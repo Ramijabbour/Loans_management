@@ -102,14 +102,6 @@ public class Loans {
 		LoanDate = loanDate;
 	}
 
-	public String getFinanceType() {
-		return FinanceType;
-	}
-
-	public void setFinanceType(String financeType) {
-		FinanceType = financeType;
-	}
-
 	public int getInterestRate() {
 		return InterestRate;
 	}
@@ -134,16 +126,27 @@ public class Loans {
 		FundintRate = fundintRate;
 	}
 
-	public String getLoanType() {
-		return LoanType;
-	}
-
-	public void setLoanType(String loanType) {
-		LoanType = loanType;
-	}
 
 	public int getClearanceNumber() {
 		return ClearanceNumber;
+	}
+
+	
+	
+	public LoansType getLoanType() {
+		return loanType;
+	}
+
+	public void setLoanType(LoansType loanType) {
+		this.loanType = loanType;
+	}
+
+	public FinanceType getFinanceType() {
+		return financeType;
+	}
+
+	public void setFinanceType(FinanceType financeType) {
+		this.financeType = financeType;
 	}
 
 	public void setClearanceNumber(int clearanceNumber) {
