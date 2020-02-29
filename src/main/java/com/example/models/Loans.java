@@ -23,7 +23,6 @@ public class Loans {
 	
 	private String LoanDate ;
 	
-	private String FinanceType ;
 	
 	private int InterestRate ;
 	
@@ -31,7 +30,6 @@ public class Loans {
 	
 	private int FundintRate ;
 	
-	private String LoanType ;
 	
 	private int ClearanceNumber;
 	
@@ -57,6 +55,12 @@ public class Loans {
 	
 	@ManyToOne
 	private User user =null ;
+	
+	@ManyToOne
+	private LoansType loanType =null ;
+	
+	@ManyToOne
+	private FinanceType financeType =null ;
 
 	public int getLoanID() {
 		return LoanID;
