@@ -19,6 +19,14 @@ public class Banks {
 	private int FinancialAllocations = 0 ;
   
 	
+	
+	public Banks(String branchName, String bankCode, int financialAllocations) {
+		super();
+		BranchName = branchName;
+		BankCode = bankCode;
+		FinancialAllocations = financialAllocations;
+	}
+
 	public int getBankID() {
 		return BankID;
 	}
