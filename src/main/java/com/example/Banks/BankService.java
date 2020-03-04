@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.dataBase.BanksRepository;
 import com.example.models.Banks;
-
-import dataBase.BanksRepository;
 
 @Service
 public class BankService {
