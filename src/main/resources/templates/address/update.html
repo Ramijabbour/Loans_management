@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<!-- Page content goes here -->
+<div class="container">
+    <div class="jumbotron">
+        	
+	<h1>Edit Address</h1>
+    <form action="#" th:action="@{/address/edit/response}" th:object="${address}" method="post">
+    	<p>ID : <input type="text" th:field="*{id}" readonly/></p>
+    	<p>Name: <input type="text" th:field="*{name}"  pattern="[a-zA-Z]*" required/></p>
+    	<p>Address: <input type="text" th:field="*{location}" required/></p>
+    	<p>TimeStamp: <input type="text" th:field="*{timestamp}" readonly/></p>
+    	<p>Phone: <input type="text" th:field="*{phone}" pattern="[0-9]*" required/></p>
+        <p>Department: <input type="text" th:field="*{department}" readonly/></p>
+        <p><input type="submit" class="btn btn-outline-info my-2 my-sm-0 btn-sm" value="Submit" /> <input type="reset" class="btn btn-outline-info my-2 my-sm-0 btn-sm" value="Reset" /></p>
+    </form>
+	
+    </div>
+</div>
+</body>
+</html>

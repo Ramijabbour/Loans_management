@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<!-- Page content goes here -->
+<div class="container">
+    <div class="jumbotron">
+        	
+	<h1>Add User</h1>
+    <form action="#" th:action="@{/management/users}" th:object="${user}" method="post">
+    	<p>User Name: <input type="text" th:field="*{username}" required/></p>
+    	<p>Department: <input type="text" th:field="*{departement}" required/></p>
+    	<p>permissions: <input type="text" th:field="*{permissions}" /></p>
+    	<p>Role: <input type="text" th:field="*{roles}" /></p>
+        <p>Password: <input type="password" th:field="*{password}" required/></p>
+        <p><input type="submit" class="btn btn-outline-info my-2 my-sm-0 btn-sm" value="Submit" /> <input type="reset" class="btn btn-outline-info my-2 my-sm-0 btn-sm" value="Reset" /></p>
+    </form>
+	
+    </div>
+</div>
+</body>
+</html>
