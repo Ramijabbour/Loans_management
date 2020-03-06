@@ -29,5 +29,16 @@ public class BankService {
 	}
 
 
+	public void deleteBank(int id) {
+		bankRepository.deleteById(id);
+	}
+
+
+	public void updateBank(Banks bank) {
+		bankRepository.save(bank);
+		
+	}
+
+
 	
 }

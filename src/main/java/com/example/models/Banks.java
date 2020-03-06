@@ -28,6 +28,15 @@ public class Banks {
 		this.BranchName = branchName;
 		this.BankCode = bankCode;
 		this.FinancialAllocations = financialAllocations;
+	public Banks() {
+		
+	}
+
+	public Banks(String branchName, String bankCode, int financialAllocations) {
+		
+		BranchName = branchName;
+		BankCode = bankCode;
+		FinancialAllocations = financialAllocations;
 	}
 
 	public int getBankID() {
