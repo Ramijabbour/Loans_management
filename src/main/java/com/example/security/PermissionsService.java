@@ -1,5 +1,7 @@
 package com.example.security;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,10 @@ public class PermissionsService {
 	
 	@Autowired
 	PermissionsRepository permissionsRepository ; 
+	
+	public List<Permissions> getAllPermissions(){
+		return this.permissionsRepository.findAll() ; 
+	}
 	
 	public void addPermission(Permissions permission ) {
 		if(this.permissionsRepository.findAll().contains(permission)) {

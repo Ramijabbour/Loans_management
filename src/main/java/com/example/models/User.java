@@ -24,7 +24,6 @@ public class User {
 	private String Gender="" ;
 
 	
-	
 	public int getUserID() {
 		return UserID;
 	}
@@ -63,9 +62,6 @@ public class User {
 
 	public void setGender(String gender) {
 		Gender = gender;
-	}
-  
-	
-	
+	}	
 	
 }

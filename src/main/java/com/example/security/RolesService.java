@@ -9,11 +9,8 @@ import com.example.models.Roles;
 
 @Service
 public class RolesService {
-
-	
 	@Autowired
 	RolesRepository rolesRepository ; 
-	
 	
 	public void addRole(Roles role ) {
 		if(this.rolesRepository.findAll().contains(role)) {
@@ -34,6 +31,5 @@ public class RolesService {
 	public void deleteRole(Roles role ) {
 		this.rolesRepository.delete(role);
 	}
-	
-	
+		
 }

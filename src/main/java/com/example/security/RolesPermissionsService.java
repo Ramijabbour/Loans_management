@@ -10,10 +10,8 @@ import com.example.models.RolePermission;
 @Service
 public class RolesPermissionsService {
 
-	
 	@Autowired
 	RolePermissionRepository rolePermissionRepository ; 
-	
 	
 	public void addRolePermission(RolePermission rolePermission) {
 		if(this.rolePermissionRepository.findAll().contains(rolePermission)) {
@@ -21,7 +19,6 @@ public class RolesPermissionsService {
 		}
 		this.rolePermissionRepository.save(rolePermission);
 	}
-	
 	
 	public void deleteRolePermission(RolePermission rolePermission) {
 		this.rolePermissionRepository.delete(rolePermission);
@@ -32,4 +29,6 @@ public class RolesPermissionsService {
 			throw new Exceptions(-404,"cannot find requested role-permission ");
 		}
 	}
+
+
 }

@@ -15,5 +15,7 @@ public class Exceptions extends RuntimeException {
 		this.ExceptionCode = exceptionNumber ; 
 	}
 	
-	
+	public String getException() {
+		return "error code : "+this.ExceptionCode + " : "+this.ErrorMsg;
+	}
 }
