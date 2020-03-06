@@ -42,7 +42,6 @@ public class BankService {
 
 	public void updateBank(Banks bank) {
 		bankRepository.save(bank);
-		
 	}
 
 

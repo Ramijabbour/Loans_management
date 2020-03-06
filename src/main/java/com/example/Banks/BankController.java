@@ -43,7 +43,7 @@ public class BankController {
 		banksercice.addBank(bank);
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT , value="/Banks/{id}")
+	@RequestMapping(method = RequestMethod.PUT , value="/Banks")
 	public void updateBank(@RequestBody Banks bank)
 	{
 		banksercice.updateBank(bank);
