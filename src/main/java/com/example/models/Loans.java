@@ -28,8 +28,6 @@ public class Loans {
 	
 	private int DelayInterestRate ;
 	
-	private int FundintRate ;
-	
 	
 	private int ClearanceNumber;
 	
@@ -118,21 +116,10 @@ public class Loans {
 		DelayInterestRate = delayInterestRate;
 	}
 
-	public int getFundintRate() {
-		return FundintRate;
-	}
-
-	public void setFundintRate(int fundintRate) {
-		FundintRate = fundintRate;
-	}
-
-
 	public int getClearanceNumber() {
 		return ClearanceNumber;
 	}
 
-	
-	
 	public LoansType getLoanType() {
 		return loanType;
 	}

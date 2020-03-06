@@ -13,14 +13,23 @@ public class Banks {
 	private int BankID ;
 
     private String BranchName="";
-
+    
+    private String BankName ="" ; 
+    
 	private String BankCode="";
 
 	private int FinancialAllocations = 0 ;
   
-	public Banks() {
-		
+	
+	
+	public Banks(String bankName,String branchName, String bankCode, int financialAllocations) {
+		super();
+		this.BankName = bankName ; 
+		this.BranchName = branchName;
+		this.BankCode = bankCode;
+		this.FinancialAllocations = financialAllocations;
 	}
+		public Banks() {}
 
 	public Banks(String branchName, String bankCode, int financialAllocations) {
 		
@@ -59,6 +68,13 @@ public class Banks {
 
 	public void setFinancialAllocations(int financialAllocations) {
 		FinancialAllocations = financialAllocations;
+	}
+
+	public String getBankName() {
+		return this.BankName; 
+	}
+	public void setBankName(String bankName) {
+		this.BankName = bankName ; 
 	}
 	
 }

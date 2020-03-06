@@ -1,12 +1,14 @@
 package com.example.Banks;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.dataBase.BanksRepository;
 import com.example.models.Banks;
+
 
 @Service
 public class BankService {
@@ -16,15 +18,19 @@ public class BankService {
 	
 	
 	public List<Banks> GetAllBanks() {
-		
 		List<Banks> banks=bankRepository.findAll();
 		return banks;
+	}
+	
+	public Optional <Banks> GetBank(int id)
+	{
+		return bankRepository.findById(id);
 	}
 	
 	
 	public void addBank(Banks bank)
 	{
-		Banks b=new Banks(bank.getBranchName(),bank.getBankCode(),bank.getFinancialAllocations());
+		Banks b=new Banks(bank.getBankName(),bank.getBranchName(),bank.getBankCode(),bank.getFinancialAllocations());
 		bankRepository.save(b);
 	}
 
@@ -36,7 +42,6 @@ public class BankService {
 
 	public void updateBank(Banks bank) {
 		bankRepository.save(bank);
-		
 	}
 
 

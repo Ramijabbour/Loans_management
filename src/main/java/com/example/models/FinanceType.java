@@ -13,7 +13,23 @@ public class FinanceType {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int FinanceTypeID ;
 	private String TypeName="";
+	private int FundintRate ;
+	private int lenght; 
 	
+	
+	public FinanceType(String typeName,int fundingRatio,int len) {
+		this.TypeName = typeName ; 
+		this.FundintRate = fundingRatio ; 
+		this.lenght = len  ;
+	}
+		
+	public int getFundintRate() {
+		return FundintRate;
+	}
+
+	public void setFundintRate(int fundintRate) {
+		FundintRate = fundintRate;
+	}
 	
 	public int getFinanceTypeID() {
 		return FinanceTypeID;
@@ -27,10 +43,12 @@ public class FinanceType {
 	public void setTypeName(String typeName) {
 		TypeName = typeName;
 	}
+
 	
-	
-	
-	
-	
-	
+	public void setLenght(int len) {
+		this.lenght = len ; 
+	}
+	public int getLenght() {
+		return this.lenght ; 
+	}
 }
