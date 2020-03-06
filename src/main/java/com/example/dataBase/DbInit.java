@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.models.Allocations;
 import com.example.models.Banks;
-import com.example.models.FinanceType;
+import com.example.models.FinanceType;	
 import com.example.models.LoansType;
 
 @Service

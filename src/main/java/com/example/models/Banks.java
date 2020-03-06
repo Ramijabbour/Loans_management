@@ -28,7 +28,8 @@ public class Banks {
 		this.BranchName = branchName;
 		this.BankCode = bankCode;
 		this.FinancialAllocations = financialAllocations;
-	public Banks() {
+	}
+		public Banks() {
 		
 	}
 
