@@ -15,6 +15,10 @@ public class LoansType {
 	private String TypeName="";
 	
 	
+	public LoansType(String loanTypeName ) {
+		this.TypeName = loanTypeName ; 
+	}
+	
 	public int getLoanTypeID() {
 		return LoanTypeID;
 	}
