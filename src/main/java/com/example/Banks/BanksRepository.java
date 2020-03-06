@@ -1,4 +1,4 @@
-package com.example.Banks;
+package com.example.dataBase;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

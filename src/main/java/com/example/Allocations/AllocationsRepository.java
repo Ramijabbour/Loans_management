@@ -1,4 +1,4 @@
-package com.example.Allocations;
+package com.example.dataBase;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
