@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
+import com.example.Allocations.AllocationsRepository;
+import com.example.Banks.BanksRepository;
 import com.example.models.Allocations;
 import com.example.models.Banks;
 import com.example.models.FinanceType;	
