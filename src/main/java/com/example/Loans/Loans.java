@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import com.example.Banks.Banks;
 import com.example.Clients.Clients;
 import com.example.FinanceType.FinanceType;
-import com.example.models.LoansType;
+import com.example.LoansType.LoansType;
 import com.example.security.user.User;
 
 
