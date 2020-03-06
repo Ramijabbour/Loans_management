@@ -8,4 +8,6 @@ import com.example.models.Banks;
 @Repository
 public interface BanksRepository extends JpaRepository<Banks,Integer>{
 
+
+
 }
