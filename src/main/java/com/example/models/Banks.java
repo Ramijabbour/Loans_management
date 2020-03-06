@@ -29,9 +29,7 @@ public class Banks {
 		this.BankCode = bankCode;
 		this.FinancialAllocations = financialAllocations;
 	}
-		public Banks() {
-		
-	}
+		public Banks() {}
 
 	public Banks(String branchName, String bankCode, int financialAllocations) {
 		
