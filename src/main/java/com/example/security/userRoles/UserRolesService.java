@@ -1,11 +1,9 @@
-package com.example.security;
+package com.example.security.userRoles;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.aspect.Exceptions;
-import com.example.dataBase.UserRolesRepository;
-import com.example.models.UserRoles;
 
 @Service
 public class UserRolesService {

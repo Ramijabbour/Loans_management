@@ -1,10 +1,13 @@
-package com.example.models;
+package com.example.security.userPermissions;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.example.security.permissions.Permissions;
+import com.example.security.user.User;
 
 @Entity
 public class UserPermission {

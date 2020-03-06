@@ -1,4 +1,4 @@
-package com.example.models;
+package com.example.security.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,6 @@ public class User {
 	
 	private String Gender="" ;
 
-	
 	
 	public int getUserID() {
 		return UserID;
@@ -63,9 +62,6 @@ public class User {
 
 	public void setGender(String gender) {
 		Gender = gender;
-	}
-  
-	
-	
+	}	
 	
 }

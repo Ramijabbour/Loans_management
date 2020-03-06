@@ -1,4 +1,4 @@
-package com.example.models;
+package com.example.security.permissions;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

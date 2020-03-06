@@ -1,10 +1,13 @@
-package com.example.models;
+package com.example.security.rolesPermissions;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.example.security.permissions.Permissions;
+import com.example.security.roles.Roles;
 
 @Entity
 public class RolePermission {
