@@ -1,11 +1,9 @@
-package com.example.security;
+package com.example.security.rolesPermissions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.aspect.Exceptions;
-import com.example.dataBase.RolePermissionRepository;
-import com.example.models.RolePermission;
 
 @Service
 public class RolesPermissionsService {

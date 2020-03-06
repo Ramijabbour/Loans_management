@@ -1,11 +1,9 @@
-package com.example.security;
+package com.example.security.userPermissions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.aspect.Exceptions;
-import com.example.dataBase.UserPermissionRepository;
-import com.example.models.UserPermission;
 
 @Service
 public class UserPermissionsService {	

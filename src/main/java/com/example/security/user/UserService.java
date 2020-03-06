@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.aspect.Exceptions;
-import com.example.dataBase.UserRepository;
-import com.example.models.User;
 
 @Service
 public class UserService {
