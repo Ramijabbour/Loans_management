@@ -20,8 +20,7 @@ public class Clients {
 	public Clients() {}
 
 	
-	public Clients(int clientID, String clientName, int identity_number) {
-		ClientID = clientID;
+	public Clients( String clientName, int identity_number) {
 		ClientName = clientName;
 		this.identity_number = identity_number;
 	}
@@ -41,6 +40,16 @@ public class Clients {
 
 	public void setClientName(String clientName) {
 		ClientName = clientName;
+	}
+
+
+	public int getIdentity_number() {
+		return identity_number;
+	}
+
+
+	public void setIdentity_number(int identity_number) {
+		this.identity_number = identity_number;
 	}
 		
 }
