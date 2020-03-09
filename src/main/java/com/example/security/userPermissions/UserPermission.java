@@ -17,11 +17,17 @@ public class UserPermission {
 	private int UserPermissionID ;
 
 	@ManyToOne
-	private User use = null;
+	private User user = null;
 	
 	@ManyToOne
 	private Permissions permission =null;
 
+	
+	public UserPermission(User user , Permissions permission ) {
+			this.user = user ; 
+			this.permission = permission ; 
+	}
+	
 	public int getUserPermissionID() {
 		return UserPermissionID;
 	}
@@ -30,12 +36,12 @@ public class UserPermission {
 		UserPermissionID = userPermissionID;
 	}
 
-	public User getUse() {
-		return use;
+	public User getUser() {
+		return user;
 	}
 
 	public void setUse(User use) {
-		this.use = use;
+		this.user = use;
 	}
 
 	public Permissions getPermission() {
@@ -45,11 +51,6 @@ public class UserPermission {
 	public void setPermission(Permissions permission) {
 		this.permission = permission;
 	}
-
-	
-
-
-	
 	
 	
 }
