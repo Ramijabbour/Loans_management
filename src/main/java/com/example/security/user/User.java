@@ -23,11 +23,13 @@ public class User {
 	@Column(nullable = false )
 	private String password = " ";
 	
-	private String UserName="";
+	private String username ;
 	private String Gender="" ;
 	private String UserPermissions = "" ; 
 	private String UserRoles =""; 
 	
+	
+	private boolean isActive = false ; 
 
 	public int getUserID() {
 		return UserID;
@@ -38,11 +40,11 @@ public class User {
 	}
 
 	public String getUserName() {
-		return UserName;
+		return username;
 	}
 
 	public void setUserName(String userName) {
-		UserName = userName;
+		username = userName;
 	}
 
 	public String getEmail() {
@@ -134,4 +136,11 @@ public class User {
 	}
 	
 
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 }
