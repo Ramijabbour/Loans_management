@@ -1,10 +1,12 @@
 //package com.example.dataBase;
-//
+
 //import java.util.Arrays;
 //import java.util.List;
 //
 //import org.springframework.boot.CommandLineRunner;
 //import org.springframework.stereotype.Service;
+
+//import com.example.security.permissions.PermissionsRepository;
 //
 //import com.example.models.Allocations;
 //import com.example.models.Banks;
@@ -20,17 +22,23 @@
 //	private AllocationsRepository allocationsRepository ;
 //	private LoansTypeRepository loansTypeRepository ;
 //
-//	public DbInit(FinanceTypeRepository finanaceTypeRepo,BanksRepository banksRepo,AllocationsRepository allocationsRepo,LoansTypeRepository loansTypeRepo) {
-//		this.finanaceTypeRepository = finanaceTypeRepo ;
-//		this.banksRepository = banksRepo ;
-//		this.allocationsRepository = allocationsRepo ;
-//		this.loansTypeRepository = loansTypeRepo ;
-//	}
+//	private PermissionsRepository permissionsRepository ; 
+	
+	/*public DbInit(FinanceTypeRepository finanaceTypeRepo,BanksRepository banksRepo,AllocationsRepository allocationsRepo,LoansTypeRepository loansTypeRepo) {
+		this.finanaceTypeRepository = finanaceTypeRepo ;
+		this.banksRepository = banksRepo ;
+		this.allocationsRepository = allocationsRepo ;
+		this.loansTypeRepository = loansTypeRepo ;
+	}*/
+	
+//	public DbInit(PermissionsRepository permissionsRepo) {
+		//this.permissionsRepository = permissionsRepo ;
+	//}
+
+
 //
-//
-//	@Override
-//	public void run(String... args) throws Exception {
-//
+	//@Override
+	//public void run(String... args) throws Exception {
 //		//Finance types data these are constants  do not change or add //////
 //		FinanceType ft1 = new FinanceType("استراتيجي",100,45);
 //		FinanceType ft2 = new FinanceType("قصير الأمد",80,180);;

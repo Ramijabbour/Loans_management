@@ -8,6 +8,8 @@ public class LoansManagementApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LoansManagementApplication.class, args);
+		System.out.println("init complete ?-------------------------------?");
 	}
+	
 
 }

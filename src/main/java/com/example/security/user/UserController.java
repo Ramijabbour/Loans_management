@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+
 @RestController
 public class UserController {
 
 	@Autowired
 	UserService userService ; 
-	
 	
 	///index page /// 
 	@RequestMapping(method = RequestMethod.GET , value = "/adminstration/index")
@@ -27,11 +27,18 @@ public class UserController {
 		return mav ; 
 	}
 	
+	@RequestMapping(method = RequestMethod.GET , value ="/adminstration/users/user")
+	public ModelAndView getUser(@ModelAttribute User user ) {
+		ModelAndView mav = new ModelAndView("adminstration/users/user");
+		mav.addObject("user",this.userService.getUserByID(user.getUserID()));
+		return mav ;
+		}
+	
 	///all users ///
 	@RequestMapping(method = RequestMethod.GET , value = "/adminstration/users/all")
 	public ModelAndView getAllUsers() {
 		ModelAndView mav = new ModelAndView("adminstration/users/all");
-		mav.addObject(this.userService.getAllUsers());
+		mav.addObject("userslist",this.userService.getAllUsers());
 		return mav ; 
 	}
 	
@@ -39,7 +46,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/adduser")
 	public ModelAndView addUserView(User user) {
 		ModelAndView mav = new ModelAndView("adminstration/adduser");
-		mav.addObject(new User());
+		mav.addObject("user",new User());
 		return mav; 
 		//return an empty user model and view  to add a new user 
 	}
@@ -56,7 +63,7 @@ public class UserController {
 	public ModelAndView updateUserRequest(@ModelAttribute User modelUser ) {
 		ModelAndView mav = new ModelAndView("adminstration/users/update");
 		Optional<User> user = this.userService.getUserByID(modelUser.getUserID());
-		mav.addObject(user);
+		mav.addObject("user",user);
 		return mav ; 
 	}
 	
@@ -65,7 +72,6 @@ public class UserController {
 		this.userService.updateUser(user);
 		response.sendRedirect("/adminstration/users/all");
 	}
-	
 	
 	
 	///delete User ///

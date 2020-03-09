@@ -1,9 +1,14 @@
 package com.example.security.userPermissions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.aspect.Exceptions;
+import com.example.security.permissions.Permissions;
+import com.example.security.user.User;
 
 @Service
 public class UserPermissionsService {	
@@ -29,6 +34,17 @@ public class UserPermissionsService {
 			this.userPermissionsRepository.save(userPermission); 
 		}
 	}
+
 	
+	public boolean checkUserPermissionDuplication(User user , Permissions permission) {
+		List<UserPermission> userPerm = new ArrayList<UserPermission>();  
+		for ( UserPermission userPermission : this.userPermissionsRepository.findAll()) {
+			if(user.getUserID() == userPermission.getUser().getUserID())
+			userPerm.add(userPermission);
+		}
+		
+		
+		return false ; 
+	}
 	
 }

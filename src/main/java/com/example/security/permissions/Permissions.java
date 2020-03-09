@@ -17,7 +17,12 @@ public class Permissions {
 	
 	private String PermissionType="";
 
-
+	public Permissions(String permissionName ) {
+		this.PermissionName = permissionName ; 
+	}
+	
+	public Permissions(){}
+	
 	public int getPermissionID() {
 		return PermissionID;
 	}
