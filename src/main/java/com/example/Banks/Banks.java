@@ -1,28 +1,31 @@
 package com.example.Banks;
 
+import ValidContent_Visitor.Valid_Visitable;
+import ValidContent_Visitor.Visitor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Banks {
+public class Banks extends Valid_Visitable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int BankID ;
+	public int BankID ;
 
-    private String BranchName="";
+    public String BranchName="";
     
-    private String BankName ="" ; 
+    public String BankName ="" ;
     
-	private String BankCode="";
+	public String BankCode="";
 
-	private int FinancialAllocations = 0 ;
+	public String FinancialAllocations  ;
   
 	
 	
-	public Banks(String bankName,String branchName, String bankCode, int financialAllocations) {
+	public Banks(String bankName,String branchName, String bankCode, String financialAllocations) {
 		super();
 		this.BankName = bankName ; 
 		this.BranchName = branchName;
@@ -31,7 +34,7 @@ public class Banks {
 	}
 		public Banks() {}
 
-	public Banks(String branchName, String bankCode, int financialAllocations) {
+	public Banks(String branchName, String bankCode, String financialAllocations) {
 		
 		BranchName = branchName;
 		BankCode = bankCode;
@@ -62,11 +65,11 @@ public class Banks {
 		BankCode = bankCode;
 	}
 
-	public int getFinancialAllocations() {
+	public String getFinancialAllocations() {
 		return FinancialAllocations;
 	}
 
-	public void setFinancialAllocations(int financialAllocations) {
+	public void setFinancialAllocations(String financialAllocations) {
 		FinancialAllocations = financialAllocations;
 	}
 
@@ -76,5 +79,4 @@ public class Banks {
 	public void setBankName(String bankName) {
 		this.BankName = bankName ; 
 	}
-	
-}
+	public boolean accept(Visitor visitor) { return visitor.visit(this); }}

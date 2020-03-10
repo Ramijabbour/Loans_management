@@ -1,11 +1,7 @@
 package com.example.Loans;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 
 import com.example.Banks.Banks;
@@ -13,221 +9,236 @@ import com.example.Clients.Clients;
 import com.example.FinanceType.FinanceType;
 import com.example.LoansType.LoansType;
 import com.example.security.user.User;
+import org.springframework.format.annotation.DateTimeFormat;
 
+//import sun.util.calendar.BaseCalendar;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 @Entity
+
 public class Loans {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int LoanID ;
-	
-	private String FirstSide ;
-	
-	private String SecondSide ;
-	
-	private String WorkDate ;
-	
-	private String LoanDate ;
-	
-	
-	private int InterestRate ;
-	
-	private int DelayInterestRate ;
-	
-	
-	private int ClearanceNumber;
-	
-	private int TotalAmmount ;
-	
-	private String TotalAmmountAsString ;
-	
-	private int NetAmmount ;
-	
-	private String NetAmmountAsString ;
-	
-	private String NumberOfVoucherAsString ;
-	
-	private int NumberOfVoucher ;
-	
-	private String purpose ;
-	
-	@ManyToOne
-	private Clients client =null ;
-	
-	@ManyToOne
-	private Banks bank =null ;
-	
-	@ManyToOne
-	private User user =null ;
-	
-	@ManyToOne
-	private LoansType loanType =null ;
-	
-	@ManyToOne
-	private FinanceType financeType =null ;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int LoanID;
 
-	public int getLoanID() {
-		return LoanID;
-	}
+    private String FirstSide;
 
-	public void setLoanID(int loanID) {
-		LoanID = loanID;
-	}
+    private String SecondSide;
 
-	public String getFirstSide() {
-		return FirstSide;
-	}
 
-	public void setFirstSide(String firstSide) {
-		FirstSide = firstSide;
-	}
+    private String WorkDate;
 
-	public String getSecondSide() {
-		return SecondSide;
-	}
 
-	public void setSecondSide(String secondSide) {
-		SecondSide = secondSide;
-	}
+    private String LoanDate;
 
-	public String getWorkDate() {
-		return WorkDate;
-	}
 
-	public void setWorkDate(String workDate) {
-		WorkDate = workDate;
-	}
+    private String InterestRate;
 
-	public String getLoanDate() {
-		return LoanDate;
-	}
+    private String DelayInterestRate;
 
-	public void setLoanDate(String loanDate) {
-		LoanDate = loanDate;
-	}
 
-	public int getInterestRate() {
-		return InterestRate;
-	}
+    private String ClearanceNumber;
 
-	public void setInterestRate(int interestRate) {
-		InterestRate = interestRate;
-	}
+    private String TotalAmmount;
 
-	public int getDelayInterestRate() {
-		return DelayInterestRate;
-	}
+    private String TotalAmmountAsString;
 
-	public void setDelayInterestRate(int delayInterestRate) {
-		DelayInterestRate = delayInterestRate;
-	}
+    private String NetAmmount;
 
-	public int getClearanceNumber() {
-		return ClearanceNumber;
-	}
 
-	public LoansType getLoanType() {
-		return loanType;
-	}
+    private String NetAmmountAsString;
 
-	public void setLoanType(LoansType loanType) {
-		this.loanType = loanType;
-	}
+    private String NumberOfVoucherAsString;
 
-	public FinanceType getFinanceType() {
-		return financeType;
-	}
+    private String NumberOfVoucher;
 
-	public void setFinanceType(FinanceType financeType) {
-		this.financeType = financeType;
-	}
+    private String purpose;
 
-	public void setClearanceNumber(int clearanceNumber) {
-		ClearanceNumber = clearanceNumber;
-	}
+    @ManyToOne
+    private Clients client = null;
 
-	public int getTotalAmmount() {
-		return TotalAmmount;
-	}
+    @ManyToOne
+    private Banks bank = null;
 
-	public void setTotalAmmount(int totalAmmount) {
-		TotalAmmount = totalAmmount;
-	}
+    @ManyToOne
+    private User user = null;
 
-	public String getTotalAmmountAsString() {
-		return TotalAmmountAsString;
-	}
+    @ManyToOne
+    private LoansType loanType = null;
 
-	public void setTotalAmmountAsString(String totalAmmountAsString) {
-		TotalAmmountAsString = totalAmmountAsString;
-	}
+    @ManyToOne
+    private FinanceType financeType = null;
 
-	public int getNetAmmount() {
-		return NetAmmount;
-	}
+    public int getLoanID() {
+        return LoanID;
+    }
 
-	public void setNetAmmount(int netAmmount) {
-		NetAmmount = netAmmount;
-	}
+    public void setLoanID(int loanID) {
+        LoanID = loanID;
+    }
 
-	public String getNetAmmountAsString() {
-		return NetAmmountAsString;
-	}
+    public String getFirstSide() {
+        return FirstSide;
+    }
 
-	public void setNetAmmountAsString(String netAmmountAsString) {
-		NetAmmountAsString = netAmmountAsString;
-	}
+    public void setFirstSide(String firstSide) {
+        FirstSide = firstSide;
+    }
 
-	public String getNumberOfVoucherAsString() {
-		return NumberOfVoucherAsString;
-	}
+    public String getSecondSide() {
+        return SecondSide;
+    }
 
-	public void setNumberOfVoucherAsString(String numberOfVoucherAsString) {
-		NumberOfVoucherAsString = numberOfVoucherAsString;
-	}
+    public void setSecondSide(String secondSide) {
+        SecondSide = secondSide;
+    }
 
-	public int getNumberOfVoucher() {
-		return NumberOfVoucher;
-	}
 
-	public void setNumberOfVoucher(int numberOfVoucher) {
-		NumberOfVoucher = numberOfVoucher;
-	}
+    public String getWorkDate() {
+        return WorkDate;
+    }
 
-	public String getPurpose() {
-		return purpose;
-	}
 
-	public void setPurpose(String purpose) {
-		this.purpose = purpose;
-	}
+    public void setWorkDate(String workDate) {
 
-	public Clients getClient() {
-		return client;
-	}
+        WorkDate = workDate;
 
-	public void setClient(Clients client) {
-		this.client = client;
-	}
+    }
 
-	public Banks getBank() {
-		return bank;
-	}
 
-	public void setBank(Banks bank) {
-		this.bank = bank;
-	}
+    public String getLoanDate() {
+        return LoanDate;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public void setLoanDate(String loanDate) {
+        LoanDate = loanDate;
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	
-	
+    }
+
+    public String getInterestRate() {
+        return InterestRate;
+    }
+
+    public void setInterestRate(String interestRate) {
+        InterestRate = interestRate;
+    }
+
+    public String getDelayInterestRate() {
+        return DelayInterestRate;
+    }
+
+    public void setDelayInterestRate(String delayInterestRate) {
+        DelayInterestRate = delayInterestRate;
+    }
+
+    public String getClearanceNumber() {
+        return ClearanceNumber;
+    }
+
+    public LoansType getLoanType() {
+        return loanType;
+    }
+
+    public void setLoanType(LoansType loanType) {
+        this.loanType = loanType;
+    }
+
+    public FinanceType getFinanceType() {
+        return financeType;
+    }
+
+    public void setFinanceType(FinanceType financeType) {
+        this.financeType = financeType;
+    }
+
+    public void setClearanceNumber(String clearanceNumber) {
+        ClearanceNumber = clearanceNumber;
+    }
+
+    public String getTotalAmmount() {
+        return TotalAmmount;
+    }
+
+    public void setTotalAmmount(String totalAmmount) {
+        TotalAmmount = totalAmmount;
+    }
+
+    public String getTotalAmmountAsString() {
+        return TotalAmmountAsString;
+    }
+
+    public void setTotalAmmountAsString(String totalAmmountAsString) {
+        TotalAmmountAsString = totalAmmountAsString;
+    }
+
+    public String getNetAmmount() {
+        return NetAmmount;
+    }
+
+    public void setNetAmmount(String netAmmount) {
+        NetAmmount = netAmmount;
+    }
+
+    public String getNetAmmountAsString() {
+        return NetAmmountAsString;
+    }
+
+    public void setNetAmmountAsString(String netAmmountAsString) {
+        NetAmmountAsString = netAmmountAsString;
+    }
+
+    public String getNumberOfVoucherAsString() {
+        return NumberOfVoucherAsString;
+    }
+
+    public void setNumberOfVoucherAsString(String numberOfVoucherAsString) {
+        NumberOfVoucherAsString = numberOfVoucherAsString;
+    }
+
+    public String getNumberOfVoucher() {
+        return NumberOfVoucher;
+    }
+
+    public void setNumberOfVoucher(String numberOfVoucher) {
+        NumberOfVoucher = numberOfVoucher;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public Clients getClient() {
+        return client;
+    }
+
+    public void setClient(Clients client) {
+        this.client = client;
+    }
+
+    public Banks getBank() {
+        return bank;
+    }
+
+    public void setBank(Banks bank) {
+        this.bank = bank;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
 }

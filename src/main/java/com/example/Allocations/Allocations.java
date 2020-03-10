@@ -21,13 +21,13 @@ public class Allocations {
 	
 	private String AllocationDate ;
 	
-	private int AllocationAmmount;
+	private String AllocationAmmount;
 	
 	@ManyToOne
 	private Banks banks =null ;
 
 	
-	public Allocations(String allocationDate , int ammount , Banks bank) {
+	public Allocations(String allocationDate , String ammount , Banks bank) {
 		this.AllocationDate = allocationDate ; 
 		this.AllocationAmmount = ammount ; 
 		this.banks = bank ; 
@@ -49,11 +49,11 @@ public class Allocations {
 		AllocationDate = allocationDate;
 	}
 
-	public int getAllocationAmmount() {
+	public String getAllocationAmmount() {
 		return AllocationAmmount;
 	}
 
-	public void setAllocationAmmount(int allocationAmmount) {
+	public void setAllocationAmmount(String allocationAmmount) {
 		AllocationAmmount = allocationAmmount;
 	}
 

@@ -20,13 +20,13 @@ public class Vouchers {
 	
 	private String VoucherDate ;
 	
-	private int VoucherAmmount;
+	private String VoucherAmmount;
 	
-	private int Total ; 
+	private String Total ;
 	
-	private int NetAmmount;
+	private String NetAmmount;
 	
-	private int FundingRatio;
+	private String FundingRatio;
 	
 	@ManyToOne
 	private Clients client =null ;
@@ -52,35 +52,35 @@ public class Vouchers {
 		VoucherDate = voucherDate;
 	}
 
-	public int getVoucherAmmount() {
+	public String getVoucherAmmount() {
 		return VoucherAmmount;
 	}
 
-	public void setVoucherAmmount(int voucherAmmount) {
+	public void setVoucherAmmount(String voucherAmmount) {
 		VoucherAmmount = voucherAmmount;
 	}
 
-	public int getTotal() {
+	public String getTotal() {
 		return Total;
 	}
 
-	public void setTotal(int total) {
+	public void setTotal(String total) {
 		Total = total;
 	}
 
-	public int getNetAmmount() {
+	public String getNetAmmount() {
 		return NetAmmount;
 	}
 
-	public void setNetAmmount(int netAmmount) {
+	public void setNetAmmount(String netAmmount) {
 		NetAmmount = netAmmount;
 	}
 
-	public int getFundingRatio() {
+	public String getFundingRatio() {
 		return FundingRatio;
 	}
 
-	public void setFundingRatio(int fundingRatio) {
+	public void setFundingRatio(String fundingRatio) {
 		FundingRatio = fundingRatio;
 	}
 

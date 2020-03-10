@@ -14,13 +14,13 @@ public class Clients {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int ClientID ;
 	private String ClientName ;
-	private int identity_number;
+	private String identity_number;
 	
 	
 	public Clients() {}
 
 	
-	public Clients( String clientName, int identity_number) {
+	public Clients( String clientName, String identity_number) {
 		ClientName = clientName;
 		this.identity_number = identity_number;
 	}
@@ -43,12 +43,12 @@ public class Clients {
 	}
 
 
-	public int getIdentity_number() {
+	public String getIdentity_number() {
 		return identity_number;
 	}
 
 
-	public void setIdentity_number(int identity_number) {
+	public void setIdentity_number(String identity_number) {
 		this.identity_number = identity_number;
 	}
 		

@@ -1,36 +1,46 @@
 package com.example.FinanceType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+		import javax.persistence.Entity;
+		import javax.persistence.GeneratedValue;
+		import javax.persistence.GenerationType;
+		import javax.persistence.Id;
 
 @Entity
 public class FinanceType {
 
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int FinanceTypeID ;
 	private String TypeName="";
-	private int FundintRate ;
-	private int lenght; 
-	
-	
-	public FinanceType(String typeName,int fundingRatio,int len) {
-		this.TypeName = typeName ; 
-		this.FundintRate = fundingRatio ; 
+	private String FundintRate ;
+
+	public String getFunded_propse() {
+		return funded_propse;
+	}
+
+	public void setFunded_propse(String funded_propse) {
+		this.funded_propse = funded_propse;
+	}
+
+	private String funded_propse;
+	private String lenght;
+
+
+	public FinanceType(String typeName,String fundingRatio,String len) {
+		this.TypeName = typeName ;
+		this.FundintRate = fundingRatio ;
 		this.lenght = len  ;
 	}
-		
-	public int getFundintRate() {
+
+	public String getFundintRate() {
 		return FundintRate;
 	}
 
-	public void setFundintRate(int fundintRate) {
+	public void setFundintRate(String fundintRate) {
 		FundintRate = fundintRate;
 	}
-	
+
 	public int getFinanceTypeID() {
 		return FinanceTypeID;
 	}
@@ -44,11 +54,11 @@ public class FinanceType {
 		TypeName = typeName;
 	}
 
-	
-	public void setLenght(int len) {
-		this.lenght = len ; 
+
+	public void setLenght(String len) {
+		this.lenght = len ;
 	}
-	public int getLenght() {
-		return this.lenght ; 
+	public String getLenght() {
+		return this.lenght ;
 	}
 }
