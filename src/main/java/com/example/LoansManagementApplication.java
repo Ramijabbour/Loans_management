@@ -1,5 +1,6 @@
 package com.example;
 
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -39,12 +40,12 @@ public class LoansManagementApplication implements CommandLineRunner {
 //		s=calendar.getTime();
 //		//d.SetDate(s);
 //		System.out.println(s); ||Bank.BankCode.contains("-")
-		String s = "-122";
+		String s = "-122#";
 
 
 		if(StringUtils.isNumeric(s)==false ||s.contains("-") )
 			System.out.println("o");
-		if(s.length()>15 || s.matches("[@_!#$%^&*()<>?/\\|}{~:]" ))
+		if(s.length()>15 || !s.matches("[@_!#$%^&*()<>?/\\|}{~:]" ))
 		{
 			System.out.println("s");
 		}
