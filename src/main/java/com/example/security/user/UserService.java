@@ -51,6 +51,15 @@ public class UserService{
 			return this.userRepository.findById(id);	
 	}
 	
+	public User getUserByUserName(String userName) {
+		for(User user : this.userRepository.findAll()) {
+			if(user.getUserName().equalsIgnoreCase(userName)) {
+				return user ; 
+			}
+		}
+		return null ;
+	}
+	
 	//add new user // 
 	public void addUser(User user ) {
 		if(checkUserinforDuplication(user)) {

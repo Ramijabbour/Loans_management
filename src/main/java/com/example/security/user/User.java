@@ -12,7 +12,6 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int UserID ;
@@ -31,6 +30,27 @@ public class User {
 	
 	private boolean isActive = false ; 
 
+	
+	public User() {}
+	
+	public User(String email, String password, String username, String gender, String userPermissions,
+			String userRoles, boolean isActive) {
+		super();
+		Email = email;
+		this.password = password;
+		this.username = username;
+		Gender = gender;
+		UserPermissions = userPermissions;
+		UserRoles = userRoles;
+		this.isActive = isActive;
+	}
+	
+	
+	public void flatUserDetailes() {
+		System.out.println("user ID : "+this.UserID+" username :"+this.username+" user email : "+this.Email);
+	}
+	
+	
 	public int getUserID() {
 		return UserID;
 	}
