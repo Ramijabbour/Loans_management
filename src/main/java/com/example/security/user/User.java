@@ -99,8 +99,18 @@ public class User {
 	public String getUserRoles() {
 		return UserRoles;
 	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
 
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 
+	
+	
+	
 	public boolean hasRole(String role) {
 		if(this.UserRoles.equalsIgnoreCase("")) {
 			return false ; 
@@ -155,12 +165,25 @@ public class User {
 		}
 	}
 	
-
-	public boolean isActive() {
-		return isActive;
+	public void revokeRoleFromUser(String role ) {
+		List<String> userRoles = this.convertRolesToList() ; 
+		if(userRoles.contains(role)) {
+			userRoles.remove(role);
+			this.UserRoles = "";
+			for(String tempRole : userRoles) {
+				this.addRole(tempRole);
+			}
+		}
 	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	
+	public void revokePermissionFromUser(String permission) {
+		List<String> userPermissions = this.convertPermissionsToList(); 
+		if(userPermissions.contains(permission)) {
+			userPermissions.remove(permission);
+			this.UserPermissions = "";
+			for(String tempPermission : userPermissions) {
+				this.addPermission(tempPermission);
+			}
+		}
 	}
 }

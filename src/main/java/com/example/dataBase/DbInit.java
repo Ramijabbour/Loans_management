@@ -24,6 +24,8 @@ public class DbInit implements CommandLineRunner{
 	
 		//User admin = new User("admin@email.com",passwordEncoder.encode("admin123"),"admin","male","ACCESS_TEST1,ACCESS_TEST2","ADMIN",true);
 		//this.userRepository.save(admin);
+		//User tester = new User("tester@email.com",passwordEncoder.encode("tester123"),"tester","male","getAllUsers","TESTER",true);
+		//this.userRepository.save(tester);
 	}
 
 

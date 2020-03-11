@@ -1,11 +1,8 @@
 package com.example.aspect;
 
-import java.io.IOException;
-
+import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
@@ -20,8 +17,6 @@ import org.springframework.stereotype.Component;
 
 
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.util.StopWatch;
-
 import com.example.security.user.User;
 import com.example.security.user.UserRepository;
 import com.example.security.user.UserService;
@@ -38,16 +33,11 @@ public class AspectModel {
 	
 	@Before("execution(* com.example.security.user.UserService..*(..)))")
 	public void test(JoinPoint  proceedingJoinPoint)  {
-		 	MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
-	        String className = methodSignature.getDeclaringType().getSimpleName();
-	        String methodName = methodSignature.getName();
-	        System.out.println("excution request for : " + className + "." + methodName );
-	       
-	        User u = get_current_User();    
-			u.flatUserDetailes();
-	        
-			
-	}
+			perintFunctionCallInfo(proceedingJoinPoint);
+	        User user = get_current_User();    
+			user.flatUserDetailes();   
+			checkUserPermission(proceedingJoinPoint,user);
+		}
 	
 	public User get_current_User() {
 		String username ; 
@@ -69,6 +59,26 @@ public class AspectModel {
 	         return null  ; 
     }
 
+	public List<String> getUserPermissions(User user ){
+		List<String> permissions =  user.convertPermissionsToList();
+		return permissions ; 
+	}
+
+	public void perintFunctionCallInfo(JoinPoint  proceedingJoinPoint) {
+		MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
+        String className = methodSignature.getDeclaringType().getSimpleName();
+        String methodName = methodSignature.getName();
+        System.out.println("excution request for : " + className + "." + methodName );
+	}
+	
+	public void checkUserPermission(JoinPoint  proceedingJoinPoint , User user ) {
+		MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
+        String methodName = methodSignature.getName();
+        if(!getUserPermissions(user).contains(methodName)) {
+			throw new UnAuthorizedException(); 
+		}
+	}
+	
 }
 
 

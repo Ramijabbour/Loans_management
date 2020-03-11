@@ -24,4 +24,12 @@ public class ExceptionsHandler {
 		return mav ; 
 	}
 
+	@ExceptionHandler(value = UnAuthorizedException.class)
+	public ModelAndView UnAuthorizedException(){
+		System.out.println("Exceptions handlerinvoked ");
+		ModelAndView mav = new ModelAndView("exceptions/exception");
+		mav.addObject("cerror",new UnAuthorizedException());
+		return mav ; 
+	}
+	
 }

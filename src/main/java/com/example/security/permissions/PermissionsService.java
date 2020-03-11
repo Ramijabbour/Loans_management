@@ -8,12 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.aspect.Exceptions;
+import com.example.security.rolesPermissions.RolesPermissionsService;
+import com.example.security.userPermissions.UserPermissionsService;
 
 @Service
 public class PermissionsService {
 	
 	@Autowired
 	PermissionsRepository permissionsRepository ; 
+	
+	
+	@Autowired 
+	private UserPermissionsService userPermissionsService ; 
+	
+	@Autowired 
+	private RolesPermissionsService rolesPermissionsService ; 
+	
 	
 	private static List<String> PermissionsList = new ArrayList<String>() ; 
 	
@@ -47,7 +57,10 @@ public class PermissionsService {
 			} 
 	}
 	
+	//we should add reference to UserPermissions Service && Role Permissions Service -- Cascade delete 
 	public void deletePermission(Permissions permission) {
+		this.userPermissionsService.deletePermission(permission);
+		this.rolesPermissionsService.deletePermission(permission);
 		this.permissionsRepository.delete(permission);
 	}
 	

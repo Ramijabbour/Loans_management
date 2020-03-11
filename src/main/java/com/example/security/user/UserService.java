@@ -24,6 +24,8 @@ public class UserService{
 	
 	List<String> ServicesNames = Arrays.asList() ; 
 	
+	
+	//Service permissions Injection 
 	public UserService() {
 		System.out.println("user service init ------------------------>>>>>>>>");
 		
@@ -37,6 +39,8 @@ public class UserService{
 		PermissionsService.addPermissionsToPermissionsList(methodsNames);
 		/*permissions added and need to be committed to permissions table in the data base at route /permissions/commit*/
 	}
+	//
+	
 	
 	//all Users// 
 	public List<User> getAllUsers() {
@@ -51,6 +55,7 @@ public class UserService{
 			return this.userRepository.findById(id);	
 	}
 	
+	//find User by userName 
 	public User getUserByUserName(String userName) {
 		for(User user : this.userRepository.findAll()) {
 			if(user.getUserName().equalsIgnoreCase(userName)) {
@@ -83,6 +88,8 @@ public class UserService{
 		this.userRepository.deleteById(user.getUserID());
 	}
 	
+	
+	//User Duplication Check 
 	//check if the user is currently in the system // 
 	public boolean checkUserinforDuplication(User user ) {
 		List<User> usersList = this.userRepository.findAll() ; 
@@ -98,28 +105,54 @@ public class UserService{
 		return false ; 
 	}
 
+	
+	//User Access Control Section 
+	
+	
 	@Transactional
 	public void addPermissionsToUser(User user , List<Permissions> permissions ) {
 		if(permissions.isEmpty()) {
-			throw new Exceptions(-406,"Empty Permissions List");
+			return ; 
 		}
 		for(Permissions permission : permissions ) {
 			if(!user.hasPermission(permission.getPermissionName())) {
 				user.addPermission(permission.getPermissionName());
 			}else {continue ;}
 		}
+		this.userRepository.save(user);
 	}
 	
 	@Transactional 
 	public void addRolesToUser(User user , List<Roles> roles) {
 		if(roles.isEmpty()) {
-			throw new Exceptions(-406,"Empty roles List");
+			return ; 
 		}
 		for(Roles role : roles ) {
 			if(!user.hasRole(role.getRoleName())) {
 				user.addRole(role.getRoleName());
 			}else {continue ;}
 		}
+		this.userRepository.save(user);
 	}
 	
+	@Transactional
+	public void revokeRoleFromUser(User user , Roles role) {
+		if(!user.hasRole(role.getRoleName())) {
+			return ; 
+		}else{
+			user.revokeRoleFromUser(role.getRoleName());
+			this.userRepository.save(user); 
+		}
+	}
+	
+	@Transactional
+	public void revokePermissionFromUser(User user , Permissions permission) {
+		if(!user.hasPermission(permission.getPermissionName())) {
+			return ; 
+		}else {
+			user.revokePermissionFromUser(permission.getPermissionName());
+			this.userRepository.save(user);
+		}
+	}
+
 }
