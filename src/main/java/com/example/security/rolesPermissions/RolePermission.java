@@ -46,7 +46,4 @@ public class RolePermission {
 		this.permission = permission;
 	}
 
-	
-	
-	
 }

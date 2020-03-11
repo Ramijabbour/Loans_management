@@ -13,8 +13,12 @@ public class LoansType {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int LoanTypeID ;
 	private String TypeName="";
-	
-	
+
+	public LoansType(int loanTypeID, String typeName) {
+		LoanTypeID = loanTypeID;
+		TypeName = typeName;
+	}
+
 	public LoansType(String loanTypeName ) {
 		this.TypeName = loanTypeName ; 
 	}
