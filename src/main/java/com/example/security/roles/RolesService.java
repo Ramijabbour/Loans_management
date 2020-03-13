@@ -26,7 +26,6 @@ public class RolesService {
 	@Autowired
 	private RolesPermissionsService rolesPermissionsService ; 
 	
-	
 	//register services to Security Permissions (permissions committed at route /permissions/commit ) 
 	RolesService(){
 		System.out.println("Roles Service Started -----------------------> ");
@@ -39,7 +38,11 @@ public class RolesService {
 		PermissionsService.addPermissionsToPermissionsList(methodsNames);
 		System.out.println("Roles Services Added to Security Permissions ");
 	}
-	// 
+	
+	
+	public List<Roles> getAllRoles(){
+		return this.rolesRepository.findAll() ; 
+	}
 	
 	public boolean addRole(Roles role ) {
 		if(this.checkRoleDuplication(role)) {
@@ -50,13 +53,6 @@ public class RolesService {
 		} 
 	}
 	
-	public void updateRole(Roles role ) {
-		if (this.rolesRepository.findById(role.getRoleID()) == null ) {
-			throw new Exceptions(-404,"item not found in the System");
-		}else {
-				this.rolesRepository.save(role);
-			} 
-	}
 	
 	public void revokePermissionFromRoles(Permissions permission , Roles role  ) {
 		List<Roles> rolesList = this.rolesRepository.findAll(); 
