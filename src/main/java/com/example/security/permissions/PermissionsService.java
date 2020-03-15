@@ -37,6 +37,10 @@ public class PermissionsService {
 		PermissionsService.addPermissionsToPermissionsList(methodsNames);
 	}
 	
+	public int getPermissionsCount() {
+		return this.permissionsRepository.findAll().size() ; 
+	}
+	
 	public List<Permissions> getAllPermissions(){
 		return this.permissionsRepository.findAll() ; 
 	}

@@ -1,5 +1,6 @@
 package com.example.security.rolesPermissions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,16 @@ public class RolesPermissionsService {
 		this.rolePermissionRepository.save(rolePermission);
 	}
 	
+	public List<RolePermission> getPermissionsOfRole(Roles role ){
+		List<RolePermission> rolePermissionsList = new ArrayList<RolePermission>(); 
+		List<RolePermission> rolePermissionsFromRepo = this.rolePermissionRepository.findAll() ; 
+		for(RolePermission rolePermission : rolePermissionsFromRepo) {
+			if(rolePermission.getRole().getRoleName().equalsIgnoreCase(role.getRoleName())){
+				rolePermissionsList.add(rolePermission);
+			}
+		}
+		return rolePermissionsList ; 
+	}
 	
 	//
 	public void deletePermission(Permissions permission) {

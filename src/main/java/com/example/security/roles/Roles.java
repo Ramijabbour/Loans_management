@@ -10,7 +10,6 @@ import javax.persistence.Id;
 
 @Entity
 public class Roles {
-
 	//attributes 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +18,16 @@ public class Roles {
 	private String AssignedPermissions="";
 	//
 	
+	
+	
+	public Roles(String roleName, String assignedPermissions) {
+		super();
+		RoleName = roleName;
+		AssignedPermissions = assignedPermissions;
+	}
+	
+	public Roles() {}
+
 	//setters and getters 
 	public int getRoleID() {
 		return RoleID;

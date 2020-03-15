@@ -2,7 +2,6 @@ package com.example.security.user;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +19,7 @@ import com.example.security.roles.Roles;
 public class UserService{
 
 	@Autowired 
-	UserRepository userRepository ; 
-	
-	List<String> ServicesNames = Arrays.asList() ; 
-	
+	UserRepository userRepository ; 	
 	
 	//Service permissions Injection 
 	public UserService() {
@@ -85,6 +81,7 @@ public class UserService{
 	
 	//delete user//
 	public void deleteUser(User user ) {
+		//should be modefied 
 		this.userRepository.deleteById(user.getUserID());
 	}
 	
