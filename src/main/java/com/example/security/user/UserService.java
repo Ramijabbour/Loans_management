@@ -62,7 +62,7 @@ public class UserService{
 	//find User by userName 
 	public User getUserByUserName(String userName) {
 		for(User user : this.userRepository.findAll()) {
-			if(user.getUserName().equalsIgnoreCase(userName)) {
+			if(user.getUsername().equalsIgnoreCase(userName)) {
 				return user ; 
 			}
 		}
@@ -71,6 +71,7 @@ public class UserService{
 	
 	//add new user // 
 	public void addUser(User user ) {
+		user.flatUserDetailes();
 		if(checkUserinforDuplication(user)) {
 			throw new Exceptions(-405,"user data duplication error");
 		}else {
@@ -101,7 +102,7 @@ public class UserService{
 		List<User> usersList = this.userRepository.findAll() ; 
 		for(int i = 0 ; i < usersList.size() ; i++ ) {
 			User tempUser = usersList.get(i) ;
-			if(tempUser.getUserName().equalsIgnoreCase(user.getUserName())) {
+			if(tempUser.getUsername().equalsIgnoreCase(user.getUsername())) {
 				return true ; 
 			}
 			if(tempUser.getEmail().equalsIgnoreCase(user.getEmail())){

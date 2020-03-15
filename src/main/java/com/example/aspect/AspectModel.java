@@ -33,10 +33,11 @@ public class AspectModel {
 	
 	@Before("execution(* com.example.security.user.UserService..*(..)))")
 	public void test(JoinPoint  proceedingJoinPoint)  {
-			perintFunctionCallInfo(proceedingJoinPoint);
-	        User user = get_current_User();    
-			user.flatUserDetailes();   
-			checkUserPermission(proceedingJoinPoint,user);
+			System.out.println("intercepting user Service methods ");
+			//perintFunctionCallInfo(proceedingJoinPoint);
+	        //User user = get_current_User();    
+			//user.flatUserDetailes();   
+			//checkUserPermission(proceedingJoinPoint,user);
 		}
 	
 	public User get_current_User() {
@@ -46,7 +47,7 @@ public class AspectModel {
 	        if(principal instanceof UserDetails) {
 	        	 username = ((UserDetails) principal).getUsername() ; 
 		         for(User user : this.userRepo.findAll()) {
-		 			if(user.getUserName().equalsIgnoreCase(username)) {
+		 			if(user.getUsername().equalsIgnoreCase(username)) {
 		 				return user ; 
 		 			}
 		 		}

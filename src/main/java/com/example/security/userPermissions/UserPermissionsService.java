@@ -42,7 +42,7 @@ public class UserPermissionsService {
 		List<Permissions> permissionsOfUser = new ArrayList<Permissions>() ; 
 		
 		for(UserPermission tempUserPermissions : userPermissions ) {
-			if(tempUserPermissions.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
+			if(tempUserPermissions.getUser().getUsername().equalsIgnoreCase(user.getUsername())) {
 				permissionsOfUser.add(tempUserPermissions.getPermissions());
 			}
 		}
@@ -86,7 +86,7 @@ public class UserPermissionsService {
 	public void  revokePermissionFromUser(User user , Permissions permission ) {
 		List<UserPermission> userPermissionList = this.userPermissionsRepository.findAll(); 
 		for(UserPermission userPermission : userPermissionList) {
-			if(userPermission.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
+			if(userPermission.getUser().getUsername().equalsIgnoreCase(user.getUsername())) {
 				if(userPermission.getPermissions().getPermissionName().equalsIgnoreCase(permission.getPermissionName())) {
 					this.userService.revokePermissionFromUser(userPermission.getUser(), userPermission.getPermissions());
 					this.userPermissionsRepository.delete(userPermission);
@@ -100,7 +100,7 @@ public class UserPermissionsService {
 	public boolean userPermissionsExsit(Permissions permission , User user ) {
 		List<UserPermission> userPermissions = this.userPermissionsRepository.findAll() ; 
 		for(UserPermission userPermission : userPermissions ) {
-			if(userPermission.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
+			if(userPermission.getUser().getUsername().equalsIgnoreCase(user.getUsername())) {
 				if(userPermission.getPermissions().getPermissionName().equalsIgnoreCase(permission.getPermissionName())) {
 					return true ; 
 				}

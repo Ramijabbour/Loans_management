@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.example.security.permissions.Permissions;
-
 @Entity
 public class User {
 	@Id
@@ -19,7 +17,7 @@ public class User {
 	private int UserID ;
 
 	@Column(nullable = false )
-	private String Email="";
+	private String email=" ";
 
 	@Column(nullable = false )
 	private String password = " ";
@@ -29,7 +27,6 @@ public class User {
 	private String UserPermissions = "" ; 
 	private String UserRoles =""; 
 	
-	
 	private boolean isActive = false ; 
 
 	
@@ -38,7 +35,7 @@ public class User {
 	public User(String email, String password, String username, String gender, String userPermissions,
 			String userRoles, boolean isActive) {
 		super();
-		Email = email;
+		this.email = email;
 		this.password = password;
 		this.username = username;
 		Gender = gender;
@@ -49,9 +46,8 @@ public class User {
 	
 	
 	public void flatUserDetailes() {
-		System.out.println("user ID : "+this.UserID+" username :"+this.username+" user email : "+this.Email);
+		System.out.println("user ID : "+this.UserID+" username :"+this.username+" user email : "+this.email+" gender : "+this.Gender);
 	}
-	
 	
 	public int getUserID() {
 		return UserID;
@@ -61,20 +57,12 @@ public class User {
 		UserID = userID;
 	}
 
-	public String getUserName() {
-		return username;
-	}
-
-	public void setUserName(String userName) {
-		username = userName;
-	}
-
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -85,23 +73,38 @@ public class User {
 		this.password = password;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getGender() {
 		return Gender;
 	}
 
 	public void setGender(String gender) {
 		Gender = gender;
-	}	
-	
-		
+	}
+
 	public String getUserPermissions() {
 		return UserPermissions;
+	}
+
+	public void setUserPermissions(String userPermissions) {
+		UserPermissions = userPermissions;
 	}
 
 	public String getUserRoles() {
 		return UserRoles;
 	}
-	
+
+	public void setUserRoles(String userRoles) {
+		UserRoles = userRoles;
+	}
+
 	public boolean isActive() {
 		return isActive;
 	}
@@ -110,9 +113,6 @@ public class User {
 		this.isActive = isActive;
 	}
 
-	
-	
-	
 	public boolean hasRole(String role) {
 		if(this.UserRoles.equalsIgnoreCase("")) {
 			return false ; 

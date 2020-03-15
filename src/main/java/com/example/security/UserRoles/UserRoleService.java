@@ -38,7 +38,7 @@ public class UserRoleService {
 		List<UserRole> userRolesList = this.userRoleRepository.findAll() ; 
 		List<Roles> userRoles = new ArrayList<Roles>();
 		for(UserRole  userRole  : userRolesList) {
-			if(userRole.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
+			if(userRole.getUser().getUsername().equalsIgnoreCase(user.getUsername())) {
 				userRoles.add(userRole.getRole());
 			}
 		}
@@ -61,7 +61,7 @@ public class UserRoleService {
 	public void revokeRoleFromUser(User user , Roles role ) {
 		List<UserRole> userRoleList = this.userRoleRepository.findAll() ; 
 		for(UserRole userRoleModel : userRoleList) {
-			if(userRoleModel.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
+			if(userRoleModel.getUser().getUsername().equalsIgnoreCase(user.getUsername())) {
 				if(userRoleModel.getRole().getRoleName().equalsIgnoreCase(role.getRoleName())) {
 					this.userService.revokeRoleFromUser(userRoleModel.getUser(),role);
 					this.userRoleRepository.delete(userRoleModel);
@@ -97,7 +97,7 @@ public class UserRoleService {
 	public boolean userRoleExist(User user , Roles role) {
 		List<UserRole> userRoleList = this.userRoleRepository.findAll() ; 
 		for(UserRole userRoleModel : userRoleList) {
-			if(userRoleModel.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
+			if(userRoleModel.getUser().getUsername().equalsIgnoreCase(user.getUsername())) {
 				if(userRoleModel.getRole().getRoleName().equalsIgnoreCase(role.getRoleName())) {
 					return true; //the repository contains this entry 
 				}

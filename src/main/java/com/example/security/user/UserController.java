@@ -68,8 +68,8 @@ public class UserController {
 	
 	///add new user ///
 	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/adduser")
-	public ModelAndView addUserRequest(User user) {
-		ModelAndView mav = new ModelAndView("adminstration/adduser");
+	public ModelAndView addUserRequest() {
+		ModelAndView mav = new ModelAndView("User/AddUser");
 		mav.addObject("user",new User());
 		return mav; 
 	}
@@ -77,6 +77,9 @@ public class UserController {
 	//add user .//
 	@RequestMapping(method = RequestMethod.POST , value="/adminstration/users/adduser")
 	public void addNewUser(@ModelAttribute User user,HttpServletResponse response) throws IOException {
+		System.out.println("posted to / admistration/users/addUser ");
+		System.out.println("with info : ");
+		user.flatUserDetailes();
 		this.userService.addUser(user);
 		response.sendRedirect("/adminstration/users/all");
 	}
