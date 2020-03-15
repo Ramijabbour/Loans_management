@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.example.security.permissions.Permissions;
+
 @Entity
 public class User {
 	@Id
@@ -186,4 +188,5 @@ public class User {
 			}
 		}
 	}
+	
 }

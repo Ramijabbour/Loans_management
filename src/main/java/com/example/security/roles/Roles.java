@@ -18,8 +18,6 @@ public class Roles {
 	private String AssignedPermissions="";
 	//
 	
-	
-	
 	public Roles(String roleName, String assignedPermissions) {
 		super();
 		RoleName = roleName;
@@ -29,6 +27,15 @@ public class Roles {
 	public Roles() {}
 
 	//setters and getters 
+	public String getAssignedPermissions() {
+		return this.AssignedPermissions ; 
+	}
+	public List<String> getAssignedPermissionsList(){
+		String[] permissions = this.AssignedPermissions.split(",");
+		List<String> assignedPermissionsList = Arrays.asList(permissions);
+		return assignedPermissionsList; 
+	}
+	
 	public int getRoleID() {
 		return RoleID;
 	}

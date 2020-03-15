@@ -24,9 +24,9 @@ public class UserRoleService {
 	
 	
 	public List<User> getUsersWithRole(Roles role ) {
-		List<UserRoleModel> userRoleList = this.userRoleRepository.findAll() ; 
+		List<UserRole> userRoleList = this.userRoleRepository.findAll() ; 
 		List<User> usersWithRole = new ArrayList<User>();
-		for(UserRoleModel  userRole  : userRoleList) {
+		for(UserRole  userRole  : userRoleList) {
 			if(userRole.getRole().getRoleName().equalsIgnoreCase(role.getRoleName())) {
 				usersWithRole.add(userRole.getUser());
 			}
@@ -35,9 +35,9 @@ public class UserRoleService {
 	}
 	
 	public List<Roles> getRolesOfUsers(User user  ){
-		List<UserRoleModel> userRolesList = this.userRoleRepository.findAll() ; 
+		List<UserRole> userRolesList = this.userRoleRepository.findAll() ; 
 		List<Roles> userRoles = new ArrayList<Roles>();
-		for(UserRoleModel  userRole  : userRolesList) {
+		for(UserRole  userRole  : userRolesList) {
 			if(userRole.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
 				userRoles.add(userRole.getRole());
 			}
@@ -52,15 +52,15 @@ public class UserRoleService {
 		for(Roles tempRole : role) {
 			if(!this.userRoleExist(user, tempRole)) {
 				this.userService.addRolesToUser(user, Arrays.asList(tempRole));
-				this.userRoleRepository.save(new UserRoleModel(user,tempRole));
+				this.userRoleRepository.save(new UserRole(user,tempRole));
 			}	
 		}
 	}
 	
 	@Transactional
 	public void revokeRoleFromUser(User user , Roles role ) {
-		List<UserRoleModel> userRoleList = this.userRoleRepository.findAll() ; 
-		for(UserRoleModel userRoleModel : userRoleList) {
+		List<UserRole> userRoleList = this.userRoleRepository.findAll() ; 
+		for(UserRole userRoleModel : userRoleList) {
 			if(userRoleModel.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
 				if(userRoleModel.getRole().getRoleName().equalsIgnoreCase(role.getRoleName())) {
 					this.userService.revokeRoleFromUser(userRoleModel.getUser(),role);
@@ -71,8 +71,8 @@ public class UserRoleService {
 	}
 	
 	public void deleteRole(Roles role ) {
-		List<UserRoleModel> userRoleList = this.userRoleRepository.findAll() ; 
-		for(UserRoleModel userRoleModel : userRoleList) {
+		List<UserRole> userRoleList = this.userRoleRepository.findAll() ; 
+		for(UserRole userRoleModel : userRoleList) {
 			if(userRoleModel.getRole().getRoleName().equalsIgnoreCase(role.getRoleName())) {
 				userService.revokeRoleFromUser(userRoleModel.getUser(), userRoleModel.getRole());
 				this.userRoleRepository.delete(userRoleModel);
@@ -83,9 +83,20 @@ public class UserRoleService {
 	}
 	
 	
+	public void deleteUser(User user ) {
+		List<UserRole> userRolesList = this.userRoleRepository.findAll() ; 
+		for(UserRole userRole : userRolesList) {
+			if(userRole.getUser().getUserID() == user.getUserID() ) {
+				this.userRoleRepository.delete(userRole);
+			}else {
+				continue ;
+			}
+		}
+	}
+	
 	public boolean userRoleExist(User user , Roles role) {
-		List<UserRoleModel> userRoleList = this.userRoleRepository.findAll() ; 
-		for(UserRoleModel userRoleModel : userRoleList) {
+		List<UserRole> userRoleList = this.userRoleRepository.findAll() ; 
+		for(UserRole userRoleModel : userRoleList) {
 			if(userRoleModel.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
 				if(userRoleModel.getRole().getRoleName().equalsIgnoreCase(role.getRoleName())) {
 					return true; //the repository contains this entry 

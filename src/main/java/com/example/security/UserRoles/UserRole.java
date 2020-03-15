@@ -10,7 +10,7 @@ import com.example.security.roles.Roles;
 import com.example.security.user.User;
 
 @Entity
-public class UserRoleModel {
+public class UserRole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int UserRoleID ;
@@ -20,10 +20,10 @@ public class UserRoleModel {
 	@ManyToOne
     private Roles role = null;
 	
-	public UserRoleModel() {}
+	public UserRole() {}
 	
 	
-	public UserRoleModel(User user , Roles role ) {
+	public UserRole(User user , Roles role ) {
 		this.user = user ; 
 		this.role = role ; 
 	}

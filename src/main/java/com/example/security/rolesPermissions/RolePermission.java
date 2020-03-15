@@ -22,6 +22,14 @@ public class RolePermission {
 	@ManyToOne
 	private Permissions permission =null;
 
+	
+	public RolePermission() {}
+	
+	public RolePermission(Permissions permission , Roles role ) {
+		this.permission = permission ; 
+		this.role = role ; 
+	}
+	
 	public int getRolePermissionID() {
 		return RolePermissionID;
 	}

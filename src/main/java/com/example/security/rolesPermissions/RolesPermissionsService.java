@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.aspect.Exceptions;
 import com.example.security.permissions.Permissions;
 import com.example.security.roles.Roles;
 import com.example.security.roles.RolesService;
@@ -20,11 +19,15 @@ public class RolesPermissionsService {
 	@Autowired 
 	private RolesService rolesService ; 
 	
-	public void addRolePermission(RolePermission rolePermission) {
-		if(this.rolePermissionRepository.findAll().contains(rolePermission)) {
-			throw new Exceptions(-405,"this role already contains this permission");
+	 
+	public void addRolePermission(Permissions permission,Roles role ) {
+		List<RolePermission> rolePermissionsList = this.getPermissionsOfRole(role);
+		for(RolePermission tempRolePermission : rolePermissionsList ) {
+			if(tempRolePermission.getPermission().getPermissionID() == permission.getPermissionID()) {
+			 return ; 
+			}
 		}
-		this.rolePermissionRepository.save(rolePermission);
+		this.rolePermissionRepository.save(new RolePermission(permission,role));
 	}
 	
 	public List<RolePermission> getPermissionsOfRole(Roles role ){
@@ -36,6 +39,15 @@ public class RolesPermissionsService {
 			}
 		}
 		return rolePermissionsList ; 
+	}
+	
+	public List<Permissions> getRolePermissionsList(Roles role ){
+		List<RolePermission> rolePermissions = this.getPermissionsOfRole(role);
+		List<Permissions> permissionsList = new ArrayList<Permissions>(); 
+		for(RolePermission rolePermission : rolePermissions) {
+			permissionsList.add(rolePermission.getPermission());
+		}
+		return permissionsList ; 
 	}
 	
 	//
@@ -58,11 +70,11 @@ public class RolesPermissionsService {
 		}
 	}
 	
-	public void updateRolePermission(RolePermission rolePermission) {
-		if(!this.rolePermissionRepository.findAll().contains(rolePermission)) {
-			throw new Exceptions(-404,"cannot find requested role-permission ");
+
+	public void addPermissionsToRole(Roles role , List<Permissions> permission ) {
+		for(Permissions tempPermission : permission) {
+			this.addRolePermission(tempPermission, role);
 		}
 	}
-
-
+	
 }

@@ -63,6 +63,7 @@ public class RolesService {
 			}
 		}
 	}
+
 	
 	@Transactional
 	public void deleteRole(Roles role ) {
@@ -84,4 +85,12 @@ public class RolesService {
 		}
 		return false  ; 
 	}
+	
+	public void grantPermissionsToRole(List<Permissions> permissionsList, Roles role ) {
+		if(permissionsList.isEmpty()) {
+			return  ;
+		}
+		this.rolesPermissionsService.addPermissionsToRole(role, permissionsList) ; 
+	}
+	
 }

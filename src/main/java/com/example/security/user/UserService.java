@@ -11,15 +11,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.aspect.Exceptions;
+import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
 import com.example.security.roles.Roles;
+import com.example.security.userPermissions.UserPermissionsService;
 
 @Service
 public class UserService{
 
 	@Autowired 
 	UserRepository userRepository ; 	
+	
+	@Autowired
+	UserRoleService userRoleService ; 
+	
+	@Autowired
+	UserPermissionsService userPermissionsService ;
 	
 	//Service permissions Injection 
 	public UserService() {
@@ -81,7 +89,8 @@ public class UserService{
 	
 	//delete user//
 	public void deleteUser(User user ) {
-		//should be modefied 
+		this.userPermissionsService.deleteUser(user);
+		this.userRoleService.deleteUser(user);
 		this.userRepository.deleteById(user.getUserID());
 	}
 	

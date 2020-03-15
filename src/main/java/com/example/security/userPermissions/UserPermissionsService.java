@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.security.permissions.Permissions;
-import com.example.security.roles.RolesService;
 import com.example.security.user.User;
 import com.example.security.user.UserService;
 
@@ -72,6 +71,17 @@ public class UserPermissionsService {
 		}
 	}
 	
+	public void deleteUser(User user ) {
+		List<UserPermission> userPermissionsList = this.userPermissionsRepository.findAll(); 
+		for(UserPermission userPermission : userPermissionsList) {
+			if(userPermission.getUser().getUserID() == user.getUserID()) {
+				this.userPermissionsRepository.delete(userPermission);
+			}else {
+				continue ; 
+			}
+		}
+	}
+	
 	@Transactional 
 	public void  revokePermissionFromUser(User user , Permissions permission ) {
 		List<UserPermission> userPermissionList = this.userPermissionsRepository.findAll(); 
@@ -86,8 +96,6 @@ public class UserPermissionsService {
 		
 		
 	}
-	
-	
 	
 	public boolean userPermissionsExsit(Permissions permission , User user ) {
 		List<UserPermission> userPermissions = this.userPermissionsRepository.findAll() ; 
