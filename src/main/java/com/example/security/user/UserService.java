@@ -75,6 +75,8 @@ public class UserService{
 		if(checkUserinforDuplication(user)) {
 			throw new Exceptions(-405,"user data duplication error");
 		}else {
+			user.setUserRoles("none");
+			user.setUserPermissions("none");
 			this.userRepository.save(user); 
 		}
 	}
@@ -121,6 +123,9 @@ public class UserService{
 		if(permissions.isEmpty()) {
 			return ; 
 		}
+		if(user.getUserPermissions().equalsIgnoreCase("none")) {
+			user.setUserPermissions("");
+		}
 		for(Permissions permission : permissions ) {
 			if(!user.hasPermission(permission.getPermissionName())) {
 				user.addPermission(permission.getPermissionName());
@@ -133,6 +138,9 @@ public class UserService{
 	public void addRolesToUser(User user , List<Roles> roles) {
 		if(roles.isEmpty()) {
 			return ; 
+		}
+		if(user.getUserRoles().equalsIgnoreCase("none")) {
+			user.setUserRoles("");
 		}
 		for(Roles role : roles ) {
 			if(!user.hasRole(role.getRoleName())) {
