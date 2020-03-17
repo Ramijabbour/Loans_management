@@ -40,9 +40,11 @@ public class RolesController {
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/viewrole")
-	public ModelAndView viewRoleIndex(@ModelAttribute Roles role ) {
-		ModelAndView mav = new ModelAndView("roles/viewrole");
+	@RequestMapping(method = RequestMethod.GET , value = "/security/roles/viewrole/{roleId}")
+	public ModelAndView viewRoleIndex(@PathVariable int roleId) {
+		ModelAndView mav = new ModelAndView("Roles/manageRole");
+		Roles role = this.rolesService.getRoleByID(roleId); 
+		mav.addObject("role",role);
 		mav.addObject("permissionslist",this.rolesPermissionsService.getPermissionsOfRole(role));
 		mav.addObject("userslist",this.userRolesService.getUsersWithRole(role));
 		return mav ; 

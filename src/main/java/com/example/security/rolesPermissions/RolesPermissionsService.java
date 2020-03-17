@@ -50,6 +50,18 @@ public class RolesPermissionsService {
 		return permissionsList ; 
 	}
 	
+	
+	public List<Roles> getRolesWithPermission(Permissions permission){
+		List<Roles> rolesWithPermissionList = new ArrayList<Roles>() ; 
+		List<RolePermission> rolePermissionList = this.rolePermissionRepository.findAll() ; 
+		for(RolePermission rolePermission : rolePermissionList) {
+			if(rolePermission.getPermission().getPermissionID() == permission.getPermissionID()) {
+				rolesWithPermissionList.add(rolePermission.getRole());
+			}
+		}	
+		return rolesWithPermissionList ; 
+	}
+	
 	//
 	public void deletePermission(Permissions permission) {
 		List<RolePermission> rolePermissionList = this.rolePermissionRepository.findAll() ;
