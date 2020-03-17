@@ -5,10 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,13 +29,7 @@ public class BankController {
 	@Autowired
 	private BankService bankservice;
 	
-	
-	@RequestMapping("Banks")
-	public List<Banks> GetAllBanks ()
-	{
-		return bankservice.GetAllBanks();
-	}
-	
+		
 	@RequestMapping("/Banks/{id}")
 	public Banks GetBank(@PathVariable int id)
 	{
@@ -43,24 +41,9 @@ public class BankController {
 		else 
 			throw new RuntimeException("Bank"+ id + "is not Exist " );
 	}
-	
-	@RequestMapping(method = RequestMethod.POST , value="/addBank")
-	public void addBank(@RequestBody Banks bank)
-	{
-		bankservice.addBank(bank);
-	}
-	
-	@RequestMapping(method = RequestMethod.PUT , value="/Banks")
-	public void updateBank(@RequestBody Banks bank)
-	{
-		bankservice.updateBank(bank);
 		
-	}
 	
-
-	
-	
-	///add new Bank(view only) ///
+	//add new Bank -------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/addBank")
 	public ModelAndView addBankRequest() {
 		ModelAndView mav = new ModelAndView("Banks/AddBank");
@@ -68,15 +51,18 @@ public class BankController {
 		return mav; 
 	}
 	 
-	//add Bank // 
+	
 	@RequestMapping(method = RequestMethod.POST , value="/Banks/addBank")
 	public void addNewBank(@ModelAttribute Banks bank,HttpServletResponse response) throws IOException {
 		System.out.println("posted to /Banks/addBank ");
 		bankservice.addBank(bank);
-		response.sendRedirect("/Banks/AllBanks");
+		response.sendRedirect("/Banks/all");
 	}
+	// -----------------------------------------------------------------------   
 	   
-	   
+	
+	
+	//get All Banks ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/all")
 	public ModelAndView ShowAllBank() {
 		ModelAndView mav = new ModelAndView("Banks/AllBanks");
@@ -84,9 +70,31 @@ public class BankController {
 		mav.addObject("allbank",allbank);
 		return mav; 
 	}
+	// -------------------------------------------------------------------
 	    
-	  
-	@RequestMapping(method = RequestMethod.DELETE, value="/Banks/{id}")
+	// update bank--------------------------------------------------------
+	@RequestMapping(method = RequestMethod.GET , value="/Banks/edit/{id}")
+	public ModelAndView ShowUpdateBank(@PathVariable int id) {
+		ModelAndView mav = new ModelAndView("Banks/updateBank");
+		Banks bank=bankservice.getBankById(id);
+		mav.addObject("bank",bank);
+		return mav; 
+	} 
+	
+	
+	@RequestMapping(method = RequestMethod.POST , value="/Banks/update/{id}")
+	public void UpdateBank(@Valid Banks bank,HttpServletResponse response) throws IOException {
+		System.out.println("posted to /Banks/update/id ");
+		bankservice.updateBank(bank);
+		response.sendRedirect("/Banks/all");
+	}
+	
+
+	
+	//----------------------------------------------------------------
+	
+	//delete Bank ----------------------------------------------------------  
+	@RequestMapping(method = RequestMethod.GET, value="/Banks/delete/{id}")
 	public void deleteBank(@PathVariable int id,HttpServletResponse response) throws IOException
 	{
 		bankservice.deleteBank(id);

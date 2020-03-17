@@ -26,6 +26,7 @@ public class Allocations {
 	@ManyToOne
 	private Banks banks =null ;
 
+	public Allocations() {}
 	
 	public Allocations(String allocationDate , String ammount , Banks bank) {
 		this.AllocationDate = allocationDate ; 

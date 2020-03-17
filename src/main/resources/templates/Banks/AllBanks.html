@@ -54,12 +54,8 @@
                   <td th:text="${bank.BranchName}"></td>
                   <td th:text="${bank.BankName}"></td>
                   <td th:text="${bank.BankCode}"></td>
-                  <td><a href="">update </a></td>
-                  <td> 
-                  	<form method="delete" action="/Banks/283">
-    					<button type="submit">Delete</button>
-					</form>
-                  	
+                  <td><a th:href="@{/Banks/edit/{id}(id=${bank.BankID})}">Update</a></td>
+                  <td><a th:href="@{/Banks/delete/{id}(id=${bank.BankID})}">Delete</a></td>
                   </td>
                 </tr>
    

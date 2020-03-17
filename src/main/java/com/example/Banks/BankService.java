@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.security.user.User;
+
 
 @Service
 public class BankService {
@@ -36,9 +38,31 @@ public class BankService {
 		bankRepository.deleteById(id);
 	}
 
+	public Banks getBankById(int id)
+	{
+		List<Banks> allBanks = this.bankRepository.findAll() ; 
+		if(allBanks.isEmpty()) {
+			System.out.println("empty BanksList ");
+			return null ;  
+		}
+		for(Banks bank : allBanks) {
+			if(bank.getBankID() == id ){
+				return bank  ; 
+			}
+		}
+		System.out.println("requested bank not found ");
+		return null ; 
+	 
+	}
 
 	public void updateBank(Banks bank) {
-		bankRepository.save(bank);
+		try {
+			if(bankRepository.findById(bank.getBankID()) != null) {
+					bankRepository.save(bank); 
+				}
+		}catch(Exception e ) {
+			System.out.println("NullPointerException Handled at bank Service / Update Bank -- call for null Bank ");
+		}
 	}
 
 
