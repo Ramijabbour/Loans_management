@@ -12,10 +12,10 @@ public class Permissions {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int PermissionID ;
 
-    private String PermissionName="";
+    private String PermissionName=" ";
 
 	
-	private String PermissionType="";
+	private String PermissionType=" ";
 
 	public Permissions(String permissionName ) {
 		this.PermissionName = permissionName ; 

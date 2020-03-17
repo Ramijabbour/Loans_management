@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.aspect.Exceptions;
+import com.example.security.roles.Roles;
 import com.example.security.rolesPermissions.RolesPermissionsService;
+import com.example.security.user.User;
 import com.example.security.userPermissions.UserPermissionsService;
 
 @Service
@@ -92,5 +94,22 @@ public class PermissionsService {
 	}
 	
 	
+	public Permissions getPermissionById(int permissionID) {
+		List<Permissions> permissionsList = this.permissionsRepository.findAll(); 
+		for(Permissions permission : permissionsList ) {
+			if(permission.getPermissionID() == permissionID) {
+				return permission ; 
+			}
+		}
+		return null ;
+	}
+	
+	public List<Roles> getRolesWithPermission(Permissions permission){
+		return this.rolesPermissionsService.getRolesWithPermission(permission);
+	}
+	
+	public List<User> getUsersWithPermission(Permissions permission){
+		return this.userPermissionsService.getUsersWithPermission(permission);
+	}
 	
 }
