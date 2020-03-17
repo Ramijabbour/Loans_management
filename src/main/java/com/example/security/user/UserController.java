@@ -3,13 +3,12 @@ package com.example.security.user;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,27 +43,27 @@ public class UserController {
 	///index page /// 
 	@RequestMapping(method = RequestMethod.GET , value = "/adminstration/index")
 	public ModelAndView index() {
-		ModelAndView mav = new ModelAndView("adminstration/index");
+		ModelAndView mav = new ModelAndView("User/index");
 		return mav ; 
 	}
 	
 	///all users ///
-		@RequestMapping(method = RequestMethod.GET , value = "/adminstration/users/all")
-		public ModelAndView getAllUsers() {
-			ModelAndView mav = new ModelAndView("User/AllUsers");
-			mav.addObject("userslist",this.userService.getAllUsers());
-			return mav ; 
-		}
+	@RequestMapping(method = RequestMethod.GET , value = "/adminstration/users/all")
+	public ModelAndView getAllUsers() {
+		ModelAndView mav = new ModelAndView("User/AllUsers");
+		mav.addObject("userslist",this.userService.getAllUsers());
+		return mav ; 
+	}
 	
 	//get user info //
 	@RequestMapping(method = RequestMethod.GET , value ="/adminstration/users/user")
 	public ModelAndView getUser(@ModelAttribute User user ) {
-		ModelAndView mav = new ModelAndView("adminstration/users/user");
+		ModelAndView mav = new ModelAndView("Users/userview");
 		mav.addObject("user",this.userService.getUserByID(user.getUserID()));
 		mav.addObject("userroleslist",this.userRoleService.getRolesOfUsers(user));
 		mav.addObject("userpermissionslist",this.userPermissionsService.getPermissionsOfUser(user));	
 		return mav ;
-		}
+	}
 	
 	///add new user ///
 	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/adduser")
@@ -86,15 +85,26 @@ public class UserController {
 	
 	
 	///update user ///
-	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/update")
-	public ModelAndView updateUserRequest(@ModelAttribute User modelUser ) {
-		ModelAndView mav = new ModelAndView("adminstration/users/update");
-		Optional<User> user = this.userService.getUserByID(modelUser.getUserID());
+	/*
+	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/update/{userid}")
+	public ModelAndView updateUserRequest(@PathVariable int userid) throws IOException {
+		ModelAndView mav = new ModelAndView("User/update");
+		User user = this.userService.getUserByID(userid);
 		mav.addObject("user",user);
 		return mav ; 
+	}*/
+	
+	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/update/{id}")
+	public ModelAndView updateUserRequest(@PathVariable int id ) throws IOException {
+		ModelAndView mav = new ModelAndView("User/update");
+		//User user = this.userService.getUserByID(userid);
+		mav.addObject("user",new User());
+		return mav ; 
+	
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT , value="/adminstration/users/update")
+	
+	@RequestMapping(method = RequestMethod.POST , value="/adminstration/users/update/{userid}")
 	public void updateUser(@ModelAttribute User user,HttpServletResponse response ) throws IOException {
 		this.userService.updateUser(user);
 		response.sendRedirect("/adminstration/users/all");
@@ -102,11 +112,10 @@ public class UserController {
 	
 	
 	///delete User ///
-	///refactor user deletion // 
 	@Transactional
-	@RequestMapping(method = RequestMethod.DELETE , value="/adminstration/users/delete")
-	public void deleteUser(@ModelAttribute User user ,HttpServletResponse response) throws IOException {
-		this.userService.deleteUser(user);
+	@RequestMapping(method = RequestMethod.POST , value="/adminstration/users/delete/{userid}")
+	public void deleteUser(@PathVariable int userid,HttpServletResponse response) throws IOException {
+		this.userService.deleteUser(this.userService.getUserByID(userid));
 		response.sendRedirect("/adminstration/users/all");
 	}
 	
@@ -186,8 +195,7 @@ public class UserController {
 		return this.returnUserView(user);
 	}
 	
-	//@RequestMapping(method = RequestMethod.GET , value = "/admistration/users/user/permissions/revoke" )
-	
+
 	public ModelAndView returnUserView(User user ) {
 		ModelAndView mav = new ModelAndView("adminstration/users/user");
 		mav.addObject("user",this.userService.getUserByID(user.getUserID()));

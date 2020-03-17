@@ -14,8 +14,8 @@ public class Roles {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int RoleID ;
-    private String RoleName="";
-	private String AssignedPermissions="";
+    private String RoleName=" ";
+	private String AssignedPermissions=" ";
 	//
 	
 	public Roles(String roleName, String assignedPermissions) {

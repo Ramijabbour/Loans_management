@@ -44,6 +44,20 @@ public class RolesService {
 		return this.rolesRepository.findAll() ; 
 	}
 	
+	public Roles getRoleByID(int roleid) {
+		List<Roles> rolesList = this.rolesRepository.findAll() ; 
+		if(rolesList.isEmpty()) {
+			return null ; 
+		}else {
+			for(Roles role : rolesList ) {
+				if(role.getRoleID() == roleid ) {
+					return role ; 
+				}
+			}
+		}
+		return null ; 
+	}
+	
 	public boolean addRole(Roles role ) {
 		if(this.checkRoleDuplication(role)) {
 			return false ; 
