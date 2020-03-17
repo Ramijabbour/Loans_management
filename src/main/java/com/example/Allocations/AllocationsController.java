@@ -30,10 +30,10 @@ public class AllocationsController {
 			ModelAndView mav = new ModelAndView("Banks/AddAllocations");
 			  List<Banks> allbank=bankservice.GetAllBanks();
 			  mav.addObject("allocation",new Allocations());
-			 // mav.addObject("allbank", attributeValue)
+			  mav.addObject("allbanks",allbank);
 			return mav; 
 		}
-		 
+		  
 		
 		@RequestMapping(method = RequestMethod.POST , value="/Allocation/addAllocation")
 		public void addNewBank(@ModelAttribute Banks bank,HttpServletResponse response) throws IOException {
