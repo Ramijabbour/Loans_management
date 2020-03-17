@@ -3,8 +3,6 @@ package com.example.security.user;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +50,19 @@ public class UserService{
 	}
 	
 	//find user by id // 
-	public Optional<User> getUserByID(int id ) {	
-		if( this.userRepository.findById(id)== null ) {
-			throw new Exceptions(-404,"cannot find the requested user ");
-		}else 
-			return this.userRepository.findById(id);	
+	public User getUserByID(int id ) {	
+		List<User> allUsers = this.userRepository.findAll() ; 
+		if(allUsers.isEmpty()) {
+			System.out.println("empty UsersList ");
+			return null ;  
+		}
+		for(User user : allUsers) {
+			if(user.getUserID() == id ){
+				return user  ; 
+			}
+		}
+		System.out.println("requested user not found ");
+		return null ; 
 	}
 	
 	//find User by userName 
@@ -75,16 +81,23 @@ public class UserService{
 		if(checkUserinforDuplication(user)) {
 			throw new Exceptions(-405,"user data duplication error");
 		}else {
+			user.setUserRoles("none");
+			user.setUserPermissions("none");
+			user.setActive(false);
 			this.userRepository.save(user); 
 		}
 	}
 	
 	//update current user // 
 	public void updateUser(User user) {
-		if(checkUserinforDuplication(user)) {
-			throw new Exceptions(-405,"user data duplication error");
-		}else {
-			this.userRepository.save(user); 
+		System.out.println("trace Update User with object : ");
+		user.flatUserDetailes();
+		try {
+			if(this.userRepository.findById(user.getUserID()) != null) {
+					this.userRepository.save(user); 
+				}
+		}catch(Exception e ) {
+			System.out.println("NullPointerException Handled at User Service / Update User -- call for null User ");
 		}
 	}
 	
@@ -121,6 +134,9 @@ public class UserService{
 		if(permissions.isEmpty()) {
 			return ; 
 		}
+		if(user.getUserPermissions().equalsIgnoreCase("none")) {
+			user.setUserPermissions("");
+		}
 		for(Permissions permission : permissions ) {
 			if(!user.hasPermission(permission.getPermissionName())) {
 				user.addPermission(permission.getPermissionName());
@@ -133,6 +149,9 @@ public class UserService{
 	public void addRolesToUser(User user , List<Roles> roles) {
 		if(roles.isEmpty()) {
 			return ; 
+		}
+		if(user.getUserRoles().equalsIgnoreCase("none")) {
+			user.setUserRoles("");
 		}
 		for(Roles role : roles ) {
 			if(!user.hasRole(role.getRoleName())) {

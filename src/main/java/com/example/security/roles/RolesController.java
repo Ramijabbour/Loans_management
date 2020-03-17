@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,15 +32,15 @@ public class RolesController {
 	private PermissionsService permissionsService ; 
 	
 	
-	@RequestMapping(method = RequestMethod.GET , value = "/roles/all")
+	@RequestMapping(method = RequestMethod.GET , value = "/security/roles/all")
 	public ModelAndView getAllRoles() {
-		ModelAndView mav = new ModelAndView("roles/all");
+		ModelAndView mav = new ModelAndView("Roles/allRoles");
 		mav.addObject("roleslist",this.rolesService.getAllRoles());
 		return mav;
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.POST , value = "/roles/viewrole")
+	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/viewrole")
 	public ModelAndView viewRoleIndex(@ModelAttribute Roles role ) {
 		ModelAndView mav = new ModelAndView("roles/viewrole");
 		mav.addObject("permissionslist",this.rolesPermissionsService.getPermissionsOfRole(role));
@@ -48,27 +49,28 @@ public class RolesController {
 	}
 
 	
-	@RequestMapping(method = RequestMethod.GET ,value = "/roles/addrole")
+	@RequestMapping(method = RequestMethod.GET ,value = "/security/roles/addrole")
 	public ModelAndView addRoleRequest() {
-		ModelAndView mav = new ModelAndView("roles/addrole");
+		ModelAndView mav = new ModelAndView("Roles/addRole");
 		mav.addObject("roleobject",new Roles());
 		return mav ; 
 	}
 	
-	@RequestMapping(method = RequestMethod.POST , value = "/role/addrole")
+	@RequestMapping(method = RequestMethod.POST , value = "/security/role/addrole")
 	public void addRoleResponse(@ModelAttribute Roles role ,HttpServletResponse response) throws IOException {
-		if(this.rolesService.addRole(role)) {
-			response.sendError(200, "role added");
-		}else {
-			response.sendError(400, "role already exist");
-		}
-		response.sendRedirect("/roles/all");
+		this.rolesService.addRole(role); 
+		response.sendRedirect("/security/roles/all");
 	} 
 	
-	@RequestMapping(method = RequestMethod.POST , value = "/roles/delete")
-	public void deleteRole(@ModelAttribute Roles role , HttpServletResponse response ) throws IOException {
+	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/delete/{roleid}")
+	public void deleteRole(@PathVariable int roleid, HttpServletResponse response ) throws IOException {
+		Roles role = this.rolesService.getRoleByID(roleid);
+		if(role == null ) {
+			response.sendRedirect("/security/roles/all");
+		}else {
 		this.rolesService.deleteRole(role);
-		response.sendRedirect("/roles/all");
+		response.sendRedirect("/security/roles/all");
+		}
 	}
 
 	 
@@ -76,14 +78,14 @@ public class RolesController {
 	 *returns current role permissions List
 	 * */
 	
-	@RequestMapping(method = RequestMethod.GET , value = "/roles/role/permissions/revoke")
+	@RequestMapping(method = RequestMethod.GET , value = "/security/roles/role/permissions/revoke")
 	public ModelAndView revokePermissionsRequest(@ModelAttribute Roles role ) {
 		ModelAndView mav = new ModelAndView("roles/revokepermissions");
 		mav.addObject("permissionslist",this.rolesPermissionsService.getRolePermissionsList(role));
 		return mav ; 
 	}
 	
-	@RequestMapping(method = RequestMethod.POST , value = "/roles/role/permissions/revoke")
+	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/role/permissions/revoke")
 	public ModelAndView revokePermissionFromRole(@ModelAttribute Roles role , @ModelAttribute List<Permissions> permissionsList ){
 		for(Permissions permission : permissionsList) {
 			this.rolesService.revokePermissionFromRoles(permission, role);
@@ -105,7 +107,7 @@ public class RolesController {
 	 * returns role view with current permissions and bearing users 
 	 * 
 	 */
-	@RequestMapping(method = RequestMethod.GET , value = "/roles/role/permissions/grant")
+	@RequestMapping(method = RequestMethod.GET , value = "/security/roles/role/permissions/grant")
 	public ModelAndView grantpermissionToRole(@ModelAttribute Roles role ) {
 		ModelAndView mav = new ModelAndView("roles/grantpermissions");
 		List<Permissions> allPermissions = this.permissionsService.getAllPermissions();
@@ -120,7 +122,7 @@ public class RolesController {
 		return mav ; 
 	}
 	
-	@RequestMapping(method = RequestMethod.POST , value = "/roles/role/permissions/grant")
+	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/role/permissions/grant")
 	public ModelAndView grantPermission(@ModelAttribute List<Permissions> permissionsList , Roles role ) {
 		this.rolesService.grantPermissionsToRole(permissionsList, role);
 		ModelAndView mav = new ModelAndView("roles/viewrole");

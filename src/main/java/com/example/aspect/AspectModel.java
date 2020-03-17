@@ -34,7 +34,7 @@ public class AspectModel {
 	@Before("execution(* com.example.security.user.UserService..*(..)))")
 	public void test(JoinPoint  proceedingJoinPoint)  {
 			System.out.println("intercepting user Service methods ");
-			//perintFunctionCallInfo(proceedingJoinPoint);
+			printFunctionCallInfo(proceedingJoinPoint);
 	        //User user = get_current_User();    
 			//user.flatUserDetailes();   
 			//checkUserPermission(proceedingJoinPoint,user);
@@ -65,7 +65,7 @@ public class AspectModel {
 		return permissions ; 
 	}
 
-	public void perintFunctionCallInfo(JoinPoint  proceedingJoinPoint) {
+	public void printFunctionCallInfo(JoinPoint  proceedingJoinPoint) {
 		MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         String className = methodSignature.getDeclaringType().getSimpleName();
         String methodName = methodSignature.getName();

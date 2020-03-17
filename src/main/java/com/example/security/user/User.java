@@ -24,10 +24,10 @@ public class User {
 	
 	private String username ;
 	private String Gender="" ;
-	private String UserPermissions = "" ; 
-	private String UserRoles =""; 
+	private String UserPermissions = " " ; 
+	private String UserRoles =" "; 
 	
-	private boolean isActive = false ; 
+	private boolean Active = false ; 
 
 	
 	public User() {}
@@ -41,12 +41,13 @@ public class User {
 		Gender = gender;
 		UserPermissions = userPermissions;
 		UserRoles = userRoles;
-		this.isActive = isActive;
+		this.Active = isActive;
 	}
 	
 	
 	public void flatUserDetailes() {
-		System.out.println("user ID : "+this.UserID+" username :"+this.username+" user email : "+this.email+" gender : "+this.Gender);
+		System.out.println("user ID : "+this.UserID+" username :"+this.username+" user email : "+this.email+" gender : "
+	+this.Gender+" role "+this.UserRoles +" permissions : "+this.UserPermissions);
 	}
 	
 	public int getUserID() {
@@ -106,11 +107,11 @@ public class User {
 	}
 
 	public boolean isActive() {
-		return isActive;
+		return Active;
 	}
 
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	public void setActive(boolean active) {
+		Active = active;
 	}
 
 	public boolean hasRole(String role) {
