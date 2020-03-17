@@ -27,8 +27,8 @@ public class BankService {
 	
 	public void addBank(Banks bank)
 	{
-		Banks b=new Banks(bank.getBankName(),bank.getBranchName(),bank.getBankCode(),bank.getFinancialAllocations());
-		bankRepository.save(b);
+		bank.setFinancialAllocations("0");
+		bankRepository.save(bank);
 	}
 
 

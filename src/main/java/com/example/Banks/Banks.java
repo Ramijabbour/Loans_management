@@ -22,8 +22,9 @@ public class Banks extends Valid_Visitable {
 	public String BankCode="";
 
 	public String FinancialAllocations  ;
-  
+
 	
+	public Banks() {}
 	
 	public Banks(String bankName,String branchName, String bankCode, String financialAllocations) {
 		super();
@@ -32,8 +33,8 @@ public class Banks extends Valid_Visitable {
 		this.BankCode = bankCode;
 		this.FinancialAllocations = financialAllocations;
 	}
-		public Banks() {}
-
+	
+	
 	public Banks(String branchName, String bankCode, String financialAllocations) {
 		
 		BranchName = branchName;
