@@ -97,14 +97,14 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/update/{id}")
 	public ModelAndView updateUserRequest(@PathVariable int id ) throws IOException {
 		ModelAndView mav = new ModelAndView("User/update");
-		//User user = this.userService.getUserByID(userid);
-		mav.addObject("user",new User());
+		User user = this.userService.getUserByID(id);
+		mav.addObject("user",user);
 		return mav ; 
 	
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.POST , value="/adminstration/users/update/{userid}")
+	@RequestMapping(method = RequestMethod.POST , value="/adminstration/users/update")
 	public void updateUser(@ModelAttribute User user,HttpServletResponse response ) throws IOException {
 		this.userService.updateUser(user);
 		response.sendRedirect("/adminstration/users/all");
@@ -120,16 +120,27 @@ public class UserController {
 	}
 	
 	
-	//Access Control Methods 
+	//Access Control Methods
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/admistration/users/user/viewuser/{userid}")
+	public ModelAndView viewUser(@PathVariable int userid ) {
+		ModelAndView mav = new ModelAndView("User/viewUser");
+		mav.addObject("userRoles",this.userRoleService.getRolesOfUsers(this.userService.getUserByID(userid)));
+		mav.addObject("userPermissions",this.userPermissionsService.getPermissionsOfUser(this.userService.getUserByID(userid)));
+		mav.addObject("user",this.userService.getUserByID(userid));
+		return mav ;  
+	}
+	
+	
 	/*
 	 * get the current user permissions 
 	 * get all permissions 
 	 * get the permissions that the user does not have 
 	 */
-	@RequestMapping(method=RequestMethod.GET , value = "/admistration/users/user/permissions/grant")
-	public ModelAndView grantPermissionsToUserRequest(@ModelAttribute User user ) {
-		ModelAndView mav = new ModelAndView("users/user/grantpermissions");
-		mav.addObject("user",user);
+	@RequestMapping(method=RequestMethod.GET , value = "/admistration/users/user/permissions/grant/{userid}")
+	public ModelAndView grantPermissionsToUserRequest(@PathVariable int userid) {
+		User user = this.userService.getUserByID(userid);
+		ModelAndView mav = new ModelAndView("Permissions/grantpermissions");
 		List<Permissions>userPermissionsList = this.userPermissionsService.getPermissionsOfUser(user);
 		List<Permissions> allPermissionsList =  this.permissionsService.getAllPermissions() ; 
 		List<Permissions> uniquePermissionsList = new ArrayList<Permissions>() ; 
@@ -137,26 +148,27 @@ public class UserController {
 			if(!userPermissionsList.contains(permission))
 				uniquePermissionsList.add(permission);
 		}
+		mav.addObject("user",user);
+		System.out.println("permissions list size : "+uniquePermissionsList.size());
 		mav.addObject("permissionslist",uniquePermissionsList);
+		
 		return mav ; 
 	}
 	
-	@RequestMapping(method = RequestMethod.POST , value = "/admistration/users/user/permissions/grant")
-	public ModelAndView grantPermissionsToUser(@ModelAttribute List<Permissions> userPermissions ,@ModelAttribute User user ) {
-		this.userPermissionsService.grantPermissionsToUser(userPermissions, user);
-		this.userService.addPermissionsToUser(user, userPermissions);
-		ModelAndView mav = new ModelAndView("adminstration/users/user");
-		mav.addObject("user",this.userService.getUserByID(user.getUserID()));
-		mav.addObject("userroleslist",this.userRoleService.getRolesOfUsers(user));
-		mav.addObject("userpermissionslist",this.userPermissionsService.getPermissionsOfUser(user));	
-		return mav ;
+	@RequestMapping(method = RequestMethod.POST , value = "/admistration/users/user/permissions/grant/{userid}/{permissionsid}")
+	public void grantPermissionsToUser(@PathVariable int userid,@PathVariable int permissionsid, HttpServletResponse response ) throws IOException {
+		User user = this.userService.getUserByID(userid);
+		Permissions permission = this.permissionsService.getPermissionById(permissionsid);
+		this.userPermissionsService.grantPermissionsToUser(permission, user);
+		String redirectPath = "/admistration/users/user/permissions/grant/"+user.getUserID();
+		response.sendRedirect(redirectPath);
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.GET , value = "/admistration/users/user/roles/grant")
-	public ModelAndView grantRoleToUserRequest(@ModelAttribute User user ) {
-		ModelAndView mav = new ModelAndView("users/user/grantroles");
-		mav.addObject("user",user);
+	@RequestMapping(method = RequestMethod.GET , value = "/admistration/users/user/roles/grant/{userid}")
+	public ModelAndView grantRoleToUserRequest(@PathVariable int userid) {
+		User user = this.userService.getUserByID(userid);
+		ModelAndView mav = new ModelAndView("Roles/grantroles");
 		List<Roles> allRoles = this.rolesService.getAllRoles() ; 
 		List<Roles> currentUserRoles = this.userRoleService.getRolesOfUsers(user); 
 		List<Roles> uniqueRoles = new ArrayList<Roles>() ; 
@@ -165,34 +177,29 @@ public class UserController {
 				uniqueRoles.add(role); 
 			}
 		}
+		mav.addObject("user",user);
 		mav.addObject("roles",uniqueRoles);
 		return mav ; 
 	} 
 	
-	@RequestMapping(method = RequestMethod.POST , value = "/adminstration/users/user/roles/grant")
-	public ModelAndView grantRolesToUser(@ModelAttribute List<Roles> rolesList ,@ModelAttribute User user ) {
-		this.userRoleService.grantRoleToUser(rolesList, user);
-		ModelAndView mav = new ModelAndView("adminstration/users/user");
-		mav.addObject("user",this.userService.getUserByID(user.getUserID()));
-		mav.addObject("userroleslist",this.userRoleService.getRolesOfUsers(user));
-		mav.addObject("userpermissionslist",this.userPermissionsService.getPermissionsOfUser(user));	
-		return mav ;
+	@RequestMapping(method = RequestMethod.POST , value = "/adminstration/users/user/roles/grant/{userid}/{roleid}")
+	public void grantRolesToUser(@PathVariable int roleid ,@PathVariable int userid,HttpServletResponse response  ) throws IOException {
+		Roles role = this.rolesService.getRoleByID(roleid);
+		User user = this.userService.getUserByID(userid);
+		this.userRoleService.grantRoleToUser(role, user);
+		String redirectPath = "/admistration/users/user/roles/grant/"+user.getUserID();
+		response.sendRedirect(redirectPath);
 	}
 	
 
 	
-	@RequestMapping(method = RequestMethod.GET , value = "/admistration/users/user/roles/revoke" )
-	public ModelAndView revokeRoleFromUser(@ModelAttribute User user ) {
-		ModelAndView mav = new ModelAndView("admistration/users/revokeroles");
-		List<Roles> userRolesList = this.userRoleService.getRolesOfUsers(user); 
-		mav.addObject("userroleslist",userRolesList);
-		return mav; 
-	}
-	
-	@RequestMapping(method = RequestMethod.POST , value = "/admistration/users/user/roles/revoke")
-	public ModelAndView revokeRolesFromUser(@ModelAttribute User user , @ModelAttribute List<Roles>roles) {
-		//revoke roles 
-		return this.returnUserView(user);
+	@RequestMapping(method = RequestMethod.POST , value = "/admistration/users/user/roles/revoke/{userid}/{roleid}" )
+	public void revokeRoleFromUser(@PathVariable int userid , @PathVariable int roleid , HttpServletResponse response)throws IOException {
+		User user = this.userService.getUserByID(userid);
+		Roles role = this.rolesService.getRoleByID(roleid);
+		this.userRoleService.revokeRoleFromUser(user, role);
+		String redirectPath = "/admistration/users/user/viewuser/"+user.getUserID(); 
+		response.sendRedirect(redirectPath);
 	}
 	
 

@@ -1,7 +1,6 @@
 package com.example.security.UserRoles;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -48,13 +47,11 @@ public class UserRoleService {
 	
 	//role grant process starts from here 
 	@Transactional
-	public void grantRoleToUser(List<Roles> role , User user ) {
-		for(Roles tempRole : role) {
-			if(!this.userRoleExist(user, tempRole)) {
-				this.userService.addRolesToUser(user, Arrays.asList(tempRole));
-				this.userRoleRepository.save(new UserRole(user,tempRole));
-			}	
-		}
+	public void grantRoleToUser(Roles role , User user ) {
+			if(!this.userRoleExist(user, role)) {
+				this.userService.addRolesToUser(user, role);
+				this.userRoleRepository.save(new UserRole(user,role));
+			}			
 	}
 	
 	@Transactional

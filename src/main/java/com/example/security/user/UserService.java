@@ -130,35 +130,31 @@ public class UserService{
 	
 	
 	@Transactional
-	public void addPermissionsToUser(User user , List<Permissions> permissions ) {
-		if(permissions.isEmpty()) {
+	public void addPermissionsToUser(User user , Permissions permission ) {
+		if(permission == null ) {
 			return ; 
 		}
 		if(user.getUserPermissions().equalsIgnoreCase("none")) {
 			user.setUserPermissions("");
 		}
-		for(Permissions permission : permissions ) {
-			if(!user.hasPermission(permission.getPermissionName())) {
-				user.addPermission(permission.getPermissionName());
-			}else {continue ;}
+		if(!user.hasPermission(permission.getPermissionName())) {
+				user.addPermission(permission.getPermissionName());	
+				this.userRepository.save(user);
 		}
-		this.userRepository.save(user);
 	}
 	
 	@Transactional 
-	public void addRolesToUser(User user , List<Roles> roles) {
-		if(roles.isEmpty()) {
+	public void addRolesToUser(User user , Roles role) {
+		if(role == null) {
 			return ; 
 		}
 		if(user.getUserRoles().equalsIgnoreCase("none")) {
 			user.setUserRoles("");
 		}
-		for(Roles role : roles ) {
 			if(!user.hasRole(role.getRoleName())) {
 				user.addRole(role.getRoleName());
-			}else {continue ;}
-		}
-		this.userRepository.save(user);
+				this.userRepository.save(user);
+			}
 	}
 	
 	@Transactional

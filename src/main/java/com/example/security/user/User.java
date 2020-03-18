@@ -171,10 +171,16 @@ public class User {
 	public void revokeRoleFromUser(String role ) {
 		List<String> userRoles = this.convertRolesToList() ; 
 		if(userRoles.contains(role)) {
-			userRoles.remove(role);
+			System.out.println("user trace point 2 ");
+			System.out.println("role index : "+UserRoles.indexOf(role));
+			//userRoles.remove(index)
+			userRoles.remove(userRoles.indexOf(role));
+			System.out.println("user trace point 3 ");
 			this.UserRoles = "";
 			for(String tempRole : userRoles) {
+				System.out.println("user trace point 4 ");
 				this.addRole(tempRole);
+				System.out.println("user trace point 5 ");
 			}
 		}
 	}

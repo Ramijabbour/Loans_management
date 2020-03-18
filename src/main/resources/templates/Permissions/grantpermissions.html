@@ -13,12 +13,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add User</h1>
+            <h1>Grant Pemissions</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Add User</li>
+              <li class="breadcrumb-item"><a href="#">Security</a></li>
+              <li class="breadcrumb-item active">Grant Permissions</li>
             </ol>
           </div>
         </div>
@@ -34,45 +34,33 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-              <h4>Enter User Info</h4>
+              <h4>All Roles</h4>
               </div>
-                <form  action="#" th:action="@{/adminstration/users/update}" th:object="${user}" method="post">
-                <div class="card-body">
-					
-					<div class="form-group">
-                   <label for="exampleInputPassword1">User ID</label>
-                   <input type="text" name="username" class="form-control" th:field="*{UserID}" readonly>
-                  </div>
-					
-                  <div class="form-group">
-                   <label for="exampleInputPassword1">User Name</label>
-                   <input type="text" name="username" class="form-control" placeholder="Enter User Name" th:field="*{username}">
-                  </div>
-                  
-					<div class="form-group">
-                   <label for="exampleInputPassword1">email</label>
-                   <input type="text" name="email" class="form-control" placeholder="Enter User Email" th:field="*{email}">
-                  </div>
-					
-
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password :</label>
-                    <input type="password" name="branchName" class="form-control"  placeholder="Enter password" th:field="*{password}">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Gender</label><br>
-                    <select th:field="*{Gender}">
-                      <option th:value="'M'" th:text="Male"></option>
-  					  <option th:value="'F'" th:text="Female"></option>
-                    </select>  
-                  </div>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th> PermissionID </th>
+                        <th> PermissionName </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${permissionslist.empty}">
+                        <td colspan="2"> No permissions to grant </td>
+                    </tr>
+                    <tr th:each="permission : ${permissionslist}">
+                        <td><span th:text="${permission.PermissionID}"> PermissionID </span></td>
+                        <td><span th:text="${permission.PermissionName}"> PermissionName </span></td>
+                        
+                        <td>
+                          <form action="#" th:action="@{/admistration/users/user/permissions/grant/}+ ${{user.UserID}} +@{/}+ ${{permission.PermissionID}}" method="post">
+                              <button th:id="'table_entry_childs_button_' +  ${{user.UserID}} + ${permission.PermissionID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                                  <i>Grant Permission to user</i>
+                              </button>
+                          </form>
+                      </td>
+                    </tr>
+                </tbody>
+            </table>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -92,7 +80,13 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
- 
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.0.3-pre
+    </div>
+    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+    reserved.
+  </footer>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

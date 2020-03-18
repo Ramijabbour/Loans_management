@@ -13,12 +13,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>All Users</h1>
+            <h1>User Info</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">All Users</li>
+              <li class="breadcrumb-item"><a href="#">Adminstration</a></li>
+              <li class="breadcrumb-item active">User Info</li>
             </ol>
           </div>
         </div>
@@ -34,58 +34,92 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-              <h4>All Users</h4>
+              <h4>user Info</h4>
               </div>
+              <div class = "container">
+              	
+              	<div class="form-group">
+                   <label for="exampleInputPassword1">User ID</label>
+                   <input type="text" name="UserID" class="form-control"  th:field="*{user.UserID}" readonly>
+                  </div>
+              	
+              	<div class="form-group">
+                   <label for="exampleInputPassword1">User Name</label>
+                   <input type="text" name="username" class="form-control" th:field="*{user.username}" readonly>
+                  </div>
+                  
+					<div class="form-group">
+                   <label for="exampleInputPassword1">email</label>
+                   <input type="text" name="email" class="form-control"  th:field="*{user.email}" readonly>
+                  </div>
+
+					<div class="form-group">
+                   <label for="exampleInputPassword1">Gender</label>
+                   <input type="text" name="email" class="form-control"  th:field="*{user.Gender}" readonly>
+                  </div>
+
+              </div>
+              
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th> ID </th>
-                        <th> UserName </th>
-                        <th> Gender </th>
-                        <th> Email </th>
-                        <th> Roles </th>
-                        <th> Permissions </th>
-                        <th> Active </th>
+                        <th> RoleID </th>
+                        <th> RoleName </th>
                     </tr>
                 </thead>
                 <tbody>
-                <tr th:if="${userslist.empty}">
-                        <td colspan="2"> No Users Available </td>
+                <tr th:if="${userRoles.empty}">
+                        <td colspan="2"> User has no roles  </td>
                     </tr>
-                    <tr th:each="user : ${userslist}">
-                        <td><span th:text="${user.UserID}"> ID </span></td>
-                        <td><span th:text="${user.username}"> UserName </span></td>
-                        <td><span th:text="${user.Gender}"> Gender </span></td>
-                        <td><span th:text="${user.email}"> Email </span></td>
-                        <td><span th:text="${user.UserRoles}"> Roles </span></td>
-                        <td><span th:text="${user.UserPermissions}"> Permissions </span></td>
-                        <td><span th:text="${user.Active}"> Active </span></td>
-                        
-                        <td>
-                          <form action="#" th:action="@{/admistration/users/user/viewuser/} + ${{user.UserID}}" method="get">
-                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                                  <i>view</i>
+                    <tr th:each="userrole : ${userRoles}">
+                       <td><span th:text="${userrole.RoleID}"> RoleID </span></td>
+                        <td><span th:text="${userrole.RoleName}"> RoleName </span></td>
+                    	<td>
+                          <form action="#" th:action="@{/admistration/users/user/roles/revoke/}+ ${{user.UserID}} + @{/} + ${{userrole.RoleID}}" method="post">
+                              <button th:id="'table_entry_childs_button_'+ ${{user.UserID}} + ${userrole.RoleID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                                  <i>revoke</i>
                               </button>
                           </form>
                       </td>
-                        
-                        <td>
-                          <form action="#" th:action="@{/adminstration/users/update/} + ${{user.UserID}}" method="get">
-                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                                  <i>Edit</i>
-                              </button>
-                          </form>
-                      </td>
-                      <td>
-                          <form action="#" th:action="@{/adminstration/users/delete/} + ${{user.UserID}}" method="post">
-                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                                  <i>Delete</i>
-                              </button>
-                          </form>
-                      </td>
+                    
                     </tr>
                 </tbody>
             </table>
+             <form action="#" th:action="@{/admistration/users/user/roles/grant/} + ${{user.UserID}}" method="get">
+                    <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                    	<i>Add Roles</i>
+                     </button>
+              </form>
+              <p></p>
+              
+              
+              
+              
+               <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th> PermissionID </th>
+                        <th> PermissionName </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${userPermissions.empty}">
+                        <td colspan="2"> User has no permissions  </td>
+                    </tr>
+                    <tr th:each="userpermission : ${userPermissions}">
+                       <td><span th:text="${userpermission.PermissionID}"> PermissionID </span></td>
+                        <td><span th:text="${userpermission.PermissionName}"> PermissionName </span></td>
+                    </tr>
+                </tbody>
+            </table>
+             <form action="#" th:action="@{/admistration/users/user/permissions/grant/} + ${{user.UserID}}" method="get">
+                    <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                    	<i>Add Permission</i>
+                     </button>
+              </form>
+              <p></p>
+                  
+              
               </div>
               <!-- /.card-header -->
               <!-- form start -->

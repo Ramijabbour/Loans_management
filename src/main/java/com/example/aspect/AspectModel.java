@@ -33,8 +33,8 @@ public class AspectModel {
 	
 	@Before("execution(* com.example.security.user.UserService..*(..)))")
 	public void test(JoinPoint  proceedingJoinPoint)  {
-			System.out.println("intercepting user Service methods ");
-			printFunctionCallInfo(proceedingJoinPoint);
+			//System.out.println("intercepting user Service methods ");
+			//printFunctionCallInfo(proceedingJoinPoint);
 	        //User user = get_current_User();    
 			//user.flatUserDetailes();   
 			//checkUserPermission(proceedingJoinPoint,user);
