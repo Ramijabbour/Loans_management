@@ -55,16 +55,6 @@ public class UserController {
 		return mav ; 
 	}
 	
-	//get user info //
-	@RequestMapping(method = RequestMethod.GET , value ="/adminstration/users/user")
-	public ModelAndView getUser(@ModelAttribute User user ) {
-		ModelAndView mav = new ModelAndView("Users/userview");
-		mav.addObject("user",this.userService.getUserByID(user.getUserID()));
-		mav.addObject("userroleslist",this.userRoleService.getRolesOfUsers(user));
-		mav.addObject("userpermissionslist",this.userPermissionsService.getPermissionsOfUser(user));	
-		return mav ;
-	}
-	
 	///add new user ///
 	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/adduser")
 	public ModelAndView addUserRequest() {
@@ -202,7 +192,44 @@ public class UserController {
 		response.sendRedirect(redirectPath);
 	}
 	
+	
+	@RequestMapping(method = RequestMethod.POST , value = "/admistration/users/user/permissions/revoke/{userid}/{permissionid}" )
+	public void revokePermissionFromUser(@PathVariable int userid , @PathVariable int permissionid , HttpServletResponse response)throws IOException {
+		User user = this.userService.getUserByID(userid);
+		Permissions permission = this.permissionsService.getPermissionById(permissionid);
+		this.userPermissionsService.revokePermissionFromUser(user, permission);
+		String redirectPath = "/admistration/users/user/viewuser/"+user.getUserID(); 
+		response.sendRedirect(redirectPath);
+	}
+	
 
+	@RequestMapping(method = RequestMethod.GET , value = "/adminstration/users/active")
+	public ModelAndView getActiveUsers() {
+		ModelAndView mav = new ModelAndView("User/activeUsers");
+		mav.addObject("userslist",this.userService.getActiveUsers());
+		return mav ; 
+	}
+	
+	@RequestMapping(method = RequestMethod.POST , value = "/adminstration/users/user/deactivate/{userid}")
+	public void deActivateUser(@PathVariable int userid , HttpServletResponse response) throws IOException {
+		this.userService.deActivateUser(userid);
+		response.sendRedirect("/adminstration/users/active");
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/adminstration/users/nonactive")
+	public ModelAndView getNonActiveUsers() {
+		ModelAndView mav = new ModelAndView("User/nonActiveUsers");
+		mav.addObject("userslist",this.userService.getNonActiveUsers());
+		return mav ; 
+	}
+	
+	@RequestMapping(method = RequestMethod.POST , value = "/adminstration/users/user/activate/{userid}")
+	public void activateUser(@PathVariable int userid , HttpServletResponse response) throws IOException {
+		this.userService.activateUser(userid);
+		response.sendRedirect("/adminstration/users/nonactive");
+	}
+	
+	
 	public ModelAndView returnUserView(User user ) {
 		ModelAndView mav = new ModelAndView("adminstration/users/user");
 		mav.addObject("user",this.userService.getUserByID(user.getUserID()));

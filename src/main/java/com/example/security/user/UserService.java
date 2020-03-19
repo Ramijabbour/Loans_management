@@ -177,4 +177,39 @@ public class UserService{
 		}
 	}
 
+	
+	public List<User> getNonActiveUsers() {
+		List<User> allUsers = this.userRepository.findAll() ; 
+		List<User> nonActiveUsers = new ArrayList<User>(); 
+		for(User user : allUsers) {
+			if(!user.isActive()) {
+				nonActiveUsers.add(user);
+			}
+		}
+		return nonActiveUsers; 
+	}
+	
+	public List<User> getActiveUsers(){
+		List<User> allUsers = this.userRepository.findAll() ; 
+		List<User> ActiveUsers = new ArrayList<User>(); 
+		for(User user : allUsers) {
+			if(user.isActive()) {
+				ActiveUsers.add(user);
+			}
+		}
+		return ActiveUsers;
+	}
+	
+	public void activateUser(int userid) {
+		User user = this.getUserByID(userid);
+		user.setActive(true);
+		this.userRepository.save(user);
+	}
+	
+	public void deActivateUser(int userid) {
+		User user = this.getUserByID(userid);
+		user.setActive(false);
+		this.userRepository.save(user);		
+	}
+	
 }
