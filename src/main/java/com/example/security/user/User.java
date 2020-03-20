@@ -114,17 +114,17 @@ public class User {
 	}
 
 	public boolean hasRole(String role) {
-		if(this.UserRoles.equalsIgnoreCase("")) {
+		if(this.UserRoles.equalsIgnoreCase(" ")) {
 			return false ; 
 		}
 		else if (!this.convertRolesToList().contains(role)) {
-			return false  ; 
+			return false ;
 		}
 		return true ; 
 	}
 	
 	public boolean hasPermission(String permission) {
-		if(this.UserPermissions.equalsIgnoreCase("")) {
+		if(this.UserPermissions.equalsIgnoreCase(" ")) {
 			return false ; 
 		}
 		else if (!this.convertPermissionsToList().contains(permission)) {
@@ -134,10 +134,17 @@ public class User {
 	}
 
 	public void addRole(String role ) {
+		if(this.UserRoles.equalsIgnoreCase(" ")) {
+			this.UserRoles=role;
+		}else
 		this.UserRoles+=","+role;
 	}
 	
 	public void addPermission(String permission ) {
+		System.out.println("grant invoked -------");
+		if(this.UserPermissions.equalsIgnoreCase(" ")) {
+			this.UserPermissions=permission;
+		}else
 		this.UserPermissions+=","+permission;
 	}
 
@@ -176,7 +183,7 @@ public class User {
 		if(userRoles.size() != 0 ) {
 		if(userRoles.contains(role)) {
 			userRoles.remove(userRoles.indexOf(role));
-			this.UserRoles = "";
+			this.UserRoles = " ";
 			for(String tempRole : userRoles) {
 				this.addRole(tempRole);
 				}
@@ -189,7 +196,7 @@ public class User {
 		if(userPermissions.size() != 0 ) {
 			if(userPermissions.contains(permission)) {
 				userPermissions.remove(permission);
-				this.UserPermissions = "";
+				this.UserPermissions = " ";
 				for(String tempPermission : userPermissions) {
 					this.addPermission(tempPermission);
 				}

@@ -33,9 +33,9 @@ public class AspectModel {
 	
 	@Before("execution(* com.example.security.user.UserService..*(..)))")
 	public void test(JoinPoint  proceedingJoinPoint)  {
-			//System.out.println("intercepting user Service methods ");
-			//printFunctionCallInfo(proceedingJoinPoint);
-	        //User user = get_current_User();    
+			System.out.println("intercepting user Service methods ");
+			printFunctionCallInfo(proceedingJoinPoint);
+			//User user = get_current_User();    
 			//user.flatUserDetailes();   
 			//checkUserPermission(proceedingJoinPoint,user);
 		}
@@ -73,6 +73,9 @@ public class AspectModel {
 	}
 	
 	public void checkUserPermission(JoinPoint  proceedingJoinPoint , User user ) {
+		if(user.convertRolesToList().contains("SUPER")) {
+			return ; 
+		}
 		MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         String methodName = methodSignature.getName();
         if(!getUserPermissions(user).contains(methodName)) {

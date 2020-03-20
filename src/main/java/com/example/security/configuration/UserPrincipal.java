@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.example.security.user.User;
 
 
@@ -16,8 +15,10 @@ public class UserPrincipal implements UserDetails  {
 
 	private static final long serialVersionUID = 1L;
 	private User user  ; 
+
 	
-	public UserPrincipal(User user ) {
+	
+	public UserPrincipal(User user ) { 
 		this.user = user ; 
 	}
 	
@@ -45,7 +46,6 @@ public class UserPrincipal implements UserDetails  {
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.user.getPassword();
 	}
 
