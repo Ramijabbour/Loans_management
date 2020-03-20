@@ -100,11 +100,11 @@ public class RolesService {
 		return false  ; 
 	}
 	
-	public void grantPermissionsToRole(List<Permissions> permissionsList, Roles role ) {
-		if(permissionsList.isEmpty()) {
+	public void grantPermissionsToRole(Permissions permission, Roles role ) {
+		if(permission == null ) {
 			return  ;
 		}
-		this.rolesPermissionsService.addPermissionsToRole(role, permissionsList) ; 
+		this.rolesPermissionsService.addPermissionsToRole(role,permission) ; 
 	}
 	
 }

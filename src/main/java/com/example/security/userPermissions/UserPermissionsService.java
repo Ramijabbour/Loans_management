@@ -49,15 +49,12 @@ public class UserPermissionsService {
 		return permissionsOfUser; 
 	}
 	
-	public void grantPermissionsToUser(List<Permissions> permissions , User user ) {
-		for(Permissions permission : permissions ) {
+	public void grantPermissionsToUser(Permissions permission , User user ) {
 			if(!this.userPermissionsExsit(permission, user)) {
-				this.userService.addPermissionsToUser(user, Arrays.asList(permission)); 
-			}else {
-				continue ; 
-			}
-		}
-		
+				this.userService.addPermissionsToUser(user, permission);
+				UserPermission userPermission = new UserPermission(user,permission);
+				this.userPermissionsRepository.save(userPermission);
+			}	
 	}
 	
 	public void deletePermission(Permissions permission) {

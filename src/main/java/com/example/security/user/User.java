@@ -1,7 +1,6 @@
 package com.example.security.user;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -149,7 +148,9 @@ public class User {
 		else {
 			List<String> userPermissions = new ArrayList<String>() ;
 			String[] permissions = this.UserPermissions.split(",");
-			userPermissions = Arrays.asList(permissions);
+			for(int i = 0 ; i<permissions.length ; i++) {
+				userPermissions.add(permissions[i]);
+			}
 			return userPermissions ; 
 			
 		}
@@ -162,7 +163,9 @@ public class User {
 		else {
 			List<String> userRoles = new ArrayList<String>() ;
 			String[] roles = this.UserRoles.split(",");
-			userRoles = Arrays.asList(roles);
+			for(int i =0 ; i < roles.length ; i++) {
+				userRoles.add(roles[i]); 
+			}
 			return userRoles ; 
 			
 		}
@@ -170,22 +173,26 @@ public class User {
 	
 	public void revokeRoleFromUser(String role ) {
 		List<String> userRoles = this.convertRolesToList() ; 
+		if(userRoles.size() != 0 ) {
 		if(userRoles.contains(role)) {
-			userRoles.remove(role);
+			userRoles.remove(userRoles.indexOf(role));
 			this.UserRoles = "";
 			for(String tempRole : userRoles) {
 				this.addRole(tempRole);
+				}
 			}
 		}
 	}
 	
 	public void revokePermissionFromUser(String permission) {
-		List<String> userPermissions = this.convertPermissionsToList(); 
-		if(userPermissions.contains(permission)) {
-			userPermissions.remove(permission);
-			this.UserPermissions = "";
-			for(String tempPermission : userPermissions) {
-				this.addPermission(tempPermission);
+		List<String> userPermissions = this.convertPermissionsToList();
+		if(userPermissions.size() != 0 ) {
+			if(userPermissions.contains(permission)) {
+				userPermissions.remove(permission);
+				this.UserPermissions = "";
+				for(String tempPermission : userPermissions) {
+					this.addPermission(tempPermission);
+				}
 			}
 		}
 	}

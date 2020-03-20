@@ -130,35 +130,31 @@ public class UserService{
 	
 	
 	@Transactional
-	public void addPermissionsToUser(User user , List<Permissions> permissions ) {
-		if(permissions.isEmpty()) {
+	public void addPermissionsToUser(User user , Permissions permission ) {
+		if(permission == null ) {
 			return ; 
 		}
 		if(user.getUserPermissions().equalsIgnoreCase("none")) {
 			user.setUserPermissions("");
 		}
-		for(Permissions permission : permissions ) {
-			if(!user.hasPermission(permission.getPermissionName())) {
-				user.addPermission(permission.getPermissionName());
-			}else {continue ;}
+		if(!user.hasPermission(permission.getPermissionName())) {
+				user.addPermission(permission.getPermissionName());	
+				this.userRepository.save(user);
 		}
-		this.userRepository.save(user);
 	}
 	
 	@Transactional 
-	public void addRolesToUser(User user , List<Roles> roles) {
-		if(roles.isEmpty()) {
+	public void addRolesToUser(User user , Roles role) {
+		if(role == null) {
 			return ; 
 		}
 		if(user.getUserRoles().equalsIgnoreCase("none")) {
 			user.setUserRoles("");
 		}
-		for(Roles role : roles ) {
 			if(!user.hasRole(role.getRoleName())) {
 				user.addRole(role.getRoleName());
-			}else {continue ;}
-		}
-		this.userRepository.save(user);
+				this.userRepository.save(user);
+			}
 	}
 	
 	@Transactional
@@ -181,4 +177,39 @@ public class UserService{
 		}
 	}
 
+	
+	public List<User> getNonActiveUsers() {
+		List<User> allUsers = this.userRepository.findAll() ; 
+		List<User> nonActiveUsers = new ArrayList<User>(); 
+		for(User user : allUsers) {
+			if(!user.isActive()) {
+				nonActiveUsers.add(user);
+			}
+		}
+		return nonActiveUsers; 
+	}
+	
+	public List<User> getActiveUsers(){
+		List<User> allUsers = this.userRepository.findAll() ; 
+		List<User> ActiveUsers = new ArrayList<User>(); 
+		for(User user : allUsers) {
+			if(user.isActive()) {
+				ActiveUsers.add(user);
+			}
+		}
+		return ActiveUsers;
+	}
+	
+	public void activateUser(int userid) {
+		User user = this.getUserByID(userid);
+		user.setActive(true);
+		this.userRepository.save(user);
+	}
+	
+	public void deActivateUser(int userid) {
+		User user = this.getUserByID(userid);
+		user.setActive(false);
+		this.userRepository.save(user);		
+	}
+	
 }

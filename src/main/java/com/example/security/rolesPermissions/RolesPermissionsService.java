@@ -21,34 +21,26 @@ public class RolesPermissionsService {
 	
 	 
 	public void addRolePermission(Permissions permission,Roles role ) {
-		List<RolePermission> rolePermissionsList = this.getPermissionsOfRole(role);
-		for(RolePermission tempRolePermission : rolePermissionsList ) {
-			if(tempRolePermission.getPermission().getPermissionID() == permission.getPermissionID()) {
+		List<Permissions> rolePermissionsList = this.getPermissionsOfRole(role);
+		for(Permissions tempPermission : rolePermissionsList ) {
+			if(tempPermission.getPermissionID() == permission.getPermissionID()) {
 			 return ; 
 			}
 		}
 		this.rolePermissionRepository.save(new RolePermission(permission,role));
 	}
 	
-	public List<RolePermission> getPermissionsOfRole(Roles role ){
-		List<RolePermission> rolePermissionsList = new ArrayList<RolePermission>(); 
+	public List<Permissions> getPermissionsOfRole(Roles role ){
+		List<Permissions> rolePermissionsList = new ArrayList<Permissions>(); 
 		List<RolePermission> rolePermissionsFromRepo = this.rolePermissionRepository.findAll() ; 
 		for(RolePermission rolePermission : rolePermissionsFromRepo) {
 			if(rolePermission.getRole().getRoleName().equalsIgnoreCase(role.getRoleName())){
-				rolePermissionsList.add(rolePermission);
+				rolePermissionsList.add(rolePermission.getPermission());
 			}
 		}
 		return rolePermissionsList ; 
 	}
 	
-	public List<Permissions> getRolePermissionsList(Roles role ){
-		List<RolePermission> rolePermissions = this.getPermissionsOfRole(role);
-		List<Permissions> permissionsList = new ArrayList<Permissions>(); 
-		for(RolePermission rolePermission : rolePermissions) {
-			permissionsList.add(rolePermission.getPermission());
-		}
-		return permissionsList ; 
-	}
 	
 	
 	public List<Roles> getRolesWithPermission(Permissions permission){
@@ -83,9 +75,18 @@ public class RolesPermissionsService {
 	}
 	
 
-	public void addPermissionsToRole(Roles role , List<Permissions> permission ) {
-		for(Permissions tempPermission : permission) {
-			this.addRolePermission(tempPermission, role);
+	public void addPermissionsToRole(Roles role , Permissions permission ) {
+			this.addRolePermission(permission, role);
+	}
+	
+	public void revokePermissionFromRole (Roles role , Permissions permission) {
+		List<RolePermission> rolePermissionsList = this.rolePermissionRepository.findAll() ; 
+		for(RolePermission rolePermission : rolePermissionsList ) {
+			if(rolePermission.getRole().getRoleID() == role.getRoleID() && rolePermission.getPermission().getPermissionID() == permission.getPermissionID()) {
+				this.rolesService.revokePermissionFromRoles(permission, role);
+				this.rolePermissionRepository.delete(rolePermission);
+				return ; 
+			}
 		}
 	}
 	

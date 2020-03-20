@@ -13,12 +13,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Manage Role</h1>
+            <h1>nonActive Users</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Security</a></li>
-              <li class="breadcrumb-item active">Manage Role</li>
+              <li class="breadcrumb-item"><a href="#">Adminstration</a></li>
+              <li class="breadcrumb-item active">nonActive Users</li>
             </ol>
           </div>
         </div>
@@ -34,78 +34,49 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-              <h4>Role Info</h4>
+              <h4>nonActive Users</h4>
               </div>
-  			<div class = "container">
-              <div class="form-group">
-                   <label for="exampleInputPassword1">Role ID</label>
-                   <input type="text" name="RoleName" class="form-control" placeholder="Role Name" th:field="*{role.RoleID}" readonly>
-                  </div>
-               <div class="form-group">
-                   <label for="exampleInputPassword1">Role Name</label>
-                   <input type="text" name="RoleName" class="form-control" placeholder="Role Name" th:field="*{role.RoleName}" readonly>
-                  </div>
-       				<div class="card-header">
-              		<h4>Users With This Role</h4>
-              		</div>		          
-                  <table id="example2" class="table table-bordered table-hover">
+              <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th> ID </th>
                         <th> UserName </th>
+                        <th> Gender </th>
+                        <th> Email </th>
+                        <th> Roles </th>
+                        <th> Permissions </th>
                         <th> Active </th>
                     </tr>
                 </thead>
                 <tbody>
                 <tr th:if="${userslist.empty}">
-                        <td colspan="2"> No Users have this Role</td>
+                        <td colspan="2"> No nonActive Users </td>
                     </tr>
                     <tr th:each="user : ${userslist}">
                         <td><span th:text="${user.UserID}"> ID </span></td>
                         <td><span th:text="${user.username}"> UserName </span></td>
+                        <td><span th:text="${user.Gender}"> Gender </span></td>
+                        <td><span th:text="${user.email}"> Email </span></td>
+                        <td><span th:text="${user.UserRoles}"> Roles </span></td>
+                        <td><span th:text="${user.UserPermissions}"> Permissions </span></td>
                         <td><span th:text="${user.Active}"> Active </span></td>
-                    </tr>
-                </tbody>
-            </table>
-            	 	<p></p>
-            	 	<hr>               
-                 
-                 <div class="card-header">
-              		<h4>Permissions of This Role</h4>
-              		</div>		          
-                  <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th> PermissionID </th>
-                        <th> PermissionName </th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${permissionslist.empty}">
-                        <td colspan="2"> No permissions in this Role</td>
-                    </tr>
-                    <tr th:each="permission : ${permissionslist}">
-                        <td><span th:text="${permission.PermissionID}"> PermissionID </span></td>
-                        <td><span th:text="${permission.PermissionName}"> PermissionName </span></td>
-                    	<td>
-                          <form action="#" th:action="@{/security/roles/role/permissions/revoke/}+ ${{role.RoleID}} + @{/} + ${{permission.PermissionID}}" method="post">
-                              <button th:id="'table_entry_childs_button_'+ ${{role.RoleID}} + ${permission.PermissionID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                                  <i>revoke</i>
+                      <td>
+                          <form action="#" th:action="@{/adminstration/users/user/activate/} + ${{user.UserID}}" method="post">
+                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                                  <i>Activate</i>
                               </button>
                           </form>
-                      	</td>
-                    
+                      </td>
+                                            <td>
+                          <form action="#" th:action="@{/adminstration/users/delete/} + ${{user.UserID}}" method="post">
+                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                                  <i>Delete</i>
+                              </button>
+                          </form>
+                      </td>
                     </tr>
                 </tbody>
             </table>
-                 <form action="#" th:action="@{/security/roles/role/permissions/grant/} + ${{role.RoleID}}" method="get">
-                    <button th:id="'table_entry_childs_button_' + ${role.RoleID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                    	<i>Add Permissions</i>
-                     </button>
-              </form>  
-                 <p></p> 
-                 <hr>
-             </div>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -125,7 +96,13 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
- 
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.0.3-pre
+    </div>
+    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+    reserved.
+  </footer>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

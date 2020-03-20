@@ -75,27 +75,14 @@ public class RolesController {
 		}
 	}
 
-	 
-	/*
-	 *returns current role permissions List
-	 * */
 	
-	@RequestMapping(method = RequestMethod.GET , value = "/security/roles/role/permissions/revoke")
-	public ModelAndView revokePermissionsRequest(@ModelAttribute Roles role ) {
-		ModelAndView mav = new ModelAndView("roles/revokepermissions");
-		mav.addObject("permissionslist",this.rolesPermissionsService.getRolePermissionsList(role));
-		return mav ; 
-	}
-	
-	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/role/permissions/revoke")
-	public ModelAndView revokePermissionFromRole(@ModelAttribute Roles role , @ModelAttribute List<Permissions> permissionsList ){
-		for(Permissions permission : permissionsList) {
-			this.rolesService.revokePermissionFromRoles(permission, role);
-		}
-		ModelAndView mav = new ModelAndView("roles/viewrole");
-		mav.addObject("permissionslist",this.rolesPermissionsService.getPermissionsOfRole(role));
-		mav.addObject("userslist",this.userRolesService.getUsersWithRole(role));
-		return mav ; 
+	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/role/permissions/revoke/{roleid}/{permissionid}")
+	public void revokePermissionFromRole(@PathVariable int roleid , @PathVariable int permissionid , HttpServletResponse response  ) throws IOException{
+		Roles role = this.rolesService.getRoleByID(roleid);
+		Permissions permission = this.permissionsService.getPermissionById(permissionid); 
+		this.rolesPermissionsService.revokePermissionFromRole(role, permission);
+		String redirectPath = "/security/roles/viewrole/"+role.getRoleID();
+		response.sendRedirect(redirectPath);
 	}
 	
 	
@@ -109,28 +96,30 @@ public class RolesController {
 	 * returns role view with current permissions and bearing users 
 	 * 
 	 */
-	@RequestMapping(method = RequestMethod.GET , value = "/security/roles/role/permissions/grant")
-	public ModelAndView grantpermissionToRole(@ModelAttribute Roles role ) {
-		ModelAndView mav = new ModelAndView("roles/grantpermissions");
+	@RequestMapping(method = RequestMethod.GET , value = "/security/roles/role/permissions/grant/{roleid}")
+	public ModelAndView grantpermissionToRole(@PathVariable int roleid) {
+		Roles role = this.rolesService.getRoleByID(roleid);
+		ModelAndView mav = new ModelAndView("Permissions/grantpermissiontorole");
 		List<Permissions> allPermissions = this.permissionsService.getAllPermissions();
-		List<String> currentPermissions =  role.getAssignedPermissionsList();
+		List<Permissions> currentPermissions =  this.rolesPermissionsService.getPermissionsOfRole(role);
 		List<Permissions> uniquePermissions = new ArrayList<Permissions>();
 		for(Permissions permission : allPermissions ) {
-			if(!currentPermissions.contains(permission.getPermissionName())) {
+			if(!currentPermissions.contains(permission)) {
 				uniquePermissions.add(permission);
 			}
 		}
+		mav.addObject("role",role);
 		mav.addObject("permissionsList",uniquePermissions);
 		return mav ; 
 	}
 	
-	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/role/permissions/grant")
-	public ModelAndView grantPermission(@ModelAttribute List<Permissions> permissionsList , Roles role ) {
-		this.rolesService.grantPermissionsToRole(permissionsList, role);
-		ModelAndView mav = new ModelAndView("roles/viewrole");
-		mav.addObject("permissionslist",this.rolesPermissionsService.getPermissionsOfRole(role));
-		mav.addObject("userslist",this.userRolesService.getUsersWithRole(role));
-		return mav ; 
+	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/role/permissions/grant/{roleid}/{permissionid}")
+	public void grantPermission(@PathVariable int roleid , @PathVariable int permissionid , HttpServletResponse response) throws IOException {
+		Roles role = this.rolesService.getRoleByID(roleid);
+		Permissions permission = this.permissionsService.getPermissionById(permissionid);
+		this.rolesService.grantPermissionsToRole(permission, role);
+		String redirectPath = "/security/roles/role/permissions/grant/"+roleid;
+		response.sendRedirect(redirectPath);
 	}
 	
 	//grant permissions end 
