@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles">
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<header th:insert="fragments.html :: nav"></header>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>loan</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">loan</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title" style="width: 70%">Loan Details  </h3>
+              
+             
+
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-hover">
+            
+                <tbody>
+                  <tr>
+                    <td> Work Date </td>
+                    <td>17/3/2020 </td>
+                  </tr>
+                  <tr>
+                    <td> Loan Date </td>
+                    <td>20/3/2020 </td>
+                  </tr>
+                  <tr>
+                    <td>Loan Type </td>
+                    <td>asd </td>
+                  </tr>
+                  <tr>
+                    <td> Finance Type </td>
+                    <td>dasa </td>
+                  </tr>
+                  <tr>
+                    <td> Interest Rate </td>
+                    <td> 5% </td>
+                  </tr>
+                  <tr>
+                    <td> Delay Interest Rate </td>
+                    <td> 10% </td>
+                  </tr>
+                  <tr>
+                    <td> Client </td>
+                    <td>المؤسسة الاستهلاكية </td>
+                  </tr>
+                  <tr>
+                    <td>Bank </td>
+                    <td>الزراعي </td>
+                  </tr>
+                  <tr>
+                    <td>Total Ammount </td>
+                    <td>1000000 </td>
+                  </tr>
+                  <tr>
+                    <td> Total Ammount As String </td>
+                    <td>مليون ليرة سورية لاغير </td>
+                  </tr>
+                  <tr>
+                    <td>Net Ammount </td>
+                    <td> 900000</td>
+                  </tr>
+                  <tr>
+                    <td>Net Ammount As String </td>
+                    <td> تسعمائة ليرة سورية</td>
+                  </tr>
+
+                  <tr>
+                    <td>Number Of Voucher</td>
+                    <td> 3</td>
+                  </tr>
+
+                  <tr>
+                    <td>Number Of Voucher As String </td>
+                    <td> ثلاث سندات فقط </td>
+                  </tr>
+
+                  <tr>
+                    <td>purpose </td>
+                    <td> dsafdf</td>
+                  </tr>
+
+                  <tr>
+                    <td>Clearance Number</td>
+                    <td> 26</td>
+                  </tr>
+
+                  <tr>
+                    <td>First Side </td>
+                    <td> Team 1 </td>
+                  </tr>
+
+                  <tr>
+                    <td>second Side </td>
+                    <td> Bank</td>
+                  </tr>               
+                </tbody>
+        
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+
+          
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+ 
+    <strong>Copyright &copy; 2014-2019 <a href="">Our Team</a>.</strong> All rights
+    reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true,
+      "autoWidth": false,
+    });
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+</body>
+</html>

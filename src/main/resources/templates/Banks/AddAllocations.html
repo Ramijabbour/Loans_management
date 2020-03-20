@@ -13,7 +13,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Bank</h1>
+            <h1>Add Allocation</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -50,9 +50,9 @@
                   </div>
 
 
-                  <div class="form-group" th:object="${allbanks}">
+                  <div class="form-group">
                     <label for="exampleInputEmail1">Bank</label><br>
-                    <select th:field="*{banks}">
+                    <select>
                       <option>Select Bank</option>
                     <option th:each="bank : ${allbanks}" th:value="${bank}" th:text="${bank.BankName}"></option>
 
@@ -86,9 +86,9 @@
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.3-pre
+      <b></b> 
     </div>
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+    <strong>Copyright &copy; 2014-2022 <a href="http://adminlte.io">our team</a>.</strong> All rights
     reserved.
   </footer>
 
