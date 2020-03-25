@@ -5,6 +5,7 @@ import com.example.Allocations.Allocations;
 import com.example.Banks.Banks;
 import com.example.Clients.Clients;
 import com.example.FinanceType.FinanceType;
+import com.example.Loans.Loans;
 import org.apache.commons.lang3.StringUtils;
 import com.example.TT.tt;
 
@@ -48,7 +49,7 @@ public class Valid_Visitable implements Visitor {
             return false;
         if (financeType.FundintRate <= 100.0 && financeType.FundintRate >= 0.0)
             financeType.FundintRate = (financeType.FundintRate / 100.0);
-        if (Float.valueOf(financeType.lenght) < 0.0)
+        if (Float.valueOf(financeType.lenght) < 0)
             return false;
         if (financeType.funded_propse.length() < 130)
             return false;
@@ -72,10 +73,24 @@ public class Valid_Visitable implements Visitor {
         //t.Total = t.Total.replaceAll(" ", "");
         if (StringUtils.isAlphaSpace(t.Total)) {
             System.out.println("ggg");
-            
+
             if (t.Total.length() == 11)
                 System.out.println("ggg");
         }
         return true;
+    }
+
+    public boolean visit(Loans loans)
+    {
+        if(Float.valueOf(loans.TotalAmmount)<0)
+            return false ;
+
+        if(StringUtils.isAlphaSpace(loans.TotalAmmountAsString) == false)
+            return  false;
+//        if (loans.LoanDate)
+
+
+
+        return true ;
     }
 }

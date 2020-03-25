@@ -4,6 +4,7 @@ import com.example.Allocations.Allocations;
 import com.example.Banks.Banks;
 import com.example.Clients.Clients;
 import com.example.FinanceType.FinanceType;
+import com.example.Loans.Loans;
 import com.example.TT.tt;
 
 public interface Visitor {
@@ -13,6 +14,7 @@ public interface Visitor {
     public boolean visit( Allocations allocations );
     public boolean visit( FinanceType financeType );
     public boolean visit( Clients clients );
+    public boolean visit(Loans loans);
 
 
 
