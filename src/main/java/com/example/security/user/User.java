@@ -1,7 +1,6 @@
 package com.example.security.user;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -17,18 +16,17 @@ public class User {
 	private int UserID ;
 
 	@Column(nullable = false )
-	private String Email="";
+	private String email=" ";
 
 	@Column(nullable = false )
 	private String password = " ";
 	
 	private String username ;
 	private String Gender="" ;
-	private String UserPermissions = "" ; 
-	private String UserRoles =""; 
+	private String UserPermissions = " " ; 
+	private String UserRoles =" "; 
 	
-	
-	private boolean isActive = false ; 
+	private boolean Active = false ; 
 
 	
 	public User() {}
@@ -36,20 +34,20 @@ public class User {
 	public User(String email, String password, String username, String gender, String userPermissions,
 			String userRoles, boolean isActive) {
 		super();
-		Email = email;
+		this.email = email;
 		this.password = password;
 		this.username = username;
 		Gender = gender;
 		UserPermissions = userPermissions;
 		UserRoles = userRoles;
-		this.isActive = isActive;
+		this.Active = isActive;
 	}
 	
 	
 	public void flatUserDetailes() {
-		System.out.println("user ID : "+this.UserID+" username :"+this.username+" user email : "+this.Email);
+		System.out.println("user ID : "+this.UserID+" username :"+this.username+" user email : "+this.email+" gender : "
+	+this.Gender+" role "+this.UserRoles +" permissions : "+this.UserPermissions);
 	}
-	
 	
 	public int getUserID() {
 		return UserID;
@@ -59,20 +57,12 @@ public class User {
 		UserID = userID;
 	}
 
-	public String getUserName() {
-		return username;
-	}
-
-	public void setUserName(String userName) {
-		username = userName;
-	}
-
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -83,46 +73,58 @@ public class User {
 		this.password = password;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getGender() {
 		return Gender;
 	}
 
 	public void setGender(String gender) {
 		Gender = gender;
-	}	
-	
-		
+	}
+
 	public String getUserPermissions() {
 		return UserPermissions;
+	}
+
+	public void setUserPermissions(String userPermissions) {
+		UserPermissions = userPermissions;
 	}
 
 	public String getUserRoles() {
 		return UserRoles;
 	}
-	
+
+	public void setUserRoles(String userRoles) {
+		UserRoles = userRoles;
+	}
+
 	public boolean isActive() {
-		return isActive;
+		return Active;
 	}
 
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	public void setActive(boolean active) {
+		Active = active;
 	}
 
-	
-	
-	
 	public boolean hasRole(String role) {
-		if(this.UserRoles.equalsIgnoreCase("")) {
+		if(this.UserRoles.equalsIgnoreCase(" ")) {
 			return false ; 
 		}
 		else if (!this.convertRolesToList().contains(role)) {
-			return false  ; 
+			return false ;
 		}
 		return true ; 
 	}
 	
 	public boolean hasPermission(String permission) {
-		if(this.UserPermissions.equalsIgnoreCase("")) {
+		if(this.UserPermissions.equalsIgnoreCase(" ")) {
 			return false ; 
 		}
 		else if (!this.convertPermissionsToList().contains(permission)) {
@@ -132,10 +134,17 @@ public class User {
 	}
 
 	public void addRole(String role ) {
+		if(this.UserRoles.equalsIgnoreCase(" ")) {
+			this.UserRoles=role;
+		}else
 		this.UserRoles+=","+role;
 	}
 	
 	public void addPermission(String permission ) {
+		System.out.println("grant invoked -------");
+		if(this.UserPermissions.equalsIgnoreCase(" ")) {
+			this.UserPermissions=permission;
+		}else
 		this.UserPermissions+=","+permission;
 	}
 
@@ -146,7 +155,9 @@ public class User {
 		else {
 			List<String> userPermissions = new ArrayList<String>() ;
 			String[] permissions = this.UserPermissions.split(",");
-			userPermissions = Arrays.asList(permissions);
+			for(int i = 0 ; i<permissions.length ; i++) {
+				userPermissions.add(permissions[i]);
+			}
 			return userPermissions ; 
 			
 		}
@@ -159,7 +170,9 @@ public class User {
 		else {
 			List<String> userRoles = new ArrayList<String>() ;
 			String[] roles = this.UserRoles.split(",");
-			userRoles = Arrays.asList(roles);
+			for(int i =0 ; i < roles.length ; i++) {
+				userRoles.add(roles[i]); 
+			}
 			return userRoles ; 
 			
 		}
@@ -167,23 +180,28 @@ public class User {
 	
 	public void revokeRoleFromUser(String role ) {
 		List<String> userRoles = this.convertRolesToList() ; 
+		if(userRoles.size() != 0 ) {
 		if(userRoles.contains(role)) {
-			userRoles.remove(role);
-			this.UserRoles = "";
+			userRoles.remove(userRoles.indexOf(role));
+			this.UserRoles = " ";
 			for(String tempRole : userRoles) {
 				this.addRole(tempRole);
+				}
 			}
 		}
 	}
 	
 	public void revokePermissionFromUser(String permission) {
-		List<String> userPermissions = this.convertPermissionsToList(); 
-		if(userPermissions.contains(permission)) {
-			userPermissions.remove(permission);
-			this.UserPermissions = "";
-			for(String tempPermission : userPermissions) {
-				this.addPermission(tempPermission);
+		List<String> userPermissions = this.convertPermissionsToList();
+		if(userPermissions.size() != 0 ) {
+			if(userPermissions.contains(permission)) {
+				userPermissions.remove(permission);
+				this.UserPermissions = " ";
+				for(String tempPermission : userPermissions) {
+					this.addPermission(tempPermission);
+				}
 			}
 		}
 	}
+	
 }

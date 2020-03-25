@@ -2,33 +2,38 @@ package com.example.security.user;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.aspect.Exceptions;
+import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
 import com.example.security.roles.Roles;
+import com.example.security.userPermissions.UserPermissionsService;
 
 @Service
 public class UserService{
 
 	@Autowired 
-	UserRepository userRepository ; 
+	UserRepository userRepository ; 	
 	
-	List<String> ServicesNames = Arrays.asList() ; 
+	@Autowired
+	UserRoleService userRoleService ; 
 	
+	@Autowired
+	UserPermissionsService userPermissionsService ;
+	
+	private PasswordEncoder passwordEncoder ;
 	
 	//Service permissions Injection 
-	public UserService() {
+	public UserService(PasswordEncoder passwordEncoder ) {
 		System.out.println("user service init ------------------------>>>>>>>>");
-		
+		this.passwordEncoder = passwordEncoder ; 
 		/*we add all the services to permissions service */
 		Method[] methods =  this.getClass().getDeclaredMethods();
 		List<String> methodsNames = new ArrayList<String>(); 
@@ -48,17 +53,25 @@ public class UserService{
 	}
 	
 	//find user by id // 
-	public Optional<User> getUserByID(int id ) {	
-		if( this.userRepository.findById(id)== null ) {
-			throw new Exceptions(-404,"cannot find the requested user ");
-		}else 
-			return this.userRepository.findById(id);	
+	public User getUserByID(int id ) {	
+		List<User> allUsers = this.userRepository.findAll() ; 
+		if(allUsers.isEmpty()) {
+			System.out.println("empty UsersList ");
+			return null ;  
+		}
+		for(User user : allUsers) {
+			if(user.getUserID() == id ){
+				return user  ; 
+			}
+		}
+		System.out.println("requested user not found ");
+		return null ; 
 	}
 	
 	//find User by userName 
 	public User getUserByUserName(String userName) {
 		for(User user : this.userRepository.findAll()) {
-			if(user.getUserName().equalsIgnoreCase(userName)) {
+			if(user.getUsername().equalsIgnoreCase(userName)) {
 				return user ; 
 			}
 		}
@@ -67,24 +80,35 @@ public class UserService{
 	
 	//add new user // 
 	public void addUser(User user ) {
+		user.flatUserDetailes();
 		if(checkUserinforDuplication(user)) {
 			throw new Exceptions(-405,"user data duplication error");
 		}else {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			user.setUserRoles(" ");
+			user.setUserPermissions(" ");
+			user.setActive(false);
 			this.userRepository.save(user); 
 		}
 	}
 	
 	//update current user // 
 	public void updateUser(User user) {
-		if(checkUserinforDuplication(user)) {
-			throw new Exceptions(-405,"user data duplication error");
-		}else {
-			this.userRepository.save(user); 
+		System.out.println("trace Update User with object : ");
+		user.flatUserDetailes();
+		try {
+			if(this.userRepository.findById(user.getUserID()) != null) {
+					this.userRepository.save(user); 
+				}
+		}catch(Exception e ) {
+			System.out.println("NullPointerException Handled at User Service / Update User -- call for null User ");
 		}
 	}
 	
 	//delete user//
 	public void deleteUser(User user ) {
+		this.userPermissionsService.deleteUser(user);
+		this.userRoleService.deleteUser(user);
 		this.userRepository.deleteById(user.getUserID());
 	}
 	
@@ -95,7 +119,7 @@ public class UserService{
 		List<User> usersList = this.userRepository.findAll() ; 
 		for(int i = 0 ; i < usersList.size() ; i++ ) {
 			User tempUser = usersList.get(i) ;
-			if(tempUser.getUserName().equalsIgnoreCase(user.getUserName())) {
+			if(tempUser.getUsername().equalsIgnoreCase(user.getUsername())) {
 				return true ; 
 			}
 			if(tempUser.getEmail().equalsIgnoreCase(user.getEmail())){
@@ -110,29 +134,28 @@ public class UserService{
 	
 	
 	@Transactional
-	public void addPermissionsToUser(User user , List<Permissions> permissions ) {
-		if(permissions.isEmpty()) {
+	public void addPermissionsToUser(User user , Permissions permission ) {
+		if(permission == null ) {
 			return ; 
 		}
-		for(Permissions permission : permissions ) {
-			if(!user.hasPermission(permission.getPermissionName())) {
-				user.addPermission(permission.getPermissionName());
-			}else {continue ;}
+		if(user.getUserPermissions().equalsIgnoreCase(" ")) {
+			user.setUserPermissions(" ");
 		}
-		this.userRepository.save(user);
+		if(!user.hasPermission(permission.getPermissionName())) {
+				user.addPermission(permission.getPermissionName());	
+				this.userRepository.save(user);
+		}
 	}
 	
-	@Transactional 
-	public void addRolesToUser(User user , List<Roles> roles) {
-		if(roles.isEmpty()) {
+	
+	public void addRolesToUser(User user , Roles role) {
+		if(role == null) {
 			return ; 
 		}
-		for(Roles role : roles ) {
-			if(!user.hasRole(role.getRoleName())) {
+		if(!user.hasRole(role.getRoleName())) {
 				user.addRole(role.getRoleName());
-			}else {continue ;}
+				this.userRepository.save(user);
 		}
-		this.userRepository.save(user);
 	}
 	
 	@Transactional
@@ -155,4 +178,39 @@ public class UserService{
 		}
 	}
 
+	
+	public List<User> getNonActiveUsers() {
+		List<User> allUsers = this.userRepository.findAll() ; 
+		List<User> nonActiveUsers = new ArrayList<User>(); 
+		for(User user : allUsers) {
+			if(!user.isActive()) {
+				nonActiveUsers.add(user);
+			}
+		}
+		return nonActiveUsers; 
+	}
+	
+	public List<User> getActiveUsers(){
+		List<User> allUsers = this.userRepository.findAll() ; 
+		List<User> ActiveUsers = new ArrayList<User>(); 
+		for(User user : allUsers) {
+			if(user.isActive()) {
+				ActiveUsers.add(user);
+			}
+		}
+		return ActiveUsers;
+	}
+	
+	public void activateUser(int userid) {
+		User user = this.getUserByID(userid);
+		user.setActive(true);
+		this.userRepository.save(user);
+	}
+	
+	public void deActivateUser(int userid) {
+		User user = this.getUserByID(userid);
+		user.setActive(false);
+		this.userRepository.save(user);		
+	}
+	
 }

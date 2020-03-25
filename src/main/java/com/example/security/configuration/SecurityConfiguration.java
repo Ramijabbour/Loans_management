@@ -28,7 +28,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	}
 	
 	//authorization //
-	//ant matchers order is very important//
 	@Override
 	protected void configure(HttpSecurity http)throws Exception {
 		http 

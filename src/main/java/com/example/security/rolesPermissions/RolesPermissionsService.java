@@ -1,11 +1,11 @@
 package com.example.security.rolesPermissions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.aspect.Exceptions;
 import com.example.security.permissions.Permissions;
 import com.example.security.roles.Roles;
 import com.example.security.roles.RolesService;
@@ -19,13 +19,40 @@ public class RolesPermissionsService {
 	@Autowired 
 	private RolesService rolesService ; 
 	
-	public void addRolePermission(RolePermission rolePermission) {
-		if(this.rolePermissionRepository.findAll().contains(rolePermission)) {
-			throw new Exceptions(-405,"this role already contains this permission");
+	 
+	public void addRolePermission(Permissions permission,Roles role ) {
+		List<Permissions> rolePermissionsList = this.getPermissionsOfRole(role);
+		for(Permissions tempPermission : rolePermissionsList ) {
+			if(tempPermission.getPermissionID() == permission.getPermissionID()) {
+			 return ; 
+			}
 		}
-		this.rolePermissionRepository.save(rolePermission);
+		this.rolePermissionRepository.save(new RolePermission(permission,role));
 	}
 	
+	public List<Permissions> getPermissionsOfRole(Roles role ){
+		List<Permissions> rolePermissionsList = new ArrayList<Permissions>(); 
+		List<RolePermission> rolePermissionsFromRepo = this.rolePermissionRepository.findAll() ; 
+		for(RolePermission rolePermission : rolePermissionsFromRepo) {
+			if(rolePermission.getRole().getRoleName().equalsIgnoreCase(role.getRoleName())){
+				rolePermissionsList.add(rolePermission.getPermission());
+			}
+		}
+		return rolePermissionsList ; 
+	}
+	
+	
+	
+	public List<Roles> getRolesWithPermission(Permissions permission){
+		List<Roles> rolesWithPermissionList = new ArrayList<Roles>() ; 
+		List<RolePermission> rolePermissionList = this.rolePermissionRepository.findAll() ; 
+		for(RolePermission rolePermission : rolePermissionList) {
+			if(rolePermission.getPermission().getPermissionID() == permission.getPermissionID()) {
+				rolesWithPermissionList.add(rolePermission.getRole());
+			}
+		}	
+		return rolesWithPermissionList ; 
+	}
 	
 	//
 	public void deletePermission(Permissions permission) {
@@ -47,11 +74,20 @@ public class RolesPermissionsService {
 		}
 	}
 	
-	public void updateRolePermission(RolePermission rolePermission) {
-		if(!this.rolePermissionRepository.findAll().contains(rolePermission)) {
-			throw new Exceptions(-404,"cannot find requested role-permission ");
+
+	public void addPermissionsToRole(Roles role , Permissions permission ) {
+			this.addRolePermission(permission, role);
+	}
+	
+	public void revokePermissionFromRole (Roles role , Permissions permission) {
+		List<RolePermission> rolePermissionsList = this.rolePermissionRepository.findAll() ; 
+		for(RolePermission rolePermission : rolePermissionsList ) {
+			if(rolePermission.getRole().getRoleID() == role.getRoleID() && rolePermission.getPermission().getPermissionID() == permission.getPermissionID()) {
+				this.rolesService.revokePermissionFromRoles(permission, role);
+				this.rolePermissionRepository.delete(rolePermission);
+				return ; 
+			}
 		}
 	}
-
-
+	
 }

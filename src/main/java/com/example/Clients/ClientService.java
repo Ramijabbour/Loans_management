@@ -28,8 +28,7 @@ public class ClientService {
 	
 	public void addClient(Clients client)
 	{
-		Clients c=new Clients(client.getClientName(),client.getIdentity_number());
-		clientRepository.save(c);
+		clientRepository.save(client);
 	}
 
 

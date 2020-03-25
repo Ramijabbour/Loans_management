@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.security.permissions.Permissions;
-import com.example.security.roles.RolesService;
 import com.example.security.user.User;
 import com.example.security.user.UserService;
 
@@ -43,22 +42,19 @@ public class UserPermissionsService {
 		List<Permissions> permissionsOfUser = new ArrayList<Permissions>() ; 
 		
 		for(UserPermission tempUserPermissions : userPermissions ) {
-			if(tempUserPermissions.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
+			if(tempUserPermissions.getUser().getUsername().equalsIgnoreCase(user.getUsername())) {
 				permissionsOfUser.add(tempUserPermissions.getPermissions());
 			}
 		}
 		return permissionsOfUser; 
 	}
 	
-	public void grantPermissionsToUser(List<Permissions> permissions , User user ) {
-		for(Permissions permission : permissions ) {
+	public void grantPermissionsToUser(Permissions permission , User user ) {
 			if(!this.userPermissionsExsit(permission, user)) {
-				this.userService.addPermissionsToUser(user, Arrays.asList(permission)); 
-			}else {
-				continue ; 
-			}
-		}
-		
+				this.userService.addPermissionsToUser(user, permission);
+				UserPermission userPermission = new UserPermission(user,permission);
+				this.userPermissionsRepository.save(userPermission);
+			}	
 	}
 	
 	public void deletePermission(Permissions permission) {
@@ -72,11 +68,22 @@ public class UserPermissionsService {
 		}
 	}
 	
+	public void deleteUser(User user ) {
+		List<UserPermission> userPermissionsList = this.userPermissionsRepository.findAll(); 
+		for(UserPermission userPermission : userPermissionsList) {
+			if(userPermission.getUser().getUserID() == user.getUserID()) {
+				this.userPermissionsRepository.delete(userPermission);
+			}else {
+				continue ; 
+			}
+		}
+	}
+	
 	@Transactional 
 	public void  revokePermissionFromUser(User user , Permissions permission ) {
 		List<UserPermission> userPermissionList = this.userPermissionsRepository.findAll(); 
 		for(UserPermission userPermission : userPermissionList) {
-			if(userPermission.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
+			if(userPermission.getUser().getUsername().equalsIgnoreCase(user.getUsername())) {
 				if(userPermission.getPermissions().getPermissionName().equalsIgnoreCase(permission.getPermissionName())) {
 					this.userService.revokePermissionFromUser(userPermission.getUser(), userPermission.getPermissions());
 					this.userPermissionsRepository.delete(userPermission);
@@ -87,12 +94,10 @@ public class UserPermissionsService {
 		
 	}
 	
-	
-	
 	public boolean userPermissionsExsit(Permissions permission , User user ) {
 		List<UserPermission> userPermissions = this.userPermissionsRepository.findAll() ; 
 		for(UserPermission userPermission : userPermissions ) {
-			if(userPermission.getUser().getUserName().equalsIgnoreCase(user.getUserName())) {
+			if(userPermission.getUser().getUsername().equalsIgnoreCase(user.getUsername())) {
 				if(userPermission.getPermissions().getPermissionName().equalsIgnoreCase(permission.getPermissionName())) {
 					return true ; 
 				}

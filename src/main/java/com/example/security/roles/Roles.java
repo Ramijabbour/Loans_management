@@ -10,16 +10,32 @@ import javax.persistence.Id;
 
 @Entity
 public class Roles {
-
 	//attributes 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int RoleID ;
-    private String RoleName="";
-	private String AssignedPermissions="";
+    private String RoleName=" ";
+	private String AssignedPermissions=" ";
 	//
 	
+	public Roles(String roleName, String assignedPermissions) {
+		super();
+		RoleName = roleName;
+		AssignedPermissions = assignedPermissions;
+	}
+	
+	public Roles() {}
+
 	//setters and getters 
+	public String getAssignedPermissions() {
+		return this.AssignedPermissions ; 
+	}
+	public List<String> getAssignedPermissionsList(){
+		String[] permissions = this.AssignedPermissions.split(",");
+		List<String> assignedPermissionsList = Arrays.asList(permissions);
+		return assignedPermissionsList; 
+	}
+	
 	public int getRoleID() {
 		return RoleID;
 	}
