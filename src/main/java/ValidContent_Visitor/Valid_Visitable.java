@@ -20,8 +20,6 @@ public class Valid_Visitable implements Visitor {
 
         if (StringUtils.isNumeric(Bank.FinancialAllocations)==false||Float.valueOf(Bank.FinancialAllocations)<0)
             return false;
-
-
         return  true;
 
     }}

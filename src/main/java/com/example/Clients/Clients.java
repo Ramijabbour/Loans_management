@@ -14,11 +14,11 @@ public class Clients {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int ClientID ;
-	private String ClientName ;
-	private String ClientType;
+	public int ClientID ;
+	public String ClientName ;
+	public String ClientType;
 	@Column(nullable = true)
-	private String identity_number;
+	public String identity_number;
 	
 	
 	public Clients() {}
