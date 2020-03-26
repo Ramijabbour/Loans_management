@@ -113,7 +113,7 @@ public class UserController {
 	//Access Control Methods
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/admistration/users/user/viewuser/{userid}")
-	public ModelAndView viewUser(@PathVariable("userid") int userid ) {
+	public ModelAndView viewUser(@PathVariable int userid ) {
 		ModelAndView mav = new ModelAndView("User/viewUser");
 		mav.addObject("userRoles",this.userRoleService.getRolesOfUsers(this.userService.getUserByID(userid)));
 		mav.addObject("userPermissions",this.userPermissionsService.getPermissionsOfUser(this.userService.getUserByID(userid)));
