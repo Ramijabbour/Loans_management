@@ -13,9 +13,8 @@ public class ReportsAndContracts {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int ReportID ;
+	
 
-
-	public ReportsAndContracts(int reportID) {
-		ReportID = reportID;
-	}
+	
+	
 }

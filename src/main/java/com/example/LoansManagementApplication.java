@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import com.example.TT.tt;
+
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
@@ -42,10 +42,10 @@ public class LoansManagementApplication implements CommandLineRunner {
 
 
         //اختبار ال visitor
-        Valid_Visitable valid_visitable = new Valid_Visitable();
-        tt t = new tt();
-        t.setTotal("1ahmad  attaR");
-        t.accept(valid_visitable);
+//        Valid_Visitable valid_visitable = new Valid_Visitable();
+//        tt t = new tt();
+//        t.setTotal("1ahmad  attaR");
+//        t.accept(valid_visitable);
 
 
         // كيفية ادخال تاريخ

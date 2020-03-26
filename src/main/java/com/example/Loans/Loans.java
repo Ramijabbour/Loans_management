@@ -4,8 +4,6 @@ package com.example.Loans;
 import javax.persistence.*;
 
 
-import ValidContent_Visitor.Valid_Visitable;
-import ValidContent_Visitor.Visitor;
 import com.example.Banks.Banks;
 import com.example.Clients.Clients;
 import com.example.FinanceType.FinanceType;
@@ -22,44 +20,44 @@ import java.util.Date;
 
 @Entity
 
-public class Loans extends Valid_Visitable {
+public class Loans {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int LoanID;
+    private int LoanID;
 
-    public String FirstSide;
+    private String FirstSide;
 
-    public String SecondSide;
-
-
-    public String WorkDate;
+    private String SecondSide;
 
 
-    public String LoanDate;
+    private String WorkDate;
 
 
-    public String InterestRate;
-
-    public String DelayInterestRate;
+    private String LoanDate;
 
 
-    public String ClearanceNumber;
+    private String InterestRate;
 
-    public String TotalAmmount;
-
-    public String TotalAmmountAsString;
-
-    public String NetAmmount;
+    private String DelayInterestRate;
 
 
-    public String NetAmmountAsString;
+    private String ClearanceNumber;
 
-    public String NumberOfVoucherAsString;
+    private String TotalAmmount;
 
-    public String NumberOfVoucher;
+    private String TotalAmmountAsString;
 
-    public String purpose;
+    private String NetAmmount;
+
+
+    private String NetAmmountAsString;
+
+    private String NumberOfVoucherAsString;
+
+    private String NumberOfVoucher;
+
+    private String purpose;
 
     @ManyToOne
     private Clients client = null;
@@ -240,9 +238,6 @@ public class Loans extends Valid_Visitable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-    public boolean accept(Visitor visitor) {
-        return visitor.visit(this);
     }
 
 

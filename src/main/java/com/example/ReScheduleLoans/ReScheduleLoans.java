@@ -13,11 +13,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class ReScheduleLoans {
 
-	public ReScheduleLoans(int reScheduleLoanID, Loans loan) {
-		ReScheduleLoanID = reScheduleLoanID;
-		this.loan = loan;
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int ReScheduleLoanID ;

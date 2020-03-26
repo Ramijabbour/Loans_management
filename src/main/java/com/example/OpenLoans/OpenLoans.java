@@ -12,11 +12,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class OpenLoans {
 
-	public OpenLoans(int openLoanID, Loans loan) {
-		OpenLoanID = openLoanID;
-		this.loan = loan;
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int OpenLoanID ;

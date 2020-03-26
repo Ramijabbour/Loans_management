@@ -14,12 +14,7 @@ public class CloseLoans {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int CloseLoanID ;
-
-	public CloseLoans(int closeLoanID, Loans loan) {
-		CloseLoanID = closeLoanID;
-		this.loan = loan;
-	}
-
+	
 	@ManyToOne
 	private Loans loan=null;
 

@@ -2,8 +2,6 @@ package com.example.Allocations;
 
 
 
-import ValidContent_Visitor.Valid_Visitable;
-import ValidContent_Visitor.Visitor;
 import com.example.Banks.Banks;
 
 import javax.persistence.Entity;
@@ -15,18 +13,16 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-public class Allocations extends Valid_Visitable {
+public class Allocations {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int AllocationID ;
+	private int AllocationID ;
 	
-	public String AllocationDate ;
+	private String AllocationDate ;
 	
-	public String AllocationAmmount;
-
-
-
+	private String AllocationAmmount;
+	
 	@ManyToOne
 	private Banks banks =null ;
 
@@ -69,9 +65,6 @@ public class Allocations extends Valid_Visitable {
 	public void setBanks(Banks banks) {
 		this.banks = banks;
 	}
-
-	public boolean accept(Visitor visitor) { return visitor.visit(this); }
+	
+	
 }
-	
-	
-
