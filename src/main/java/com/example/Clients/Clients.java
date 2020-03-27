@@ -1,5 +1,7 @@
 package com.example.Clients;
 
+import ValidContent_Visitor.Visitor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -73,5 +75,5 @@ public class Clients {
 	public void setIdentity_number(String identity_number) {
 		this.identity_number = identity_number;
 	}
-		
-}
+
+	public boolean accept(Visitor visitor) { return visitor.visit(this); }}

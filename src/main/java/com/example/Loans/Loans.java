@@ -4,6 +4,7 @@ package com.example.Loans;
 import javax.persistence.*;
 
 
+import ValidContent_Visitor.Visitor;
 import com.example.Banks.Banks;
 import com.example.Clients.Clients;
 import com.example.FinanceType.FinanceType;
@@ -240,5 +241,4 @@ public class Loans {
         this.user = user;
     }
 
-
-}
+    public boolean accept(Visitor visitor) { return visitor.visit(this); }}

@@ -2,6 +2,7 @@ package com.example.Allocations;
 
 
 
+import ValidContent_Visitor.Visitor;
 import com.example.Banks.Banks;
 
 import javax.persistence.Entity;
@@ -19,9 +20,9 @@ public class Allocations {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int AllocationID ;
 	
-	private String AllocationDate ;
+	public String AllocationDate ;
 	
-	private String AllocationAmmount;
+	public String AllocationAmmount;
 	
 	@ManyToOne
 	private Banks banks =null ;
@@ -65,6 +66,5 @@ public class Allocations {
 	public void setBanks(Banks banks) {
 		this.banks = banks;
 	}
-	
-	
-}
+	public boolean accept(Visitor visitor) { return visitor.visit(this); }}
+
