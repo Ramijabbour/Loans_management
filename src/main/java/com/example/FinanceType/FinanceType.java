@@ -13,9 +13,23 @@ public class FinanceType {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+
 	public int FinanceTypeID ;
 	public String TypeName="";
 	public double FundintRate ;
+
+
+
+
+
+	
+	public FinanceType() {
+		
+	}
+
+	public FinanceType(String typeName) {
+		TypeName = typeName;
+	}
 
 	public String getFunded_propse() {
 		return funded_propse;

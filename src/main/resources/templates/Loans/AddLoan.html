@@ -37,126 +37,116 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" id="quickForm">
+              <form action="#"  th:action="@{/Loans/addLoan}"  method="post" th:object="${loan}">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Work Date </label>
-                    <input type="date" name="workDate" class="form-control">
+                    <input type="date" name="workDate" class="form-control" th:field="*{WorkDate}">
                   </div>
 
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Loan Date </label>
-                    <input type="date" name="LoanDate" class="form-control">
+                    <input type="date" name="LoanDate" class="form-control" th:field="*{LoanDate}">
                   </div>
-
+					
+					
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Loan Type</label>
-                     <select>
-                      <option></option>
-                      <option></option>   
-                      <option></option>   
-                      <option></option>   
+                    <label for="exampleInputPassword1">Loan Type</label><br>
+                    <select th:field="*{loanType}">
+                      <option th:each="loantype : ${allloantype}" th:value="${loantype.LoanTypeID}" th:text="${loantype.TypeName} "></option>	  
                     </select>
-                  </div>
-
+                  </div>  
+				
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Finance Type</label>
-                     <select>
-                      <option></option>
-                      <option></option>   
-                      <option></option>   
-                      <option></option>   
+                    <label for="exampleInputPassword1">Finance Type</label><br>
+                    <select th:field="*{financeType}">
+                      <option th:each="financetype : ${allfinancetype}" th:value="${financetype.FinanceTypeID}" th:text="${financetype.TypeName} "></option>	  
                     </select>
                   </div>
 
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">Interest Rate </label>
-                    <input type="number" name="interestRate" class="form-control" placeholder="Enter Interest Rate">
+                    <input type="number" name="interestRate" class="form-control" placeholder="Enter Interest Rate" th:field="*{InterestRate}">
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Client</label>
-                     <select>
-                      <option>jak</option>
-                      <option>الوؤسسة الاستهلاكية</option>   
-                      <option>المؤسسة التعاونية</option>   
-                      <option></option>   
+                    <label for="exampleInputPassword1">Client</label><br>
+                    <select th:field="*{client}">
+                      <option th:each="client : ${allclient}" th:value="${client.ClientID}" th:text="${client.ClientName}"></option>
+  					  
                     </select>
                   </div>
 
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Bank</label>
-                     <select>
-                      <option>الزراعي</option>
-                      <option>التجاري </option>   
-                      <option> العقاري</option>   
-                      <option>الصناعي</option>   
+                    <label for="exampleInputPassword1">Bank</label><br>
+                    <select th:field="*{bank}">
+                      <option th:each="bank : ${allbank}" th:value="${bank.BankID}" th:text="${bank.BankName}+ ' '+ ${bank.BranchName} "></option>	  
                     </select>
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Delay Interest Rate </label>
-                    <input type="number" name="DelayInterestRate" class="form-control" placeholder="Enter Delay Interest Rate">
+                    <input type="number" name="DelayInterestRate" class="form-control" placeholder="Enter Delay Interest Rate"  th:field="*{DelayInterestRate}">
                   </div>
 
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Total Ammount </label>
-                    <input type="number" name="TotalAmmount" class="form-control" placeholder="Enter Total Ammount">
+                    <input type="number" name="TotalAmmount" class="form-control" placeholder="Enter Total Ammount" th:field="*{TotalAmmount}">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Total Ammount As String </label>
-                    <input type="text" name="TotalAmmountAsString" class="form-control" placeholder="Enter Total Ammount As String ">
+                    <input type="text" name="TotalAmmountAsString" class="form-control" placeholder="Enter Total Ammount As String " th:field="*{TotalAmmountAsString}">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Net Ammount </label>
-                    <input type="number" name="NetAmmount" class="form-control" placeholder="Enter Net Ammount">
+                    <input type="number" name="NetAmmount" class="form-control" placeholder="Enter Net Ammount" th:field="*{NetAmmount}">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Net Ammount As String </label>
-                    <input type="text" name="NetAmmountAsString" class="form-control" placeholder="Enter Net Ammount As String ">
+                    <input type="text" name="NetAmmountAsString" class="form-control" placeholder="Enter Net Ammount As String " th:field="*{NetAmmountAsString}">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Number Of Voucher </label>
-                    <input type="text" name="NumberOfVoucher" class="form-control" placeholder="Enter Number Of Voucher">
+                    <input type="text" name="NumberOfVoucher" class="form-control" placeholder="Enter Number Of Voucher" th:field="*{NumberOfVoucher}">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Number Of Voucher As String </label>
-                    <input type="text" name="Number Of VoucherAsString" class="form-control" placeholder="Enter Number Of Voucher As String ">
+                    <input type="text" name="Number Of VoucherAsString" class="form-control" placeholder="Enter Number Of Voucher As String " th:field="*{NumberOfVoucherAsString}">
                   </div>
 
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Clearance Number </label>
-                    <input type="number" name="ClearanceNumber" class="form-control" placeholder="Enter Clearance Number  ">
+                    <input type="number" name="ClearanceNumber" class="form-control" placeholder="Enter Clearance Number  " th:field="*{ClearanceNumber}">
                   </div>
 
 
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">purpose </label>
-                    <input type="text" name="purpose" class="form-control" placeholder="Enter purpose  ">
+                    <input type="text" name="purpose" class="form-control" placeholder="Enter purpose  " th:field="*{purpose}">
                   </div>
 
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">First Side </label>
-                    <input type="text" name="FirstSide" class="form-control" placeholder="Enter First Side">
+                    <input type="text" name="FirstSide" class="form-control" placeholder="Enter First Side" th:field="*{FirstSide}">
                   </div>
                 
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Second Side </label>
-                    <input type="text" name="SecondSide" class="form-control" placeholder="Enter Second Side">
+                    <input type="text" name="SecondSide" class="form-control" placeholder="Enter Second Side" th:field="*{SecondSide}">
                   </div>
                     
                 

@@ -19,6 +19,15 @@ public class OpenLoans {
 	@ManyToOne
 	private Loans loan=null;
 
+	
+	
+	public OpenLoans() {
+	}
+
+	public OpenLoans(Loans loan) {
+		this.loan = loan;
+	}
+
 	public int getOpenLoanID() {
 		return OpenLoanID;
 	}

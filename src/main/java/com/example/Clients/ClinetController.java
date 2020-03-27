@@ -5,15 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.example.Clients.Clients;
 
 @RestController
@@ -36,19 +37,7 @@ public class ClinetController {
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.PUT , value="/Clients")
-	public void updateClient(@RequestBody Clients client)
-	{
-		clientservice.updateClient(client);
-		
-	}
-	
-	@RequestMapping(method = RequestMethod.DELETE , value="/Clients/{id}")
-	public void deleteClient(@PathVariable int id)
-	{
-		clientservice.deleteClient(id);
-		
-	}
+
 	
 	//add new Client -------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Clients/addClient")
@@ -62,9 +51,6 @@ public class ClinetController {
 	@RequestMapping(method = RequestMethod.POST , value="/Clients/addClient")
 	public void addNewClient(@ModelAttribute Clients client,HttpServletResponse response) throws IOException {
 		System.out.println("posted to /Clients/addClient ");
-		System.out.println(client.getClientType()+"----------------------");
-		if(client.getIdentity_number()==null)
-			client.setIdentity_number(""); 
 		clientservice.addClient(client);
 		response.sendRedirect("/Clients/all");
 	}
@@ -73,7 +59,7 @@ public class ClinetController {
 	
 	//get All Clients ------------------------------------------------------
 		@RequestMapping(method = RequestMethod.GET , value="/Clients/all")
-		public ModelAndView ShowAllBank() {
+		public ModelAndView ShowAllClient() {
 			ModelAndView mav = new ModelAndView("Clients/AllClients");
 			List<Clients> allclients=clientservice.GetAllClients();
 			mav.addObject("allclients",allclients);
@@ -82,7 +68,35 @@ public class ClinetController {
    // -------------------------------------------------------------------
 	
 	
-	
+		// update client--------------------------------------------------------
+		@RequestMapping(method = RequestMethod.GET , value="/Clients/edit/{id}")
+		public ModelAndView ShowUpdateClient(@PathVariable int id) {
+			ModelAndView mav = new ModelAndView("Clients/updateClient");
+			Clients client=clientservice.GetClientById(id);
+			mav.addObject("client",client);
+			return mav; 
+		} 
+		
+		
+		@RequestMapping(method = RequestMethod.POST , value="/Clients/update/{id}")
+		public void UpdateClient(@Valid Clients client,HttpServletResponse response) throws IOException {
+			System.out.println("posted to /Clients/update/id ");
+			clientservice.updateClient(client);
+			response.sendRedirect("/Clients/all");
+		}
+		
+
+		
+		//----------------------------------------------------------------
+		
+		//delete Bank ----------------------------------------------------------  
+		@RequestMapping(method = RequestMethod.GET, value="/Clients/delete/{id}")
+		public void deleteClient(@PathVariable int id,HttpServletResponse response) throws IOException
+		{
+			clientservice.deleteClient(id);
+			response.sendRedirect("/Clients/all");
+		}
+		
 	
 	
 	
