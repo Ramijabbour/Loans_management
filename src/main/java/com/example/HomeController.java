@@ -18,4 +18,10 @@ public class HomeController {
     	ModelAndView mav = new ModelAndView("Login/index");
     	return mav; 
     }
+    
+    @RequestMapping(method = RequestMethod.GET , value = "/")
+    public ModelAndView Root() {
+    	ModelAndView mav = new ModelAndView("fragments");
+    	return mav; 
+    }
 }

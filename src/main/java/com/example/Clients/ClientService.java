@@ -20,6 +20,24 @@ public class ClientService {
 		return clients;
 	}
 	
+	public Clients GetClientById(int id)
+	{
+		List<Clients> allclient=clientRepository.findAll();
+		if(allclient.isEmpty())
+		{
+			System.out.println("empty ClinetsList ");
+			return null ;
+		}
+		for (Clients client : allclient)
+		{
+			if(client.getClientID()==id)
+				return client;
+		}
+		System.out.println("requested client not found ");
+		return null;
+		
+	}
+	
 	public Optional <Clients> GetClient(int id)
 	{
 		return clientRepository.findById(id);
@@ -38,7 +56,13 @@ public class ClientService {
 
 
 	public void updateClient(Clients client) {
-		clientRepository.save(client);
+		try {
+			if(clientRepository.findById(client.getClientID()) != null) {
+					clientRepository.save(client); 
+				}
+		}catch(Exception e ) {
+			System.out.println("NullPointerException Handled at client Service / Update client -- call for null client ");
+		}
 	}
 
 }

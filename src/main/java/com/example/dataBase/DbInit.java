@@ -4,6 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.FinanceType.FinanceType;
+import com.example.FinanceType.FinanceTypeRepository;
+import com.example.LoansType.LoansType;
+import com.example.LoansType.LoansTypeRepository;
 import com.example.security.roles.Roles;
 import com.example.security.roles.RolesRepository;
 import com.example.security.user.User;
@@ -16,6 +20,8 @@ public class DbInit implements CommandLineRunner{
 	private UserRepository userRepository ; 
 	private PasswordEncoder passwordEncoder ; 
 	private RolesRepository rolesRepo; 
+	private LoansTypeRepository TypeRepo;
+	private FinanceTypeRepository financeRepo;
 	
 	public DbInit(UserRepository userRepo ,PasswordEncoder passwordEncoder,RolesRepository rolesRepo) {
 		this.userRepository = userRepo;
@@ -23,6 +29,13 @@ public class DbInit implements CommandLineRunner{
 		
 		this.rolesRepo = rolesRepo ; 
 	}
+	/*
+	public DbInit() {}
+	public DbInit(LoansTypeRepository loantype ,FinanceTypeRepository financeType)
+	{
+		this.TypeRepo=loantype;
+		this.financeRepo=financeType;
+	}*/
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -32,7 +45,14 @@ public class DbInit implements CommandLineRunner{
 		//User tester = new User("tester@email.com",passwordEncoder.encode("tester123"),"tester","male","getAllUsers","TESTER",true);
 		//this.userRepository.save(tester);
 		//Roles testRole = new Roles("TEST","test1,test2,test3");
-		//this.rolesRepo.save(testRole); 
+		//this.rolesRepo.save(testRole);
+		/*
+		LoansType l = new LoansType("مرخص");
+		this.TypeRepo.save(l);
+		
+		FinanceType f=new FinanceType("مواسم استراتيجية");
+		this.financeRepo.save(f);
+		*/
 	}
 
 

@@ -32,7 +32,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title" style="width: 70%">All Clients </h3>
-              <a style="margin-right: 50px ; background : #2B65EC ; color: #FFF;padding: 6px ;border: 2px solid ;" href="AddClients.html " >Add Client </a>
+              <a style="margin-right: 50px ; background : #2B65EC ; color: #FFF;padding: 6px ;border: 2px solid ;" href="../Clients/addClient" >Add Client </a>
              
 
             </div>
@@ -54,8 +54,21 @@
                   <td th:text="${client.ClientName}"></td>
                   <td th:text="${client.ClientType}"></td>
                   <td th:text="${client.identity_number}"></td>
-                  <td><a th:href="@{/Clients/edit/{id}(id=${client.ClientID})}">Update</a></td>
-                  <td><a th:href="@{/Clients/delete/{id}(id=${client.ClientID})}">Delete</a></td>
+                  <td>
+                      <form action="#" th:action="@{/Clients/delete/} + ${{client.ClientID}}" method="get">
+                          <button th:id="'table_entry_childs_button_' + ${client.ClientID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                              <i>Delete</i>
+                          </button>
+                      </form>
+                  </td>
+                        
+                  <td>
+                    <form action="#" th:action="@{/Clients/edit/}+ ${{client.ClientID}}" method="get">
+                        <button th:id="'table_entry_childs_button_' + ${client.ClientID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                            <i>Edit</i>
+                        </button>
+                    </form>
+                </td>
                   </tr>
                 </tbody>
         

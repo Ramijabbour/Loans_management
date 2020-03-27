@@ -12,6 +12,7 @@ import javax.validation.constraints.Null;
 @Entity
 public class Clients {
 
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int ClientID ;
@@ -22,9 +23,6 @@ public class Clients {
 	
 	
 	public Clients() {}
-
-	
-	
 
 
 	public Clients(String clientName, String clientType, String identity_number) {

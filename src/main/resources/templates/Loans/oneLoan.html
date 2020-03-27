@@ -42,81 +42,81 @@
                 <tbody>
                   <tr>
                     <td> Work Date </td>
-                    <td>17/3/2020 </td>
+                    <td th:text=${loan.WorkDate}></td>
                   </tr>
                   <tr>
                     <td> Loan Date </td>
-                    <td>20/3/2020 </td>
+                    <td th:text=${loan.LoanDate}> </td>
                   </tr>
                   <tr>
                     <td>Loan Type </td>
-                    <td>asd </td>
+                    <td> </td>
                   </tr>
                   <tr>
                     <td> Finance Type </td>
-                    <td>dasa </td>
+                    <td> </td>
                   </tr>
                   <tr>
                     <td> Interest Rate </td>
-                    <td> 5% </td>
+                    <td th:text=${loan.InterestRate}+'%'></td>
                   </tr>
                   <tr>
                     <td> Delay Interest Rate </td>
-                    <td> 10% </td>
+                    <td th:text=${loan.DelayInterestRate}+'%'> </td>
                   </tr>
                   <tr>
                     <td> Client </td>
-                    <td>المؤسسة الاستهلاكية </td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td>Bank </td>
-                    <td>الزراعي </td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td>Total Ammount </td>
-                    <td>1000000 </td>
+                    <td th:text=${loan.TotalAmmount}></td>
                   </tr>
                   <tr>
                     <td> Total Ammount As String </td>
-                    <td>مليون ليرة سورية لاغير </td>
+                    <td th:text=${loan.TotalAmmountAsString}></td>
                   </tr>
                   <tr>
                     <td>Net Ammount </td>
-                    <td> 900000</td>
+                    <td th:text=${loan.NetAmmount}></td>
                   </tr>
                   <tr>
                     <td>Net Ammount As String </td>
-                    <td> تسعمائة ليرة سورية</td>
+                    <td th:text=${loan.NetAmmountAsString}></td>
                   </tr>
 
                   <tr>
                     <td>Number Of Voucher</td>
-                    <td> 3</td>
+                    <td th:text=${loan.NumberOfVoucher}></td>
                   </tr>
 
                   <tr>
                     <td>Number Of Voucher As String </td>
-                    <td> ثلاث سندات فقط </td>
+                    <td th:text=${loan.NumberOfVoucherAsString}> </td>
                   </tr>
 
                   <tr>
                     <td>purpose </td>
-                    <td> dsafdf</td>
+                    <td th:text=${loan.purpose}> </td>
                   </tr>
 
                   <tr>
                     <td>Clearance Number</td>
-                    <td> 26</td>
+                    <td th:text=${loan.ClearanceNumber}> </td>
                   </tr>
 
                   <tr>
                     <td>First Side </td>
-                    <td> Team 1 </td>
+                    <td th:text=${loan.FirstSide}> </td>
                   </tr>
 
                   <tr>
                     <td>second Side </td>
-                    <td> Bank</td>
+                    <td th:text=${loan.SecondSide}> </td>
                   </tr>               
                 </tbody>
         
