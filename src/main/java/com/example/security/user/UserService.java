@@ -6,6 +6,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.aspect.Exceptions;
@@ -27,10 +28,12 @@ public class UserService{
 	@Autowired
 	UserPermissionsService userPermissionsService ;
 	
+	private PasswordEncoder passwordEncoder ;
+	
 	//Service permissions Injection 
-	public UserService() {
+	public UserService(PasswordEncoder passwordEncoder ) {
 		System.out.println("user service init ------------------------>>>>>>>>");
-		
+		this.passwordEncoder = passwordEncoder ; 
 		/*we add all the services to permissions service */
 		Method[] methods =  this.getClass().getDeclaredMethods();
 		List<String> methodsNames = new ArrayList<String>(); 
@@ -81,8 +84,9 @@ public class UserService{
 		if(checkUserinforDuplication(user)) {
 			throw new Exceptions(-405,"user data duplication error");
 		}else {
-			user.setUserRoles("none");
-			user.setUserPermissions("none");
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			user.setUserRoles(" ");
+			user.setUserPermissions(" ");
 			user.setActive(false);
 			this.userRepository.save(user); 
 		}
@@ -134,8 +138,8 @@ public class UserService{
 		if(permission == null ) {
 			return ; 
 		}
-		if(user.getUserPermissions().equalsIgnoreCase("none")) {
-			user.setUserPermissions("");
+		if(user.getUserPermissions().equalsIgnoreCase(" ")) {
+			user.setUserPermissions(" ");
 		}
 		if(!user.hasPermission(permission.getPermissionName())) {
 				user.addPermission(permission.getPermissionName());	
@@ -143,18 +147,15 @@ public class UserService{
 		}
 	}
 	
-	@Transactional 
+	
 	public void addRolesToUser(User user , Roles role) {
 		if(role == null) {
 			return ; 
 		}
-		if(user.getUserRoles().equalsIgnoreCase("none")) {
-			user.setUserRoles("");
-		}
-			if(!user.hasRole(role.getRoleName())) {
+		if(!user.hasRole(role.getRoleName())) {
 				user.addRole(role.getRoleName());
 				this.userRepository.save(user);
-			}
+		}
 	}
 	
 	@Transactional

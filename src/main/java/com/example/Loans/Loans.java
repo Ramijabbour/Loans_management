@@ -24,31 +24,31 @@ public class Loans {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int LoanID;
+    public int LoanID;
 
-    private String FirstSide;
+    public String FirstSide;
 
-    private String SecondSide;
-
-
-    private String WorkDate;
+    public String SecondSide;
 
 
-    private String LoanDate;
+    public String WorkDate;
 
 
-    private String InterestRate;
-
-    private String DelayInterestRate;
+    public String LoanDate;
 
 
-    private String ClearanceNumber;
+    public String InterestRate;
 
-    private String TotalAmmount;
+    public String DelayInterestRate;
 
-    private String TotalAmmountAsString;
 
-    private String NetAmmount;
+    public String ClearanceNumber;
+
+    public String TotalAmmount;
+
+    public String TotalAmmountAsString;
+
+    public String NetAmmount;
 
 
     private String NetAmmountAsString;
