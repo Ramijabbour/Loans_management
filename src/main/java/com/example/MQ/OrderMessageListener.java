@@ -11,18 +11,21 @@ import org.springframework.stereotype.Component;
 public class OrderMessageListener {
 
     @Autowired
-    private OrderRepsitory orderRepsitory;
+    private OnHoldCheckRepository onHoldCheckRepository;
 
+    /*
     static final Logger logger = LoggerFactory.getLogger(OrderMessageListener.class);
 
     @RabbitListener(queues = RabbitConfig.QUEUE_ORDERS)
     public void processOrder(Chaque check) {
         check.id=check.id;
-        orderRepsitory.save(check);
+        onHoldCheckRepository.save(check);
         logger.info("Order Received: "+check);
     }
     @Scheduled(fixedRate = 7200000)
     public void reportCurrentTime() {
        return;
     }
+    */
+    
 }

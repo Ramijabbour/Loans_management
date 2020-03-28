@@ -17,13 +17,23 @@ public class Chaque {
     public String SecondBank;
     public int SecondBankSW;
     public double Amount;
+    public boolean active = false ; 
+    
+    
+    public boolean isActive() {
+		return active;
+	}
 
-    public Chaque() {
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public Chaque() {
     }
 
-    public Chaque(int checkId, String firstBank, int firstBankSW, String secondBank, int secondBankSW, double amount) {
-        CheckId = checkId;
-        FirstBank = firstBank;
+    public Chaque(int id , String firstBank, int firstBankSW, String secondBank, int secondBankSW, double amount) {
+        this.CheckId = id ; 
+    	FirstBank = firstBank;
         FirstBankSW = firstBankSW;
         SecondBank = secondBank;
         SecondBankSW = secondBankSW;

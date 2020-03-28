@@ -27,7 +27,8 @@ public class LoansManagementApplication implements CommandLineRunner {
 
         SpringApplication.run(LoansManagementApplication.class, args);
 
-
+        
+        
     }
 
 
