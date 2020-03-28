@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Add Check</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item">Central Bank/Add Check</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- jquery validation -->
+            <div class="card card-primary">
+              <div class="card-header">
+              <h4>Enter Check Info</h4>
+              </div>
+              <hr>
+                <form  action="#" th:action="@{/settlement/checks/add}" th:object="${check}" method="post">
+                <div class="card-body">
+                  <div class="form-group">
+                   <label for="exampleInputPassword1">Check Sequence Number</label>
+                   <input type="text" name="CheckId" class="form-control" placeholder="Enter User Name" th:field="*{CheckId}">
+                  </div>
+                  <hr>
+					<div class="form-group">
+                   <label for="exampleInputPassword1">FirstBank Title</label>
+                   <input type="text" name="FirstBank" class="form-control" placeholder="Enter User Email" th:field="*{FirstBank}">
+                  </div>
+					<hr>
+				 	<div class="form-group">
+                   <label for="exampleInputPassword1">FirstBank SW</label>
+                   <input type="text" name="FirstBankSW" class="form-control" placeholder="Enter User Email" th:field="*{FirstBankSW}">
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                   <label for="exampleInputPassword1">SecondBank Title</label>
+                   <input type="text" name="SecondBank" class="form-control" placeholder="Enter User Email" th:field="*{SecondBank}">
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                   <label for="exampleInputPassword1">SecondBank SW</label>
+                   <input type="text" name="SecondBankSW" class="form-control" placeholder="Enter User Email" th:field="*{SecondBankSW}">
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                   <label for="exampleInputPassword1">Amount</labela>
+                   <input type="text" name="Amount" class="form-control" placeholder="Enter User Email" th:field="*{Amount}">
+                  </div>
+                         
+                </div>
+                <hr>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+            </div>
+            <!-- /.card -->
+            </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+          <div class="col-md-6">
+
+          </div>
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- jquery-validation -->
+<script src="../../plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="../../plugins/jquery-validation/additional-methods.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  $.validator.setDefaults({
+    submitHandler: function () {
+      alert( "Form successful submitted!" );
+    }
+  });
+  $('#quickForm').validate({
+    rules: {
+      email: {
+        required: true,
+        email: true,
+      },
+      password: {
+        required: true,
+        minlength: 5
+      },
+      terms: {
+        required: true
+      },
+    },
+    messages: {
+      email: {
+        required: "Please enter a email address",
+        email: "Please enter a vaild email address"
+      },
+      password: {
+        required: "Please provide a password",
+        minlength: "Your password must be at least 5 characters long"
+      },
+      terms: "Please accept our terms"
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+});
+</script>
+
+</body>
+</html>

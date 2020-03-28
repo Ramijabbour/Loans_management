@@ -72,14 +72,20 @@ public class SettlementService {
 	}
 	
 	public void settleChecks() {
-		initSettlementOperation() ; 
-		SettelmentModel.setNumberOfParticipants(this.ParticipantsCount);
-		List<SettledChaque> resultList = SettelmentModel.minCashFlow(toSettleChecks,ParticipantsIds);
-		this.settledChecksRepository.saveAll(resultList);
+		initSettlementOperation(); 
+		SettelmentHandler.setNumberOfParticipants(this.ParticipantsCount);
+		if(ParticipantsIds.size() != 0 ) {
+			List<SettledChaque> resultList = SettelmentHandler.minCashFlow(toSettleChecks,ParticipantsIds);
+			this.settledChecksRepository.saveAll(resultList);
+		}
 		// add result validation 
 		// change check state 
 		// export results to another check model objects and repo
-		
 	}
 	
+	
+	public void addCheck(Chaque check ) {
+		//check data validation 
+		this.onHoldChecksRepository.save(check);		
+	}
 }

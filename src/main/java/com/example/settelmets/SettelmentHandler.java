@@ -3,11 +3,9 @@ package com.example.settelmets;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.MQ.Chaque;
 import com.example.MQ.SettledChaque;
 
-public class SettelmentModel {
-
+public class SettelmentHandler {
     // Number of participants in the settlement 
     private static int N ; 
      
@@ -71,5 +69,4 @@ public class SettelmentModel {
         return resultList; 
     } 
     
-
 }
