@@ -2,10 +2,13 @@ package com.example.settelmets;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.Banks.BankService;
+import com.example.Banks.Banks;
 import com.example.MQ.Chaque;
 import com.example.MQ.OnHoldCheckRepository;
 import com.example.MQ.SettledChaque;
@@ -18,10 +21,13 @@ public class SettlementService {
 	private OnHoldCheckRepository onHoldChecksRepository ;  	
 	@Autowired
 	private SettledChecksRepository settledChecksRepository;
-
+	@Autowired
+	private BankService banksService  ; 
+	
 	private int[][] toSettleChecks ; 
 	private int ParticipantsCount ; 
 	private List<Integer> ParticipantsIds ; 
+	
 
 	private void initSettlementOperation() {
 		//essential variables 
@@ -84,8 +90,79 @@ public class SettlementService {
 	}
 	
 	
-	public void addCheck(Chaque check ) {
-		//check data validation 
-		this.onHoldChecksRepository.save(check);		
+	public int addCheck(Chaque check ) {
+		int result = testCheckInfoValidation(check) ; 
+		if(result == 0 ) {
+			this.onHoldChecksRepository.save(check);
+			return 0 ; 
+		}else{
+			return result ; 
+		}
 	}
+	
+	
+	//error Codes : 
+	/*
+	 * 		ERROR 				 | Error code  |
+	 * ----------------------------------------- 
+	 * amount less than zero     | -1 			|
+	 * sender is the receiver    | -2  			|
+	 *  first bank not found 	 | -311 		|ID Error 
+	 *  first bank name is wrong | -312			|Name Error 
+	 *  second bank not found    | -321  		|ID Error
+	 *  second bank name is wrong| -322			|Name Error
+	 *  check id duplication     | -4  			|
+	 * */
+	public int testCheckInfoValidation(Chaque check ) {
+		//check ID data duplication 
+		List<Chaque> allChecks = this.onHoldChecksRepository.findAll() ; 
+		if(check.getAmount() <= 0 ) {
+			return -1 ;
+		}
+		if(check.getFirstBank().equalsIgnoreCase(check.getSecondBank())) {
+			return -2 ; 
+		}
+		if(check.getFirstBankSW() == check.getSecondBankSW()) {
+			return -2 ;
+		}
+		//check the first bank data 
+		Banks bank = this.banksService.getBankByID(check.getFirstBankSW());
+		if(bank == null ){
+			return -311 ; 
+		}
+		if(!bank.getBranchName().equalsIgnoreCase(check.getFirstBank())) {
+			return -312 ;
+		}
+		
+		//check the second bank data 
+		Banks bank2 = this.banksService.getBankByID(check.getSecondBankSW()) ; 
+		if(bank2 == null ) {
+			return -321 ; 
+		}
+		if(!bank2.getBranchName().equalsIgnoreCase(check.getSecondBank())) {
+			return -322 ; 
+		}
+		for(Chaque tempCheck : allChecks ) {
+			if(check.getCheckId() == tempCheck.getCheckId() ) {
+				return -4;  
+			}
+		}	
+		return 0 ; 
+	} 
+	
+	public boolean resultDataCheck(List<Chaque> results) {
+		List<Integer> banks = new ArrayList<Integer>();
+		List<Double> debts = new ArrayList<Double>();
+		List<Double> pays = new ArrayList<Double>();
+
+		banks = this.findNumberOfParticipants(results); 
+		
+		for(Chaque check : results ) {
+			debts.add(banks.indexOf(check.getFirstBankSW()), check.getAmount());
+			pays.add(banks.indexOf(check.getSecondBankSW()),check.getAmount());
+		}
+		
+		return false ; 
+	}
+	
 }

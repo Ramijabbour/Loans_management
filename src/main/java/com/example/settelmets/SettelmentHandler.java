@@ -68,5 +68,5 @@ public class SettelmentHandler {
         minCashFlowRec(amount,participantsIds,resultList); 
         return resultList; 
     } 
-    
+  
 }

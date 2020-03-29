@@ -27,10 +27,15 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form name="f" th:action="@{/login}" method="post" class="login100-form validate-form">
+				<form name="f" th:action="" class="login100-form validate-form">
 					<span class="login100-form-title">
-						Check Added Successfully
+						Operation Failed Try Again 
 					</span>
+					<div class="form-group">
+                   <label for="exampleInputPassword1">Error Details</label>
+                   <input type="text" name="msg" class="form-control" th:field="*{msg}" readonly>
+                  </div>
+                  
 					<div class="text-center p-t-136">
 						<a class="txt2" href="#">
 						</a>

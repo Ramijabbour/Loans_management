@@ -66,5 +66,14 @@ public class BankService {
 	}
 
 
+	public Banks getBankByID(int bankId) {
+		List<Banks> banksList = this.bankRepository.findAll() ; 
+		for(Banks bank : banksList) {
+			if(bank.getBankID() == bankId) {
+				return bank ; 
+			}
+		}
+		return null ; 
+	}
 	
 }

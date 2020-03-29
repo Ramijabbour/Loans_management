@@ -15,8 +15,7 @@ public class SettlementController {
 	@Autowired
 	SettlementService settlementService ; 
 	
-	
-	//add protection or lock the method 
+	//add protection or lock the method
 	@RequestMapping(method = RequestMethod.GET ,value = "/settlement/invoke" )
 	public void invokeSettleMethod() {
 		this.settlementService.settleChecks();
@@ -29,12 +28,46 @@ public class SettlementController {
 		return mav ; 
 	}
 	
+
 	@RequestMapping(method = RequestMethod.POST , value = "/settlement/checks/add")
 	public ModelAndView addCheck(@ModelAttribute Chaque check ) {
-		this.settlementService.addCheck(check);
-		ModelAndView mav = new ModelAndView("settlement/success");
-		return mav ; 
-	}
+		int operationCode = this.settlementService.addCheck(check);
+		
+		if(operationCode != 0 ) {
+			String msg = this.translateErrorCode(operationCode) ;
+			ModelAndView mav = new ModelAndView("settlement/fail");
+			mav.addObject("msg", new String());
+			return mav ; 
+		}else {
+			ModelAndView mav = new ModelAndView("settlement/success");
+			return mav ; 
+		}
+	}	
 	
+	
+	private String translateErrorCode(int errCode) {
+		if(errCode == -1  ) {
+			return "The transfer ammount is less than zero";
+		}
+		if(errCode ==  -2 ) {
+			return "Sender and reciever are the Same bank";
+		}
+		if(errCode ==  -311) {
+			return "First Bnak not found " ; 
+		}
+		if(errCode ==  -312) {
+			return "First Banke Name Error ";
+		}
+		if(errCode ==  -321) {
+			return "Second Bank not found ";
+		}
+		if(errCode ==  -322) {
+			return "Second Bank Name Error ";
+		}
+		if(errCode ==  -4) {
+			return "The CheckId is already used";
+		}
+		return "unknown error ";
+	}
 	
 }
