@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.MasterService;
+import com.example.Notifications.NotificationsService;
 import com.example.aspect.Exceptions;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
@@ -17,7 +19,7 @@ import com.example.security.roles.Roles;
 import com.example.security.userPermissions.UserPermissionsService;
 
 @Service
-public class UserService{
+public class UserService extends MasterService {
 
 	@Autowired 
 	UserRepository userRepository ; 	
@@ -88,7 +90,8 @@ public class UserService{
 			user.setUserRoles(" ");
 			user.setUserPermissions(" ");
 			user.setActive(false);
-			this.userRepository.save(user); 
+			this.userRepository.save(user);
+			super.notificationsService.addNotification("New User need Activation", "/adminstration/users/nonactive", "ADMIN,SUPER");
 		}
 	}
 	

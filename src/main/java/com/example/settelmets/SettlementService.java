@@ -2,8 +2,6 @@ package com.example.settelmets;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,6 +80,7 @@ public class SettlementService {
 		SettelmentHandler.setNumberOfParticipants(this.ParticipantsCount);
 		if(ParticipantsIds.size() != 0 ) {
 			List<SettledChaque> resultList = SettelmentHandler.minCashFlow(toSettleChecks,ParticipantsIds);
+			
 			this.settledChecksRepository.saveAll(resultList);
 		}
 		// add result validation 
@@ -101,7 +100,7 @@ public class SettlementService {
 	}
 	
 	
-	//error Codes : 
+
 	/*
 	 * 		ERROR 				 | Error code  |
 	 * ----------------------------------------- 
@@ -150,16 +149,17 @@ public class SettlementService {
 		return 0 ; 
 	} 
 	
-	public boolean resultDataCheck(List<Chaque> results) {
+	public boolean resultDataCheck(List<Chaque> results,List<Chaque> input) {
 		List<Integer> banks = new ArrayList<Integer>();
-		List<Double> debts = new ArrayList<Double>();
-		List<Double> pays = new ArrayList<Double>();
 
-		banks = this.findNumberOfParticipants(results); 
+		banks = this.findNumberOfParticipants(input); 
 		
-		for(Chaque check : results ) {
-			debts.add(banks.indexOf(check.getFirstBankSW()), check.getAmount());
-			pays.add(banks.indexOf(check.getSecondBankSW()),check.getAmount());
+		double[] debts = new double[banks.size()] ; 
+		double[] pays = new double[banks.size()] ; 
+		
+		for(Chaque check : input) {
+			debts[banks.indexOf(check.getFirstBankSW())] += check.getAmount() ; 
+			pays[banks.indexOf(check.getSecondBankSW())] += check.getAmount();
 		}
 		
 		return false ; 

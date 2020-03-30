@@ -36,7 +36,7 @@ public class SettlementController {
 		if(operationCode != 0 ) {
 			String msg = this.translateErrorCode(operationCode) ;
 			ModelAndView mav = new ModelAndView("settlement/fail");
-			mav.addObject("msg", new String());
+			mav.addObject("msg", msg);
 			return mav ; 
 		}else {
 			ModelAndView mav = new ModelAndView("settlement/success");
