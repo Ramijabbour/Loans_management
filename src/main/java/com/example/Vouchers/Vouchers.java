@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import com.example.Clients.Clients;
+import com.example.Loans.Loans;
 import com.example.security.user.User;
 
 
@@ -28,12 +29,16 @@ public class Vouchers {
 	
 	private String FundingRatio;
 	
+	private String Status ; 
+	
 	@ManyToOne
 	private Clients client =null ;
 	
 	@ManyToOne
 	private User user =null ;
 
+	@ManyToOne
+	private Loans Loan =null ;
 	
 	
 	public int getVoucherID() {
@@ -50,6 +55,15 @@ public class Vouchers {
 
 	public void setVoucherDate(String voucherDate) {
 		VoucherDate = voucherDate;
+	}
+
+	
+	public String getStatus() {
+		return Status;
+	}
+
+	public void setStatus(String status) {
+		Status = status;
 	}
 
 	public String getVoucherAmmount() {
@@ -98,6 +112,14 @@ public class Vouchers {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Loans getLoan() {
+		return Loan;
+	}
+
+	public void setLoan(Loans loan) {
+		Loan = loan;
 	}
 
 	

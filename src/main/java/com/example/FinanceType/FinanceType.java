@@ -18,11 +18,6 @@ public class FinanceType {
 	public String TypeName="";
 	public double FundintRate ;
 
-
-
-
-
-	
 	public FinanceType() {
 		
 	}
