@@ -13,12 +13,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Update Bank</h1>
+            <h1>Update Allocation</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Update Bank</li>
+              <li class="breadcrumb-item active">All Allocation</li>
+              <li class="breadcrumb-item active">update Allocation</li>
             </ol>
           </div>
         </div>
@@ -34,43 +35,41 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Update Bank <small>Insert Details</small></h3>
+                <h3 class="card-title">Allocations : <small>Insert Details</small></h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form  action="#"  th:action="@{/Banks/update/{id}(id=${bank.BankID})}" th:object="${bank}" method="post">
+              <form th:action="@{/Allocation/update/}+${allocation.AllocationID}"  th:object="${allocation}" method="post">
                 <div class="card-body">
                 
                 
                   <div class="form-group">
-                    <label for="exampleInputEmail1">ID</label>
-                    <input type="number" name="BankName" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" th:field="*{BankID}"  readonly>
+                    <label for="exampleInputEmail1">ID </label>
+                    <input type="number" name="ID" class="form-control" th:field="*{AllocationID}" readonly>
+                  </div>
+					                
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Date </label>
+                    <input type="date" name="workDate" class="form-control" th:field="*{AllocationDate}">
                   </div>
                   
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Name</label>
-                    <input type="text" name="BankName" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" th:field="*{BankName}" >
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Branch Name :</label>
-                    <input type="text" name="BranchName" class="form-control" id="exampleInputPassword1" placeholder="Enter Branch Name" th:field="*{BranchName}">
+                    <label for="exampleInputPassword1">Ammount :</label>
+                    <input type="number" name="amount" class="form-control"  placeholder="Enter Ammount" th:field="*{AllocationAmmount}">
                   </div>
 
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Bank Code :</label>
-                    <input type="text" name="BankCode" class="form-control" id="exampleInputPassword1" placeholder="Enter Bank Code " th:field="*{BankCode}">
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Bank Allocation :</label>
-                    <input type="text" name="BankCode" class="form-control" id="exampleInputPassword1" placeholder="Enter Bank Code " th:field="*{FinancialAllocations}" readonly>
+                    <label for="exampleInputPassword1">Bank</label><br>
+                    <select th:field="*{banks}">
+                      <option th:each="bank : ${allbank}" th:value="${bank.BankID}" th:text="${bank.BankName}+ ' '+ ${bank.BranchName} "></option>	  
+                    </select>
                   </div>
                   
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">update</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
               </form>
             </div>
@@ -91,9 +90,9 @@
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.3-pre
+      <b></b> 
     </div>
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+    <strong>Copyright &copy; 2014-2022 <a href="http://adminlte.io">our team</a>.</strong> All rights
     reserved.
   </footer>
 

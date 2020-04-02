@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,16 +32,69 @@ public class AllocationsController {
 			ModelAndView mav = new ModelAndView("Banks/AddAllocations");
 			  List<Banks> allbank=bankservice.GetAllBanks();
 			  mav.addObject("allocation",new Allocations());
-			  mav.addObject("allbanks",allbank);
+			  mav.addObject("allbank",allbank);
 			return mav; 
 		}
 		  
 		
 		@RequestMapping(method = RequestMethod.POST , value="/Allocation/addAllocation")
-		public void addNewBank(@ModelAttribute Banks bank,HttpServletResponse response) throws IOException {
-			System.out.println("posted to /Banks/addBank ");
-			bankservice.addBank(bank);
+		public void addNewAllocation(@ModelAttribute Allocations Allocation,HttpServletResponse response) throws IOException {
+			System.out.println("posted to /Allocation/addAllocation ");
+			Banks bank = bankservice.getBankById(Allocation.getBanks().getBankID());
+			bank.setFinancialAllocations(Allocation.getAllocationAmmount());
+			System.out.println("Done");
+			allocationService.addAllocation(Allocation);
 			response.sendRedirect("/Banks/all");
 		}
 		// -----------------------------------------------------------------------   
+
+		//Get All Allocation -----------------------------------------------------
+		@RequestMapping(method = RequestMethod.GET , value="/Allocation/all")
+		public ModelAndView AllAllocation() {
+			ModelAndView mav = new ModelAndView("Banks/AllAllocations");
+			  List<Allocations> allAllocations=allocationService.getAllAllocations();
+			  System.out.println(allAllocations.size()+"----------------------");
+			  mav.addObject("AllAllocations",allAllocations);
+			 
+			return mav; 
+		}
+
+		// -----------------------------------------------------------------------
+		
+		//Delete Allocation ------------------------------------------------------
+		
+		@RequestMapping(method = RequestMethod.GET, value="/Allocation/delete/{id}")
+		public void deleteAllocation(@PathVariable int id,HttpServletResponse response) throws IOException
+		{
+			allocationService.DeleteAllocation(id);
+			response.sendRedirect("/Allocation/all");
+		}
+
+
+
+		// ------------------------------------------------------------------
+		// update Allocation--------------------------------------------------------
+		@RequestMapping(method = RequestMethod.GET , value="/Allocation/edit/{id}")
+		public ModelAndView ShowUpdateAllocation(@PathVariable int id) {
+			ModelAndView mav = new ModelAndView("Banks/UpdateAllocations");
+			Allocations Allocation = allocationService.getAllocationById(id);
+			List<Banks> allbank=bankservice.GetAllBanks();
+			mav.addObject("allbank",allbank);
+			mav.addObject("allocation",Allocation);
+			return mav; 
+		} 
+		
+		
+		@RequestMapping(method = RequestMethod.POST , value="/Allocation/update/{id}")
+		public void UpdateAlloaction(@Valid Allocations allocation,HttpServletResponse response) throws IOException {
+			System.out.println("posted to /Banks/update/id ");
+			Banks bank = bankservice.getBankById(allocation.getBanks().getBankID());
+			bank.setFinancialAllocations(allocation.getAllocationAmmount());
+			allocationService.updateAllocation(allocation);
+			response.sendRedirect("/Allocation/all");
+		}
+		
+
+
 }
+

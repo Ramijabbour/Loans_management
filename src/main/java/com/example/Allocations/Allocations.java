@@ -20,7 +20,7 @@ public class Allocations {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int AllocationID ;
 	
-	public String AllocationDate ;
+	public String AllocationDate;
 	
 	public String AllocationAmmount;
 	

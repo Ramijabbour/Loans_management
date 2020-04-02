@@ -50,11 +50,11 @@
                   </tr>
                   <tr>
                     <td>Loan Type </td>
-                    <td> </td>
+                    <td th:text=${loan.loanType.TypeName}> </td>
                   </tr>
                   <tr>
                     <td> Finance Type </td>
-                    <td> </td>
+                    <td th:text="${loan.financeType.TypeName}"> </td>
                   </tr>
                   <tr>
                     <td> Interest Rate </td>
@@ -66,11 +66,11 @@
                   </tr>
                   <tr>
                     <td> Client </td>
-                    <td></td>
+                    <td th:text="${loan.client.ClientName}"></td>
                   </tr>
                   <tr>
                     <td>Bank </td>
-                    <td></td>
+                    <td th:text ="${loan.bank.BankName}+' '+${loan.bank.BranchName}"></td>
                   </tr>
                   <tr>
                     <td>Total Ammount </td>

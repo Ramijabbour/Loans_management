@@ -38,12 +38,14 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" id="quickForm" th:object="${allocation}">
+              <form th:action="@{/Allocation/addAllocation}"  th:object="${allocation}" method="post">
                 <div class="card-body">
+                
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Date</label>
-                    <input type="Date" name="date" class="form-control" id="exampleInputEmail1" th:field="*{AllocationDate}">
+                    <label for="exampleInputEmail1">Date </label>
+                    <input type="date" name="workDate" class="form-control" th:field="*{AllocationDate}">
                   </div>
+                  
                   <div class="form-group">
                     <label for="exampleInputPassword1">Ammount :</label>
                     <input type="number" name="amount" class="form-control"  placeholder="Enter Ammount" th:field="*{AllocationAmmount}">
@@ -51,17 +53,12 @@
 
 
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Bank</label><br>
-                    <select>
-                      <option>Select Bank</option>
-                    <option th:each="bank : ${allbanks}" th:value="${bank}" th:text="${bank.BankName}"></option>
-
-                      
+                    <label for="exampleInputPassword1">Bank</label><br>
+                    <select th:field="*{banks}">
+                      <option th:each="bank : ${allbank}" th:value="${bank.BankID}" th:text="${bank.BankName}+ ' '+ ${bank.BranchName} "></option>	  
                     </select>
                   </div>
-
-
-            
+                  
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
