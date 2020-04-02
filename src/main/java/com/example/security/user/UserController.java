@@ -49,7 +49,7 @@ public class UserController {
 	
 	///all users ///
 	@RequestMapping(method = RequestMethod.GET , value = "/adminstration/users/all")
-	public ModelAndView getAllUsers() {
+	public ModelAndView getAllUsers() {  
 		ModelAndView mav = new ModelAndView("User/AllUsers");
 		mav.addObject("userslist",this.userService.getAllUsers());
 		return mav ; 

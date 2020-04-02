@@ -1,5 +1,7 @@
 package com.example.Notifications;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -23,7 +25,30 @@ public class Notification {
 		this.TargetedRoles = roles ; 
 	}
 	
-	//major runtime issue 
+	
+	
+	public boolean containRolesList(String roles ){
+		System.out.println("roles string ; "+roles );
+		List<String>rolesList = splitWithComma(roles);
+		System.out.println("roles list size "+rolesList.size());
+		for(String temp : rolesList) {
+			System.out.println("roles list : "+temp);
+		}
+		
+		List<String>targetedRolesList = splitWithComma(this.TargetedRoles);
+		System.out.println("size : "+targetedRolesList.size());
+		for(String s : targetedRolesList) {
+			System.out.println("string "+s );
+		}
+		for(String roleItem : rolesList ) {
+			if(targetedRolesList.contains(roleItem)) {
+				System.out.println("condition");
+				return true ;  
+			}
+		}
+		return false ; 
+	}
+	 
 	public boolean containsRole(Roles role ) {
 		String[] roles = this.TargetedRoles.split(","); 
 		for(int i = 0 ; i < roles.length  ; i ++) {
@@ -74,17 +99,31 @@ public class Notification {
 	public void setTargetedRoles(String targetedRoles) {
 		TargetedRoles = targetedRoles;
 	}
-
 	
 	public boolean isStatus() {
 		return Status;
 	}
 
-	
 	public void setStatus(boolean status) {
 		Status = status;
 	} 
 	
-	
+	public List<String> splitWithComma(String splitTarget){
+		String tempString ="";
+		List<String> result = new ArrayList<String>(); 
+		for(int i = 0 ; i<splitTarget.length() ; i++) {
+			if(splitTarget.charAt(i) !=',') {
+				if(splitTarget.charAt(i) ==' ') {
+					continue ;
+				}
+				tempString += splitTarget.charAt(i); 
+			}else {
+				result.add(tempString);
+				tempString ="" ; 
+			}
+		}
+		result.add(tempString);
+		return result ; 
+	}
 	
 }

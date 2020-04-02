@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.MasterService;
-import com.example.Notifications.NotificationsService;
 import com.example.aspect.Exceptions;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;

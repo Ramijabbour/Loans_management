@@ -82,6 +82,7 @@ public class SettlementService {
 			List<SettledChaque> resultList = SettelmentHandler.minCashFlow(toSettleChecks,ParticipantsIds);
 			
 			this.settledChecksRepository.saveAll(resultList);
+			
 		}
 		// add result validation 
 		// change check state 
@@ -164,5 +165,23 @@ public class SettlementService {
 		
 		return false ; 
 	}
+
+	
+	public List<Chaque> getOnHoldChecks(){	
+		return this.onHoldChecksRepository.findByActiveFalse() ; 
+	}
+	
+	public List<Chaque> getSettledChecks(){
+		return this.onHoldChecksRepository.findByActiveTrue();
+	}
+	
+	public List<Chaque> getAllChecks(){
+		return this.onHoldChecksRepository.findAll() ; 
+	}
+	
+	public List<SettledChaque> getSettledChecksReports(){
+		return this.settledChecksRepository.findAll();
+	}
+	
 	
 }

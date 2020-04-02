@@ -6,26 +6,30 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.security.roles.Roles;
+import com.example.MasterService;
 
 @Service
-public class NotificationsService {
+public class NotificationsService extends MasterService{
 	
 	@Autowired
 	private NotificationsRepository notificationsRepository ; 
-	
+			
 	public void addNotification(String title , String link,String rolesList){
 		Notification notification = new Notification(title,link,rolesList);
 		this.notificationsRepository.save(notification); 
 	}
 	
-	public List<Notification> getRoleNewNotifications(Roles role){
+	public List<Notification> getRoleNewNotifications(){
+		if(this.get_current_User() == null ) {
+			return new ArrayList<Notification>();
+		}
 		List<Notification> roleNotificationsList = new ArrayList<Notification>(); 
-		for(Notification notification : roleNotificationsList) {
+		List<Notification> allNotifications = this.notificationsRepository.findAll() ; 
+		for(Notification notification : allNotifications) {
 			if(notification.isStatus()) {
 				continue ; 
 			}
-			if(notification.containsRole(role)) {
+			if(notification.containRolesList(super.get_current_User().getUserRoles())) {
 				notification.setStatus(true);
 				this.notificationsRepository.save(notification);
 				roleNotificationsList.add(notification);
@@ -34,16 +38,29 @@ public class NotificationsService {
 		return roleNotificationsList ; 
 	}
 	
-	public List<Notification> getRoleAllNotifications(Roles role){
-		List<Notification> roleNotificationsList = new ArrayList<Notification>(); 
-		for(Notification notification : roleNotificationsList) {
-			if(notification.containsRole(role)) {
+	public List<Notification> getRoleAllNotifications(){
+		if(this.get_current_User() == null ) {
+			return new ArrayList<Notification>();
+		}
+		List<Notification> roleNotificationsList = new ArrayList<Notification>();
+		List<Notification> allNotifications = this.notificationsRepository.findAll() ; 
+		for(Notification notification : allNotifications) {
+			if(notification.containRolesList(super.get_current_User().getUserRoles())) {
 				roleNotificationsList.add(notification);
 			}
 		}	
 		return roleNotificationsList ; 
 	}
-	
-	
+
+	public Notification getNotificationsByID(int id) {
+		List<Notification> all = this.notificationsRepository.findAll(); 
+		for(Notification notification : all ) {
+			if(notification.getNotificationId() == id ) {
+				return notification ; 
+			}
+		}
+		return null;
+	}
+
 	
 }

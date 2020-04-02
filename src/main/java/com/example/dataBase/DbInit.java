@@ -40,7 +40,7 @@ public class DbInit implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Chaque check1 = new Chaque(1,"bank1",1,"bank2",2,1000);
+		/*Chaque check1 = new Chaque(1,"bank1",1,"bank2",2,1000);
 		this.onHoldRepo.save(check1);
 		Chaque check6 = new Chaque(6,"bank3",3,"bank4",4,100);
 		this.onHoldRepo.save(check6);
@@ -66,7 +66,7 @@ public class DbInit implements CommandLineRunner{
 		this.onHoldRepo.save(check9);
 		Chaque check10 = new Chaque(10,"bank5",5,"bank1",1,300);
 		this.onHoldRepo.save(check10);
-		
+		*/
 		
 		
 		//User admin = new User("admin@email.com",passwordEncoder.encode("admin123"),"admin","male","ACCESS_TEST1,ACCESS_TEST2","ADMIN",true);

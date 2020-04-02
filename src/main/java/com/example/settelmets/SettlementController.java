@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import com.example.MQ.Chaque;
 
 @RestController
@@ -28,7 +29,6 @@ public class SettlementController {
 		return mav ; 
 	}
 	
-
 	@RequestMapping(method = RequestMethod.POST , value = "/settlement/checks/add")
 	public ModelAndView addCheck(@ModelAttribute Chaque check ) {
 		int operationCode = this.settlementService.addCheck(check);
@@ -43,7 +43,6 @@ public class SettlementController {
 			return mav ; 
 		}
 	}	
-	
 	
 	private String translateErrorCode(int errCode) {
 		if(errCode == -1  ) {
@@ -70,4 +69,34 @@ public class SettlementController {
 		return "unknown error ";
 	}
 	
+
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/all")
+	public ModelAndView getAllChecks() {
+		ModelAndView mav = new ModelAndView("settlement/allChecks");
+		mav.addObject("checksList",this.settlementService.getAllChecks());
+		return mav ; 
+
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled")
+	public ModelAndView getSettledChecks() {
+		ModelAndView mav = new ModelAndView("settlement/settled");
+		mav.addObject("checksList",this.settlementService.getSettledChecks());
+		return mav ; 
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/onhold")
+	public ModelAndView getonHoldChecks() {
+		ModelAndView mav = new ModelAndView("settlement/onHold");
+		mav.addObject("checksList",this.settlementService.getOnHoldChecks());
+		return mav ; 
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/reports")
+	public ModelAndView getonSettlementReports() {
+		ModelAndView mav = new ModelAndView("settlement/reports");
+		mav.addObject("checksList",this.settlementService.getSettledChecksReports());
+		return mav ; 
+	}
+
 }
