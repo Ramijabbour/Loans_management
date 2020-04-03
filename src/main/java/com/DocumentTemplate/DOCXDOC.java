@@ -28,7 +28,7 @@ public class DOCXDOC implements CreateDocTemplate {
         //Write the Document in file system
         FileOutputStream out = null;
         try {
-            out = new FileOutputStream(new File(Path+"_"+Filename+".docx"));
+            out = new FileOutputStream(new File(Path+Filename+".docx"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -28,7 +28,7 @@ public class PDFDOC implements CreateDocTemplate  {
         normal3.setColor(BaseColor.GRAY.darker());
         Document document = new Document();
         try {
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(Path+"_"+Filename+".pdf"));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(Path+Filename+".pdf"));
             document.open();
             PdfPTable table = new PdfPTable(1);
             table.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);

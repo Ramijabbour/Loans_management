@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ar" dir="rtl">
+<head>
+
+    <title>Getting Started: Serving Web Content</title>
+    <style>
+    h2 {
+        font-family:"Arabic Typesetting";
+        font-size:40px;
+    }
+
+    p {
+        font-family:"Arabic Typesetting";
+        font-size:35px;
+    }
+
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>&emsp;&emsp;الجمهورية العربية السورية<br></br>&emsp;&emsp;مصرف سورية المركزي<br></br>&emsp;&emsp;نظام التسوية اللحظية<br></br><br></br></h2>
+<h2>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;اشعار دفع مستحقات مادية<br></br></h2>
+
+<p>&emsp;&emsp;الى البنك: <span th:text=${Bank}></span><br/>&emsp;&emsp;رمز الفرع: <span th:text=${Code}></span></p>
+<p><br/>&emsp;&emsp;استنادا لنتيجة نظام التسوية اللحظية الخاص بمصرف سورية المركزي توجب عليكم دفع المستحقات
+    <br/>&emsp;&emsp;المالية المفروضة عليكم و قدرها<span th:text="'('+${Amount}+')'"></span>ل.س</p>
+<p><br/>&emsp;&emsp;علما انه سيتم تسديد هذه المستحقات الى: </p>
+<p>&emsp;&emsp;البنك: <span th:text=${Bank2}></span><br/>&emsp;&emsp;رمز الفرع: <span th:text=${Code2}></span></p>
+<p><br/><br/><br/>&emsp;&emsp;دمشق في:</p>
+<p>&emsp;&emsp;<span th:text=${Date}></span></p>
+</body>
+</html>
