@@ -1,0 +1,130 @@
+package com.DocumentTemplate;
+
+import com.example.MQ.SettledChaque;
+
+import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STOnOff;
+import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
+public class DOCXDOC implements CreateDocTemplate {
+    @Override
+    public void CreateRTGSDoc(SettledChaque settledChaque) {
+
+
+        String Path="D:\\";
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        String Filename=settledChaque.FirstBankSW+dateFormat.format(date);
+        //Blank Document
+        XWPFDocument document = new XWPFDocument();
+
+
+        //Write the Document in file system
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(new File(Path+"_"+Filename+".docx"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //create paragraph
+        XWPFParagraph paragraph = document.createParagraph();
+        CTP ctp = paragraph.getCTP();
+        CTPPr ctppr = ctp.getPPr();
+        if (ctppr == null) ctppr = ctp.addNewPPr();
+        ctppr.addNewBidi().setVal(STOnOff.ON);
+        //Tiltle
+        XWPFRun paragraphtitle = paragraph.createRun();
+        paragraphtitle.setBold(true);
+
+        // paragraphOneRunOne.setItalic(true);
+        paragraphtitle.setText("الجمهورية العربية السورية");
+        paragraphtitle.addBreak();
+        paragraphtitle.setText("مصرف سورية المركزي");
+        paragraphtitle.setFontFamily("Arabic Typesetting");
+        paragraphtitle.setFontSize(26);
+        paragraphtitle.setColor("000000");
+        paragraphtitle.addBreak();
+        paragraphtitle.setText("نظام التسوية اللحظية");
+        paragraphtitle.addBreak();
+        //title2
+        //create another paragraph
+        XWPFParagraph paragraph2 = document.createParagraph();
+        //adding arabic lang
+        CTP ctp2 = paragraph2.getCTP();
+        CTPPr ctppr2 = ctp.getPPr();
+        if (ctppr2 == null) ctppr2 = ctp.addNewPPr();
+        ctppr2.addNewBidi().setVal(STOnOff.ON);
+        paragraph2.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun paragraphtitle2 = paragraph2.createRun();
+        paragraphtitle2.setText("اشعار دفع مستحقات مادية");
+        paragraphtitle2.setColor("000000");
+        paragraphtitle2.setFontSize(18);
+        //Body
+        XWPFParagraph paragraph3 = document.createParagraph();
+        //adding arabic lang
+        CTP ctp3 = paragraph3.getCTP();
+        CTPPr ctppr3 = ctp.getPPr();
+        if (ctppr3 == null) ctppr3 = ctp.addNewPPr();
+        ctppr3.addNewBidi().setVal(STOnOff.ON);
+        paragraph3.setAlignment(ParagraphAlignment.RIGHT);
+        XWPFRun paragraphbody = paragraph3.createRun();
+        paragraphbody.addBreak();
+        paragraphbody.addBreak();
+        paragraphbody.setText("الى البنك:");
+        paragraphbody.setText(settledChaque.FirstBank);
+        paragraphbody.addBreak();
+        paragraphbody.setText(String.valueOf(settledChaque.FirstBankSW));
+        paragraphbody.setText(":" + "رمز الفرع");
+        paragraphbody.addBreak();
+        paragraphbody.addBreak();
+        paragraphbody.setText("استنادا لنتيجة نظام التسوية اللحظية الخاص بمصرف سورية المركزي توجب عليكم دفع المستحقات المالية المفروضة عليكم و قدرها");
+        paragraphbody.setText(")");
+        paragraphbody.setText(settledChaque.Amount+ "(ل.س");
+        paragraphbody.setText("");
+        paragraphbody.addBreak();
+        paragraphbody.addBreak();
+        paragraphbody.setText(":علما انه سيتم تسديد هذ المستحقات الى");
+        paragraphbody.setText("");
+        paragraphbody.addBreak();
+        paragraphbody.setText("البنك:");
+        paragraphbody.setText(settledChaque.SecondBank);
+        paragraphbody.addBreak();
+        paragraphbody.setText(String.valueOf(settledChaque.SecondBankSW));
+        paragraphbody.setText(":" + "رمز الفرع");
+        paragraphbody.addBreak();
+        paragraphbody.addBreak();
+        paragraphbody.addBreak();
+        paragraphbody.addBreak();
+        paragraphbody.addBreak();
+        paragraphbody.setText(":دمشق في");
+        paragraphbody.addBreak();
+        paragraphbody.setText(dateFormat.format(date));
+        paragraphbody.setBold(false);
+        paragraphbody.setColor("101010");
+        paragraphbody.setFontSize(15);
+        try {
+            document.write(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("fontstyle.docx written successully");
+
+
+
+
+    }
+
+}
+
