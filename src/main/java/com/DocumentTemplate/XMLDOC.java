@@ -15,7 +15,7 @@ public class XMLDOC implements ViewDocTemplate {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
 
-        String viewName = "greeting";
+        String viewName = "DOC/greeting";
 
         Map<String, Object> model = new HashMap<String, Object>();
 
@@ -27,7 +27,7 @@ public class XMLDOC implements ViewDocTemplate {
         model.put("Date",dateFormat.format(date));
 
 
-
+        
         return new ModelAndView(viewName , model);
     }
 }

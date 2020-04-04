@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import com.example.MQ.Chaque;
 
 @RestController
@@ -15,7 +14,7 @@ public class SettlementController {
 	
 	@Autowired
 	SettlementService settlementService ; 
-	
+
 	//add protection or lock the method
 	@RequestMapping(method = RequestMethod.GET ,value = "/settlement/invoke" )
 	public void invokeSettleMethod() {
@@ -83,8 +82,8 @@ public class SettlementController {
 		ModelAndView mav = new ModelAndView("settlement/settled");
 		mav.addObject("checksList",this.settlementService.getSettledChecks());
 		return mav ; 
-	}
-	
+	}	
+		
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/onhold")
 	public ModelAndView getonHoldChecks() {
 		ModelAndView mav = new ModelAndView("settlement/onHold");
@@ -92,11 +91,6 @@ public class SettlementController {
 		return mav ; 
 	}
 	
-	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/reports")
-	public ModelAndView getonSettlementReports() {
-		ModelAndView mav = new ModelAndView("settlement/reports");
-		mav.addObject("checksList",this.settlementService.getSettledChecksReports());
-		return mav ; 
-	}
-
+	
+	
 }

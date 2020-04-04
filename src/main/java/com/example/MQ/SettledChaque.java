@@ -93,5 +93,9 @@ public class SettledChaque {
 		public void setLocalDateTime(LocalDateTime localDateTime) {
 			this.localDateTime = localDateTime;
 		}
+
+		public int getId() {
+			return id;
+		}
 	    
 }

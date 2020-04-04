@@ -78,7 +78,7 @@ public class SettlementService extends MasterService {
 	}
 	
 	//change schedule invoke time and isolate it in another thread 
-	@Scheduled(fixedRate = 10000)
+	@Scheduled(fixedRate = 7000000)
 	public void settleChecks() {
 		System.out.println("ettlement invoked at : "+MasterService.getCurrDateTime());
 		initSettlementOperation(); 
@@ -172,16 +172,22 @@ public class SettlementService extends MasterService {
 		return this.onHoldChecksRepository.findByActiveFalse() ; 
 	}
 	
-	public List<Chaque> getSettledChecks(){
-		return this.onHoldChecksRepository.findByActiveTrue();
+	public List<SettledChaque> getSettledChecks(){
+		return this.settledChecksRepository.findAll(); 
 	}
 	
 	public List<Chaque> getAllChecks(){
 		return this.onHoldChecksRepository.findAll() ; 
 	}
-	
-	public List<SettledChaque> getSettledChecksReports(){
-		return this.settledChecksRepository.findAll();
+
+	public SettledChaque findCheckByID(int id ) {
+		List<SettledChaque> all = this.settledChecksRepository.findAll() ; 
+		for(SettledChaque settledCheck : all) {
+			if(settledCheck.getId() == id ) {
+				return settledCheck; 
+			}
+		}
+		return null ; 
 	}
 	
 }

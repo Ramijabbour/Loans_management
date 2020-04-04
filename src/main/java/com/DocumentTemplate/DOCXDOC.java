@@ -13,11 +13,15 @@ import java.util.Date;
 
 
 public class DOCXDOC implements CreateDocTemplate {
+	
+	public DOCXDOC(){
+	}
+	
     @Override
     public void CreateRTGSDoc(SettledChaque settledChaque) {
 
 
-        String Path="D:\\";
+        String Path=System.getProperty("user.dir");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         String Filename=settledChaque.getFirstBankSW()+dateFormat.format(date);

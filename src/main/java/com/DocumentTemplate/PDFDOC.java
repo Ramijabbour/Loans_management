@@ -13,15 +13,15 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 public class PDFDOC implements CreateDocTemplate  {
 
-    public static Font normal = FontFactory.getFont("D:\\GitHub\\Loans_management\\src\\main\\resources\\static\\fonts\\DocFonts\\arabtype.ttf", BaseFont.IDENTITY_H, 26);
-    public static Font normal2 = FontFactory.getFont("D:\\GitHub\\Loans_management\\src\\main\\resources\\static\\fonts\\DocFonts\\arabtype.ttf", BaseFont.IDENTITY_H, 18);
-    public static Font normal3 = FontFactory.getFont("D:\\GitHub\\Loans_management\\src\\main\\resources\\static\\fonts\\DocFonts\\arabtype.ttf", BaseFont.IDENTITY_H, 18);
+    public static Font normal = FontFactory.getFont(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\fonts\\DocFonts\\arabtype.ttf", BaseFont.IDENTITY_H, 26);
+    public static Font normal2 = FontFactory.getFont(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\fonts\\DocFonts\\arabtype.ttf", BaseFont.IDENTITY_H, 18);
+    public static Font normal3 = FontFactory.getFont(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\fonts\\DocFonts\\arabtype.ttf", BaseFont.IDENTITY_H, 18);
 
     @Override
     public void CreateRTGSDoc(SettledChaque settledChaque) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        String Path="D:\\";
+        String Path=System.getProperty("user.dir");
         String Filename=settledChaque.getFirstBankSW()+dateFormat.format(date);
         normal.setColor(BaseColor.BLACK.darker());
         normal2.setColor(BaseColor.BLACK.brighter());

@@ -39,6 +39,7 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
+                    	<th> EntryId </th>
                         <th> CheckId </th>
                         <th> FirstBank </th>
                         <th> FirstBankSW </th>
@@ -46,7 +47,7 @@
                         <th> SecondBankSW </th>
                         <th> Amount </th>
                         <th> Date </th>
-                        <th> state </th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -54,6 +55,7 @@
                         <td colspan="2"> no checks available</td>
                     </tr>
                     <tr th:each="check : ${checksList}">
+                    	<td><span th:text="${check.id}"> EntryId </span></td>
                         <td><span th:text="${check.CheckId}"> CheckId </span></td>
                         <td><span th:text="${check.FirstBank}"> FirstBank </span></td>
                         <td><span th:text="${check.FirstBankSW}"> FirstBankSW </span></td>
@@ -61,7 +63,14 @@
                         <td><span th:text="${check.SecondBankSW}"> SecondBankSW </span></td>
                         <td><span th:text="${check.Amount}"> Amount </span></td>
                         <td><span th:text="${check.localDateTime}"> Date </span></td>
-                        <td><span th:text="${check.active}"> state </span></td>
+                     
+                    	 <td>
+                          <form action="#" th:action="@{/export/xml/} + ${{check.id}}" method="get">
+                              <button th:id="'table_entry_childs_button_' + ${check.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                                  <i>Report</i>
+                              </button>
+                          </form>
+                      </td>
                     </tr>
                 </tbody>
             </table>
