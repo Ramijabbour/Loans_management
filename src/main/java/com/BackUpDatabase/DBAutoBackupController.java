@@ -23,8 +23,6 @@ public class DBAutoBackupController implements CommandLineRunner {
     @Override
     @Scheduled(cron = "0 30 1 * * ?")
     public void run(String... args) throws Exception {
-
-
     }
 
     public static void Backupdbtosql() {
@@ -111,6 +109,5 @@ public class DBAutoBackupController implements CommandLineRunner {
         }
 
     }
-
 
 }
