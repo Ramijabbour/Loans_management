@@ -1,4 +1,4 @@
-package com.BackUpDatabase;
+	package com.BackUpDatabase;
 
 
 import org.springframework.boot.CommandLineRunner;
@@ -25,15 +25,15 @@ public class DBAutoBackupController  {
         String dbNameList = "client_1 client_2";
 
         String fileName = "Daily_DB_Backup"; // default file name
-        String folderPath = "D:\\";
+        String folderPath = System.getProperty("user.dir");
         File f1 = new File(folderPath);
         f1.mkdir();
 
         String saveFileName = fileName + "_" + backupDateStr + ".sql";
-        String savePath = "D:\\" + File.separator + saveFileName;
+        String savePath = System.getProperty("user.dir") + File.separator + saveFileName;
 
         //*HERE
-        String executeCmd = "mysqldump --user=root --password=jad@1234 --all-databases > backup.sql";
+        String executeCmd = "mysqldump --user=root --password=root --all-databases > backup.sql";
 
         Process runtimeProcess = null;
         try {
