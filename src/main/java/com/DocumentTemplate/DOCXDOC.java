@@ -21,19 +21,19 @@ public class DOCXDOC implements CreateDocTemplate {
     public void CreateRTGSDoc(SettledChaque settledChaque) {
 
 
-        String Path=System.getProperty("user.dir");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String Path= System.getProperty("user.dir")+"\\";
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Date date = new Date();
         String Filename=settledChaque.getFirstBankSW()+dateFormat.format(date);
         //Blank Document
         XWPFDocument document = new XWPFDocument();
-
-
         //Write the Document in file system
         FileOutputStream out = null;
         try {
+          	File file = new File(Path+Filename+".docx");
+        	file.createNewFile();
             out = new FileOutputStream(new File(Path+Filename+".docx"));
-        } catch (FileNotFoundException e) {
+        } catch (Exception e ) {
             e.printStackTrace();
         }
 
@@ -120,11 +120,12 @@ public class DOCXDOC implements CreateDocTemplate {
         }
         try {
             out.close();
+            document.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         System.out.println("fontstyle.docx written successully");
-
+        
 
 
 

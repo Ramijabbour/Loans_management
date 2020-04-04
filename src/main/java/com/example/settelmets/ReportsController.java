@@ -24,23 +24,33 @@ public class ReportsController {
 	@Autowired
 	private SettlementService settlementService ; 
 	
-	@RequestMapping(method = RequestMethod.POST , value = "/settlement/checks/settled/reports/exort/docx")
-	public void getDocxReport(@ModelAttribute SettledChaque settledChaque,HttpServletResponse response ) throws IOException{
-		this.reportsService.exportDocx(settledChaque);
-		response.sendRedirect("");//download Link 	
+	@RequestMapping(method = RequestMethod.GET,value = "/settlement/checks/settled/reports/export/{id}")
+	public ModelAndView getExportIndex(@PathVariable int id ) {
+		SettledChaque settledCheck = this.settlementService.findCheckByID(id);
+		ModelAndView mav = new ModelAndView("DOC/exportHandler");
+		mav.addObject("check",settledCheck);
+		return mav ; 
 	}
 	
-	@RequestMapping(method = RequestMethod.POST , value = "/settlement/checks/settled/reports/export/pdf")
-	public void getPdfReport(@ModelAttribute SettledChaque settledChaque , HttpServletResponse response )throws IOException {
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled/reports/export/docx/{id}")
+	public void getDocxReport(@PathVariable int id,HttpServletResponse response ) throws IOException{
+		SettledChaque settledChaque = this.settlementService.findCheckByID(id) ; 
+		this.reportsService.exportDocx(settledChaque);
+		//response.sendRedirect("");//download Link 	
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled/reports/export/pdf/{id}")
+	public void getPdfReport(@PathVariable int id , HttpServletResponse response )throws IOException {
+		SettledChaque settledChaque = this.settlementService.findCheckByID(id) ; 
 		this.reportsService.excportPDF(settledChaque);
-		response.sendRedirect("");//download Link
+		//response.sendRedirect("");//download Link
 	}
 
 	
-	@RequestMapping(method = RequestMethod.GET , value = "/export/xml/{id}")
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled/reports/export/xml/{id}")
 	public ModelAndView getXmlReport(@PathVariable int id) {
-		SettledChaque sc = this.settlementService.findCheckByID(id) ; 
-		return this.reportsService.exportXml(sc);
+		SettledChaque settledChaque = this.settlementService.findCheckByID(id) ; 
+		return this.reportsService.exportXml(settledChaque);
 	}
 
 	
