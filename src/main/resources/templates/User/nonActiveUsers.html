@@ -44,7 +44,7 @@
                         <th> Gender </th>
                         <th> Email </th>
                         <th> Roles </th>
-                        <th> Permissions </th>
+                        <th> CreatedAt </th>
                         <th> Active </th>
                     </tr>
                 </thead>
@@ -58,7 +58,7 @@
                         <td><span th:text="${user.Gender}"> Gender </span></td>
                         <td><span th:text="${user.email}"> Email </span></td>
                         <td><span th:text="${user.UserRoles}"> Roles </span></td>
-                        <td><span th:text="${user.UserPermissions}"> Permissions </span></td>
+                        <td><span th:text="${user.createdAt}"> CreatedAt </span></td>
                         <td><span th:text="${user.Active}"> Active </span></td>
                       <td>
                           <form action="#" th:action="@{/adminstration/users/user/activate/} + ${{user.UserID}}" method="post">

@@ -1,6 +1,9 @@
 package com.example.security.user;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.MasterBackUpService;
 import com.example.MasterService;
 import com.example.aspect.Exceptions;
 import com.example.security.UserRoles.UserRoleService;
@@ -18,7 +22,7 @@ import com.example.security.roles.Roles;
 import com.example.security.userPermissions.UserPermissionsService;
 
 @Service
-public class UserService extends MasterService {
+public class UserService extends MasterService implements MasterBackUpService {
 
 	@Autowired 
 	UserRepository userRepository ; 	
@@ -213,6 +217,23 @@ public class UserService extends MasterService {
 		User user = this.getUserByID(userid);
 		user.setActive(false);
 		this.userRepository.save(user);		
+	}
+
+
+	@Override
+	public void backUpData() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("mm-ss");  
+		String fileName =  System.getProperty("user.dir")+"\\BackUp\\Users_BackUp_"+dtf.format(MasterService.getCurrDateTime()) +".ser";
+		File myObj = new File(fileName);
+		System.out.println("file name "+fileName);
+		try {
+			myObj.createNewFile();
+			System.out.println("File created: " + myObj.getName());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

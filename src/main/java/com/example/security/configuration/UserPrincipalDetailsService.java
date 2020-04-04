@@ -5,11 +5,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.MasterService;
 import com.example.security.user.User;
 import com.example.security.user.UserRepository;
 
 @Service
-public class UserPrincipalDetailsService implements UserDetailsService {
+public class UserPrincipalDetailsService extends MasterService implements UserDetailsService {
 
 	private UserRepository userRepository ; 
 	
@@ -22,6 +23,8 @@ public class UserPrincipalDetailsService implements UserDetailsService {
 		User user = this.userRepository.findByUsername(username) ;
 		if(user == null ) {
 			user = new User();
+		}else {
+			super.activityService.addActivityLog(user.getUserID(),user.getUsername() , "Login");
 		}
 		UserPrincipal userPrincipal = new UserPrincipal(user) ;  
 		

@@ -20,7 +20,7 @@ public class DOCXDOC implements CreateDocTemplate {
         String Path="D:\\";
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        String Filename=settledChaque.FirstBankSW+dateFormat.format(date);
+        String Filename=settledChaque.getFirstBankSW()+dateFormat.format(date);
         //Blank Document
         XWPFDocument document = new XWPFDocument();
 
@@ -78,15 +78,15 @@ public class DOCXDOC implements CreateDocTemplate {
         paragraphbody.addBreak();
         paragraphbody.addBreak();
         paragraphbody.setText("الى البنك:");
-        paragraphbody.setText(settledChaque.FirstBank);
+        paragraphbody.setText(settledChaque.getFirstBank());
         paragraphbody.addBreak();
-        paragraphbody.setText(String.valueOf(settledChaque.FirstBankSW));
+        paragraphbody.setText(String.valueOf(settledChaque.getFirstBankSW()));
         paragraphbody.setText(":" + "رمز الفرع");
         paragraphbody.addBreak();
         paragraphbody.addBreak();
         paragraphbody.setText("استنادا لنتيجة نظام التسوية اللحظية الخاص بمصرف سورية المركزي توجب عليكم دفع المستحقات المالية المفروضة عليكم و قدرها");
         paragraphbody.setText(")");
-        paragraphbody.setText(settledChaque.Amount+ "(ل.س");
+        paragraphbody.setText(settledChaque.getAmount()+ "(ل.س");
         paragraphbody.setText("");
         paragraphbody.addBreak();
         paragraphbody.addBreak();
@@ -94,9 +94,9 @@ public class DOCXDOC implements CreateDocTemplate {
         paragraphbody.setText("");
         paragraphbody.addBreak();
         paragraphbody.setText("البنك:");
-        paragraphbody.setText(settledChaque.SecondBank);
+        paragraphbody.setText(settledChaque.getSecondBank());
         paragraphbody.addBreak();
-        paragraphbody.setText(String.valueOf(settledChaque.SecondBankSW));
+        paragraphbody.setText(String.valueOf(settledChaque.getSecondBankSW()));
         paragraphbody.setText(":" + "رمز الفرع");
         paragraphbody.addBreak();
         paragraphbody.addBreak();

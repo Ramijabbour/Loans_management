@@ -1,7 +1,7 @@
 package com.example.Notifications;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.example.MasterService;
 import com.example.security.roles.Roles;
 
 @Entity
@@ -20,9 +21,11 @@ public class Notification {
 	private String Link ; 
 	private String TargetedRoles ="";
 	private boolean Status = false ; 
+	private LocalDateTime localDateTime ; 
 	
 	public void setNotificationRoles(String roles ) {
 		this.TargetedRoles = roles ; 
+		
 	}
 	
 	
@@ -62,6 +65,7 @@ public class Notification {
 	
 	public Notification() {
 		super();
+		this.localDateTime = MasterService.getCurrDateTime() ;
 	}
 	
 	public Notification(String notificationTitle, String link, String targetedRoles) {
@@ -69,6 +73,7 @@ public class Notification {
 		NotificationTitle = notificationTitle;
 		Link = link;
 		this.setNotificationRoles(targetedRoles);
+		this.localDateTime = MasterService.getCurrDateTime() ;
 	}
 
 	public int getNotificationId() {
@@ -125,5 +130,19 @@ public class Notification {
 		result.add(tempString);
 		return result ; 
 	}
+
+
+
+	public LocalDateTime getLocalDateTime() {
+		return localDateTime;
+	}
+
+
+
+	public void setLocalDateTime(LocalDateTime localDateTime) {
+		this.localDateTime = localDateTime;
+	}
+	
+	
 	
 }

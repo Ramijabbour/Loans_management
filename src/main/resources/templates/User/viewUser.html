@@ -58,6 +58,11 @@
                    <input type="text" name="email" class="form-control"  th:field="*{user.Gender}" readonly>
                   </div>
 
+				<div class="form-group">
+                   <label for="exampleInputPassword1">Created At</label>
+                   <input type="text" name="email" class="form-control"  th:field="*{user.CreatedAt}" readonly>
+                  </div>
+
               </div>
               
               <table id="example2" class="table table-bordered table-hover">
@@ -125,8 +130,11 @@
                      </button>
               </form>
               <p></p>
-                  
-              
+              <form action="#" th:action="@{/adminstration/logs/userlogs/} + ${{user.UserID}}" method="get">
+                    <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                    	<i>View User Logs</i>
+                     </button>
+              </form>
               </div>
               <!-- /.card-header -->
               <!-- form start -->

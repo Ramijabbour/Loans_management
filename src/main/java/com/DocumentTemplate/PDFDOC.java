@@ -22,7 +22,7 @@ public class PDFDOC implements CreateDocTemplate  {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         String Path="D:\\";
-        String Filename=settledChaque.FirstBankSW+dateFormat.format(date);
+        String Filename=settledChaque.getFirstBankSW()+dateFormat.format(date);
         normal.setColor(BaseColor.BLACK.darker());
         normal2.setColor(BaseColor.BLACK.brighter());
         normal3.setColor(BaseColor.GRAY.darker());
@@ -35,9 +35,9 @@ public class PDFDOC implements CreateDocTemplate  {
             PdfPCell cell = new PdfPCell();
             Paragraph p = new Paragraph("الجمهورية العربية السورية \nمصرف سورية المركزي\nنظام التسوية اللحظية\n\n                       اشعار دفع مستحقات مادية\n\n", normal);
             Paragraph p1 = new Paragraph("\n\n\n");
-            Paragraph p2=new Paragraph("الى البنك: " + settledChaque.FirstBank+"\n"+"رمز الفرع: "+settledChaque.FirstBankSW+"\n"+"\n"+"" +
-                    "استنادا لنتيجة نظام التسوية اللحظية الخاص بمصرف سورية المركزي توجب عليكم دفع المستحقات المالية المفروضة عليكم و قدرها("+settledChaque.Amount+")"+"ل.س"+
-                    "\n\n"+"علما انه سيتم تسديد هذه المستحقات الى:"+"\n"+"البنك: "+settledChaque.SecondBank+"\n"+"رمز الفرع: "+settledChaque.SecondBankSW+"\n\n\n\n\nدمشق في:"+
+            Paragraph p2=new Paragraph("الى البنك: " + settledChaque.getFirstBank()+"\n"+"رمز الفرع: "+settledChaque.getFirstBankSW()+"\n"+"\n"+"" +
+                    "استنادا لنتيجة نظام التسوية اللحظية الخاص بمصرف سورية المركزي توجب عليكم دفع المستحقات المالية المفروضة عليكم و قدرها("+settledChaque.getAmount()+")"+"ل.س"+
+                    "\n\n"+"علما انه سيتم تسديد هذه المستحقات الى:"+"\n"+"البنك: "+settledChaque.getSecondBank()+"\n"+"رمز الفرع: "+settledChaque.getSecondBankSW()+"\n\n\n\n\nدمشق في:"+
                     "\n"+dateFormat.format(date),normal2);
             // Paragraph p3 = new Paragraph(Bank,normal2);
             p.setAlignment(PdfPCell.ALIGN_LEFT);

@@ -1,5 +1,6 @@
 package com.example.security.user;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.example.MasterService;
+
 @Entity
-public class User {
+public class User implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int UserID ;
@@ -25,11 +31,11 @@ public class User {
 	private String Gender="" ;
 	private String UserPermissions = " " ; 
 	private String UserRoles =" "; 
-	
+	private LocalDateTime createdAt ; 
 	private boolean Active = false ; 
 
 	
-	public User() {}
+	public User() {this.createdAt = MasterService.getCurrDateTime() ; }
 	
 	public User(String email, String password, String username, String gender, String userPermissions,
 			String userRoles, boolean isActive) {
@@ -41,6 +47,7 @@ public class User {
 		UserPermissions = userPermissions;
 		UserRoles = userRoles;
 		this.Active = isActive;
+		this.createdAt = MasterService.getCurrDateTime() ; 
 	}
 	
 	
@@ -111,6 +118,15 @@ public class User {
 
 	public void setActive(boolean active) {
 		Active = active;
+	}
+	
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public boolean hasRole(String role) {
@@ -203,5 +219,6 @@ public class User {
 			}
 		}
 	}
+
 	
 }

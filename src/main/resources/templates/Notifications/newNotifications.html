@@ -18,7 +18,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Notifications</li>
+              <li class="breadcrumb-item active">New Notifications</li>
             </ol>
           </div>
         </div>
@@ -34,12 +34,13 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-              <h4>Notifications</h4>
+              <h4>New Notifications</h4>
               </div>
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th> Notification </th>
+                        <th> TimeStamp </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,7 @@
                     </tr>
                     <tr th:each="notification : ${notificationslist}">
                         <td><span th:text="${notification.NotificationTitle}"> Notification </span></td>
+                        <td><span th:text="${notification.localDateTime}"> TimeStamp </span></td>  
                         <td>
                           <form action="#" th:action="@{/notifications/redirect/} + ${{notification.NotificationId}}" method="get">
                               <button th:id="'table_entry_childs_button_' + ${notification.NotificationId}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">

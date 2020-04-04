@@ -1,24 +1,31 @@
 package com.example.MQ;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.example.MasterService;
 
 @Entity
 public class SettledChaque {
 
 	 @Id
 	    @GeneratedValue(strategy = GenerationType.AUTO)
-	    public int id;
-	    public int CheckId;
-	    public String FirstBank;
-	    public int FirstBankSW;
-	    public String SecondBank;
-	    public int SecondBankSW;
-	    public double Amount;
+	 	private int id;
+	 	private int CheckId;
+	 	private String FirstBank;
+	 	private int FirstBankSW;
+	 	private String SecondBank;
+	 	private int SecondBankSW;
+	 	private double Amount;
 
+	 	private LocalDateTime localDateTime ; 
+	 	
 	    public SettledChaque() {
+	    	 this.localDateTime = MasterService.getCurrDateTime() ; 
 	    }
 
 	    public SettledChaque(int id , String firstBank, int firstBankSW, String secondBank, int secondBankSW, double amount) {
@@ -28,6 +35,7 @@ public class SettledChaque {
 	        SecondBank = secondBank;
 	        SecondBankSW = secondBankSW;
 	        Amount = amount;
+	        this.localDateTime = MasterService.getCurrDateTime() ; 
 	    }
 
 	    public int getCheckId() {
@@ -77,4 +85,13 @@ public class SettledChaque {
 	    public void setAmount(double amount) {
 	        Amount = amount;
 	    }
+
+		public LocalDateTime getLocalDateTime() {
+			return localDateTime;
+		}
+
+		public void setLocalDateTime(LocalDateTime localDateTime) {
+			this.localDateTime = localDateTime;
+		}
+	    
 }

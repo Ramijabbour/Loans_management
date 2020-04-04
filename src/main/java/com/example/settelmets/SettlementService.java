@@ -3,8 +3,10 @@ package com.example.settelmets;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.example.MasterService;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
 import com.example.MQ.Chaque;
@@ -13,7 +15,7 @@ import com.example.MQ.SettledChaque;
 import com.example.MQ.SettledChecksRepository;
 
 @Service
-public class SettlementService {
+public class SettlementService extends MasterService {
 
 	@Autowired 
 	private OnHoldCheckRepository onHoldChecksRepository ;  	
@@ -75,7 +77,10 @@ public class SettlementService {
 		return banks; 
 	}
 	
+	//change schedule invoke time and isolate it in another thread 
+	@Scheduled(fixedRate = 10000)
 	public void settleChecks() {
+		System.out.println("ettlement invoked at : "+MasterService.getCurrDateTime());
 		initSettlementOperation(); 
 		SettelmentHandler.setNumberOfParticipants(this.ParticipantsCount);
 		if(ParticipantsIds.size() != 0 ) {
@@ -84,23 +89,20 @@ public class SettlementService {
 			this.settledChecksRepository.saveAll(resultList);
 			
 		}
+		super.notificationsService.addNotification("Gross Settlement reports ready", "/settlement/checks/reports", "SUPER");
 		// add result validation 
-		// change check state 
-		// export results to another check model objects and repo
 	}
-	
 	
 	public int addCheck(Chaque check ) {
 		int result = testCheckInfoValidation(check) ; 
 		if(result == 0 ) {
 			this.onHoldChecksRepository.save(check);
+			super.notificationsService.addNotification("check added to settlement Service", "/settlement/checks/all", "SUPER");
 			return 0 ; 
 		}else{
 			return result ; 
 		}
-	}
-	
-	
+	}	
 
 	/*
 	 * 		ERROR 				 | Error code  |
@@ -166,7 +168,6 @@ public class SettlementService {
 		return false ; 
 	}
 
-	
 	public List<Chaque> getOnHoldChecks(){	
 		return this.onHoldChecksRepository.findByActiveFalse() ; 
 	}
@@ -182,6 +183,5 @@ public class SettlementService {
 	public List<SettledChaque> getSettledChecksReports(){
 		return this.settledChecksRepository.findAll();
 	}
-	
 	
 }

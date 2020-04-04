@@ -7,12 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.example.Notifications.NotificationsService;
+
 @Component
 public class OrderMessageListener {
 
     @Autowired
     private OnHoldCheckRepository onHoldCheckRepository;
-
+    
+    @Autowired
+    private NotificationsService notificationsService ; 
+    
+    
     /*
     static final Logger logger = LoggerFactory.getLogger(OrderMessageListener.class);
 
@@ -22,6 +28,7 @@ public class OrderMessageListener {
         onHoldCheckRepository.save(check);
         logger.info("Order Received: "+check);
     }
+    
     @Scheduled(fixedRate = 7200000)
     public void reportCurrentTime() {
        return;

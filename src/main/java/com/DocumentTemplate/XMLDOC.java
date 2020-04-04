@@ -19,11 +19,11 @@ public class XMLDOC implements ViewDocTemplate {
 
         Map<String, Object> model = new HashMap<String, Object>();
 
-        model.put("Bank",settledChaque.FirstBank);
-        model.put("Code",settledChaque.FirstBankSW);
-        model.put("Bank2",settledChaque.SecondBank);
-        model.put("Code2",settledChaque.SecondBankSW);
-        model.put("Amount",settledChaque.Amount);
+        model.put("Bank",settledChaque.getFirstBank());
+        model.put("Code",settledChaque.getFirstBankSW());
+        model.put("Bank2",settledChaque.getSecondBank());
+        model.put("Code2",settledChaque.getSecondBankSW());
+        model.put("Amount",settledChaque.getAmount());
         model.put("Date",dateFormat.format(date));
 
 

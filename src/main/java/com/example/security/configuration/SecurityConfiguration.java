@@ -38,10 +38,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		.formLogin().defaultSuccessUrl("/index")
 		.loginPage("/login").permitAll()
 		.and()
-		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login") ;
+		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").deleteCookies("JSESSIONID");
 	}
-	
-	
+		
 	
 	//cause we are using the data base 
 	@Bean
@@ -57,4 +56,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		return new BCryptPasswordEncoder(); 
 	}
 	
+
 }

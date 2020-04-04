@@ -13,12 +13,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Active Users</h1>
+            <h1>System Logs</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Adminstration</a></li>
-              <li class="breadcrumb-item active">Active Users</li>
+              <li class="breadcrumb-item"><a href="#">System</a></li>
+              <li class="breadcrumb-item active">Logs</li>
             </ol>
           </div>
         </div>
@@ -34,46 +34,26 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-              <h4>Active Users</h4>
+              <h4>UserLogs</h4>
               </div>
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th> ID </th>
+                        <th> UserId </th>
                         <th> UserName </th>
-                        <th> Gender </th>
-                        <th> Email </th>
-                        <th> Roles </th>
-                        <th> CreatedAt</th>
-                        <th> Active </th>
+                        <th> Activity </th>
+                        <th> TimeStamp </th>
                     </tr>
                 </thead>
                 <tbody>
-                <tr th:if="${userslist.empty}">
-                        <td colspan="2"> No Active Users </td>
+                <tr th:if="${logList.empty}">
+                        <td colspan="2"> No Logs Available for this user </td>
                     </tr>
-                    <tr th:each="user : ${userslist}">
-                        <td><span th:text="${user.UserID}"> ID </span></td>
-                        <td><span th:text="${user.username}"> UserName </span></td>
-                        <td><span th:text="${user.Gender}"> Gender </span></td>
-                        <td><span th:text="${user.email}"> Email </span></td>
-                        <td><span th:text="${user.UserRoles}"> Roles </span></td>
-                        <td><span th:text="${user.createdAt}"> CreatedAt </span></td>
-                        <td><span th:text="${user.Active}"> Active </span></td>
-                      <td>
-                          <form action="#" th:action="@{/adminstration/users/user/deactivate/} + ${{user.UserID}}" method="post">
-                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                                  <i>deActivate</i>
-                              </button>
-                          </form>
-                      </td>
-                       <td>
-                          <form action="#" th:action="@{/adminstration/users/delete/} + ${{user.UserID}}" method="post">
-                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                                  <i>Delete</i>
-                              </button>
-                          </form>
-                      </td>
+                    <tr th:each="log : ${logList}">
+                        <td><span th:text="${log.UserId}"> UserId </span></td>
+                        <td><span th:text="${log.UserName}"> UserName </span></td>
+                        <td><span th:text="${log.Activity}"> Activity </span></td>
+                        <td><span th:text="${log.TimeStamp}"> TimeStamp </span></td>
                     </tr>
                 </tbody>
             </table>

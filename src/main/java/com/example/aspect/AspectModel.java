@@ -69,7 +69,11 @@ public class AspectModel {
 		MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         String className = methodSignature.getDeclaringType().getSimpleName();
         String methodName = methodSignature.getName();
+        String[] param = methodSignature.getParameterNames();
         System.out.println("excution request for : " + className + "." + methodName );
+        for(String parameter : param ) {
+        	System.out.println("with parameter : "+parameter);
+        }
 	}
 	
 	public void checkUserPermission(JoinPoint  proceedingJoinPoint , User user ) {
