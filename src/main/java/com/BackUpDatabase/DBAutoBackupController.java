@@ -13,9 +13,12 @@ import java.util.Date;
 
 @Configuration
 @EnableScheduling
-public class DBAutoBackupController  {
-//    @Scheduled(cron = "0 30 1 * * ?")
-    public static void main(String[] args)   {
+public class DBAutoBackupController implements CommandLineRunner {
+
+
+    @Override
+    @Scheduled(cron = "0 30 1 * * ?")
+    public void run(String... args) throws Exception {
 
         System.out.println("Backup Started at " + new Date());
 
@@ -24,16 +27,16 @@ public class DBAutoBackupController  {
         String backupDateStr = format.format(backupDate);
         String dbNameList = "client_1 client_2";
 
-        String fileName = "Daily_DB_Backup"; // default file name
-        String folderPath = System.getProperty("user.dir");
+        String fileName = "Daily_DB_Backup";
+        String folderPath = "C:\\home";
         File f1 = new File(folderPath);
         f1.mkdir();
 
         String saveFileName = fileName + "_" + backupDateStr + ".sql";
-        String savePath = System.getProperty("user.dir") + File.separator + saveFileName;
+        String savePath = filePath + File.separator + saveFileName;
 
-        //*HERE
-        String executeCmd = "mysqldump --user=root --password=root --all-databases > backup.sql";
+        String executeCmd = "mysqldump -u " + dbUserName + " -p" + dbUserPassword + "  --databases " + dbNameList
+                + " -r " + savePath;
 
         Process runtimeProcess = null;
         try {
