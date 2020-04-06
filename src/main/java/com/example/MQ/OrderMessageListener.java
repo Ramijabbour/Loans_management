@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Component
 public class OrderMessageListener {
 
     @Autowired
@@ -25,9 +24,7 @@ public class OrderMessageListener {
     
 
     static final Logger logger = LoggerFactory.getLogger(OrderMessageListener.class);
-
     @RabbitListener(queues = RabbitConfig.QUEUE_ORDERS)
-    @Transactional
     public void processOrder(Chaque check) {
         check.id=check.id;
         System.out.println(check.Amount+" "+check.CheckId+" "+check.FirstBank+" "+check.SecondBank+" "+check.active);
