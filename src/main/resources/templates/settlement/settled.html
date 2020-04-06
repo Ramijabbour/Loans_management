@@ -63,14 +63,8 @@
                         <td><span th:text="${check.SecondBankSW}"> SecondBankSW </span></td>
                         <td><span th:text="${check.Amount}"> Amount </span></td>
                         <td><span th:text="${check.localDateTime}"> Date </span></td>
-                     	
-                     	<td><a th:href="@{|/settlement/checks/settled/reports/export/?id=${check.id}|}"><span th:text=download></span></a></td>
-                    	 <td>
-                          <form action="#" th:action="@{/settlement/checks/settled/reports/export/} + ${{check.id}}" method="get">
-                              <button th:id="'table_entry_childs_button_' + ${check.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                                  <i>Reports</i>
-                              </button>
-                          </form>
+                
+                    	<td> <a th:href="@{|/settlement/checks/settled/reports/export?id=${check.id}|}"><span th:text=reports></span></a></td>
                       </td>
                     </tr>
                 </tbody>
