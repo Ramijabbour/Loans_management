@@ -17,12 +17,15 @@ import com.example.Banks.BankService;
 import com.example.Banks.Banks;
 import com.example.Clients.ClientService;
 import com.example.Clients.Clients;
+import com.example.CloseLoans.CloseLoanService;
+import com.example.CloseLoans.CloseLoans;
 import com.example.FinanceType.FinanceType;
 import com.example.FinanceType.FinanceTypeService;
 import com.example.LoansType.LoansType;
 import com.example.LoansType.LoansTypeService;
 import com.example.OpenLoans.OpenLoans;
 import com.example.OpenLoans.OpenLoansService;
+import com.example.Vouchers.VoucherService;
 
 @RestController
 public class LoansController {
@@ -40,6 +43,11 @@ public class LoansController {
 	
 	@Autowired
 	OpenLoansService openLoanService; 
+	@Autowired
+	CloseLoanService closeLoanService ;
+	
+	@Autowired
+	VoucherService voucherService;
 	
 	//get All Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all")
@@ -72,6 +80,7 @@ public class LoansController {
 	public void addNewLoan(@ModelAttribute Loans loan,HttpServletResponse response) throws IOException {
 		System.out.println("posted to /Loans/addLoan "); 
 		loansService.addLoan(loan);
+		
 		OpenLoans ol =new OpenLoans(loan);
 		openLoanService.addOpenLoan(ol);
 		response.sendRedirect("/Loans/all");
@@ -126,6 +135,26 @@ public class LoansController {
 		loansService.DeleteLoan(id);
 		response.sendRedirect("/Loans/all");
 	}
+	
+	@RequestMapping(method = RequestMethod.GET , value="/Loans/CheckCloseLoan/{id}")
+	public void CheckCloseLoan(@PathVariable int id ,HttpServletResponse response) throws IOException
+	{
+		Loans loan = loansService.getOneByID(id);
+		OpenLoans open=openLoanService.getOpenLoanFromLoan(id);
+		CloseLoans closeloan=new CloseLoans(loan);
+		if (voucherService.AllVoucherPaid(id))
+		{
+			closeLoanService.addLoan(closeloan);
+			openLoanService.DeleteOpenLoan(open);
+		}
+		response.sendRedirect("/Vouchers/all/"+loan.getLoanID());
+	}
+	
+	
+	// check to Close Loan 
+	
+
+	
 
 	
 }

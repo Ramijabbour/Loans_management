@@ -1,6 +1,8 @@
 
 package com.example.OpenLoans;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,23 @@ public class OpenLoansService {
 	{
 		this.openLoanRepository.save(openLoan);
 	}
+	
+	public void DeleteOpenLoan(OpenLoans openloan)
+	{
+		openLoanRepository.delete(openloan);
+	}
+	
+	public OpenLoans getOpenLoanFromLoan(int id)
+	{
+		List<OpenLoans> allOpenLoans=openLoanRepository.findAll();
+		
+		for(OpenLoans o : allOpenLoans)
+		{
+			if(o.getLoan().getLoanID()==id)
+				return o;
+		}
+		return null;
+	}
+	
 	
 }

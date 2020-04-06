@@ -26,6 +26,8 @@ public class Loans {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int LoanID;
+    
+    public String Name ;
 
     public String FirstSide;
 
@@ -74,6 +76,9 @@ public class Loans {
 
     @ManyToOne
     private FinanceType financeType = null;
+    
+    
+    public Loans() {}
 
     public int getLoanID() {
         return LoanID;
@@ -240,5 +245,15 @@ public class Loans {
     public void setUser(User user) {
         this.user = user;
     }
+    
+    
 
-    public boolean accept(Visitor visitor) { return visitor.visit(this); }}
+    public String getName() {
+		return Name;
+	}
+
+	public void setName(String name) {
+		Name = name;
+	}
+
+	public boolean accept(Visitor visitor) { return visitor.visit(this); }}
