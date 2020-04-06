@@ -14,20 +14,20 @@ public class Chaque {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    private int CheckId;
-    private String FirstBank;
-    private int FirstBankSW;
-    private String SecondBank;
-    private int SecondBankSW;
-    private double Amount;
-	private LocalDateTime localDateTime ; 
-    private boolean active = false ; 
+    public int id;
+    public int CheckId;
+    public String FirstBank;
+    public int FirstBankSW;
+    public String SecondBank;
+    public int SecondBankSW;
+    public double Amount;
+	//public LocalDateTime localDateTime ;
+    public boolean active = false ;
     
 
 
 	public Chaque() {
-		 this.localDateTime = MasterService.getCurrDateTime() ; 
+		// this.localDateTime = MasterService.getCurrDateTime() ;
     }
 
     public Chaque(int id , String firstBank, int firstBankSW, String secondBank, int secondBankSW, double amount) {
@@ -37,7 +37,7 @@ public class Chaque {
         SecondBank = secondBank;
         SecondBankSW = secondBankSW;
         Amount = amount;
-        this.localDateTime = MasterService.getCurrDateTime() ; 
+       // this.localDateTime = MasterService.getCurrDateTime() ;
     }
 
     public int getCheckId() {
@@ -96,13 +96,13 @@ public class Chaque {
   		this.active = active;
   	}
 
-	public LocalDateTime getLocalDateTime() {
-		return localDateTime;
-	}
+//	public LocalDateTime getLocalDateTime() {
+//		return localDateTime;
+//	}
 
-	public void setLocalDateTime(LocalDateTime localDateTime) {
-		this.localDateTime = localDateTime;
-	}
+//	public void setLocalDateTime(LocalDateTime localDateTime) {
+//		this.localDateTime = localDateTime;
+//	}
 
 	public int getId() {
 		return id;

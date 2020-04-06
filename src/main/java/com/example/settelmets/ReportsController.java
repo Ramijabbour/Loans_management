@@ -53,7 +53,6 @@ public class ReportsController {
 			}
 		};
 	}
-
 	@RequestMapping(value = "/downloadpdfFile", method = RequestMethod.GET)
 	public StreamingResponseBody getSteamingFile2(HttpServletResponse response) throws IOException {
 		response.setContentType("application/pdf");
@@ -68,10 +67,6 @@ public class ReportsController {
 			}
 		};
 	}
-
-
-
-	
 	@RequestMapping(method = RequestMethod.GET,value = "/settlement/checks/settled/reports/export/{id}")
 	public ModelAndView getExportIndex(@PathVariable int id ) {
 		SettledChaque settledCheck = this.settlementService.findCheckByID(id);
