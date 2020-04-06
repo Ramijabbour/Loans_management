@@ -1,7 +1,9 @@
 package com.example.settelmets;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 
@@ -26,6 +28,7 @@ import com.example.settelmets.SettlementService;
 import com.itextpdf.kernel.geom.Path;
 import com.itextpdf.kernel.pdf.canvas.parser.clipper.Paths;
 import com.itextpdf.styledxmlparser.css.media.MediaType;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 @RestController
 public class ReportsController {
@@ -34,7 +37,40 @@ public class ReportsController {
 	private ReportsService reportsService ;
 
 	@Autowired
-	private SettlementService settlementService ; 
+	private SettlementService settlementService ;
+
+	@RequestMapping(value = "/downloaddocxFile", method = RequestMethod.GET)
+	public StreamingResponseBody getSteamingFile(HttpServletResponse response) throws IOException {
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=\"D:\\fontstyle.docx\"");
+		InputStream inputStream = new FileInputStream(new File("D:\\fontstyle.docx"));
+		return outputStream -> {
+			int nRead;
+			byte[] data = new byte[1024];
+			while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+				System.out.println("Writing some bytes of file...");
+				outputStream.write(data, 0, nRead);
+			}
+		};
+	}
+
+	@RequestMapping(value = "/downloadpdfFile", method = RequestMethod.GET)
+	public StreamingResponseBody getSteamingFile2(HttpServletResponse response) throws IOException {
+		response.setContentType("application/pdf");
+		response.setHeader("Content-Disposition", "attachment; filename=\"D:\\h.pdf\"");
+		InputStream inputStream = new FileInputStream(new File("D:\\h.pdf"));
+		return outputStream -> {
+			int nRead;
+			byte[] data = new byte[1024];
+			while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+				System.out.println("Writing some bytes of file...");
+				outputStream.write(data, 0, nRead);
+			}
+		};
+	}
+
+
+
 	
 	@RequestMapping(method = RequestMethod.GET,value = "/settlement/checks/settled/reports/export/{id}")
 	public ModelAndView getExportIndex(@PathVariable int id ) {
