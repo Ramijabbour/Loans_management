@@ -12,9 +12,10 @@ import com.example.MQ.SettledChaque;
 public class ReportsService {
 
 	
-	public void exportDocx(SettledChaque settledChaque) {
+	public String exportDocx(SettledChaque settledChaque) {
 		DOCXDOC docsGenerator = new DOCXDOC() ; 
-		docsGenerator.CreateRTGSDoc(settledChaque);
+		String downloadPath = docsGenerator.CreateRTGSDoc(settledChaque);
+		return downloadPath ; 
 	}
 	
 	public ModelAndView exportXml(SettledChaque settledChaque) {
@@ -23,9 +24,10 @@ public class ReportsService {
 		
 	}
 	
-	public void excportPDF(SettledChaque settledChaque) {
+	public String excportPDF(SettledChaque settledChaque) {
 		PDFDOC pdfGenerator = new PDFDOC(); 
-		pdfGenerator.CreateRTGSDoc(settledChaque);
+		String downloadPath =  pdfGenerator.CreateRTGSDoc(settledChaque);
+		return downloadPath ; 
 	}
 	
 }
