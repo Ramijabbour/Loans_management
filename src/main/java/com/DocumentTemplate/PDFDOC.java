@@ -18,7 +18,7 @@ public class PDFDOC implements CreateDocTemplate  {
     public static Font normal3 = FontFactory.getFont(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\fonts\\DocFonts\\arabtype.ttf", BaseFont.IDENTITY_H, 18);
 
     @Override
-    public void CreateRTGSDoc(SettledChaque settledChaque) {
+    public String CreateRTGSDoc(SettledChaque settledChaque) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Date date = new Date();
         String Path=System.getProperty("user.dir")+"//";
@@ -27,6 +27,7 @@ public class PDFDOC implements CreateDocTemplate  {
         normal2.setColor(BaseColor.BLACK.brighter());
         normal3.setColor(BaseColor.GRAY.darker());
         Document document = new Document();
+        String returnPath = Path+Filename+".pdf" ; 
         try {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(Path+Filename+".pdf"));
             document.open();
@@ -57,6 +58,7 @@ public class PDFDOC implements CreateDocTemplate  {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return returnPath ; 
     }
     }
 
