@@ -36,6 +36,9 @@ public class ReportsController {
 	@Autowired
 	private SettlementService settlementService ; 
 	
+	@Autowired 
+	private ReportLinkService reportLinkService ; 
+	
 	@RequestMapping(method = RequestMethod.GET,value = "/settlement/checks/settled/reports/export/{id}")
 	public ModelAndView getExportIndex(@PathVariable int id ) {
 		SettledChaque settledCheck = this.settlementService.findCheckByID(id);
@@ -46,20 +49,36 @@ public class ReportsController {
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled/reports/export")
 	@ResponseBody
-	public FileSystemResource  getDocxReport(@Param(value ="id") int id ,HttpServletResponse response ) throws IOException{
+	public void  getDocxReport(@Param(value ="id") int id){
 		SettledChaque settledChaque = this.settlementService.findCheckByID(id) ; 
-		String path = this.reportsService.exportDocx(settledChaque);
-		System.out.println("file path : "+path );
-		FileSystemResource fsr = new FileSystemResource(new File(path));
-		response.setContentType("application/force-download");
-		return new FileSystemResource(new File(path));
+		ReportsLinkModel reportsLinkModel = this.reportLinkService.getRportLinkModel(settledChaque.getId(),1) ; 	
+		String path ; 
+		if(reportsLinkModel == null ) {
+			path = this.reportsService.exportDocx(settledChaque);
+			System.out.println("file path : "+path );
+			reportsLinkModel = new ReportsLinkModel(settledChaque.getId(),path,1);
+			this.reportLinkService.addReportLinkModel(reportsLinkModel,1);
+		}else {
+			path = reportsLinkModel.getPath() ; 
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled/reports/export/pdf/{id}")
-	public void getPdfReport(@PathVariable int id , HttpServletResponse response )throws IOException {
+	public void getPdfReport(@PathVariable int id){
 		SettledChaque settledChaque = this.settlementService.findCheckByID(id) ; 
-		this.reportsService.excportPDF(settledChaque);
-		//response.sendRedirect("");//download Link
+		ReportsLinkModel reportsLinkModel = this.reportLinkService.getRportLinkModel(settledChaque.getId(),2) ; 	
+		String path ; 
+		if(reportsLinkModel == null) {
+			path = this.reportsService.excportPDF(settledChaque);
+			System.out.println("file path : "+path );
+			reportsLinkModel = new ReportsLinkModel(settledChaque.getId(),path,2);
+			this.reportLinkService.addReportLinkModel(reportsLinkModel,2);
+		}else {
+			path = reportsLinkModel.getPath() ; 
+		}
+		
+	
+	
 	}
 
 	
