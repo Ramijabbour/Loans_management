@@ -18,6 +18,12 @@ public class CloseLoans {
 	@ManyToOne
 	private Loans loan=null;
 
+	public CloseLoans() {}
+	
+	public CloseLoans(Loans loan) {
+		this.loan = loan;
+	}
+
 	public int getCloseLoanID() {
 		return CloseLoanID;
 	}

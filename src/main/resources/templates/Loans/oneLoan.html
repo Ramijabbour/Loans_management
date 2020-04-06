@@ -31,15 +31,22 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title" style="width: 70%">Loan Details  </h3>
-              
-             
-
+                <form action="#" th:action="@{/Vouchers/all/}+ ${{loan.LoanID}}" method="get">
+                        <button th:id="'table_entry_childs_button_' + ${loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                            <i>Show Voucher</i>
+                        </button>
+                </form>
             </div>
+            
             <!-- /.card-header -->
             <div class="card-body">
               <table id="example2" class="table table-bordered table-hover">
             
                 <tbody>
+               	  <tr>
+                    <td> Name </td>
+                    <td th:text=${loan.Name}></td>
+                  </tr>
                   <tr>
                     <td> Work Date </td>
                     <td th:text=${loan.WorkDate}></td>
