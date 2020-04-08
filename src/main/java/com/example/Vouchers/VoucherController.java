@@ -59,7 +59,7 @@ public class VoucherController {
 		voucher.setStatus("Open");
 		voucher.setLoan(loan);
 		voucherService.addVoucher(voucher);
-		response.sendRedirect("/Loans/all");
+		response.sendRedirect("/Loans/all/Open");
 	}
 	
 	// ----------------------------------------------------------------------------

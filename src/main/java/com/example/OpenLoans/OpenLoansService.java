@@ -12,6 +12,11 @@ public class OpenLoansService {
 	@Autowired 
 	private OpenLoansRepository openLoanRepository;
 	
+	public List<OpenLoans> GetAllOpenLoan()
+	{
+		return openLoanRepository.findAll();
+	}
+	
 	
 	public void addOpenLoan(OpenLoans openLoan)
 	{
