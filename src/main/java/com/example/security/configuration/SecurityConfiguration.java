@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		.authorizeRequests()
 		.antMatchers("/index").authenticated()
 		.and()
-		.formLogin().defaultSuccessUrl("/index")
+		.formLogin().defaultSuccessUrl("/")
 		.loginPage("/login").permitAll()
 		.and()
 		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").deleteCookies("JSESSIONID");

@@ -27,5 +27,9 @@ public class ReportLinkService {
 		}
 	}
 	
+	public void deleteReportLink(ReportsLinkModel reportsLinkModel ) {
+		this.reportsLinkRepository.delete(reportsLinkModel);
+	}
+	
 	
 }

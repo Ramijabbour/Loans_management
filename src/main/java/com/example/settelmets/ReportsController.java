@@ -2,6 +2,7 @@ package com.example.settelmets;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +63,21 @@ public class ReportsController {
 			path = reportsLinkModel.getPath() ; 
 			return getSteamingDocxFile(response,path);
 		}
-		}catch(Exception e ) {
+		}
+		catch(FileNotFoundException fe) {
+			this.reportLinkService.deleteReportLink(reportsLinkModel);
+			path = this.reportsService.exportDocx(settledChaque);
+			System.out.println("file path : "+path );
+			reportsLinkModel = new ReportsLinkModel(settledChaque.getId(),path,1);
+			this.reportLinkService.addReportLinkModel(reportsLinkModel,1);
+			try {
+				return getSteamingDocxFile(response,path);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null ; 
+			}
+		}
+		catch(Exception e ) {
 			e.printStackTrace(); 
 			return null;	
 		}	
@@ -85,7 +100,22 @@ public class ReportsController {
 			path = reportsLinkModel.getPath() ; 
 			return this.getSteamingPdfFile(response, path);
 		}
-		}catch(Exception e ) {
+		}
+		catch(FileNotFoundException fe) {
+			this.reportLinkService.deleteReportLink(reportsLinkModel);
+			path = this.reportsService.excportPDF(settledChaque);
+			System.out.println("file path : "+path );
+			reportsLinkModel = new ReportsLinkModel(settledChaque.getId(),path,2);
+			this.reportLinkService.addReportLinkModel(reportsLinkModel,2);
+			try {
+				return this.getSteamingPdfFile(response, path);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null ; 
+			}
+		}
+		
+		catch(Exception e ) {
 			e.printStackTrace();  
 			return null ; 
 		}
