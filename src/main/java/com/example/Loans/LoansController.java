@@ -39,7 +39,7 @@ public class LoansController {
 	@Autowired 
 	LoansTypeService loansTypeService;
 	@Autowired 
-	FinanceTypeService financeTypeService ;
+	FinanceTypeService financeTypeService ; 
 	
 	@Autowired
 	OpenLoansService openLoanService; 
@@ -49,12 +49,21 @@ public class LoansController {
 	@Autowired
 	VoucherService voucherService;
 	
-	//get All Loans ------------------------------------------------------
-	@RequestMapping(method = RequestMethod.GET , value="/Loans/all")
-	public ModelAndView ShowAllLoans() { 
-		ModelAndView mav = new ModelAndView("Loans/AllLoans");
-		List<Loans> allloans=loansService.getAllLoans();
-		mav.addObject("allloans",allloans);
+	//get All Open Loans ------------------------------------------------------
+	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open")
+	public ModelAndView ShowAllOpenLoans() { 
+		ModelAndView mav = new ModelAndView("Loans/AllOpenLoans");
+		List<OpenLoans> allOpenloans=openLoanService.GetAllOpenLoan();
+		mav.addObject("allloans",allOpenloans);
+		return mav; 
+	}
+	// -------------------------------------------------------------------
+	//get All Close Loans ------------------------------------------------------
+	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Close")
+	public ModelAndView ShowAllCloseLoans() { 
+		ModelAndView mav = new ModelAndView("Loans/AllCloseLoan");
+		List<CloseLoans> allCloseloans=closeLoanService.GetAllCloseLoan();
+		mav.addObject("allloans",allCloseloans);
 		return mav; 
 	}
 	// -------------------------------------------------------------------
@@ -83,7 +92,7 @@ public class LoansController {
 		
 		OpenLoans ol =new OpenLoans(loan);
 		openLoanService.addOpenLoan(ol);
-		response.sendRedirect("/Loans/all");
+		response.sendRedirect("/Loans/all/Open");
 	}
 	// -------------------------------------------------------------------
 	
@@ -121,7 +130,10 @@ public class LoansController {
 	public void UpdateLoan(@Valid Loans loan,HttpServletResponse response) throws IOException {
 		System.out.println("posted to /Loans/update/id ");
 		loansService.updateLoan(loan);
-		response.sendRedirect("/Loans/all");
+		if(openLoanService.getOpenLoanFromLoan(loan.getLoanID())!=null)
+			response.sendRedirect("/Loans/all/Open");
+		else 
+			response.sendRedirect("/Loans/all/Close");
 	}
 	
 
@@ -133,7 +145,11 @@ public class LoansController {
 	public void deleteLoan(@PathVariable int id,HttpServletResponse response) throws IOException
 	{
 		loansService.DeleteLoan(id);
-		response.sendRedirect("/Loans/all");
+		
+		if(openLoanService.getOpenLoanFromLoan(id)!=null)
+			response.sendRedirect("/Loans/all/Open");
+		else 
+			response.sendRedirect("/Loans/all/Close");
 	}
 	
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/CheckCloseLoan/{id}")

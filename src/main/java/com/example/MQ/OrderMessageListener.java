@@ -1,5 +1,6 @@
 package com.example.MQ;
 
+import com.example.MasterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -8,8 +9,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.example.Notifications.NotificationsService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Component
+@Service
 public class OrderMessageListener {
 
     @Autowired
@@ -19,20 +22,22 @@ public class OrderMessageListener {
     private NotificationsService notificationsService ; 
     
     
-    /*
-    static final Logger logger = LoggerFactory.getLogger(OrderMessageListener.class);
 
+    static final Logger logger = LoggerFactory.getLogger(OrderMessageListener.class);
     @RabbitListener(queues = RabbitConfig.QUEUE_ORDERS)
     public void processOrder(Chaque check) {
         check.id=check.id;
+        System.out.println(check.Amount+" "+check.CheckId+" "+check.FirstBank+" "+check.SecondBank+" "+check.active);
+
+      //  check.localDateTime= MasterService.getCurrDateTime();
         onHoldCheckRepository.save(check);
         logger.info("Order Received: "+check);
     }
     
-    @Scheduled(fixedRate = 7200000)
-    public void reportCurrentTime() {
-       return;
-    }
-    */
+//    @Scheduled(fixedRate = 7200000)
+//    public void reportCurrentTime() {
+//       return;
+//    }
+
     
 }

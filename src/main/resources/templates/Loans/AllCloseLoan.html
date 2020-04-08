@@ -12,7 +12,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Loanss</h1>
+            <h1>Loans</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -51,51 +51,44 @@
                   <th></th>
                   <th></th>
                   <th></th>
-                   <th></th>
+                  
                   
 
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each ="loan : ${allloans}">
-                  <td th:text="${loan.Name}"></td>
-                  <td th:text="${loan.WorkDate}"></td>
-                  <td th:text="${loan.LoanDate}"></td>
-                  <td th:text="${loan.financeType.TypeName}"></td>
-                  <td th:text="${loan.loanType.TypeName}"></td>
-                  <td th:text="${loan.InterestRate}"></td>
-                  <td th:text ="${loan.bank.BankName}+' '+${loan.bank.BranchName}"></td>
-                  <td th:text="${loan.NetAmmount}"></td>
+                  <td th:text="${loan.loan.Name}"></td>
+                  <td th:text="${loan.loan.WorkDate}"></td>
+                  <td th:text="${loan.loan.LoanDate}"></td>
+                  <td th:text="${loan.loan.financeType.TypeName}"></td>
+                  <td th:text="${loan.loan.loanType.TypeName}"></td>
+                  <td th:text="${loan.loan.InterestRate}"></td>
+                  <td th:text ="${loan.loan.bank.BankName}+' '+${loan.loan.bank.BranchName}"></td>
+                  <td th:text="${loan.loan.NetAmmount}"></td>
                   <td>
-                      <form action="#" th:action="@{/Loans/Loan/} + ${{loan.LoanID}}" method="get">
-                          <button th:id="'table_entry_childs_button_' + ${loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                      <form action="#" th:action="@{/Loans/Loan/} + ${{loan.loan.LoanID}}" method="get">
+                          <button th:id="'table_entry_childs_button_' + ${loan.loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                               <i>View</i>
                           </button>
                       </form>
                   </td>
                   <td>
-                      <form action="#" th:action="@{/Loans/delete/} + ${{loan.LoanID}}" method="get">
-                          <button th:id="'table_entry_childs_button_' + ${loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                      <form action="#" th:action="@{/Loans/delete/} + ${{loan.loan.LoanID}}" method="get">
+                          <button th:id="'table_entry_childs_button_' + ${loan.loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                               <i>Delete</i>
                           </button>
                       </form>
                   </td>
                         
                   <td>
-                    <form action="#" th:action="@{/Loans/edit/}+ ${{loan.LoanID}}" method="get">
-                        <button th:id="'table_entry_childs_button_' + ${loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                    <form action="#" th:action="@{/Loans/edit/}+ ${{loan.loan.LoanID}}" method="get">
+                        <button th:id="'table_entry_childs_button_' + ${loan.loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                             <i>Edit</i>
                         </button>
                     </form>
                 </td>
-                
-                <td>
-                    <form action="#" th:action="@{/Loan/AddVoucher/}+ ${{loan.LoanID}}" method="get">
-                        <button th:id="'table_entry_childs_button_' + ${loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                            <i>Voucher</i>
-                        </button>
-                    </form>
-                </td>
+ 
                 </tr>
                 </tbody>
         

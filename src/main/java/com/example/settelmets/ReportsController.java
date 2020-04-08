@@ -22,36 +22,36 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 @RestController
 public class ReportsController {
 
-	@Autowired 
+	@Autowired
 	private ReportsService reportsService ;
 
 	@Autowired
 	private SettlementService settlementService ;
 
-	@Autowired 
-	private ReportLinkService reportLinkService ; 
-	
-	
+	@Autowired
+	private ReportLinkService reportLinkService ;
+
+
 	@RequestMapping(method = RequestMethod.GET,value = "/settlement/checks/settled/reports/export")
 	public ModelAndView getExportIndex(@Param(value ="id") int id ) {
 		SettledChaque settledCheck = this.settlementService.findCheckByID(id);
 		ModelAndView mav = new ModelAndView("DOC/exportHandler");
 		mav.addObject("check",settledCheck);
-		return mav ; 
+		return mav ;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled/reports/export/html")
 	public ModelAndView getXmlReport(@Param(value ="id") int id) {
-		SettledChaque settledChaque = this.settlementService.findCheckByID(id) ; 
+		SettledChaque settledChaque = this.settlementService.findCheckByID(id) ;
 		return this.reportsService.exportXml(settledChaque);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled/reports/export/docx")
 	@ResponseBody
 	public StreamingResponseBody getDocxReport(@Param(value ="id") int id , HttpServletResponse response ){
-		SettledChaque settledChaque = this.settlementService.findCheckByID(id) ; 
-		ReportsLinkModel reportsLinkModel = this.reportLinkService.getRportLinkModel(settledChaque.getId(),1) ; 	
-		String path ; 
+		SettledChaque settledChaque = this.settlementService.findCheckByID(id) ;
+		ReportsLinkModel reportsLinkModel = this.reportLinkService.getRportLinkModel(settledChaque.getId(),1) ;
+		String path ;
 		try {
 		if(reportsLinkModel == null ) {
 			path = this.reportsService.exportDocx(settledChaque);
@@ -82,13 +82,13 @@ public class ReportsController {
 			return null;	
 		}	
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled/reports/export/pdf")
 	@ResponseBody
 	public StreamingResponseBody getPdfReport(@Param(value ="id") int id,HttpServletResponse response){
-		SettledChaque settledChaque = this.settlementService.findCheckByID(id) ; 
-		ReportsLinkModel reportsLinkModel = this.reportLinkService.getRportLinkModel(settledChaque.getId(),2) ; 	
-		String path ; 
+		SettledChaque settledChaque = this.settlementService.findCheckByID(id) ;
+		ReportsLinkModel reportsLinkModel = this.reportLinkService.getRportLinkModel(settledChaque.getId(),2) ;
+		String path ;
 		try {
 		if(reportsLinkModel == null) {
 			path = this.reportsService.excportPDF(settledChaque);
@@ -121,7 +121,7 @@ public class ReportsController {
 		}
 	}
 
-	
+
 	public StreamingResponseBody getSteamingDocxFile(HttpServletResponse response,String path) throws IOException {
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", "attachment; filename=\"report.docx");
@@ -149,5 +149,5 @@ public class ReportsController {
 			}
 		};
 	}
-	
+
 }
