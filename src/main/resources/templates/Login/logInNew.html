@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments.html :: headerfiles">
 
 </head>
@@ -49,7 +50,10 @@
                    <input class="input100" type="password" id="password" name="password"
                                    placeholder="Password" required>
                   </div>
-					           
+					  
+					   <div sec:authorize="isAuthenticated()">
+            			Text visible only to authenticated users.
+       			 		</div>         
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

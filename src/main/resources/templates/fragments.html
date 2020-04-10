@@ -42,7 +42,7 @@
     </form>
 
     <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto" >
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -150,7 +150,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-          <a href="#" class="d-block">My account</a>
+          <a href="#" class="d-block" >My account</a>
         </div>
       </div>
 
@@ -160,7 +160,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
      
-          <li class="nav-item has-treeview" sec:authorize="isAuthenticated()">
+          <li  class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tree"></i>
               <p>
@@ -169,7 +169,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+              <li class="nav-item" >
                 <a href="/Loans/all" class="nav-link">
                   <i class="far fa-circle nav-icon" sec:authorize="isAuthenticated()"></i>
                   <p>Show All Loans</p>
@@ -193,11 +193,6 @@
         
             </ul>
           </li>
-
-
-        
-
-
 
 
           <li class="nav-item has-treeview">
