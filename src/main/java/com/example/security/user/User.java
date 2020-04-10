@@ -29,13 +29,17 @@ public class User implements java.io.Serializable {
 	
 	private String username ;
 	private String Gender="" ;
-	private String UserPermissions = " " ; 
-	private String UserRoles =" "; 
+	private String UserPermissions = "none" ; 
+	private String UserRoles ="none"; 
 	private LocalDateTime createdAt ; 
 	private boolean Active = false ; 
 
 	
-	public User() {this.createdAt = MasterService.getCurrDateTime() ; }
+	public User() {
+		this.createdAt = MasterService.getCurrDateTime() ;
+		this.UserRoles = "none"; 
+		this.UserPermissions = "none";
+	}
 	
 	public User(String email, String password, String username, String gender, String userPermissions,
 			String userRoles, boolean isActive) {
@@ -44,8 +48,14 @@ public class User implements java.io.Serializable {
 		this.password = password;
 		this.username = username;
 		Gender = gender;
-		UserPermissions = userPermissions;
-		UserRoles = userRoles;
+		if(userPermissions.equalsIgnoreCase("") || userPermissions.equalsIgnoreCase(" "))
+			this.UserPermissions = "none";
+		else 
+			this.UserPermissions = userPermissions ; 
+		if(userRoles.equalsIgnoreCase("") || userRoles.equalsIgnoreCase(" "))
+			this.UserRoles = "none";
+		else 
+			this.UserRoles = userRoles; 
 		this.Active = isActive;
 		this.createdAt = MasterService.getCurrDateTime() ; 
 	}
@@ -150,15 +160,14 @@ public class User implements java.io.Serializable {
 	}
 
 	public void addRole(String role ) {
-		if(this.UserRoles.equalsIgnoreCase(" ")) {
+		if(this.UserRoles.equalsIgnoreCase(" ") || this.UserRoles.equalsIgnoreCase("")) {
 			this.UserRoles=role;
 		}else
 		this.UserRoles+=","+role;
 	}
 	
 	public void addPermission(String permission ) {
-		System.out.println("grant invoked -------");
-		if(this.UserPermissions.equalsIgnoreCase(" ")) {
+		if(this.UserPermissions.equalsIgnoreCase(" ") || this.UserPermissions.equalsIgnoreCase("")) {
 			this.UserPermissions=permission;
 		}else
 		this.UserPermissions+=","+permission;
@@ -175,7 +184,6 @@ public class User implements java.io.Serializable {
 				userPermissions.add(permissions[i]);
 			}
 			return userPermissions ; 
-			
 		}
 	}
 	
@@ -199,7 +207,7 @@ public class User implements java.io.Serializable {
 		if(userRoles.size() != 0 ) {
 		if(userRoles.contains(role)) {
 			userRoles.remove(userRoles.indexOf(role));
-			this.UserRoles = " ";
+			this.UserRoles = "";
 			for(String tempRole : userRoles) {
 				this.addRole(tempRole);
 				}
@@ -212,7 +220,7 @@ public class User implements java.io.Serializable {
 		if(userPermissions.size() != 0 ) {
 			if(userPermissions.contains(permission)) {
 				userPermissions.remove(permission);
-				this.UserPermissions = " ";
+				this.UserPermissions = "";
 				for(String tempPermission : userPermissions) {
 					this.addPermission(tempPermission);
 				}

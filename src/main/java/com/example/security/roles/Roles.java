@@ -15,13 +15,14 @@ public class Roles {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int RoleID ;
     private String RoleName=" ";
-	private String AssignedPermissions=" ";
+	private String AssignedPermissions="none";
 	//
 	
 	public Roles(String roleName, String assignedPermissions) {
 		super();
 		RoleName = roleName;
 		AssignedPermissions = assignedPermissions;
+		this.AssignedPermissions = "none";
 	}
 	
 	public Roles() {}
@@ -59,7 +60,7 @@ public class Roles {
 	
 	//permissions assignment handling 
 	public void addSinglePermissionToRole(String permission) {
-		if(this.AssignedPermissions.equalsIgnoreCase("")) {
+		if(this.AssignedPermissions.equalsIgnoreCase("") || this.AssignedPermissions.equalsIgnoreCase(" ")) {
 			this.AssignedPermissions = permission ; 
 		}else if(this.convertPermissionsToList().contains(permission)) {
 			return ; 
@@ -77,7 +78,7 @@ public class Roles {
 	}
 	
 	public List<String> convertPermissionsToList(){
-		if(this.AssignedPermissions.equalsIgnoreCase("")) {
+		if(this.AssignedPermissions.equalsIgnoreCase("") || this.AssignedPermissions.equalsIgnoreCase(" ")) {
 			return null ; 
 		}
 		String[] permissionsArray = this.AssignedPermissions.split(",");

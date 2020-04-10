@@ -46,6 +46,8 @@ public class UserService extends MasterService implements MasterBackUpService {
 			System.out.println("method name from service : "+method.getName());
 			methodsNames.add(method.getName());
 		}
+		methodsNames.add(this.getClass().getSimpleName());
+		System.out.println("ls service : "+this.getClass().getSimpleName());
 		PermissionsService.addPermissionsToPermissionsList(methodsNames);
 		/*permissions added and need to be committed to permissions table in the data base at route /permissions/commit*/
 	}
@@ -90,8 +92,8 @@ public class UserService extends MasterService implements MasterBackUpService {
 			throw new Exceptions(-405,"user data duplication error");
 		}else {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			user.setUserRoles(" ");
-			user.setUserPermissions(" ");
+			//user.setUserRoles(" ");
+			//user.setUserPermissions(" ");
 			user.setActive(false);
 			this.userRepository.save(user);
 			super.notificationsService.addNotification("New User need Activation", "/adminstration/users/nonactive", "ADMIN,SUPER");
@@ -160,6 +162,7 @@ public class UserService extends MasterService implements MasterBackUpService {
 		}
 		if(!user.hasRole(role.getRoleName())) {
 				user.addRole(role.getRoleName());
+				user.addPermission(role.getAssignedPermissions());
 				this.userRepository.save(user);
 		}
 	}
@@ -169,7 +172,12 @@ public class UserService extends MasterService implements MasterBackUpService {
 		if(!user.hasRole(role.getRoleName())) {
 			return ; 
 		}else{
+			//remove role permissions from string /
 			user.revokeRoleFromUser(role.getRoleName());
+			for(String permission : role.getAssignedPermissions().split(",")) {
+				user.revokePermissionFromUser(permission);	
+			}
+			user.flatUserDetailes();
 			this.userRepository.save(user); 
 		}
 	}

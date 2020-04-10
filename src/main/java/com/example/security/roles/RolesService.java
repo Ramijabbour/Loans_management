@@ -73,6 +73,7 @@ public class RolesService {
 		for(Roles tempRole : rolesList ) {
 			if(tempRole.getRoleName().equalsIgnoreCase(role.getRoleName())) {
 				role.revokePermissionFromRole(permission.getPermissionName());
+				
 				this.rolesRepository.save(role);
 			}
 		}
@@ -104,6 +105,7 @@ public class RolesService {
 		if(permission == null ) {
 			return  ;
 		}
+		role.addSinglePermissionToRole(permission.getPermissionName());
 		this.rolesPermissionsService.addPermissionsToRole(role,permission) ; 
 	}
 	
