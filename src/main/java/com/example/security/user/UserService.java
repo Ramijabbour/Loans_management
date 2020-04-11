@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.MasterBackUpService;
 import com.example.MasterService;
-import com.example.aspect.Exceptions;
+import com.example.aspect.DataDuplicationException;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
@@ -89,15 +89,16 @@ public class UserService extends MasterService implements MasterBackUpService {
 	public void addUser(User user ) {
 		user.flatUserDetailes();
 		if(checkUserinforDuplication(user)) {
-			throw new Exceptions(-405,"user data duplication error");
+			throw new DataDuplicationException();
 		}else {
+			user = (User) super.encryptData(user);
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			//user.setUserRoles(" ");
-			//user.setUserPermissions(" ");
 			user.setActive(false);
 			this.userRepository.save(user);
 			super.notificationsService.addNotification("New User need Activation", "/adminstration/users/nonactive", "ADMIN,SUPER");
+			
 		}
+		
 	}
 	
 	//update current user // 
@@ -110,6 +111,7 @@ public class UserService extends MasterService implements MasterBackUpService {
 				}
 		}catch(Exception e ) {
 			System.out.println("NullPointerException Handled at User Service / Update User -- call for null User ");
+			e.printStackTrace();
 		}
 	}
 	

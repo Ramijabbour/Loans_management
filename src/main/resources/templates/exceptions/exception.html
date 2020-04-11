@@ -5,7 +5,6 @@
     <div class="jumbotron">  	
 	<h1>Error</h1>
     <form action="#" th:action="@{/index}" th:object="${cerror}" method="get">
-    	<p>Error Code : <span th:text="*{ExceptionCode}"></span></p>
     	<p>Error Details : <span th:text="*{ErrorMsg}"></span></p>
     	<button class="btn btn-outline-info my-2 my-sm-0 btn-sm">return to home page </button>
     </form>

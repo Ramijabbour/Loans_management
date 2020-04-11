@@ -32,4 +32,21 @@ public class ExceptionsHandler {
 		return mav ; 
 	}
 	
+	@ExceptionHandler(value = DataDuplicationException.class)
+	public ModelAndView handleDataDuplication(){
+		System.out.println("Exceptions handlerinvoked ");
+		ModelAndView mav = new ModelAndView("exceptions/exception");
+		mav.addObject("cerror",new DataDuplicationException());
+		return mav ; 
+	}
+	
+	@ExceptionHandler(value = ItemNotFoundException.class)
+	public ModelAndView handleItemNotFoundException(){
+		System.out.println("Exceptions handlerinvoked ");
+		ModelAndView mav = new ModelAndView("exceptions/exception");
+		mav.addObject("cerror",new ItemNotFoundException());
+		return mav ; 
+	}
+	
+	
 }

@@ -133,6 +133,7 @@ public class ReportsController {
 				System.out.println("Writing some bytes of file...");
 				outputStream.write(data, 0, nRead);
 			}
+			inputStream.close();
 		};
 	}
 
@@ -147,7 +148,9 @@ public class ReportsController {
 				System.out.println("Writing some bytes of file...");
 				outputStream.write(data, 0, nRead);
 			}
+			inputStream.close();
 		};
+		
 	}
 
 }

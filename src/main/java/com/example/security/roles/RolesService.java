@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.aspect.Exceptions;
+import com.example.aspect.ItemNotFoundException;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
@@ -83,7 +83,7 @@ public class RolesService {
 	@Transactional
 	public void deleteRole(Roles role ) {
 		if (this.rolesRepository.findById(role.getRoleID()) == null ) {
-			throw new Exceptions(-404,"item not found in the System");
+			throw new ItemNotFoundException();
 		}else {
 			this.userRoleService.deleteRole(role);
 			this.rolesPermissionsService.deleteRole(role);

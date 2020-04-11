@@ -1,23 +1,18 @@
 package com.example.aspect;
 
-
-
 //throwable class 
 public class Exceptions extends RuntimeException {
 	
-	private static final long serialVersionUID = 1L ; 
-	protected int ExceptionCode ; 
+	private static final long serialVersionUID = 1L ;  
 	protected String ErrorMsg ;
-
 	
 	public Exceptions() {}
 	
-	public Exceptions(int exceptionNumber,String errorMsg){
+	public Exceptions(String errorMsg){
 		this.ErrorMsg = errorMsg ; 
-		this.ExceptionCode = exceptionNumber ; 
 	}
 	
 	public String getException() {
-		return "error code : "+this.ExceptionCode + " : "+this.ErrorMsg;
+		return this.ErrorMsg;
 	}
 }
