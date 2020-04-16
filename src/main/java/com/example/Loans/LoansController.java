@@ -87,25 +87,25 @@ public class LoansController {
 	
 	@RequestMapping(method = RequestMethod.POST , value="/Loans/addLoan")
 	public void addNewLoan(@ModelAttribute Loans loan,HttpServletResponse response) throws IOException {
-		System.out.println("posted to /Loans/addLoan "); 
-		loansService.addLoan(loan);
+	
 		Banks bank=loan.getBank();
 		int Amount=Integer.parseInt(loan.getNetAmmount());
-		System.out.println("amount "+Amount);
 		int bankAlloacation  =Integer.parseInt(bank.getFinancialAllocations());
-		System.out.println("allocation "+bankAlloacation);
 		int NewAllocation=bankAlloacation-Amount;
-		System.out.println("new "+NewAllocation);
-		if(NewAllocation<0) {
-			System.out.println("cann't Add loan ....... Allocation is to low");
-			response.sendRedirect("/Loans/addLoan");
-			}
+		
+		if(NewAllocation>=0) {
+			System.out.println("posted to /Loans/addLoan "); 
+			bank.setFinancialAllocations(Integer.toString(NewAllocation));
+			loansService.addLoan(loan);	
+		    OpenLoans ol =new OpenLoans(loan);
+		    openLoanService.addOpenLoan(ol);
+			response.sendRedirect("/Loans/all/Open");
+		}
+			
+		
 		else {
-			System.out.println("convert to string "+ Integer.toString(NewAllocation));
-		bank.setFinancialAllocations(Integer.toString(NewAllocation));	
-		OpenLoans ol =new OpenLoans(loan);
-		openLoanService.addOpenLoan(ol);
-		response.sendRedirect("/Loans/all/Open");
+			System.out.println("NullPointerException Handled at loan Service / Add loan -- call for low allocation");
+			response.sendRedirect("/Loans/addLoan");
 		}
 	}
 	// -------------------------------------------------------------------
