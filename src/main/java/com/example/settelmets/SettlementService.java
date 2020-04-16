@@ -78,7 +78,7 @@ public class SettlementService extends MasterService {
 	}
 	
 	//change schedule invoke time and isolate it in another thread 
-	@Scheduled(fixedRate = 7000000)
+	//@Scheduled(fixedRate = 7000000)
 	public void settleChecks() {
 		System.out.println("ettlement invoked at : "+MasterService.getCurrDateTime());
 		initSettlementOperation(); 

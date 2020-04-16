@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Banks.Banks;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -58,5 +59,15 @@ public class AllocationsService {
 	 
 	}
 
+	
+	public List<Allocations> getBankAllocations(Banks bank){
+		List<Allocations> bankAllocations = new ArrayList<Allocations>();
+ 		for(Allocations allocation : this.allocationsRepository.findAll()) {
+			if(allocation.getBanks().getBankID() == bank.getBankID() ) {
+				bankAllocations.add(allocation);
+			}
+		}
+		return bankAllocations ; 
+	}
 
 }

@@ -22,7 +22,7 @@ public class OrderMessageListener {
     private NotificationsService notificationsService ; 
     
     
-
+/*
     static final Logger logger = LoggerFactory.getLogger(OrderMessageListener.class);
     @RabbitListener(queues = RabbitConfig.QUEUE_ORDERS)
     public void processOrder(Chaque check) {
@@ -33,7 +33,7 @@ public class OrderMessageListener {
         onHoldCheckRepository.save(check);
         logger.info("Order Received: "+check);
     }
-    
+  */  
 //    @Scheduled(fixedRate = 7200000)
 //    public void reportCurrentTime() {
 //       return;

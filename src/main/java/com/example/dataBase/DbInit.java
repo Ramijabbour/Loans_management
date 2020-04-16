@@ -65,8 +65,8 @@ public class DbInit implements CommandLineRunner{
 		Chaque check9 = new Chaque(9,"bank4",4,"bank3",3,200);
 		this.onHoldRepo.save(check9);
 		Chaque check10 = new Chaque(10,"bank5",5,"bank1",1,300);
-		this.onHoldRepo.save(check10);
-		*/
+		this.onHoldRepo.save(check10);*/
+	
 		
 		
 		//User admin = new User("admin@email.com",passwordEncoder.encode("admin123"),"admin","male","ACCESS_TEST1,ACCESS_TEST2","ADMIN",true);

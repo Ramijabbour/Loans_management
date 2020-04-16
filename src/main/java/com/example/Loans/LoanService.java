@@ -1,9 +1,12 @@
 package com.example.Loans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.Banks.Banks;
 
 @Service
 public class LoanService {
@@ -54,6 +57,17 @@ public class LoanService {
 		}catch(Exception e ) {
 			System.out.println("NullPointerException Handled at loan Service / Update loan -- call for null loan ");
 		}
+	}
+	
+	
+	public List<Loans> getBankLoans(Banks bank){
+		List<Loans> bankLoans = new ArrayList<Loans>();
+		for(Loans loan : this.loansRepository.findAll()) {
+			if(loan.getBank().getBankID() == bank.getBankID()) {
+				bankLoans.add(loan); 
+			}
+		}
+		return bankLoans; 
 	}
 	
 }

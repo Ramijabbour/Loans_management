@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -101,5 +102,16 @@ public class BankController {
 		response.sendRedirect("/Banks/all");
 	}
 	
+	
+	@Autowired
+	private BankStatsService bankStatsService ; 
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/{id}")
+	public ModelAndView getBankStats(@PathVariable int id) {
+		ModelAndView mav = new ModelAndView("Banks/stats");
+		Banks bank = this.bankservice.getBankById(id);
+		mav.addObject("bankstats",this.bankStatsService.getBankStats(bank)) ;
+		return mav ; 
+	}
 	
 }
