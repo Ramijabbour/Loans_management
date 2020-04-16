@@ -3,6 +3,8 @@ package com.example.aspect;
 import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
@@ -13,13 +15,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
-
-
+import org.springframework.util.StopWatch;
 import org.aspectj.lang.reflect.MethodSignature;
 import com.example.security.user.User;
 import com.example.security.user.UserRepository;
 import com.example.security.user.UserService;
+import com.example.settelmets.SettlementService;
 
 @Aspect
 @Component
@@ -30,6 +31,7 @@ public class AspectModel {
 	private UserRepository userRepo ; 
 	
 	Logger UserLogger =LoggerFactory.getLogger(UserService.class);
+	Logger SettlementLogger = LoggerFactory.getLogger(SettlementService.class);
 	
 	@Before("execution(* com.example.security.user.UserService..*(..)))")
 	public void test(JoinPoint  proceedingJoinPoint)  {
@@ -38,7 +40,28 @@ public class AspectModel {
 			//User user = get_current_User();    
 			//user.flatUserDetailes();   
 			//checkUserPermission(proceedingJoinPoint,user);
-		}
+	}
+	
+	
+	
+	
+	
+	@Around("execution(* com.example.settelmets.SettlementService..*(..))")
+    public Object SettlementServiceAspectHandler(ProceedingJoinPoint proceedingJoinPoint) throws Throwable
+    {
+        final StopWatch stopWatch = new StopWatch();
+        //Measure method execution time
+        stopWatch.start();
+        Object result = proceedingJoinPoint.proceed();
+        stopWatch.stop();
+        //Log method execution time
+        SettlementLogger.info("Execution of " + printFunctionCallInfo(proceedingJoinPoint)+" with excution Time ::" + stopWatch.getTotalTimeMillis() + " ms");
+        return result;
+    }
+
+	
+	
+	
 	
 	public User get_current_User() {
 		String username ; 
@@ -65,15 +88,18 @@ public class AspectModel {
 		return permissions ; 
 	}
 
-	public void printFunctionCallInfo(JoinPoint  proceedingJoinPoint) {
+	public String printFunctionCallInfo(JoinPoint  proceedingJoinPoint) {
 		MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         String className = methodSignature.getDeclaringType().getSimpleName();
         String methodName = methodSignature.getName();
         String[] param = methodSignature.getParameterNames();
+       String out = "excution request for : " + className + "." + methodName ; 
         System.out.println("excution request for : " + className + "." + methodName );
         for(String parameter : param ) {
+        	out+="with parameter : "+parameter ; 
         	System.out.println("with parameter : "+parameter);
         }
+        return out ; 
 	}
 	
 	public void checkUserPermission(JoinPoint  proceedingJoinPoint , User user ) {
