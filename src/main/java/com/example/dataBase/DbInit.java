@@ -27,8 +27,10 @@ public class DbInit implements CommandLineRunner{
 	
 	private OnHoldCheckRepository onHoldRepo ; 
 	
-	public DbInit(OnHoldCheckRepository onHoldRepositpry ) {
+	public DbInit(OnHoldCheckRepository onHoldRepositpry ,UserRepository userRepository,PasswordEncoder passwordEncoder) {
 		this.onHoldRepo = onHoldRepositpry ; 
+		this.userRepository = userRepository ; 
+		this.passwordEncoder = passwordEncoder ; 
 	}
 	/*
 	public DbInit() {}

@@ -24,4 +24,5 @@ public class HomeController {
     	ModelAndView mav = new ModelAndView("fragments");
     	return mav; 
     }
+    
 }
