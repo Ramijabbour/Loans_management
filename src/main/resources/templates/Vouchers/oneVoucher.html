@@ -1,41 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  lang="ar" dir="rtl"
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments.html :: headerfiles">
-
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Central Bank of syria</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/../../new/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/../../new/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/../../new/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <header th:insert="fragments.html :: nav"></header>
+<div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Voucher</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">Loan</a></li>
-              <li class="breadcrumb-item"><a href="#">All Vouchers </a></li>
-              <li class="breadcrumb-item active">voucher</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title" style="width: 70%">Voucher Details  </h3>
+              <h3 class="card-title" style="width: 70%">معلومات السند  </h3>
               <form action="#" th:action="@{/Vouchers/Paid/}+ ${{voucher.VoucherID}}" method="get">
                         <button th:id="'table_entry_childs_button_' + ${voucher.VoucherID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                            <i>Payment</i>
+                            <i>دفع</i>
                         </button>
                 </form>
             </div>
@@ -46,15 +43,15 @@
             
                 <tbody>
                	  <tr>
-                    <td> Voucher Date </td>
+                    <td> تاريخ السند </td>
                     <td th:text=${voucher.VoucherDate}></td>
                   </tr>
                   <tr>
-                    <td> Voucher Ammount </td>
+                    <td> قيمة السند </td>
                     <td th:text=${voucher.VoucherAmmount}></td>
                   </tr>
                   <tr>
-                    <td> Total </td>
+                    <td> الاجمالي </td>
                     <td th:text=${voucher.Total}> </td>
                   </tr>
                   <tr>
@@ -62,19 +59,19 @@
                     <td th:text=${voucher.NetAmmount}> </td>
                   </tr>
                   <tr>
-                    <td>Funding Ratio </td>
+                    <td>نسبة التمويل </td>
                     <td th:text="${voucher.FundingRatio}"> </td>
                   </tr>
                   <tr>
-                    <td> Status </td>
+                    <td> الحالة </td>
                     <td th:text=${voucher.Status}></td>
                   </tr>
                   <tr>
-                    <td> Client </td>
+                    <td> المتعامل </td>
                     <td th:text=${voucher.client.ClientName}> </td>
                   </tr>
                   <tr>
-                    <td> Loan </td>
+                    <td> السلفة </td>
                     <td th:text="${voucher.loan.LoanID}"></td>
                   </tr>
                     
@@ -88,50 +85,16 @@
 
           
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
- 
-    <strong>Copyright &copy; 2014-2019 <a href="">Our Team</a>.</strong> All rights
-    reserved.
-  </footer>
+   <footer class="footer">
+          <div class="footer-wrap">
+              <div class="w-100 clearfix">
+                <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+              </div>
+          </div>
+ </footer>  
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<!-- page script -->
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true,
-      "autoWidth": false,
-    });
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
 </body>
 </html>

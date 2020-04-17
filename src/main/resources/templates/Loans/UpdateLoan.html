@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  lang="ar" dir="rtl"
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments.html :: headerfiles">
-
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Central Bank of syria</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/../../new/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/../../new/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/../../new/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <header th:insert="fragments.html :: nav"></header>
+<div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -12,13 +27,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Update Loan</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Update Loan</li>
-            </ol>
+            <h3>تعديل سلفة</h3>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -33,7 +42,7 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Update Loan :  <small>Insert Details</small></h3>
+                <h4>ادخل معلومات التعديل  </h4>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -46,24 +55,24 @@
                   </div> 
                   
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Name </label>
+                    <label for="exampleInputEmail1">رقم الرهن </label>
                     <input type="text" name="Name" class="form-control" th:field="*{Name}">
                   </div>
                   
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Work Date </label>
+                    <label for="exampleInputEmail1">تاريخ العمل </label>
                     <input type="date" name="workDate" class="form-control" th:field="*{WorkDate}">
                   </div>
 
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Loan Date </label>
+                    <label for="exampleInputPassword1">تاريخ السلفة </label>
                     <input type="date" name="LoanDate" class="form-control" th:field="*{LoanDate}">
                   </div>
 					
 					
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Loan Type</label><br>
+                    <label for="exampleInputPassword1">نوع السلفة</label><br>
                     <select th:field="*{loanType}">
                       <option th:each="loantype : ${allloantype}" th:value="${loantype.LoanTypeID}" th:text="${loantype.TypeName} "></option>	  
                     </select>
@@ -71,7 +80,7 @@
 				
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Finance Type</label><br>
+                    <label for="exampleInputPassword1">نوع التمويل</label><br>
                     <select th:field="*{financeType}">
                       <option th:each="financetype : ${allfinancetype}" th:value="${financetype.FinanceTypeID}" th:text="${financetype.TypeName} "></option>	  
                     </select>
@@ -79,12 +88,12 @@
 
                   
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Interest Rate </label>
+                    <label for="exampleInputPassword1">معدل الفائدة </label>
                     <input type="number" name="interestRate" class="form-control" placeholder="Enter Interest Rate" th:field="*{InterestRate}">
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Client</label><br>
+                    <label for="exampleInputPassword1">المتعامل</label><br>
                     <select th:field="*{client}">
                       <option th:each="client : ${allclient}" th:value="${client.ClientID}" th:text="${client.ClientName}"></option>
   					  
@@ -93,14 +102,14 @@
 
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Bank</label><br>
+                    <label for="exampleInputPassword1">البنك</label><br>
                     <select th:field="*{bank}">
                       <option th:each="bank : ${allbank}" th:value="${bank.BankID}" th:text="${bank.BankName}+ ' '+ ${bank.BranchName} "></option>	  
                     </select>
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Delay Interest Rate </label>
+                    <label for="exampleInputPassword1">معدل التأخير </label>
                     <input type="number" name="DelayInterestRate" class="form-control" placeholder="Enter Delay Interest Rate"  th:field="*{DelayInterestRate}">
                   </div>
 
@@ -126,7 +135,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Number Of Voucher </label>
+                    <label for="exampleInputPassword1">عدد السندات </label>
                     <input type="text" name="NumberOfVoucher" class="form-control" placeholder="Enter Number Of Voucher" th:field="*{NumberOfVoucher}">
                   </div>
 
@@ -144,26 +153,26 @@
 
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">purpose </label>
+                    <label for="exampleInputPassword1">الهدف </label>
                     <input type="text" name="purpose" class="form-control" placeholder="Enter purpose  " th:field="*{purpose}">
                   </div>
 
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">First Side </label>
+                    <label for="exampleInputPassword1">الفريق الاول </label>
                     <input type="text" name="FirstSide" class="form-control" placeholder="Enter First Side" th:field="*{FirstSide}">
                   </div>
                 
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Second Side </label>
+                    <label for="exampleInputPassword1">الفريق الثاني</label>
                     <input type="text" name="SecondSide" class="form-control" placeholder="Enter Second Side" th:field="*{SecondSide}">
                   </div>
                     
                 
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">تأكيد</button>
                 </div>
               </form>
             </div>
@@ -182,78 +191,14 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      
-    </div>
-    <strong>Copyright &copy; 2014-2022 <a href="http://adminlte.io">our team</a>.</strong> All rights
-    reserved.
-  </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+  <footer class="footer">
+          <div class="footer-wrap">
+              <div class="w-100 clearfix">
+                <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+              </div>
+          </div>
+ </footer> 
+ 
 </div>
-<!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- jquery-validation -->
-<script src="../../plugins/jquery-validation/jquery.validate.min.js"></script>
-<script src="../../plugins/jquery-validation/additional-methods.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
-  $('#quickForm').validate({
-    rules: {
-      email: {
-        required: true,
-        email: true,
-      },
-      password: {
-        required: true,
-        minlength: 5
-      },
-      terms: {
-        required: true
-      },
-    },
-    messages: {
-      email: {
-        required: "Please enter a email address",
-        email: "Please enter a vaild email address"
-      },
-      password: {
-        required: "Please provide a password",
-        minlength: "Your password must be at least 5 characters long"
-      },
-      terms: "Please accept our terms"
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
-  });
-});
-</script>
 </body>
 </html>

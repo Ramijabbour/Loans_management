@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  lang="ar" dir="rtl"
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments.html :: headerfiles">
-
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Central Bank of syria</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/../../new/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/../../new/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/../../new/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <header th:insert="fragments.html :: nav"></header>
-
+<div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -13,13 +27,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Bank</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Add Bank</li>
-            </ol>
+            <h3>إضافة بنك</h3>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -34,31 +42,31 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">New Bank <small>Insert Details</small></h3>
-              </div>
+              <h4>أدخل معلومات البنك</h4>
+            </div>
               <!-- /.card-header -->
               <!-- form start -->
               <form  action="#"  th:action="@{/Banks/addBank}" th:object="${bank}" method="post">
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Name</label>
+                    <label for="exampleInputEmail1">الأسم</label>
                     <input type="text" name="BankName" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" th:field="*{BankName}">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Branch Name :</label>
+                    <label for="exampleInputPassword1">أسم الفرع </label>
                     <input type="text" name="BranchName" class="form-control" id="exampleInputPassword1" placeholder="Enter Branch Name" th:field="*{BranchName}">
                   </div>
 
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Bank Code :</label>
+                    <label for="exampleInputPassword1">رمز البنك</label>
                     <input type="text" name="BankCode" class="form-control" id="exampleInputPassword1" placeholder="Enter Bank Code " th:field="*{BankCode}">
                   </div>
                   
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">تأكيد</button>
                 </div>
               </form>
             </div>
@@ -77,19 +85,15 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      
-    </div>
-    <strong>Copyright &copy; 2014-2022 <a href="http://adminlte.io">Our Team</a>.</strong> All rights
-    reserved.
-  </footer>
+<footer class="footer">
+          <div class="footer-wrap">
+              <div class="w-100 clearfix">
+                <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+              </div>
+          </div>
+        </footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+
 </div>
 <!-- ./wrapper -->
 

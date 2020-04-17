@@ -1,52 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  lang="ar" dir="rtl"
+ xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragments.html :: headerfiles">
-
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Central Bank of syria</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/../../new/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/../../new/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/../../new/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body >
 <header th:insert="fragments.html :: nav"></header>
+<div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Loans</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">All Loans</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
 
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title" style="width: 70%">All Loans </h3>
-              
+  	<div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                <h4 class="card-title">السلف المغلقة</h4>
              
-
-            </div>
+         	   </div>
             <!-- /.card-header -->
-            <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
+            <div class="table-responsive pt-4">
+              <table class="table table-dark">
                 <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Work Date</th>
-                  <th>Loan Date</th>
-                  <th>Finance Type</th>
-                  <th>Loan Type</th>
-                  <th>Interest Rate</th>
-                  <th>Bank</th>
+                  <th>رقم الرهن</th>
+                  <th>تاريخ العمل</th>
+                  <th>تاريخ السلفة</th>
+                  <th>نوع التمويل</th>
+                  <th>نوع السلفة</th>
+                  <th>معدل الفائدة</th>
+                  <th>البنك</th>
                   <th>Net Ammount</th>
                   <th></th>
                   <th></th>
@@ -69,14 +65,14 @@
                   <td>
                       <form action="#" th:action="@{/Loans/Loan/} + ${{loan.loan.LoanID}}" method="get">
                           <button th:id="'table_entry_childs_button_' + ${loan.loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                              <i>View</i>
+                              <i>عرض</i>
                           </button>
                       </form>
                   </td>
                   <td>
                       <form action="#" th:action="@{/Loans/delete/} + ${{loan.loan.LoanID}}" method="get">
                           <button th:id="'table_entry_childs_button_' + ${loan.loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                              <i>Delete</i>
+                              <i>حذف</i>
                           </button>
                       </form>
                   </td>
@@ -84,7 +80,7 @@
                   <td>
                     <form action="#" th:action="@{/Loans/edit/}+ ${{loan.loan.LoanID}}" method="get">
                         <button th:id="'table_entry_childs_button_' + ${loan.loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                            <i>Edit</i>
+                            <i>تعديل</i>
                         </button>
                     </form>
                 </td>
@@ -100,50 +96,15 @@
 
           
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
- 
-    <strong>Copyright &copy; 2014-2019 <a href="">Our Team</a>.</strong> All rights
-    reserved.
-  </footer>
+  <footer class="footer">
+          <div class="footer-wrap">
+              <div class="w-100 clearfix">
+                <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+              </div>
+          </div>
+ </footer>  
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<!-- page script -->
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true,
-      "autoWidth": false,
-    });
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
 </body>
 </html>

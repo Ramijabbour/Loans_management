@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  lang="ar" dir="rtl"
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments.html :: headerfiles">
-
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Central Bank of syria</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/../../new/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/../../new/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/../../new/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <header th:insert="fragments.html :: nav"></header>
+<div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -12,18 +27,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Voucher</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Loan</li>
-              <li class="breadcrumb-item active">Add Voucher</li>
-            </ol>
+            <h3>إضافة سند</h3>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
+
 
     <!-- Main content -->
     <section class="content">
@@ -34,27 +43,27 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">New Voucher :  <small>Insert Details</small></h3>
+                <h4>ادخل معلومات السند </h4>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
               <form action="#"  th:action="@{/Loan/AddVoucher/}+${{myloan.LoanID}}"  method="post" th:object="${voucher}">
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Voucher Date </label>
+                    <label for="exampleInputEmail1">تاريخ السند </label>
                     <input type="date" name="VoucherDate" class="form-control" th:field="*{VoucherDate}">
                   </div>
 
 					
                   
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Voucher Ammount </label>
-                    <input type="number" name="VoucherAmmount" class="form-control" placeholder="Enter Voucher Ammount" th:field="*{VoucherAmmount}">
+                    <label for="exampleInputPassword1">قيمة السند </label>
+                    <input type="number" name="VoucherAmmount" class="form-control" placeholder="ادخل قيمة السند" th:field="*{VoucherAmmount}">
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Total </label>
-                    <input type="number" name="Total" class="form-control" placeholder="Enter Total"  th:field="*{Total}">
+                    <label for="exampleInputPassword1">الاجمالي </label>
+                    <input type="number" name="Total" class="form-control" placeholder="ادخل الاجمالي"  th:field="*{Total}">
                   </div>
 
 
@@ -64,7 +73,7 @@
                   </div>
                   
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Client</label><br>
+                    <label for="exampleInputPassword1">المتعامل</label><br>
                     <select th:field="*{client}">
                       <option th:each="client : ${allclient}" th:value="${client.ClientID}" th:text="${client.ClientName}"></option>
                     </select>
@@ -72,8 +81,8 @@
 
                   
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Funding Ratio </label>
-                    <input type="number" name="FundingRatio" class="form-control" placeholder="Enter Funding Ratio" th:field="*{FundingRatio}">
+                    <label for="exampleInputPassword1">نسبة التمويل </label>
+                    <input type="number" name="FundingRatio" class="form-control" placeholder="ادخل نسبة التمويل" th:field="*{FundingRatio}">
                   </div>
                   
                  <!--   <div class="form-group" hidden:true>
@@ -86,7 +95,7 @@
  
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">تأكيد</button>
                 </div>
               </form>
             </div>
@@ -104,79 +113,16 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      
-    </div>
-    <strong>Copyright &copy; 2014-2022 <a href="http://adminlte.io">our team</a>.</strong> All rights
-    reserved.
-  </footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+<footer class="footer">
+     <div class="footer-wrap">
+         <div class="w-100 clearfix">
+           <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+         </div>
+     </div>
+</footer>
+ 
 </div>
-<!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- jquery-validation -->
-<script src="../../plugins/jquery-validation/jquery.validate.min.js"></script>
-<script src="../../plugins/jquery-validation/additional-methods.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
-  $('#quickForm').validate({
-    rules: {
-      email: {
-        required: true,
-        email: true,
-      },
-      password: {
-        required: true,
-        minlength: 5
-      },
-      terms: {
-        required: true
-      },
-    },
-    messages: {
-      email: {
-        required: "Please enter a email address",
-        email: "Please enter a vaild email address"
-      },
-      password: {
-        required: "Please provide a password",
-        minlength: "Your password must be at least 5 characters long"
-      },
-      terms: "Please accept our terms"
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
-  });
-});
-</script>
 </body>
 </html>
