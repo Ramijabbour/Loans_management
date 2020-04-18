@@ -1,6 +1,42 @@
 <!DOCTYPE html>
-<head>
-	<title>Redirect</title>
-	<meta charset="UTF-8">
+<html  lang="ar" dir="rtl"
+ xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles">
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Central Bank of syria</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/../../new/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/../../new/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/../../new/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
 </head>
-<body><p>paragraph</p></body>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+  
+<div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+            <a class="navbar-brand brand-logo" href="/../new/home/home.html"><img src="/../../new/images/photo58099326311927453266.jpg" alt="logo"/></a>
+            <a class="navbar-brand brand-logo-mini" href="/../new/home/home.html"><img src="/../../new/images/photo5810167110637302253.jpg" alt="logo"/></a>
+</div>
+
+	<footer class="footer">
+          <div class="footer-wrap">
+              <div class="w-100 clearfix">
+                <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+              </div>
+          </div>
+   </footer>
+  <!-- container-scroller -->
+  <!-- base:js -->
+  <script src="/../../new/vendors/base/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="/../../new/js/template.js"></script>
+</body>
+</html>

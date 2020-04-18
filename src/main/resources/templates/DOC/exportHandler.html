@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  lang="ar" dir="rtl"
+ xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles">
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Central Bank of syria</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/../../new/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/../../new/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/../../new/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
+</head>
 <body class="hold-transition sidebar-mini layout-fixed">
+<header th:insert="fragments.html :: nav"></header>
+ 
 <div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Export</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item">Settlement/Export</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -29,15 +32,21 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-              <h4>Reports</h4>
+              <h4>التقارير</h4>
               </div>
               <hr>
+              <div class="container-fluid">
                   <a th:href="@{|/settlement/checks/settled/reports/export/html?id=${check.id}|}"><span th:text=htmlView></span></a>
-                  <hr>
+                 </div>
+                <hr>
+                 <div class="container-fluid">
                   <a th:href="@{|/settlement/checks/settled/reports/export/pdf?id=${check.id}|}"><span th:text=downloadPDF></span></a>      
     			  <hr>
+    			  </div>
+    			   <div class="container-fluid">
                   <a th:href="@{|/settlement/checks/settled/reports/export/docx?id=${check.id}|}"><span th:text=downloadDocx></span></a>
               	   <hr>
+              	   </div>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -57,74 +66,14 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- jquery-validation -->
-<script src="../../plugins/jquery-validation/jquery.validate.min.js"></script>
-<script src="../../plugins/jquery-validation/additional-methods.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
-  $('#quickForm').validate({
-    rules: {
-      email: {
-        required: true,
-        email: true,
-      },
-      password: {
-        required: true,
-        minlength: 5
-      },
-      terms: {
-        required: true
-      },
-    },
-    messages: {
-      email: {
-        required: "Please enter a email address",
-        email: "Please enter a vaild email address"
-      },
-      password: {
-        required: "Please provide a password",
-        minlength: "Your password must be at least 5 characters long"
-      },
-      terms: "Please accept our terms"
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
-  });
-});
-</script>
-
+<footer class="footer">
+          <div class="footer-wrap">
+              <div class="w-100 clearfix">
+                <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+              </div>
+          </div>
+   </footer>
 </body>
 </html>

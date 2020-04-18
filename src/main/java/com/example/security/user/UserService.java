@@ -91,7 +91,6 @@ public class UserService extends MasterService implements MasterBackUpService {
 		if(checkUserinforDuplication(user)) {
 			throw new DataDuplicationException();
 		}else {
-			user = (User) super.encryptData(user);
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			user.setActive(false);
 			this.userRepository.save(user);

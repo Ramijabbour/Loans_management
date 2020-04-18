@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html  lang="ar" dir="rtl"
- xmlns:th="http://www.thymeleaf.org">
+ xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments.html :: headerfiles">
  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -31,7 +32,7 @@
                   <h4 class="card-title">كل المستخدمين</h4>
                  
                   <div class="table-responsive pt-4">
-                    <table class="table table-dark ">
+                    <table class="table table-bordered table-hover">
                       <thead>
                         <tr>
                         <th> المعرف </th>
@@ -97,6 +98,12 @@
   <!-- /.content-wrapper -->
 </div>
 <!-- ./wrapper -->
-
+<footer class="footer">
+          <div class="footer-wrap">
+              <div class="w-100 clearfix">
+                <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+              </div>
+          </div>
+          </footer>
 </body>
 </html>

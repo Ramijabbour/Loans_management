@@ -13,15 +13,15 @@ public class HomeController {
     	return mav; 
     }
     
-    @RequestMapping(method = RequestMethod.GET , value = "/index")
-    public ModelAndView index() {
-    	ModelAndView mav = new ModelAndView("Login/index");
-    	return mav; 
-    }
-    
     @RequestMapping(method = RequestMethod.GET , value = "/")
     public ModelAndView Root() {
     	ModelAndView mav = new ModelAndView("fragments");
+    	return mav; 
+    }
+    
+    @RequestMapping(method = RequestMethod.GET , value = "/index")
+    public ModelAndView index() {
+    	ModelAndView mav = new ModelAndView("Login/index");
     	return mav; 
     }
     
