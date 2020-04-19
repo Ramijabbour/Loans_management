@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.example.MasterService;
-import com.example.aspect.EncryptDecrypt.LocalDateEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
@@ -34,7 +33,8 @@ public class User implements java.io.Serializable {
 	private String UserPermissions = "none" ;
 	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String UserRoles ="none";
-	@Convert(converter = LocalDateEncryptDecryptConverter.class)
+
+
 	private LocalDateTime createdAt ; 
 	private boolean Active = false ; 
 
