@@ -24,6 +24,7 @@ public class BanksStatsController {
 		mav.addObject("bankstats",this.bankStatsService.getBankStats(bank)) ;
 		return mav ; 
 	}
+
 	
 	// add redirect routes 
 	

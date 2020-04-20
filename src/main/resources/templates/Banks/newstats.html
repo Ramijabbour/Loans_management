@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html  lang="ar" dir="rtl"
+ xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles">
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Central Bank of syria</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/../../new/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/../../new/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/../../new/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
+</head>
+<body >
+<header th:insert="fragments.html :: nav"></header>
+<body>
+<div class="container-scroller">
+    <!-- partial -->
+		<div class="container-fluid page-body-wrapper">
+			<div class="main-panel">
+				<div class="content-wrapper">
+				<div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">معلومات المصرف</h4>
+                  <form class="form-sample">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">معرف المصرف</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" th:field="*{bankstats.Bank.BankID}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">اسم المصرف</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control"  th:field="*{bankstats.Bank.BankName}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">رمز المصرف</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" th:field="*{bankstats.Bank.BankCode}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">عدد الأفرع</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" th:field="*{bankstats.BranchesCount}"  readonly/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+        
+                  </form>
+                </div>
+              </div>
+            </div>
+					<div class="row">
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-success font-weight-bold" th:text="*{bankstats.SumAllocations}"></h2>
+										<i class="mdi mdi-account-outline mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="newClient"></canvas>
+								<div class="line-chart-row-title">عدد المخصصات الكلية</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-danger font-weight-bold"  th:text="*{bankstats.TotalAllocations}"></h2>
+										<i class="mdi mdi-refresh mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="allProducts"></canvas>
+								<div class="line-chart-row-title">مجموع المخصصات الكلية</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-info font-weight-bold" th:text="*{bankstats.SumAllLoans}"></h2>
+										<i class="mdi mdi-file-document-outline mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="invoices"></canvas>
+								<div class="line-chart-row-title">إجمالي عدد السلف</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-warning font-weight-bold"  th:text="*{bankstats.TotalLoansValue}"></h2>
+										<i class="mdi mdi-folder-outline mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="projects"></canvas>
+								<div class="line-chart-row-title">القيمة الإجمالية للسلف</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-secondary font-weight-bold"  th:text="*{bankstats.SumOpenLoans}"></h2>
+										<i class="mdi mdi-bank mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="orderRecieved"></canvas>
+								<div class="line-chart-row-title">عدد السلف المفتوحة</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-dark font-weight-bold"  th:text="*{bankstats.SumClosedLoans}"></h2>
+										<i class="mdi mdi-cash text-dark mdi-18px"></i>
+									</div>
+								</div>
+								<canvas id="transactions"></canvas>
+								<div class="line-chart-row-title">عدد السلف المغلقة</div>
+							</div>
+						</div>
+					</div>
+					<div class ="row">
+					
+										<div class="col-lg-3">
+											<h4 class="card-title">نسب السلف</h4>
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="progress progress-lg grouped mb-2">
+														<div class="progress-bar  bg-danger" role="progressbar" style="width: 80%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+														<div class="progress-bar bg-info" role="progressbar" style="width:  20%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+												<div class="col-sm-12">
+													<ul class="graphl-legend-rectangle">
+														<li><span class="bg-danger"></span> مغلقة (80%)</li>
+														<li><span class="bg-warning"></span>مفتوحة (20%)</li>
+													</ul>
+												</div>
+											</div>
+
+										</div>
+							</div>
+							
+		<div class = "row">
+				<div class="card-body">
+               <div class="card-header">
+              <h4>معلومات الفروع</h4>
+              </div>
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>اسم الفرع</th>
+                  <th>اسم المصرف</th>
+                  <th>رمز المصرف</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                     
+                <tr th:each ="bank : ${bankstats.BranchesList}" >
+                  <td th:text="${bank.BranchName}"></td>
+                  <td th:text="${bank.BankName}"></td>
+                  <td th:text="${bank.BankCode}"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>				
+	</div>
+	<div class="row">
+	            <div class="card-body">
+               <div class="card-header">
+              <h4>معلومات المخصصات</h4>
+              </div>
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>قيمة المخصصات</th>
+                  <th>تاريخ المخصصات</th>
+                  <th>اسم المصرف</th>
+                </tr>
+                </thead>
+                <tbody>
+                     
+                <tr th:each ="allocation : ${bankstats.AllAllocations}" >
+                   <td th:text="${allocation.AllocationAmmount}"></td>
+                  <td th:text="${allocation.AllocationDate}"></td>
+                  <td th:text="${allocation.banks.BankName}+' '+${allocation.banks.BranchName}"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+	</div>
+	
+	
+	<div class = "row">
+				<div class="card-body">
+			<h4>السلف المغلقة</h4>
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>اسم السلفة</th>
+                  <th>التاريخ</th>
+                  <th>تاريخ منح السلفة</th>
+                  <th>نوع التمويل</th>
+                  <th>نوع السلفة</th>
+                  <th>معدل الفائدة</th>
+                  <th>اسم المصرف</th>
+                  <th>القيمة الصافية</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each ="loan : ${bankstats.ClosedLoansList}">
+                  <td th:text="${loan.loan.Name}"></td>
+                  <td th:text="${loan.loan.WorkDate}"></td>
+                  <td th:text="${loan.loan.LoanDate}"></td>
+                  <td th:text="${loan.loan.financeType.TypeName}"></td>
+                  <td th:text="${loan.loan.loanType.TypeName}"></td>
+                  <td th:text="${loan.loan.InterestRate}"></td>
+                  <td th:text ="${loan.loan.bank.BankName}+' '+${loan.loan.bank.BranchName}"></td>
+                  <td th:text="${loan.loan.NetAmmount}"></td>
+                </tr>
+                </tbody>
+        
+              </table>
+            </div>
+	
+	</div>
+	
+	<div class = "row">
+				<div class="card-body">
+			<h4>السلف المفتوحة</h4>
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>اسم السلفة</th>
+                  <th>التاريخ</th>
+                  <th>تاريخ منح السلفة</th>
+                  <th>نوع التمويل</th>
+                  <th>نوع السلفة</th>
+                  <th>معدل الفائدة</th>
+                  <th>اسم المصرف</th>
+                  <th>القيمة الصافية</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each ="loan : ${bankstats.OpenLoansList}">
+                  <td th:text="${loan.loan.Name}"></td>
+                  <td th:text="${loan.loan.WorkDate}"></td>
+                  <td th:text="${loan.loan.LoanDate}"></td>
+                  <td th:text="${loan.loan.financeType.TypeName}"></td>
+                  <td th:text="${loan.loan.loanType.TypeName}"></td>
+                  <td th:text="${loan.loan.InterestRate}"></td>
+                  <td th:text ="${loan.loan.bank.BankName}+' '+${loan.loan.bank.BranchName}"></td>
+                  <td th:text="${loan.loan.NetAmmount}"></td>
+
+                </tr>
+                </tbody>
+        
+              </table>
+            </div>
+	
+	</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+ <script src="/../../new/vendors/base/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="/../../new/js/template.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <script src="/../../new/vendors/chart.js/Chart.min.js"></script>
+    <script src="/../../new/vendors/progressbar.js/progressbar.min.js"></script>
+		<script src="/../../new/vendors/chartjs-plugin-datalabels/chartjs-plugin-datalabels.js"></script>
+		<script src="/../../new/vendors/justgage/raphael-2.1.4.min.js"></script>
+		<script src="/../../new/vendors/justgage/justgage.js"></script>
+    <!-- Custom js for this page-->
+    <script src="/../../new/js/dashboard.js"></script>
+<footer class="footer">
+          <div class="footer-wrap">
+              <div class="w-100 clearfix">
+                <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+              </div>
+          </div>
+ </footer>
+	</body>
+</html>

@@ -114,4 +114,13 @@ public class BankController {
 		return mav ; 
 	}
 	
+	@RequestMapping(method = RequestMethod.GET , value = "/banks/view/newstats/{id}")
+	public ModelAndView getBankNewStats(@PathVariable int id) {
+		ModelAndView mav = new ModelAndView("Banks/newstats");
+		Banks bank = this.bankservice.getBankById(id);
+		mav.addObject("bankstats",this.bankStatsService.getBankStats(bank)) ;
+		return mav ; 
+	}
+	
+	
 }

@@ -86,6 +86,7 @@ public class UserService extends MasterService implements MasterBackUpService {
 	}
 	
 	//add new user // 
+	@Transactional
 	public void addUser(User user ) {
 		user.flatUserDetailes();
 		if(checkUserinforDuplication(user)) {

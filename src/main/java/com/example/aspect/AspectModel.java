@@ -42,10 +42,6 @@ public class AspectModel {
 			//checkUserPermission(proceedingJoinPoint,user);
 	}
 	
-	
-	
-	
-	
 	@Around("execution(* com.example.settelmets.SettlementService..*(..))")
     public Object SettlementServiceAspectHandler(ProceedingJoinPoint proceedingJoinPoint) throws Throwable
     {
@@ -58,10 +54,6 @@ public class AspectModel {
         SettlementLogger.info("Execution of " + printFunctionCallInfo(proceedingJoinPoint)+" with excution Time ::" + stopWatch.getTotalTimeMillis() + " ms");
         return result;
     }
-
-	
-	
-	
 	
 	public User get_current_User() {
 		String username ; 
@@ -88,6 +80,18 @@ public class AspectModel {
 		return permissions ; 
 	}
 
+	public void checkUserPermission(JoinPoint  proceedingJoinPoint , User user ) {
+		if(user.convertRolesToList().contains("SUPER")) {
+			return ; 
+		}
+		MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
+        String methodName = methodSignature.getName();
+        if(!getUserPermissions(user).contains(methodName)) {
+			throw new UnAuthorizedException(); 
+		}
+	}
+
+	
 	public String printFunctionCallInfo(JoinPoint  proceedingJoinPoint) {
 		MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         String className = methodSignature.getDeclaringType().getSimpleName();
@@ -100,17 +104,6 @@ public class AspectModel {
         	System.out.println("with parameter : "+parameter);
         }
         return out ; 
-	}
-	
-	public void checkUserPermission(JoinPoint  proceedingJoinPoint , User user ) {
-		if(user.convertRolesToList().contains("SUPER")) {
-			return ; 
-		}
-		MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
-        String methodName = methodSignature.getName();
-        if(!getUserPermissions(user).contains(methodName)) {
-			throw new UnAuthorizedException(); 
-		}
 	}
 	
 }
