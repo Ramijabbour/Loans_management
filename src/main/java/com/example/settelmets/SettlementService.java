@@ -94,7 +94,8 @@ public class SettlementService extends MasterService {
 	}
 	
 	public int addCheck(Chaque check ) {
-		int result = testCheckInfoValidation(check) ; 
+		//int result = testCheckInfoValidation(check) ;
+		int result =0 ;
 		if(result == 0 ) {
 			this.onHoldChecksRepository.save(check);
 			super.notificationsService.addNotification("check added to settlement Service", "/settlement/checks/all", "SUPER");
