@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 import com.example.MasterService;
+import com.example.aspect.EncryptDecrypt.DoubleEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
@@ -21,6 +22,7 @@ public class Chaque {
     public int FirstBankSW;
     public String SecondBank;
     public int SecondBankSW;
+    @Convert(converter = DoubleEncryptDecryptConverter.class)
     public double Amount;
 	public LocalDateTime localDateTime ;
     public boolean active = false ;
