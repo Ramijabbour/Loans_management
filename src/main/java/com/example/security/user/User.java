@@ -4,13 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.example.MasterService;
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
 public class User implements java.io.Serializable {
@@ -22,15 +19,22 @@ public class User implements java.io.Serializable {
 	private int UserID ;
 
 	@Column(nullable = false )
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String email=" ";
 
 	@Column(nullable = false )
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String password = " ";
-	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String username ;
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String Gender="" ;
-	private String UserPermissions = "none" ; 
-	private String UserRoles ="none"; 
+	@Convert(converter = StringEncryptDecryptConverter.class)
+	private String UserPermissions = "none" ;
+	@Convert(converter = StringEncryptDecryptConverter.class)
+	private String UserRoles ="none";
+
+
 	private LocalDateTime createdAt ; 
 	private boolean Active = false ; 
 
