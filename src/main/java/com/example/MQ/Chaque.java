@@ -2,12 +2,11 @@ package com.example.MQ;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.example.MasterService;
+import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
 public class Chaque {
@@ -15,7 +14,9 @@ public class Chaque {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int id;
+    @Convert(converter = IntEncryptDecryptConverter.class)
     public int CheckId;
+    @Convert(converter = StringEncryptDecryptConverter.class)
     public String FirstBank;
     public int FirstBankSW;
     public String SecondBank;
