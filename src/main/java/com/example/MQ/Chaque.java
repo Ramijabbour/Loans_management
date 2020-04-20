@@ -2,12 +2,17 @@ package com.example.MQ;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.example.MasterService;
+import com.example.aspect.EncryptDecrypt.DoubleEncryptDecryptConverter;
+import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
 public class Chaque {
@@ -15,17 +20,37 @@ public class Chaque {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int id;
-    public int CheckId;
-    public String FirstBank;
-    public int FirstBankSW;
-    public String SecondBank;
-    public int SecondBankSW;
-    public double Amount;
-	public LocalDateTime localDateTime ;
-    public boolean active = false ;
     
-
-
+    @Column(nullable = false )
+    //@Convert(converter = IntEncryptDecryptConverter.class)
+    public int CheckId;
+    
+    @Column(nullable = false )
+    @Convert(converter = StringEncryptDecryptConverter.class)
+    public String FirstBank;
+    
+    @Column(nullable = false )
+    //@Convert(converter = IntEncryptDecryptConverter.class)
+    public int FirstBankSW;
+    
+    @Column(nullable = false )
+    @Convert(converter = StringEncryptDecryptConverter.class)
+    public String SecondBank;
+    
+    @Column(nullable = false )
+    //@Convert(converter = IntEncryptDecryptConverter.class)
+    public int SecondBankSW;
+    
+    @Column(nullable = false )
+    //@Convert(converter = DoubleEncryptDecryptConverter.class)
+    public double Amount;
+	
+    @Column(nullable = false )
+    public LocalDateTime localDateTime ;
+    
+	public boolean active = false ;
+    
+    
 	public Chaque() {
 		this.localDateTime = MasterService.getCurrDateTime() ;
     }
