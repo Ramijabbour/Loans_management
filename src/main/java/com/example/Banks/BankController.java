@@ -56,6 +56,7 @@ public class BankController {
 	@RequestMapping(method = RequestMethod.POST , value="/Banks/addBank")
 	public void addNewBank(@ModelAttribute Banks bank,HttpServletResponse response) throws IOException {
 		System.out.println("posted to /Banks/addBank ");
+		bank.setFinancialAllocations("0");
 		bankservice.addBank(bank);
 		response.sendRedirect("/Banks/all");
 	}
@@ -113,14 +114,5 @@ public class BankController {
 		mav.addObject("bankstats",this.bankStatsService.getBankStats(bank)) ;
 		return mav ; 
 	}
-	
-	@RequestMapping(method = RequestMethod.GET , value = "/banks/view/newstats/{id}")
-	public ModelAndView getBankNewStats(@PathVariable int id) {
-		ModelAndView mav = new ModelAndView("Banks/newstats");
-		Banks bank = this.bankservice.getBankById(id);
-		mav.addObject("bankstats",this.bankStatsService.getBankStats(bank)) ;
-		return mav ; 
-	}
-	
 	
 }
