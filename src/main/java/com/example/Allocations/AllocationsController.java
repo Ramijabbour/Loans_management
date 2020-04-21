@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.BankBranches.BrancheService;
+import com.example.BankBranches.Branches;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
 
@@ -25,6 +27,9 @@ public class AllocationsController {
 	
 	@Autowired
 	BankService bankservice ;
+	
+	@Autowired
+	BrancheService brancheservice ;
 	
 	//add new Allocation -------------------------------------------------------
 		@RequestMapping(method = RequestMethod.GET , value="/Allocation/addAllocation")
@@ -40,7 +45,7 @@ public class AllocationsController {
 		@RequestMapping(method = RequestMethod.POST , value="/Allocation/addAllocation")
 		public void addNewAllocation(@ModelAttribute Allocations Allocation,HttpServletResponse response) throws IOException {
 			System.out.println("posted to /Allocation/addAllocation ");
-			Banks bank = bankservice.getBankById(Allocation.getBanks().getBankID());
+			Banks bank=bankservice.getBankByID(Allocation.getBank().getBankID());
 			bank.setFinancialAllocations(Allocation.getAllocationAmmount());
 			System.out.println("Done");
 			allocationService.addAllocation(Allocation);
@@ -78,8 +83,8 @@ public class AllocationsController {
 		public ModelAndView ShowUpdateAllocation(@PathVariable int id) {
 			ModelAndView mav = new ModelAndView("Banks/UpdateAllocations");
 			Allocations Allocation = allocationService.getAllocationById(id);
-			List<Banks> allbank=bankservice.GetAllBanks();
-			mav.addObject("allbank",allbank);
+			List<Banks> allbanks =bankservice.GetAllBanks();
+			mav.addObject("allbanks",allbanks);
 			mav.addObject("allocation",Allocation);
 			return mav; 
 		} 
@@ -87,8 +92,8 @@ public class AllocationsController {
 		
 		@RequestMapping(method = RequestMethod.POST , value="/Allocation/update/{id}")
 		public void UpdateAlloaction(@Valid Allocations allocation,HttpServletResponse response) throws IOException {
-			System.out.println("posted to /Banks/update/id ");
-			Banks bank = bankservice.getBankById(allocation.getBanks().getBankID());
+			System.out.println("posted to /Allocations/update/id ");
+			Banks bank=bankservice.getBankById(allocation.getBank().getBankID());
 			bank.setFinancialAllocations(allocation.getAllocationAmmount());
 			allocationService.updateAllocation(allocation);
 			response.sendRedirect("/Allocation/all");

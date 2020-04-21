@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.example.BankBranches.BrancheService;
+import com.example.BankBranches.Branches;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
 import com.example.Clients.ClientService;
@@ -35,7 +38,7 @@ public class LoansController {
 	@Autowired 
 	ClientService clientService; 
 	@Autowired 
-	BankService bankService ;
+	BrancheService brancheService ;
 	@Autowired 
 	LoansTypeService loansTypeService;
 	@Autowired 
@@ -74,12 +77,12 @@ public class LoansController {
 	public ModelAndView AddLoan() { 
 		ModelAndView mav = new ModelAndView("Loans/AddLoan");
 		List<Clients> allclient = clientService.GetAllClients();
-		List<Banks> allbank=bankService.GetAllBanks();
+		List<Branches> allbranche=brancheService.getAllBranche();
 		List<LoansType> allloanType = loansTypeService.getAllType();
 		List<FinanceType> allfinanceType= financeTypeService.getAllFinanceType();
 	    mav.addObject("allclient",allclient);
 	    mav.addObject("loan",new Loans());
-	    mav.addObject("allbank",allbank);
+	    mav.addObject("allbranche",allbranche);
 	    mav.addObject("allloantype",allloanType);
 	    mav.addObject("allfinancetype",allfinanceType);
 		return mav; 
@@ -88,7 +91,8 @@ public class LoansController {
 	@RequestMapping(method = RequestMethod.POST , value="/Loans/addLoan")
 	public void addNewLoan(@ModelAttribute Loans loan,HttpServletResponse response) throws IOException {
 	
-		Banks bank=loan.getBank();
+		Banks bank=loan.getBranche().getBank();
+		
 		int Amount=Integer.parseInt(loan.getNetAmmount());
 		int bankAlloacation  =Integer.parseInt(bank.getFinancialAllocations());
 		int NewAllocation=bankAlloacation-Amount;
@@ -127,13 +131,12 @@ public class LoansController {
 		ModelAndView mav = new ModelAndView("Loans/UpdateLoan");
 		Loans loan=loansService.getOneByID(id);
 		List<Clients> allclient = clientService.GetAllClients();
-		List<Banks> allbank=bankService.GetAllBanks();
+		List<Branches> allbranche=brancheService.getAllBranche();
 		List<LoansType> allloanType = loansTypeService.getAllType();
 		List<FinanceType> allfinanceType= financeTypeService.getAllFinanceType();
-		mav.addObject("allbank",allbank);
+		mav.addObject("allbranche",allbranche);
 		mav.addObject("loan",loan);
 		mav.addObject("allclient",allclient);
-	    mav.addObject("allbank",allbank);
 	    mav.addObject("allloantype",allloanType);
 	    mav.addObject("allfinancetype",allfinanceType);
 		return mav; 

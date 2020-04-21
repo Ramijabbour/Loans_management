@@ -63,7 +63,7 @@ public class AllocationsService {
 	public List<Allocations> getBankAllocations(Banks bank){
 		List<Allocations> bankAllocations = new ArrayList<Allocations>();
  		for(Allocations allocation : this.allocationsRepository.findAll()) {
-			if(allocation.getBanks().getBankID() == bank.getBankID() ) {
+			if(allocation.getBank().getBankID() == bank.getBankID() ) {
 				bankAllocations.add(allocation);
 			}
 		}

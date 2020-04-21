@@ -43,7 +43,7 @@
                   <th>نوع السلفة</th>
                   <th>معدل الفائدة</th>
                   <th>البنك</th>
-                  <th>Net Ammount</th>
+                  <th>القيمة الصافية</th>
                   <th></th>
                   <th></th>
                   <th></th>
@@ -60,7 +60,7 @@
                   <td th:text="${loan.loan.financeType.TypeName}"></td>
                   <td th:text="${loan.loan.loanType.TypeName}"></td>
                   <td th:text="${loan.loan.InterestRate}"></td>
-                  <td th:text ="${loan.loan.bank.BankName}+' '+${loan.loan.bank.BranchName}"></td>
+                  <td th:text ="${loan.loan.branche.bank.BankName}+' '+${loan.loan.branche.BranchName}"></td>
                   <td th:text="${loan.loan.NetAmmount}"></td>
                   <td>
                       <form action="#" th:action="@{/Loans/Loan/} + ${{loan.loan.LoanID}}" method="get">
