@@ -56,6 +56,7 @@ public class BankController {
 	@RequestMapping(method = RequestMethod.POST , value="/Banks/addBank")
 	public void addNewBank(@ModelAttribute Banks bank,HttpServletResponse response) throws IOException {
 		System.out.println("posted to /Banks/addBank ");
+		bank.setFinancialAllocations("0");
 		bankservice.addBank(bank);
 		response.sendRedirect("/Banks/all");
 	}
@@ -101,6 +102,17 @@ public class BankController {
 		bankservice.deleteBank(id);
 		response.sendRedirect("/Banks/all");
 	}
-
+	
+	
+	@Autowired
+	private BankStatsService bankStatsService ; 
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/{id}")
+	public ModelAndView getBankStats(@PathVariable int id) {
+		ModelAndView mav = new ModelAndView("Banks/stats");
+		Banks bank = this.bankservice.getBankById(id);
+		mav.addObject("bankstats",this.bankStatsService.getBankStats(bank)) ;
+		return mav ; 
+	}
 	
 }

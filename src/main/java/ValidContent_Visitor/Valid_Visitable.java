@@ -19,14 +19,14 @@ public class Valid_Visitable implements Visitor {
 
     @Override
     public boolean visit(Banks Bank) {
-        if (Bank.BankCode.charAt(0) != '#' && StringUtils.isNumeric(Bank.BankCode) == false || Bank.BankCode.contains("-") || Bank.BankCode.length() > 7)
-            return false;
+       // if (Bank.BankCode.charAt(0) != '#' && StringUtils.isNumeric(Bank.BankCode) == false || Bank.BankCode.contains("-") || Bank.BankCode.length() > 7)
+         //   return false;
         if (Bank.BankName.length() > 20 || !Bank.BankName.matches("[@_!#$%^&*()<>?/\\|}{~:]"))
             return false;
         if (StringUtils.isNumeric(Bank.FinancialAllocations) == false || Float.valueOf(Bank.FinancialAllocations) < 0.0)
             return false;
-        if (Bank.BranchName.length() > 20)
-            return false;
+        //if (Bank.BranchName.length() > 20)
+          //  return false;
         return true;
     }
 

@@ -3,6 +3,8 @@ package com.example.Allocations;
 
 
 import ValidContent_Visitor.Visitor;
+
+import com.example.BankBranches.Branches;
 import com.example.Banks.Banks;
 
 import javax.persistence.Entity;
@@ -25,14 +27,14 @@ public class Allocations {
 	public String AllocationAmmount;
 	
 	@ManyToOne
-	private Banks banks =null ;
+	private Banks bank =null ;
 
 	public Allocations() {}
 	
 	public Allocations(String allocationDate , String ammount , Banks bank) {
 		this.AllocationDate = allocationDate ; 
 		this.AllocationAmmount = ammount ; 
-		this.banks = bank ; 
+		this.bank = bank ; 
 	}
 	
 	public int getAllocationID() {
@@ -59,12 +61,15 @@ public class Allocations {
 		AllocationAmmount = allocationAmmount;
 	}
 
-	public Banks getBanks() {
-		return banks;
+
+
+	public Banks getBank() {
+		return bank;
 	}
 
-	public void setBanks(Banks banks) {
-		this.banks = banks;
+	public void setBank(Banks bank) {
+		this.bank = bank;
 	}
+
 	public boolean accept(Visitor visitor) { return visitor.visit(this); }}
 

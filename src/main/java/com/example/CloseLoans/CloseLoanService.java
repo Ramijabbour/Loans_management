@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.BankBranches.Branches;
 import com.example.Banks.Banks;
 
 @Service
@@ -24,14 +25,14 @@ public class CloseLoanService {
 		return closeLoanRepository.findAll();
 	}
 	
-	public List<CloseLoans> getBankClosedLoans(Banks bank){
-		List<CloseLoans> bankLoans = new ArrayList<CloseLoans>();
+	public List<CloseLoans> getBrancheClosedLoans(Branches branche){
+		List<CloseLoans> brancheLoans = new ArrayList<CloseLoans>();
 		for(CloseLoans loan : this.closeLoanRepository.findAll()) {
-			if(loan.getLoan().getBank().getBankID() == bank.getBankID()) {
-				bankLoans.add(loan); 
+			if(loan.getLoan().getBranche().getBrancheID() == branche.getBrancheID()) {
+				brancheLoans.add(loan); 
 			}
 		}
-		return bankLoans; 
+		return brancheLoans; 
 	}
 	
 }
