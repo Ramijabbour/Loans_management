@@ -74,6 +74,30 @@
                     <input type="text" name="Identity" class="form-control"  placeholder="Enter Identity Number" th:field="*{identity_number}">
                   </div>
                   
+                                    <div class="form-group">
+                    <label for="exampleInputEmail1">البريد الالكتروني </label>
+                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل البريد الالكتروني" th:field="*{email}">
+                  </div>
+                        
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">رقم الهاتف</label>
+                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل رقم الهاتف" th:field="*{phone}">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"> العنوان</label>
+                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل العنوان" th:field="*{address}">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">الجنس</label><br>
+                    <select th:field="*{gender}">
+                    <option th:value="''" th:text="Select"></option>
+                      <option th:value="'M'" th:text="Male"></option>
+  					  <option th:value="'F'" th:text="Female"></option>
+                    </select>  
+                  </div>  
+                  
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

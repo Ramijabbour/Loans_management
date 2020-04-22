@@ -39,6 +39,10 @@
                   <th>اسم المتعامل</th>
                   <th>النوع</th>
                   <th>الرقم الوطني</th>
+                  <th>البريد الالكتروني</th>
+                  <th>رقم الهاتف</th>
+                  <th>العنوان</th>
+                  <th>الجنس</th>
                   <th></th>
                   <th></th>
 
@@ -49,6 +53,10 @@
                   <td th:text="${client.ClientName}"></td>
                   <td th:text="${client.ClientType}"></td>
                   <td th:text="${client.identity_number}"></td>
+                  <td th:text="${client.email}"></td>
+                  <td th:text="${client.phone}"></td>
+                  <td th:text="${client.address}"></td>
+                  <td th:text="${client.gender}"></td>
                   <td>
                       <form action="#" th:action="@{/Clients/delete/} + ${{client.ClientID}}" method="get">
                           <button th:id="'table_entry_childs_button_' + ${client.ClientID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">

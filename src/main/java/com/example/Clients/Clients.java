@@ -23,19 +23,32 @@ public class Clients {
 	@Column(nullable = true)
 	public String identity_number;
 	
+	public String email;
+	
+	public String phone;
+	
+	public String address ;
+	
+	public String gender ;
 	
 	public Clients() {}
 
 
-	public Clients(String clientName, String clientType, String identity_number) {
+
+
+
+
+	public Clients(String clientName, String clientType, String identity_number, String email, String phone,
+			String address, String gender) {
 		
 		ClientName = clientName;
 		ClientType = clientType;
 		this.identity_number = identity_number;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+		this.gender = gender;
 	}
-
-
-
 
 
 	public String getClientType() {
@@ -74,4 +87,36 @@ public class Clients {
 		this.identity_number = identity_number;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
 	public boolean accept(Visitor visitor) { return visitor.visit(this); }}
