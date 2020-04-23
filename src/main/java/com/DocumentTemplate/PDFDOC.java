@@ -13,9 +13,9 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 public class PDFDOC implements CreateDocTemplate  {
 
-    public static Font normal = FontFactory.getFont(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\fonts\\DocFonts\\arabtype.ttf", BaseFont.IDENTITY_H, 26);
-    public static Font normal2 = FontFactory.getFont(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\fonts\\DocFonts\\arabtype.ttf", BaseFont.IDENTITY_H, 18);
-    public static Font normal3 = FontFactory.getFont(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\fonts\\DocFonts\\arabtype.ttf", BaseFont.IDENTITY_H, 18);
+    public static Font normal = FontFactory.getFont(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\new\\fonts\\sourcesanspro\\arabtype.ttf", BaseFont.IDENTITY_H, 26);
+    public static Font normal2 = FontFactory.getFont(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\new\\fonts\\sourcesanspro\\arabtype.ttf", BaseFont.IDENTITY_H, 18);
+    public static Font normal3 = FontFactory.getFont(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\new\\fonts\\sourcesanspro\\arabtype.ttf", BaseFont.IDENTITY_H, 18);
 
     @Override
     public String CreateRTGSDoc(SettledChaque settledChaque) {

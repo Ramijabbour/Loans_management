@@ -80,7 +80,7 @@ public class DOCXDOC implements CreateDocTemplate {
         XWPFRun paragraphbody = paragraph3.createRun();
         paragraphbody.addBreak();
         paragraphbody.addBreak();
-        paragraphbody.setText("الى البنك:");
+        paragraphbody.setText(":" + "الى البنك");
         paragraphbody.setText(settledChaque.getFirstBank());
         paragraphbody.addBreak();
         paragraphbody.setText(String.valueOf(settledChaque.getFirstBankSW()));
