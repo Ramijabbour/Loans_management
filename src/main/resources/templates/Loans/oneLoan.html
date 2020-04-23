@@ -76,22 +76,22 @@
                   </tr>
                   <tr>
                     <td>البنك </td>
-                    <td th:text ="${loan.bank.BankName}+' '+${loan.bank.BranchName}"></td>
+                    <td th:text ="${loan.branche.bank.BankName}+' '+${loan.branche.BranchName}"></td>
                   </tr>
                   <tr>
-                    <td>Total Ammount </td>
+                    <td>القيمة الكلية </td>
                     <td th:text=${loan.TotalAmmount}></td>
                   </tr>
                   <tr>
-                    <td> Total Ammount As String </td>
+                    <td>القيمة الكلية كتابيا </td>
                     <td th:text=${loan.TotalAmmountAsString}></td>
                   </tr>
                   <tr>
-                    <td>Net Ammount </td>
+                    <td>القيمة الصافية </td>
                     <td th:text=${loan.NetAmmount}></td>
                   </tr>
                   <tr>
-                    <td>Net Ammount As String </td>
+                    <td>القيمة الصافية كتابيا </td>
                     <td th:text=${loan.NetAmmountAsString}></td>
                   </tr>
 
@@ -101,7 +101,7 @@
                   </tr>
 
                   <tr>
-                    <td>Number Of Voucher As String </td>
+                    <td>عدد السندات كتابيا </td>
                     <td th:text=${loan.NumberOfVoucherAsString}> </td>
                   </tr>
 

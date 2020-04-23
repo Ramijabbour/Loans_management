@@ -27,12 +27,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>إضافة بنك</h3>
+            <h3>تعديل فرع</h3>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
+    
+    
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -42,46 +43,66 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-              <h4>أدخل معلومات البنك</h4>
-            </div>
+				<h4>أدخل معلومات الفرع</h4>
+              </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form  action="#"  th:action="@{/Banks/addBank}" th:object="${bank}" method="post">
+              <form  action="#"  th:action="@{/Banks/Branches/update/}+${{branche.BrancheID}}" th:object="${branche}" method="post">
                 <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">الأسم</label>
-                    <input type="text" name="BankName" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" th:field="*{BankName}">
+                
+               <div class="form-group">
+                  <label for="exampleInputEmail1">ID</label>
+                  <input type="number" name="BankName" class="form-control" id="exampleInputEmail1" placeholder="" th:field="*{BrancheID}" readonly>
+               </div>
+                
+               <div class="form-group">
+                    <label for="exampleInputEmail1">اسم الفرع </label>
+                    <input type="text" name="name" class="form-control"  placeholder="Enter Name" th:field="*{BranchName}">
                   </div>
-   
+            
+	           	<div class="form-group">
+                   <label for="exampleInputEmail1">رمز الفرع</label>
+                   <input type="text" name="Identity" class="form-control"  placeholder="Enter Identity Number" th:field="*{BrancheCode}">
+	            </div>
+            	
+            	<div class="form-group">
+                   <label for="exampleInputEmail1">البنك</label>
+                   <input type="text" name="Identity" class="form-control"   th:field="*{bank}" readonly>
+	            </div>
+            	
+                  
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">تأكيد</button>
+                  <button type="submit" class="btn btn-primary">تعديل</button>
                 </div>
               </form>
             </div>
             <!-- /.card -->
             </div>
-         
+          <!--/.col (left) -->
+          <!-- right column -->
           <div class="col-md-6">
 
           </div>
-    
+          <!--/.col (right) -->
         </div>
         <!-- /.row -->
-      </div>
+      </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-<footer class="footer">
-      <div class="footer-wrap">
-          <div class="w-100 clearfix">
-            <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+
+  <footer class="footer">
+          <div class="footer-wrap">
+              <div class="w-100 clearfix">
+                <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+              </div>
           </div>
-      </div>
-</footer>
+ </footer>  
 
 </div>
+
 </body>
 </html>

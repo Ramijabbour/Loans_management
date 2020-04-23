@@ -36,12 +36,13 @@ public class BankStatsService {
 		statusModel.setBank(bank);
 		statusModel.setBranchesList(this.bankService.getBankBranches(bank));
 		statusModel.setAllAllocations(this.allocationsService.getBankAllocations(bank));
-		statusModel.setOverAllLoansList(this.loansService.getBankLoans(bank));
-		statusModel.setOpenLoansList(this.openLoansService.getBankOpenLoans(bank));
-		statusModel.setClosedLoansList(this.closedLoansService.getBankClosedLoans(bank));
+	//	statusModel.setOverAllLoansList(this.loansService.getBankLoans(bank));
+		//statusModel.setOpenLoansList(this.openLoansService.getBankOpenLoans(bank));
+		//statusModel.setClosedLoansList(this.closedLoansService.getBankClosedLoans(bank));
 		statusModel.calculateBankStats(); 
 		return statusModel; 
 	}
+	
 	
 	
 }

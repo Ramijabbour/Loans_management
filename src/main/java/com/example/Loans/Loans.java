@@ -5,6 +5,8 @@ import javax.persistence.*;
 
 
 import ValidContent_Visitor.Visitor;
+
+import com.example.BankBranches.Branches;
 import com.example.Banks.Banks;
 import com.example.Clients.Clients;
 import com.example.FinanceType.FinanceType;
@@ -66,7 +68,7 @@ public class Loans {
     private Clients client = null;
 
     @ManyToOne
-    private Banks bank = null;
+    private Branches branche = null;
 
     @ManyToOne
     private User user = null;
@@ -230,15 +232,15 @@ public class Loans {
         this.client = client;
     }
 
-    public Banks getBank() {
-        return bank;
-    }
+    public Branches getBranche() {
+		return branche;
+	}
 
-    public void setBank(Banks bank) {
-        this.bank = bank;
-    }
+	public void setBranche(Branches branche) {
+		this.branche = branche;
+	}
 
-    public User getUser() {
+	public User getUser() {
         return user;
     }
 

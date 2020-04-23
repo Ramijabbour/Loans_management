@@ -27,7 +27,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>إضافة بنك</h3>
+            <h3>عرض الفرع</h3>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -42,46 +42,58 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-              <h4>أدخل معلومات البنك</h4>
+              <h4> معلومات الفرع</h4>
             </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form  action="#"  th:action="@{/Banks/addBank}" th:object="${bank}" method="post">
+            
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">الأسم</label>
-                    <input type="text" name="BankName" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" th:field="*{BankName}">
+                    <input type="text" name="BankName" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" th:field="*{branche.BranchName}" readonly>
                   </div>
-   
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">رمز الفرع</label>
+                    <input type="text" name="BranchName" class="form-control" id="exampleInputPassword1" placeholder="Enter Branch Name" th:field="*{branche.BrancheCode}" readonly>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">البنك</label><br>
+                    <select th:field="*{branche.bank}" readonly>
+                      <option th:value="${branche.bank.BankID}" th:text="${branche.bank.BankName}" readonly></option>	  
+                    </select>
+                  </div>
+                  
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">تأكيد</button>
-                </div>
-              </form>
+                </form>
             </div>
             <!-- /.card -->
             </div>
-         
+          <!--/.col (left) -->
+          <!-- right column -->
           <div class="col-md-6">
 
           </div>
-    
+          <!--/.col (right) -->
         </div>
         <!-- /.row -->
-      </div>
+      </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 <footer class="footer">
-      <div class="footer-wrap">
-          <div class="w-100 clearfix">
-            <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+          <div class="footer-wrap">
+              <div class="w-100 clearfix">
+                <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+              </div>
           </div>
-      </div>
-</footer>
+        </footer>
+
 
 </div>
+
 </body>
 </html>

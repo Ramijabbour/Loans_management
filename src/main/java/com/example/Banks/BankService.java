@@ -30,7 +30,6 @@ public class BankService {
 	
 	public void addBank(Banks bank)
 	{
-		bank.setFinancialAllocations("0");
 		bankRepository.save(bank);
 	}
 
