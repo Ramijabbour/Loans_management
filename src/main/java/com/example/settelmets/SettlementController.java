@@ -21,7 +21,7 @@ public class SettlementController {
 		this.settlementService.settleChecks();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/add/get")
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/add")
 	public ModelAndView addCheckView() {
 		ModelAndView mav = new ModelAndView("settlement/add");
 		mav.addObject("check",new Chaque());

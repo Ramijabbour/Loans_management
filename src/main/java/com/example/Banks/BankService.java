@@ -1,13 +1,10 @@
 package com.example.Banks;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.security.user.User;
 
 
 @Service
@@ -74,19 +71,6 @@ public class BankService {
 			}
 		}
 		return null ; 
-	}
-	
-	
-	public List<Banks> getBankBranches(Banks bank){
-		List<Banks> branches = new ArrayList<Banks>();
-		for(Banks bankk : this.bankRepository.findAll()) {
-			if(bankk.getBankName().equalsIgnoreCase(bank.getBankName())) {
-				branches.add(bankk);
-			}
-		}
-		return branches ; 
-	}
-	
-	
+	}	
 	
 }

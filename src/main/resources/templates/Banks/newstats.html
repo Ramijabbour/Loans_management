@@ -51,14 +51,6 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">رمز المصرف</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" th:field="*{bankstats.Bank.BankCode}" readonly/>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
                           <label class="col-sm-3 col-form-label">عدد الأفرع</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control" th:field="*{bankstats.BranchesCount}"  readonly/>
@@ -145,28 +137,7 @@
 							</div>
 						</div>
 					</div>
-					<div class ="row">
-					
-										<div class="col-lg-3">
-											<h4 class="card-title">نسب السلف</h4>
-											<div class="row">
-												<div class="col-sm-12">
-													<div class="progress progress-lg grouped mb-2">
-														<div class="progress-bar  bg-danger" role="progressbar" style="width: 80%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-														<div class="progress-bar bg-info" role="progressbar" style="width:  20%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-												</div>
-												<div class="col-sm-12">
-													<ul class="graphl-legend-rectangle">
-														<li><span class="bg-danger"></span> مغلقة (80%)</li>
-														<li><span class="bg-warning"></span>مفتوحة (20%)</li>
-													</ul>
-												</div>
-											</div>
-
-										</div>
-							</div>
-							
+			
 		<div class = "row">
 				<div class="card-body">
                <div class="card-header">
@@ -176,17 +147,20 @@
                 <thead>
                 <tr>
                   <th>اسم الفرع</th>
-                  <th>اسم المصرف</th>
-                  <th>رمز المصرف</th>
-
+                  <th>رمز الفرع</th>
+                  <th>البنك</th>
+                  <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                     
-                <tr th:each ="bank : ${bankstats.BranchesList}" >
-                  <td th:text="${bank.BranchName}"></td>
-                  <td th:text="${bank.BankName}"></td>
-                  <td th:text="${bank.BankCode}"></td>
+ 
+               <tr th:each ="branche : ${bankstats.BranchesList}" >
+                  <td th:text="${branche.BranchName}"></td>
+                  <td th:text="${branche.BrancheCode}"></td>
+                  <td th:text="${branche.bank.BankName}"></td>
+               
+               
+               
                 </tr>
                 </tbody>
               </table>

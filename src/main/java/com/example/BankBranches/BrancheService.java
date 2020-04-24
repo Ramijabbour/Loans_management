@@ -1,9 +1,12 @@
 package com.example.BankBranches;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.Banks.Banks;
 
 @Service
 public class BrancheService {
@@ -46,7 +49,17 @@ public class BrancheService {
 			if(branche.getBrancheID()==id)
 				return branche;
 		}
-		return null;
-		
+		return null;		
+	}
+	
+	public List<Branches> getBankBranches(Banks bank ){
+		List<Branches> allBranches = this.brancheRepository.findAll() ; 
+		List<Branches> result = new ArrayList<Branches>() ; 
+		for(Branches branch : allBranches) {
+			if(branch.getBank().getBankID() == bank.getBankID()) {
+				result.add(branch);
+			}
+		}
+		return result; 
 	}
 }

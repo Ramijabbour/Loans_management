@@ -103,16 +103,21 @@ public class BankController {
 		response.sendRedirect("/Banks/all");
 	}
 	
-	
 	@Autowired
 	private BankStatsService bankStatsService ; 
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/{id}")
-	public ModelAndView getBankStats(@PathVariable int id) {
-		ModelAndView mav = new ModelAndView("Banks/stats");
+	public ModelAndView getBankNewStats(@PathVariable int id) {
+		ModelAndView mav = new ModelAndView("Banks/newstats");
 		Banks bank = this.bankservice.getBankById(id);
 		mav.addObject("bankstats",this.bankStatsService.getBankStats(bank)) ;
 		return mav ; 
 	}
 	
+	
+
+
 }
+
+
+

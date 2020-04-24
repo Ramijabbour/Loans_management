@@ -116,7 +116,7 @@ public class SettlementService extends MasterService {
 	 *  second bank name is wrong| -322			|Name Error
 	 *  check id duplication     | -4  			|
 	 * */
-	public int testCheckInfoValidation(Chaque check ) {
+	/*public int testCheckInfoValidation(Chaque check ) {
 		//check ID data duplication 
 		List<Chaque> allChecks = this.onHoldChecksRepository.findAll() ; 
 		if(check.getAmount() <= 0 ) {
@@ -152,7 +152,7 @@ public class SettlementService extends MasterService {
 		}	
 		return 0 ; 
 	} 
-	
+	*/
 	public boolean resultDataCheck(List<Chaque> results,List<Chaque> input) {
 		List<Integer> banks = new ArrayList<Integer>();
 

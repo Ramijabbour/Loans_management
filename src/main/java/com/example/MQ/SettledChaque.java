@@ -2,26 +2,51 @@ package com.example.MQ;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.example.MasterService;
+import com.example.aspect.EncryptDecrypt.DoubleEncryptDecryptConverter;
+import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
 public class SettledChaque {
 
-	 @Id
+	 	@Id
 	    @GeneratedValue(strategy = GenerationType.AUTO)
+	 	@Convert(converter = IntEncryptDecryptConverter.class)
 	 	private int id;
+	 	
+	 	@Column(nullable = false )
+	 	@Convert(converter = IntEncryptDecryptConverter.class)
 	 	private int CheckId;
+	 	
+	 	@Column(nullable = false )
+	 	@Convert(converter = StringEncryptDecryptConverter.class)
 	 	private String FirstBank;
+	 	
+	 	@Column(nullable = false )
+	 	@Convert(converter = IntEncryptDecryptConverter.class)
 	 	private int FirstBankSW;
+	 	
+	 	@Column(nullable = false )
+	 	@Convert(converter = StringEncryptDecryptConverter.class)
 	 	private String SecondBank;
+	 	
+	 	@Column(nullable = false )
+	 	@Convert(converter = IntEncryptDecryptConverter.class)
 	 	private int SecondBankSW;
+	 	
+	 	@Column(nullable = false )
+	 	@Convert(converter = DoubleEncryptDecryptConverter.class)
 	 	private double Amount;
 
+	 	@Column(nullable = false )
 	 	private LocalDateTime localDateTime ; 
 	 	
 	    public SettledChaque() {

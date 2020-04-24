@@ -3,6 +3,7 @@ package com.example.Banks;
 import java.util.List ;
 
 import com.example.Allocations.Allocations;
+import com.example.BankBranches.Branches;
 import com.example.CloseLoans.CloseLoans;
 import com.example.Loans.Loans;
 import com.example.OpenLoans.OpenLoans;
@@ -13,7 +14,7 @@ public class StatsModel {
 
 	private Banks Bank ; 
 	private int BranchesCount = 0 ; 
-	private List<Banks> BranchesList ; 
+	private List<Branches> BranchesList ; 
 
 	private List<Allocations> AllAllocations ; 
 	
@@ -29,11 +30,12 @@ public class StatsModel {
 	private int SumOpenLoans = 0 ; 
 	private int SumClosedLoans = 0 ; 
 	private double TotalLoansValue = 0 ; 
+	
 	private float ClosedPercentage = 0 ; 
 	private float OpenPercentage = 0 ;
 	
 	public StatsModel() {
-		this.BranchesList = new ArrayList<Banks>(); 
+		this.BranchesList = new ArrayList<Branches>(); 
 		this.AllAllocations = new ArrayList<Allocations>();
 		this.OverAllLoansList = new ArrayList<Loans>();
 		this.ClosedLoansList = new ArrayList<CloseLoans>();
@@ -65,13 +67,13 @@ public class StatsModel {
 
 
 
-	public List<Banks> getBranchesList() {
+	public List<Branches> getBranchesList() {
 		return BranchesList;
 	}
 
 
 
-	public void setBranchesList(List<Banks> branchesList) {
+	public void setBranchesList(List<Branches> branchesList) {
 		BranchesList = branchesList;
 	}
 
