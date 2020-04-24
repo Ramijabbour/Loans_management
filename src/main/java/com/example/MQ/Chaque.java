@@ -13,7 +13,7 @@ import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 public class Chaque {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO) 
     public int id;
     @Convert(converter = IntEncryptDecryptConverter.class)
     public int CheckId;
@@ -35,13 +35,12 @@ public class Chaque {
     public double Amount;
 	
     @Column(nullable = false )
-    public LocalDateTime localDateTime ;
+    public final LocalDateTime localDateTime = MasterService.getCurrDateTime() ;
     
 	public boolean active = false ;
     
     
 	public Chaque() {
-		this.localDateTime = MasterService.getCurrDateTime() ;
     }
 
     public Chaque(int id , String firstBank, int firstBankSW, String secondBank, int secondBankSW, double amount) {
@@ -51,7 +50,6 @@ public class Chaque {
         SecondBank = secondBank;
         SecondBankSW = secondBankSW;
         Amount = amount;
-        this.localDateTime = MasterService.getCurrDateTime() ;
     }
 
     public int getCheckId() {
@@ -112,10 +110,6 @@ public class Chaque {
 
 	public LocalDateTime getLocalDateTime() {
 		return localDateTime;
-	}
-
-	public void setLocalDateTime(LocalDateTime localDateTime) {
-		this.localDateTime = localDateTime;
 	}
 
 	public int getId() {
