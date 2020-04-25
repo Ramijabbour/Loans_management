@@ -1,4 +1,4 @@
-package com.example.Loans;
+/*package com.example.Loans;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -139,7 +139,7 @@ public class LoanInfoDoc implements CreateInfoDocTemplate {
        paragraphbody3.addBreak();
        paragraphbody3.setText("__________________________________________________");
        paragraphbody3.addBreak();
-       
+       */
        
        
      /*
@@ -159,7 +159,7 @@ public class LoanInfoDoc implements CreateInfoDocTemplate {
        row.getCell(0).setText("2.");  
        row.getCell(1).setText("Mohan");  
        row.getCell(2).setText("mohan@gmail.com");  
-        */
+        *//*
        paragraphbody2.setBold(false);
        paragraphbody.setBold(false);
        paragraphbody2.setColor("101010");
@@ -185,7 +185,7 @@ public class LoanInfoDoc implements CreateInfoDocTemplate {
 		
 	}
 	
-	
+	*/
 
 	
 	
@@ -352,5 +352,5 @@ public class LoanInfoDoc implements CreateInfoDocTemplate {
 		
 		
 	}
-    */
-}
+    
+}*/
