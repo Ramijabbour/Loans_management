@@ -11,6 +11,7 @@ import com.example.Banks.Banks;
 import com.example.Clients.Clients;
 import com.example.FinanceType.FinanceType;
 import com.example.LoansType.LoansType;
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 import com.example.security.user.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -29,39 +30,50 @@ public class Loans {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int LoanID;
     
+    @Convert(converter = StringEncryptDecryptConverter.class)
     public String Name ;
-
+    
+    @Convert(converter = StringEncryptDecryptConverter.class)
     public String FirstSide;
-
+    
+    @Convert(converter = StringEncryptDecryptConverter.class)
     public String SecondSide;
-
-
+    
+    @Convert(converter = StringEncryptDecryptConverter.class)
+    public String LoanNumber;
+    
     public String WorkDate;
 
 
     public String LoanDate;
 
-
+    @Convert(converter = StringEncryptDecryptConverter.class)
     public String InterestRate;
 
+    @Convert(converter = StringEncryptDecryptConverter.class)
     public String DelayInterestRate;
 
-
+    @Convert(converter = StringEncryptDecryptConverter.class)
     public String ClearanceNumber;
 
+    @Convert(converter = StringEncryptDecryptConverter.class)
     public String TotalAmmount;
-
+    
+    @Convert(converter = StringEncryptDecryptConverter.class)
     public String TotalAmmountAsString;
-
+    
+    @Convert(converter = StringEncryptDecryptConverter.class)
     public String NetAmmount;
 
-
+    @Convert(converter = StringEncryptDecryptConverter.class)
     private String NetAmmountAsString;
-
+    
+    @Convert(converter = StringEncryptDecryptConverter.class)
     private String NumberOfVoucherAsString;
-
+    
+    @Convert(converter = StringEncryptDecryptConverter.class)
     private String NumberOfVoucher;
-
+    @Convert(converter = StringEncryptDecryptConverter.class)
     private String purpose;
 
     @ManyToOne
@@ -256,6 +268,16 @@ public class Loans {
 
 	public void setName(String name) {
 		Name = name;
+	}
+	
+	
+
+	public String getLoanNumber() {
+		return LoanNumber;
+	}
+
+	public void setLoanNumber(String loanNumber) {
+		LoanNumber = loanNumber;
 	}
 
 	public boolean accept(Visitor visitor) { return visitor.visit(this); }}

@@ -1,5 +1,6 @@
 package com.example.BankBranches;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import com.example.Banks.Banks;
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
 public class Branches {
@@ -15,8 +17,10 @@ public class Branches {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int BrancheID ;
 	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	public String BranchName="";
 	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	public String BrancheCode="";
 	
 

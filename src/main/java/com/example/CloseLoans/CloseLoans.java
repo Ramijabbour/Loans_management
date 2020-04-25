@@ -15,8 +15,12 @@ public class CloseLoans {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int CloseLoanID ;
 	
+	private String Status;
+	
 	@ManyToOne
 	private Loans loan=null;
+	
+	
 
 	public CloseLoans() {}
 	
@@ -38,6 +42,14 @@ public class CloseLoans {
 
 	public void setLoan(Loans loan) {
 		this.loan = loan;
+	}
+
+	public String getStatus() {
+		return Status;
+	}
+
+	public void setStatus(String status) {
+		Status = status;
 	}
 	
 	

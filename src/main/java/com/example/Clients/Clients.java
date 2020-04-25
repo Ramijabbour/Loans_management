@@ -3,11 +3,14 @@ package com.example.Clients;
 import ValidContent_Visitor.Visitor;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Null;
+
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 
 
@@ -18,16 +21,26 @@ public class Clients {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int ClientID ;
+	@Convert(converter = StringEncryptDecryptConverter.class)
+
 	public String ClientName ;
+	@Convert(converter = StringEncryptDecryptConverter.class)
+
 	public String ClientType;
 	@Column(nullable = true)
+	@Convert(converter = StringEncryptDecryptConverter.class)
+
 	public String identity_number;
-	
+	@Convert(converter = StringEncryptDecryptConverter.class)
+
 	public String email;
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	
 	public String phone;
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	
 	public String address ;
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	
 	public String gender ;
 	
