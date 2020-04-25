@@ -1,4 +1,4 @@
-package com.example.OpenLoans;
+/*package com.example.OpenLoans;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -158,6 +158,7 @@ public class  OpenLoansContrantDocs implements CreateOpenDocTemplate {
 
 	    }
 */
+/*
 
 	@Override
 	public void CreateOpenLoanDoc(Loans Loan) {
@@ -292,5 +293,5 @@ public class  OpenLoansContrantDocs implements CreateOpenDocTemplate {
 	}
 
 	
-}
+}*/
 
