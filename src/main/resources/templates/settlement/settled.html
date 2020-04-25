@@ -37,12 +37,11 @@
                 <thead>
                     <tr>
                     	<th> المعرف </th>
+                        <th> الرقم التسلسلي </th>
                         <th> المصرف الأول </th>
-                        <th> الفرع الأول </th>
-                        <th> رمز الفرع الأول </th>
+                        <th> رمز المصرف الأول </th>
                         <th> المصرف الثاني </th>
-                        <th> الفرع الثاني </th>
-                        <th> رمز الفرغ الثاني </th>
+                        <th> رمز المصرف الثاني </th>
                         <th> القيمة </th>
                         <th> التاريخ </th>
                         
@@ -54,12 +53,11 @@
                     </tr>
                     <tr th:each="check : ${checksList}">
                     	<td><span th:text="${check.id}"> EntryId </span></td>
-                        <td><span th:text="${check.FirstBankName}"> FirstBankName </span></td>
-                        <td><span th:text="${check.FirstBranchName}"> FirstBranchName </span></td>
-                        <td><span th:text="${check.FirstBranchCode}"> FirstBranchCode </span></td>
-                        <td><span th:text="${check.SecondBankName}"> SecondBankName </span></td>
-                        <td><span th:text="${check.SecondBranchName}">SecondBranchName </span></td>
-                        <td><span th:text="${check.SecondBranchCode}">SecondBranchCode </span></td>
+                        <td><span th:text="${check.CheckId}"> CheckId </span></td>
+                        <td><span th:text="${check.FirstBank}"> FirstBank </span></td>
+                        <td><span th:text="${check.FirstBankSW}"> FirstBankSW </span></td>
+                        <td><span th:text="${check.SecondBank}"> SecondBank </span></td>
+                        <td><span th:text="${check.SecondBankSW}"> SecondBankSW </span></td>
                         <td><span th:text="${check.Amount}"> Amount </span></td>
                         <td><span th:text="${check.localDateTime}"> Date </span></td>
                 

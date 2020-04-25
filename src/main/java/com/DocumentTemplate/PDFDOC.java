@@ -19,8 +19,7 @@ public class PDFDOC implements CreateDocTemplate  {
 
     @Override
     public String CreateRTGSDoc(SettledChaque settledChaque) {
-       /*
-        *  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Date date = new Date();
         String Path=System.getProperty("user.dir")+"//";
         String Filename=settledChaque.getFirstBankSW()+dateFormat.format(date);
@@ -60,10 +59,7 @@ public class PDFDOC implements CreateDocTemplate  {
             e.printStackTrace();
         }
         return returnPath ; 
-    */ 
-    return null ; 
     }
-    
     }
 
 

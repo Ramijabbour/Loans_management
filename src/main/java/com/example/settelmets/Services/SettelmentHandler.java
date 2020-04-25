@@ -40,7 +40,7 @@ public class SettelmentHandler {
         return (x < y) ? x: y; 
     } 
       
-    public static void minCashFlowRec(int amount[], List<String> participantsIds , List<SettledChaque> resultList, List<String> banksNames, List<String> branchesNames) 
+    public static void minCashFlowRec(int amount[], List<String> participantsIds , List<SettledChaque> resultList) 
     { 
         int mxCredit = getMax(amount), mxDebit = getMin(amount); 
         if (amount[mxCredit] == 0 && amount[mxDebit] == 0) 
@@ -49,16 +49,15 @@ public class SettelmentHandler {
         amount[mxCredit] -= min; 
         amount[mxDebit] += min; 
       
-        System.out.println("Branch " + participantsIds.get(mxDebit) + " from Bank : "+ banksNames.get(mxDebit) + " pays " + min 
-                                + " to " + "Branch " + participantsIds.get(mxCredit) + " from Bank : "+banksNames.get(mxCredit)); 
+        System.out.println("Person " + mxDebit + " pays " + min 
+                                + " to " + "Person " + mxCredit); 
         
-        SettledChaque check = new SettledChaque(banksNames.get(mxDebit),branchesNames.get(mxDebit),participantsIds.get(mxDebit),banksNames.get(mxCredit),branchesNames.get(mxCredit),participantsIds.get(mxCredit),min); 
-        
+        SettledChaque check = new SettledChaque(0,String.valueOf(mxDebit),participantsIds.get(mxDebit),String.valueOf(mxCredit),participantsIds.get(mxCredit), min); 
         resultList.add(check);
-        minCashFlowRec(amount,participantsIds,resultList,banksNames,branchesNames); 
+        minCashFlowRec(amount,participantsIds,resultList); 
     } 
 
-    public static List<SettledChaque> minCashFlow(int graph[][], List<String> participantsIds , List<String> BanksNames , List<String>BranchesNames) 
+    public static List<SettledChaque> minCashFlow(int graph[][], List<String> participantsIds) 
     { 
         int amount[]=new int[N]; 
       
@@ -66,7 +65,7 @@ public class SettelmentHandler {
         for (int i = 0; i < N; i++) 
             amount[p] += (graph[i][p] - graph[p][i]);
         List<SettledChaque> resultList = new ArrayList<SettledChaque>();
-        minCashFlowRec(amount,participantsIds,resultList,BanksNames,BranchesNames); 
+        minCashFlowRec(amount,participantsIds,resultList); 
         return resultList; 
     } 
   

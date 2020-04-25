@@ -32,16 +32,13 @@ public class SettlementService extends MasterService {
 	private int[][] toSettleChecks ; 
 	private int ParticipantsCount ; 
 	private List<String> ParticipantsIds ; 
-	private List<String> BanksNames ; 
-	private List<String> BranchesNames;
+	
 
-	private List<Chaque> initSettlementOperation() {
+	private void initSettlementOperation() {
 		//essential variables 
-		ParticipantsIds = new ArrayList<String>() ;
-		BanksNames = new ArrayList<String>(); 
-		BranchesNames = new ArrayList<String>();
+		ParticipantsIds = new ArrayList<String>() ; 
 		List<Chaque> onHoldChecks = this.onHoldChecksRepository.findByActiveFalse() ;
-		ParticipantsIds = this.getParticipantsInfo(onHoldChecks,this.BanksNames,this.BranchesNames);
+		ParticipantsIds = this.findNumberOfParticipants(onHoldChecks);
 		ParticipantsCount = ParticipantsIds.size() ; 
 		
 		//initialize toSettleChecks array with zero values 
@@ -65,22 +62,21 @@ public class SettlementService extends MasterService {
 				}
 			System.out.println();
 			}	
-		return onHoldChecks ; 
+		
+		for(Chaque check : onHoldChecks) {
+			check.setActive(true);
+		}
+		this.onHoldChecksRepository.saveAll(onHoldChecks); 
 	}
 	
-	private List<String> getParticipantsInfo(List<Chaque> checks,List<String> banksNames ,List<String> branchesNames){
+	private List<String> findNumberOfParticipants(List<Chaque> checks ){
 		List<String> banks = new ArrayList<String>();
 		for(Chaque check : checks ){
 			if(!banks.contains(check.getFirstBranchCode())) {
-				banks.add(check.getFirstBranchCode());
-				banksNames.add(check.getFirstBankName());
-				branchesNames.add(check.getFirstBranchName());
+				banks.add(check.getFirstBranchCode()); 
 			}
 			if(!banks.contains(check.getSecondBranchCode())) {
-				banks.add(check.getSecondBranchCode());
-				banksNames.add(check.getSecondBankName());
-				branchesNames.add(check.getSecondBranchName());
-				
+				banks.add(check.getSecondBranchCode()); 
 			}
 		}
 		return banks; 
@@ -91,16 +87,13 @@ public class SettlementService extends MasterService {
 	@Transactional
 	public void settleChecks() {
 		System.out.println("ettlement invoked at : "+MasterService.getCurrDateTime());
-		List<Chaque> onHoldChecks = initSettlementOperation(); 
+		initSettlementOperation(); 
 		SettelmentHandler.setNumberOfParticipants(this.ParticipantsCount);
 		if(ParticipantsIds.size() != 0 ) {
-			List<SettledChaque> resultList = SettelmentHandler.minCashFlow(toSettleChecks,ParticipantsIds,BanksNames,BranchesNames);
+			List<SettledChaque> resultList = SettelmentHandler.minCashFlow(toSettleChecks,ParticipantsIds);
+			
 			this.settledChecksRepository.saveAll(resultList);
 			
-			for(Chaque check : onHoldChecks) {
-				check.setActive(true);
-			}
-			this.onHoldChecksRepository.saveAll(onHoldChecks); 
 		}
 		super.notificationsService.addNotification("Gross Settlement reports ready", "/settlement/checks/reports", "SUPER");
 		// add result validation 
