@@ -1,4 +1,4 @@
-package com.example.MQ;
+package com.example.settelmets.Models;
 
 import java.time.LocalDateTime;
 
@@ -31,16 +31,16 @@ public class SettledChaque {
 	 	private String FirstBank;
 	 	
 	 	@Column(nullable = false )
-	 	@Convert(converter = IntEncryptDecryptConverter.class)
-	 	private int FirstBankSW;
+	 	@Convert(converter = StringEncryptDecryptConverter.class)
+	 	private String FirstBankSW;
 	 	
 	 	@Column(nullable = false )
 	 	@Convert(converter = StringEncryptDecryptConverter.class)
 	 	private String SecondBank;
 	 	
 	 	@Column(nullable = false )
-	 	@Convert(converter = IntEncryptDecryptConverter.class)
-	 	private int SecondBankSW;
+	 	@Convert(converter = StringEncryptDecryptConverter.class)
+	 	private String SecondBankSW;
 	 	
 	 	@Column(nullable = false )
 	 	@Convert(converter = DoubleEncryptDecryptConverter.class)
@@ -53,7 +53,7 @@ public class SettledChaque {
 	    	 this.localDateTime = MasterService.getCurrDateTime() ; 
 	    }
 
-	    public SettledChaque(int id , String firstBank, int firstBankSW, String secondBank, int secondBankSW, double amount) {
+	    public SettledChaque(int id , String firstBank, String firstBankSW, String secondBank, String secondBankSW, double amount) {
 	        this.CheckId = id ; 
 	    	FirstBank = firstBank;
 	        FirstBankSW = firstBankSW;
@@ -78,15 +78,7 @@ public class SettledChaque {
 	    public void setFirstBank(String firstBank) {
 	        FirstBank = firstBank;
 	    }
-
-	    public int getFirstBankSW() {
-	        return FirstBankSW;
-	    }
-
-	    public void setFirstBankSW(int firstBankSW) {
-	        FirstBankSW = firstBankSW;
-	    }
-
+	    
 	    public String getSecondBank() {
 	        return SecondBank;
 	    }
@@ -95,13 +87,6 @@ public class SettledChaque {
 	        SecondBank = secondBank;
 	    }
 
-	    public int getSecondBankSW() {
-	        return SecondBankSW;
-	    }
-
-	    public void setSecondBankSW(int secondBankSW) {
-	        SecondBankSW = secondBankSW;
-	    }
 
 	    public double getAmount() {
 	        return Amount;
@@ -122,5 +107,15 @@ public class SettledChaque {
 		public int getId() {
 			return id;
 		}
+
+		public String getFirstBankSW() {
+			return FirstBankSW;
+		}
+
+		public String getSecondBankSW() {
+			return SecondBankSW;
+		}
 	    
+		
+		
 }

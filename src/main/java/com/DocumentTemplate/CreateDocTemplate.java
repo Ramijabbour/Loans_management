@@ -1,7 +1,7 @@
 package com.DocumentTemplate;
 
 
-import com.example.MQ.SettledChaque;
+import com.example.settelmets.Models.SettledChaque;
 
 public interface CreateDocTemplate {
 

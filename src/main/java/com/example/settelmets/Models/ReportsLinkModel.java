@@ -1,4 +1,4 @@
-package com.example.settelmets;
+package com.example.settelmets.Models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

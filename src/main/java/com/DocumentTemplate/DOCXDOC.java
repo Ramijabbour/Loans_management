@@ -1,11 +1,12 @@
 package com.DocumentTemplate;
 
-import com.example.MQ.SettledChaque;
-
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STOnOff;
+
+import com.example.settelmets.Models.SettledChaque;
+
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

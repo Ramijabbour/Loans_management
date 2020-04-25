@@ -1,7 +1,10 @@
-package com.example.settelmets;
+package com.example.settelmets.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.settelmets.Models.ReportsLinkModel;
+import com.example.settelmets.Repositories.ReportsLinkRepository;
 
 @Service 
 public class ReportLinkService {

@@ -1,4 +1,4 @@
-package com.example.settelmets;
+package com.example.settelmets.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -7,14 +7,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.MQ.Chaque;
+import com.example.settelmets.Models.CheckDisposableModel;
+import com.example.settelmets.Services.SettlementService;
 
 @RestController
 public class SettlementController {
 	
 	@Autowired
-	SettlementService settlementService ; 
-
+	SettlementService settlementService ;  
+	
 	//add protection or lock the method
 	@RequestMapping(method = RequestMethod.GET ,value = "/settlement/invoke" )
 	public void invokeSettleMethod() {
@@ -24,14 +25,13 @@ public class SettlementController {
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/add")
 	public ModelAndView addCheckView() {
 		ModelAndView mav = new ModelAndView("settlement/add");
-		mav.addObject("check",new Chaque());
+		mav.addObject("check",new CheckDisposableModel());
 		return mav ; 
 	}
 	
 	@RequestMapping(method = RequestMethod.POST , value = "/settlement/checks/add")
-	public ModelAndView addCheck(@ModelAttribute Chaque check ) {
+	public ModelAndView addCheck(@ModelAttribute CheckDisposableModel check ) {
 		int operationCode = this.settlementService.addCheck(check);
-		
 		if(operationCode != 0 ) {
 			String msg = this.translateErrorCode(operationCode) ;
 			ModelAndView mav = new ModelAndView("settlement/fail");

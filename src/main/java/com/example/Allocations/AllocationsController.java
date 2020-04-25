@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.BankBranches.BrancheService;
-import com.example.BankBranches.Branches;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
 

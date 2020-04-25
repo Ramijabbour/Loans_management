@@ -1,7 +1,8 @@
 package com.DocumentTemplate;
 
-import com.example.MQ.SettledChaque;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.example.settelmets.Models.SettledChaque;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

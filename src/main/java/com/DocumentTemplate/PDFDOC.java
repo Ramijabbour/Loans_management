@@ -1,11 +1,11 @@
 package com.DocumentTemplate;
-import com.example.MQ.SettledChaque;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.example.settelmets.Models.SettledChaque;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;

@@ -1,18 +1,24 @@
-package com.example.settelmets;
+package com.example.settelmets.Services;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.example.MasterService;
+import com.example.BankBranches.BrancheService;
+import com.example.BankBranches.Branches;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
-import com.example.MQ.Chaque;
-import com.example.MQ.OnHoldCheckRepository;
-import com.example.MQ.SettledChaque;
-import com.example.MQ.SettledChecksRepository;
+import com.example.settelmets.Models.Chaque;
+import com.example.settelmets.Models.CheckDisposableModel;
+import com.example.settelmets.Models.SettledChaque;
+import com.example.settelmets.Repositories.OnHoldCheckRepository;
+import com.example.settelmets.Repositories.SettledChecksRepository;
 
 @Service
 public class SettlementService extends MasterService {
@@ -21,17 +27,16 @@ public class SettlementService extends MasterService {
 	private OnHoldCheckRepository onHoldChecksRepository ;  	
 	@Autowired
 	private SettledChecksRepository settledChecksRepository;
-	@Autowired
-	private BankService banksService  ; 
+	
 	
 	private int[][] toSettleChecks ; 
 	private int ParticipantsCount ; 
-	private List<Integer> ParticipantsIds ; 
+	private List<String> ParticipantsIds ; 
 	
 
 	private void initSettlementOperation() {
 		//essential variables 
-		ParticipantsIds = new ArrayList<Integer>() ; 
+		ParticipantsIds = new ArrayList<String>() ; 
 		List<Chaque> onHoldChecks = this.onHoldChecksRepository.findByActiveFalse() ;
 		ParticipantsIds = this.findNumberOfParticipants(onHoldChecks);
 		ParticipantsCount = ParticipantsIds.size() ; 
@@ -45,9 +50,9 @@ public class SettlementService extends MasterService {
 		}	
 		//Checks to settle to Array 
 		for(Chaque check : onHoldChecks) {
-			int currId = check.getFirstBankSW() ; 
+			String currId = check.getFirstBranchCode() ; 
 			int indexFrom = ParticipantsIds.indexOf(currId); 
-			int indexTo = ParticipantsIds.indexOf(check.getSecondBankSW());
+			int indexTo = ParticipantsIds.indexOf(check.getSecondBranchCode());
 			this.toSettleChecks[indexFrom][indexTo] += check.getAmount() ; 
 		}	
 		
@@ -64,14 +69,14 @@ public class SettlementService extends MasterService {
 		this.onHoldChecksRepository.saveAll(onHoldChecks); 
 	}
 	
-	private List<Integer> findNumberOfParticipants(List<Chaque> checks ){
-		List<Integer> banks = new ArrayList<Integer>();
+	private List<String> findNumberOfParticipants(List<Chaque> checks ){
+		List<String> banks = new ArrayList<String>();
 		for(Chaque check : checks ){
-			if(!banks.contains(check.getFirstBankSW())) {
-				banks.add(check.getFirstBankSW()); 
+			if(!banks.contains(check.getFirstBranchCode())) {
+				banks.add(check.getFirstBranchCode()); 
 			}
-			if(!banks.contains(check.getSecondBankSW())) {
-				banks.add(check.getSecondBankSW()); 
+			if(!banks.contains(check.getSecondBranchCode())) {
+				banks.add(check.getSecondBranchCode()); 
 			}
 		}
 		return banks; 
@@ -79,6 +84,7 @@ public class SettlementService extends MasterService {
 	
 	//change schedule invoke time and isolate it in another thread 
 	//@Scheduled(fixedRate = 7000000)
+	@Transactional
 	public void settleChecks() {
 		System.out.println("ettlement invoked at : "+MasterService.getCurrDateTime());
 		initSettlementOperation(); 
@@ -93,11 +99,14 @@ public class SettlementService extends MasterService {
 		// add result validation 
 	}
 	
-	public int addCheck(Chaque check ) {
+	public int addCheck(CheckDisposableModel check ) {
 		//int result = testCheckInfoValidation(check) ;
 		int result =0 ;
 		if(result == 0 ) {
-			this.onHoldChecksRepository.save(check);
+			Chaque finalCheck = new Chaque(check.getCheckId(),check.getFirstBankName(), check.getSecondBankName(),check.getFirstBranchName(),
+					check.getFirstBranchCode(),check.getSecondBranchName(),check.getSecondBranchCode(),check.getAmount(),super.get_current_User().getUsername(),
+					super.get_current_User().getUserID(),false);
+			this.onHoldChecksRepository.save(finalCheck);
 			super.notificationsService.addNotification("check added to settlement Service", "/settlement/checks/all", "SUPER");
 			return 0 ; 
 		}else{
@@ -111,48 +120,61 @@ public class SettlementService extends MasterService {
 	 * amount less than zero     | -1 			|
 	 * sender is the receiver    | -2  			|
 	 *  first bank not found 	 | -311 		|ID Error 
-	 *  first bank name is wrong | -312			|Name Error 
+	 *  first branch not found   | -312			|Name Error 
 	 *  second bank not found    | -321  		|ID Error
-	 *  second bank name is wrong| -322			|Name Error
+	 *  second branch not found  | -322			|Name Error
 	 *  check id duplication     | -4  			|
 	 * */
-	/*public int testCheckInfoValidation(Chaque check ) {
+
+	/*public int testCheckInfoValidation(CheckDisposableModel check ) {
 		//check ID data duplication 
 		List<Chaque> allChecks = this.onHoldChecksRepository.findAll() ; 
 		if(check.getAmount() <= 0 ) {
 			return -1 ;
 		}
-		if(check.getFirstBank().equalsIgnoreCase(check.getSecondBank())) {
+		if(check.getFirstBankName().equalsIgnoreCase(check.getSecondBankName())) {
 			return -2 ; 
 		}
-		if(check.getFirstBankSW() == check.getSecondBankSW()) {
+		if(check.getFirstBranchName().equalsIgnoreCase(check.getSecondBranchName())) {
+			return -2 ; 
+		}
+		if(check.getFirstBranchCode() == check.getSecondBranchCode()) {
 			return -2 ;
 		}
 		//check the first bank data 
-		Banks bank = this.banksService.getBankByID(check.getFirstBankSW());
+		Banks bank = this.banksService.getBankByName(check.getFirstBankName());
 		if(bank == null ){
 			return -311 ; 
 		}
-		if(!bank.getBranchName().equalsIgnoreCase(check.getFirstBank())) {
-			return -312 ;
+		//check branch 
+		List<Branches> bankBranches = this.branchesService.getBankBranches(bank);
+		boolean found = false; 
+		for(Branches branch : bankBranches ) {
+			if(branch.getBrancheCode().equalsIgnoreCase(String.valueOf(check.getFirstBranchCode()))) {
+				found = true ; 
+				break ; 
+			}
+		}if(!found) {
+			return -312 ; 
 		}
 		
 		//check the second bank data 
-		Banks bank2 = this.banksService.getBankByID(check.getSecondBankSW()) ; 
+		Banks bank2 = this.banksService.getBankByName(check.getSecondBankName()); 
 		if(bank2 == null ) {
 			return -321 ; 
 		}
-		if(!bank2.getBranchName().equalsIgnoreCase(check.getSecondBank())) {
-			return -322 ; 
-		}
+		//check branch 
+		
+		
 		for(Chaque tempCheck : allChecks ) {
 			if(check.getCheckId() == tempCheck.getCheckId() ) {
 				return -4;  
 			}
 		}	
 		return 0 ; 
-	} 
-	*/
+	}*/
+	
+	/*
 	public boolean resultDataCheck(List<Chaque> results,List<Chaque> input) {
 		List<Integer> banks = new ArrayList<Integer>();
 
@@ -168,7 +190,7 @@ public class SettlementService extends MasterService {
 		
 		return false ; 
 	}
-
+*/
 	public List<Chaque> getOnHoldChecks(){	
 		return this.onHoldChecksRepository.findByActiveFalse() ; 
 	}

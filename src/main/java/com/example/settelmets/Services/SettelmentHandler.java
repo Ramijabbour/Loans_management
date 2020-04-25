@@ -1,9 +1,9 @@
-package com.example.settelmets;
+package com.example.settelmets.Services;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.MQ.SettledChaque;
+import com.example.settelmets.Models.SettledChaque;
 
 public class SettelmentHandler {
     // Number of participants in the settlement 
@@ -40,7 +40,7 @@ public class SettelmentHandler {
         return (x < y) ? x: y; 
     } 
       
-    public static void minCashFlowRec(int amount[], List<Integer> participantsIds , List<SettledChaque> resultList) 
+    public static void minCashFlowRec(int amount[], List<String> participantsIds , List<SettledChaque> resultList) 
     { 
         int mxCredit = getMax(amount), mxDebit = getMin(amount); 
         if (amount[mxCredit] == 0 && amount[mxDebit] == 0) 
@@ -57,7 +57,7 @@ public class SettelmentHandler {
         minCashFlowRec(amount,participantsIds,resultList); 
     } 
 
-    public static List<SettledChaque> minCashFlow(int graph[][], List<Integer> participantsIds) 
+    public static List<SettledChaque> minCashFlow(int graph[][], List<String> participantsIds) 
     { 
         int amount[]=new int[N]; 
       
