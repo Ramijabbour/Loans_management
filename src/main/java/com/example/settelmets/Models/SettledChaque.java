@@ -23,24 +23,29 @@ public class SettledChaque {
 	 	private int id;
 	 	
 	 	@Column(nullable = false )
-	 	@Convert(converter = IntEncryptDecryptConverter.class)
-	 	private int CheckId;
+	 	@Convert(converter = StringEncryptDecryptConverter.class)
+	 	private String FirstBankName;
 	 	
 	 	@Column(nullable = false )
 	 	@Convert(converter = StringEncryptDecryptConverter.class)
-	 	private String FirstBank;
+	 	private String FirstBranchName;
+	 
+	 	@Column(nullable = false )
+	 	@Convert(converter = StringEncryptDecryptConverter.class)
+	 	private String FirstBranchCode;	 	
+	 	
 	 	
 	 	@Column(nullable = false )
 	 	@Convert(converter = StringEncryptDecryptConverter.class)
-	 	private String FirstBankSW;
+	 	private String SecondBankName;
 	 	
 	 	@Column(nullable = false )
 	 	@Convert(converter = StringEncryptDecryptConverter.class)
-	 	private String SecondBank;
-	 	
+	 	private String SecondBranchName;
+
 	 	@Column(nullable = false )
 	 	@Convert(converter = StringEncryptDecryptConverter.class)
-	 	private String SecondBankSW;
+	 	private String SecondBranchCode;
 	 	
 	 	@Column(nullable = false )
 	 	@Convert(converter = DoubleEncryptDecryptConverter.class)
@@ -49,73 +54,63 @@ public class SettledChaque {
 	 	@Column(nullable = false )
 	 	private LocalDateTime localDateTime ; 
 	 	
+	 
 	    public SettledChaque() {
 	    	 this.localDateTime = MasterService.getCurrDateTime() ; 
 	    }
-
-	    public SettledChaque(int id , String firstBank, String firstBankSW, String secondBank, String secondBankSW, double amount) {
-	        this.CheckId = id ; 
-	    	FirstBank = firstBank;
-	        FirstBankSW = firstBankSW;
-	        SecondBank = secondBank;
-	        SecondBankSW = secondBankSW;
-	        Amount = amount;
-	        this.localDateTime = MasterService.getCurrDateTime() ; 
-	    }
-
-	    public int getCheckId() {
-	        return CheckId;
-	    }
-
-	    public void setCheckId(int checkId) {
-	        CheckId = checkId;
-	    }
-
-	    public String getFirstBank() {
-	        return FirstBank;
-	    }
-
-	    public void setFirstBank(String firstBank) {
-	        FirstBank = firstBank;
-	    }
 	    
-	    public String getSecondBank() {
-	        return SecondBank;
-	    }
-
-	    public void setSecondBank(String secondBank) {
-	        SecondBank = secondBank;
-	    }
-
-
-	    public double getAmount() {
-	        return Amount;
-	    }
-
-	    public void setAmount(double amount) {
-	        Amount = amount;
-	    }
-
-		public LocalDateTime getLocalDateTime() {
-			return localDateTime;
+		public SettledChaque(String firstBankName, String firstBranchName, String firstBranchCode,
+				String secondBankName, String secondBranchName, String secondBranchCode, double amount) {
+			super();
+			FirstBankName = firstBankName;
+			FirstBranchName = firstBranchName;
+			FirstBranchCode = firstBranchCode;
+			SecondBankName = secondBankName;
+			SecondBranchName = secondBranchName;
+			SecondBranchCode = secondBranchCode;
+			Amount = amount;
+			this.localDateTime = MasterService.getCurrDateTime() ;
 		}
 
-		public void setLocalDateTime(LocalDateTime localDateTime) {
-			this.localDateTime = localDateTime;
-		}
+
+
 
 		public int getId() {
 			return id;
 		}
 
-		public String getFirstBankSW() {
-			return FirstBankSW;
+		public String getFirstBankName() {
+			return FirstBankName;
 		}
 
-		public String getSecondBankSW() {
-			return SecondBankSW;
+		public String getFirstBranchName() {
+			return FirstBranchName;
 		}
-	    
-		
+
+		public String getFirstBranchCode() {
+			return FirstBranchCode;
+		}
+
+		public String getSecondBankName() {
+			return SecondBankName;
+		}
+
+		public String getSecondBranchName() {
+			return SecondBranchName;
+		}
+
+		public String getSecondBranchCode() {
+			return SecondBranchCode;
+		}
+
+		public double getAmount() {
+			return Amount;
+		}
+
+		public LocalDateTime getLocalDateTime() {
+			return localDateTime;
+		}
+
+	   
 		
 }

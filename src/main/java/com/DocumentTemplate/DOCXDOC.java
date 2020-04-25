@@ -20,7 +20,7 @@ public class DOCXDOC implements CreateDocTemplate {
 	
     @Override
     public String CreateRTGSDoc(SettledChaque settledChaque) {
-        String Path= System.getProperty("user.dir")+"\\";
+    /*    String Path= System.getProperty("user.dir")+"\\";
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Date date = new Date();
         String Filename=settledChaque.getFirstBankSW()+dateFormat.format(date);
@@ -127,8 +127,9 @@ public class DOCXDOC implements CreateDocTemplate {
         System.out.println("fontstyle.docx written successully");
         
         return returnPath ; 
-
-
+     */
+    	//remove return stmt after fix 
+    		return null ; 
     }
 
 }

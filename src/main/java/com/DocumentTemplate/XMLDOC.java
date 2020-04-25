@@ -13,7 +13,7 @@ import java.util.Map;
 public class XMLDOC implements ViewDocTemplate {
     @Override
     public ModelAndView ViewRTGSDOC(SettledChaque settledChaque) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    /*    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
 
         String viewName = "DOC/greeting";
@@ -30,5 +30,7 @@ public class XMLDOC implements ViewDocTemplate {
 
         
         return new ModelAndView(viewName , model);
+        */ 
+    	return null ; 
     }
 }
