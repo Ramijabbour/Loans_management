@@ -45,14 +45,14 @@ public class Valid_Visitable implements Visitor {
     public boolean visit(FinanceType financeType) {
         if (!financeType.TypeName.matches("[@_!#$%^&*()<>?/\\|}{~:]"))
             return false;
-        if (financeType.FundintRate> 100.0 && financeType.FundintRate < 0.0)
-            return false;
-        if (financeType.FundintRate <= 100.0 && financeType.FundintRate >= 0.0)
-            financeType.FundintRate = (financeType.FundintRate / 100.0);
-        if (Float.valueOf(financeType.lenght) < 0)
-            return false;
-        if (financeType.funded_propse.length() < 130)
-            return false;
+       // if (financeType.FundintRate> 100.0 && financeType.FundintRate < 0.0)
+         //   return false;
+        //if (financeType.FundintRate <= 100.0 && financeType.FundintRate >= 0.0)
+          //  financeType.FundintRate = (financeType.FundintRate / 100.0);
+        //if (Float.valueOf(financeType.lenght) < 0)
+           // return false;
+      //  if (financeType.funded_propse.length() < 130)
+         //   return false;
         return true;
     }
 

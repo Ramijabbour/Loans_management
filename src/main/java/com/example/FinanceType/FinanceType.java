@@ -2,10 +2,13 @@ package com.example.FinanceType;
 
 		import ValidContent_Visitor.Visitor;
 
-		import javax.persistence.Entity;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
 		import javax.persistence.GeneratedValue;
 		import javax.persistence.GenerationType;
 		import javax.persistence.Id;
+
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
 public class FinanceType {
@@ -15,17 +18,24 @@ public class FinanceType {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 
 	public int FinanceTypeID ;
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	public String TypeName="";
-	public double FundintRate ;
+	@Convert(converter = StringEncryptDecryptConverter.class)
+	public String FundintRate ;
 
 	public FinanceType() {
 		
 	}
-
-	public FinanceType(String typeName) {
+	
+	
+	
+	
+	public FinanceType(String typeName, String fundintRate) {
 		TypeName = typeName;
+		FundintRate = fundintRate;
 	}
 
+/*
 	public String getFunded_propse() {
 		return funded_propse;
 	}
@@ -43,18 +53,25 @@ public class FinanceType {
 		this.FundintRate = fundingRatio ;
 		this.lenght = len  ;
 	}
-
-	public double getFundintRate() {
-		return FundintRate;
-	}
-
-	public void setFundintRate(double fundintRate) {
-		FundintRate = fundintRate;
-	}
-
+*/
+	
 	public int getFinanceTypeID() {
 		return FinanceTypeID;
 	}
+	public String getFundintRate() {
+		return FundintRate;
+	}
+
+
+
+
+	public void setFundintRate(String fundintRate) {
+		FundintRate = fundintRate;
+	}
+
+
+
+
 	public void setFinanceTypeID(int financeTypeID) {
 		FinanceTypeID = financeTypeID;
 	}
@@ -66,10 +83,10 @@ public class FinanceType {
 	}
 
 
-	public void setLenght(String len) {
+	/*public void setLenght(String len) {
 		this.lenght = len ;
 	}
 	public String getLenght() {
 		return this.lenght ;
-	}
+	}*/
 	public boolean accept(Visitor visitor) { return visitor.visit(this); }}
