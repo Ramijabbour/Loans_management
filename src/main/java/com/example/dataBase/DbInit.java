@@ -27,10 +27,12 @@ public class DbInit implements CommandLineRunner{
 	
 	private OnHoldCheckRepository onHoldRepo ; 
 	
-	public DbInit(OnHoldCheckRepository onHoldRepositpry ,UserRepository userRepository,PasswordEncoder passwordEncoder) {
+	public DbInit(OnHoldCheckRepository onHoldRepositpry ,UserRepository userRepository,PasswordEncoder passwordEncoder,LoansTypeRepository LtypeRepo,FinanceTypeRepository financeRep) {
 		this.onHoldRepo = onHoldRepositpry ; 
 		this.userRepository = userRepository ; 
-		this.passwordEncoder = passwordEncoder ; 
+		this.passwordEncoder = passwordEncoder ;
+		this.TypeRepo=LtypeRepo;
+		this.financeRepo=financeRep;
 	}
 	/*
 	public DbInit() {}
@@ -80,9 +82,20 @@ public class DbInit implements CommandLineRunner{
 		/*
 		LoansType l = new LoansType("مرخص");
 		this.TypeRepo.save(l);
+		LoansType l1 = new LoansType("معفى");
+		this.TypeRepo.save(l1);
 		
-		FinanceType f=new FinanceType("مواسم استراتيجية");
+		 FinanceType f=new FinanceType("مواسم استراتيجية","100");
+		
 		this.financeRepo.save(f);
+		
+		FinanceType f1=new FinanceType("طويل الامد","75");
+		
+		this.financeRepo.save(f1);
+		
+		FinanceType f2=new FinanceType("قصير","80");
+		 
+		this.financeRepo.save(f2);
 		*/
 	}
 

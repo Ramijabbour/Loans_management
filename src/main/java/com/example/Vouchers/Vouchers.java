@@ -1,5 +1,6 @@
 package com.example.Vouchers;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +9,7 @@ import javax.persistence.ManyToOne;
 
 import com.example.Clients.Clients;
 import com.example.Loans.Loans;
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 import com.example.security.user.User;
 
 
@@ -19,16 +21,17 @@ public class Vouchers {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int VoucherID ;
 	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String VoucherDate ;
-	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String VoucherAmmount;
-	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String Total ;
-	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String NetAmmount;
-	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String FundingRatio;
-	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String Status ; 
 	
 	@ManyToOne
