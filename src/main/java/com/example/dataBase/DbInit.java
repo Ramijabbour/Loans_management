@@ -4,7 +4,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.FinanceType.FinanceType;
 import com.example.FinanceType.FinanceTypeRepository;
+import com.example.LoansType.LoansType;
 import com.example.LoansType.LoansTypeRepository;
 import com.example.security.roles.RolesRepository;
 import com.example.security.user.UserRepository;
@@ -31,13 +33,6 @@ public class DbInit implements CommandLineRunner{
 		this.TypeRepo=LtypeRepo;
 		this.financeRepo=financeRep;
 	}
-	/*
-	public DbInit() {}
-	public DbInit(LoansTypeRepository loantype ,FinanceTypeRepository financeType)
-	{
-		this.TypeRepo=loantype;
-		this.financeRepo=financeType;
-	}*/
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -116,7 +111,7 @@ public class DbInit implements CommandLineRunner{
 		 
 		this.financeRepo.save(f2);
 		*/
-		
+
 		
 		
 	}

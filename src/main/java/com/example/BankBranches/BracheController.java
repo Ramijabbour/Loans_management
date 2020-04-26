@@ -54,6 +54,17 @@ public class BracheController {
 		return mav; 
 	}
 	
+	
+	//get Bank Branches ------------------------------------------------------
+	@RequestMapping(method = RequestMethod.GET , value="/BankBranches/{id}")
+	public ModelAndView ShowAllBranches(@PathVariable int id) {
+		ModelAndView mav = new ModelAndView("Branches/AllBranche");
+		Banks bank = bankservice.getBankById(id);
+	    List<Branches> allbranche=brancheService.getBankBranches(bank);
+		mav.addObject("allbranches",allbranche);
+		return mav; 
+	}
+	
 	//get  Branche ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/Branches/view/{id}")
 	public ModelAndView ShowABranche(@PathVariable int id) {
