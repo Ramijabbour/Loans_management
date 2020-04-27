@@ -52,7 +52,6 @@
                   <th>مخصصات البنك</th>
                   <th></th>
                   <th></th>
-                  <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,21 +60,7 @@
                   <td th:text="${bank.BankID}"></td>
                   <td th:text="${bank.BankName}"></td>
                   <td th:text="${bank.FinancialAllocations}"></td>
-                  <td>
-                      <form action="#" th:action="@{/Banks/delete/} + ${{bank.BankID}}" method="get">
-                          <button th:id="'table_entry_childs_button_' + ${bank.BankID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                              <i>حذف</i>
-                          </button>
-                      </form>
-                  </td>
-                        
-                  <td>
-                    <form action="#" th:action="@{/Banks/edit/}+ ${{bank.BankID}}" method="get">
-                        <button th:id="'table_entry_childs_button_' + ${bank.BankID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                            <i>تعديل</i>
-                        </button>
-                    </form>
-                </td>
+       
                  <td>
                     <form action="#" th:action="@{/Banks/view/stats/}+ ${{bank.BankID}}" method="get">
                         <button th:id="'table_entry_childs_button_' + ${bank.BankID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
