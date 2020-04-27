@@ -17,7 +17,7 @@ public class User implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	 @Convert(converter = IntEncryptDecryptConverter.class)
+	@Convert(converter = IntEncryptDecryptConverter.class)
 	private int UserID ;
 
 	@Column(nullable = false )
@@ -25,7 +25,6 @@ public class User implements java.io.Serializable {
 	private String email=" ";
 
 	@Column(nullable = false )
-	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String password = " ";
 	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String username ;

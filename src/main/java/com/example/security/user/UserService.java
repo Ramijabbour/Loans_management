@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.MasterBackUpService;
 import com.example.MasterService;
-import com.example.aspect.DataDuplicationException;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
@@ -87,18 +86,44 @@ public class UserService extends MasterService implements MasterBackUpService {
 	
 	//add new user // 
 	@Transactional
-	public void addUser(User user ) {
+	public String addUser(User user ) {
 		user.flatUserDetailes();
 		if(checkUserinforDuplication(user)) {
-			throw new DataDuplicationException();
-		}else {
+			return "User already exist in the system";
+		}
+		else if(!validateUserInfo(user).equalsIgnoreCase("ok")) {
+			return validateUserInfo(user); 
+		}
+		else {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			user.setActive(false);
 			this.userRepository.save(user);
 			super.notificationsService.addNotification("New User need Activation", "/adminstration/users/nonactive", "ADMIN,SUPER");
-			
+			return "ok";
 		}
 		
+	}
+	
+	private String validateUserInfo(User user) {
+		if(user.getUsername().length() < 6 || user.getUsername().length() > 20) {
+			return "userName length should be between 6 and 20 " ; 
+		}
+		if(user.getPassword().length() < 8 || user.getPassword().length() > 20 ) {
+			return "password length should be between 8 and 20" ; 
+		}
+		if(!user.getGender().equalsIgnoreCase("M")) {
+			if(!user.getGender().equalsIgnoreCase("F"))
+			return "unknown gender";
+		}
+		for(char c : user.getUsername().toCharArray()) {
+			if(!Character.isAlphabetic(c) || !Character.isDigit(c)) {
+				return "userName Contains Illegal characters";
+			}
+		}
+		if(validatePassword(user.getPassword())) {
+			return "password contains illegal characters";
+		}
+		return "ok";
 	}
 	
 	//update current user // 
@@ -123,7 +148,7 @@ public class UserService extends MasterService implements MasterBackUpService {
 	}
 	
 	
-	//User Duplication Check 
+	//User Info Check 
 	//check if the user is currently in the system // 
 	public boolean checkUserinforDuplication(User user ) {
 		List<User> usersList = this.userRepository.findAll() ; 
@@ -139,6 +164,27 @@ public class UserService extends MasterService implements MasterBackUpService {
 		return false ; 
 	}
 
+	//check if the password contains illegal characters 
+	private boolean validatePassword(String password) {
+		boolean num = false ,
+				lower = false ,
+				upper = false; 
+		for(char c : password.toCharArray()) {
+			if(Character.isLowerCase(c)) {
+				lower = true ; 
+			}else if(Character.isUpperCase(c)) {
+				upper = true ; 
+			}else if(Character.isDigit(c)) {
+				num = true ; 
+			}else {
+				return false ; 
+			}
+		}
+		if(num && lower && upper ) {
+			return true ; 
+		}
+		return false ; 
+	}	
 	
 	//User Access Control Section 
 	
