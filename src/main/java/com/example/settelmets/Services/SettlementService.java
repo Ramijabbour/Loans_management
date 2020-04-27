@@ -28,6 +28,10 @@ public class SettlementService extends MasterService {
 	@Autowired
 	private SettledChecksRepository settledChecksRepository;
 	
+	@Autowired 
+	private BankService banksService ; 
+	@Autowired
+	private BrancheService branchesService ; 
 	
 	private int[][] toSettleChecks ; 
 	private int ParticipantsCount ; 
@@ -87,7 +91,7 @@ public class SettlementService extends MasterService {
 	}
 	
 	//change schedule invoke time and isolate it in another thread 
-	//@Scheduled(fixedRate = 7000000)
+	@Scheduled(fixedRate = 7000000)
 	@Transactional
 	public void settleChecks() {
 		System.out.println("ettlement invoked at : "+MasterService.getCurrDateTime());
@@ -106,9 +110,9 @@ public class SettlementService extends MasterService {
 		// add result validation 
 	}
 	
+	@Transactional
 	public int addCheck(CheckDisposableModel check ) {
-		//int result = testCheckInfoValidation(check) ;
-		int result =0 ;
+		int result = testCheckInfoValidation(check) ;
 		if(result == 0 ) {
 			Chaque finalCheck = new Chaque(check.getCheckId(),check.getFirstBankName(), check.getSecondBankName(),check.getFirstBranchName(),
 					check.getFirstBranchCode(),check.getSecondBranchName(),check.getSecondBranchCode(),check.getAmount(),super.get_current_User().getUsername(),
@@ -124,40 +128,51 @@ public class SettlementService extends MasterService {
 	/*
 	 * 		ERROR 				 | Error code  |
 	 * ----------------------------------------- 
-	 * amount less than zero     | -1 			|
-	 * sender is the receiver    | -2  			|
-	 *  first bank not found 	 | -311 		|ID Error 
-	 *  first branch not found   | -312			|Name Error 
-	 *  second bank not found    | -321  		|ID Error
-	 *  second branch not found  | -322			|Name Error
+	 *  amount less than zero    | -1 			|Logical Error
+	 *
+	 *  check between branches   | -21			|Logical Error
+	 *  of the same bank 	    
+	 * 
+	 *  sender branch code is 	 | -22			|Logical Error
+	 *  equal to receiver 
+	 *  branch code
+	 *  
+	 *  first bank not found 	 | -311 		|First Bank Name Error 
+	 *  
+	 *  first branch not found   | -312			|First Branch Code Error 
+	 *  
+	 *  second bank not found    | -321  		|Second Bank Name Error
+	 *  
+	 *  second branch not found  | -322			|Second Branch Code Error
+	 *  
 	 *  check id duplication     | -4  			|
 	 * */
 
-	/*public int testCheckInfoValidation(CheckDisposableModel check ) {
+	public int testCheckInfoValidation(CheckDisposableModel check ) {
 		//check ID data duplication 
 		List<Chaque> allChecks = this.onHoldChecksRepository.findAll() ; 
 		if(check.getAmount() <= 0 ) {
 			return -1 ;
 		}
+		
 		if(check.getFirstBankName().equalsIgnoreCase(check.getSecondBankName())) {
-			return -2 ; 
+			return -21 ; 
 		}
-		if(check.getFirstBranchName().equalsIgnoreCase(check.getSecondBranchName())) {
-			return -2 ; 
+		
+		if(check.getFirstBranchCode().equalsIgnoreCase(check.getSecondBranchCode())) {
+			return -22 ; 
 		}
-		if(check.getFirstBranchCode() == check.getSecondBranchCode()) {
-			return -2 ;
-		}
+		
 		//check the first bank data 
 		Banks bank = this.banksService.getBankByName(check.getFirstBankName());
 		if(bank == null ){
 			return -311 ; 
 		}
 		//check branch 
-		List<Branches> bankBranches = this.branchesService.getBankBranches(bank);
+		List<Branches> firstBankBranches = this.branchesService.getBankBranches(bank);
 		boolean found = false; 
-		for(Branches branch : bankBranches ) {
-			if(branch.getBrancheCode().equalsIgnoreCase(String.valueOf(check.getFirstBranchCode()))) {
+		for(Branches branch : firstBankBranches ) {
+			if(branch.getBrancheCode().equalsIgnoreCase(check.getFirstBranchCode())) {
 				found = true ; 
 				break ; 
 			}
@@ -165,13 +180,23 @@ public class SettlementService extends MasterService {
 			return -312 ; 
 		}
 		
+		
 		//check the second bank data 
 		Banks bank2 = this.banksService.getBankByName(check.getSecondBankName()); 
 		if(bank2 == null ) {
 			return -321 ; 
 		}
-		//check branch 
-		
+		//check branch
+		boolean found2 = false ; 
+		List<Branches> secondBankBranches = this.branchesService.getBankBranches(bank2);
+		for(Branches branch : secondBankBranches) {
+			if(branch.getBrancheCode().equalsIgnoreCase(check.getSecondBranchCode())) {
+				found2 = true ; 
+			}
+		}
+		if(!found2) {
+			return -322 ; 
+		}
 		
 		for(Chaque tempCheck : allChecks ) {
 			if(check.getCheckId() == tempCheck.getCheckId() ) {
@@ -179,7 +204,7 @@ public class SettlementService extends MasterService {
 			}
 		}	
 		return 0 ; 
-	}*/
+	}
 	
 	/*
 	public boolean resultDataCheck(List<Chaque> results,List<Chaque> input) {
@@ -198,6 +223,7 @@ public class SettlementService extends MasterService {
 		return false ; 
 	}
 */
+	
 	public List<Chaque> getOnHoldChecks(){	
 		return this.onHoldChecksRepository.findByActiveFalse() ; 
 	}

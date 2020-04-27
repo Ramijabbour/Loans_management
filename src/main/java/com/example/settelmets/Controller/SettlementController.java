@@ -42,25 +42,51 @@ public class SettlementController {
 			return mav ; 
 		}
 	}	
-	
+		
+	/*
+	 * 		ERROR 				 | Error code  |
+	 * ----------------------------------------- 
+	 *  amount less than zero    | -1 			|Logical Error
+	 *
+	 *  check between branches   | -21			|Logical Error
+	 *  of the same bank 	    
+	 * 
+	 *  sender branch code is 	 | -22			|Logical Error
+	 *  equal to receiver 
+	 *  branch code
+	 *  
+	 *  first bank not found 	 | -311 		|First Bank Name Error 
+	 *  
+	 *  first branch not found   | -312			|First Branch Code Error 
+	 *  
+	 *  second bank not found    | -321  		|Second Bank Name Error
+	 *  
+	 *  second branch not found  | -322			|Second Branch Code Error
+	 *  
+	 *  check id duplication     | -4  			|
+	 * */
 	private String translateErrorCode(int errCode) {
 		if(errCode == -1  ) {
 			return "The transfer ammount is less than zero";
 		}
-		if(errCode ==  -2 ) {
-			return "Sender and reciever are the Same bank";
+		if(errCode ==  -21 ) {
+			return "the check is between branches from the same bank";
 		}
+		if(errCode ==  -22 ) {
+			return "sender branch code is equal to receiver branch code";
+		}
+		
 		if(errCode ==  -311) {
 			return "First Bnak not found " ; 
 		}
 		if(errCode ==  -312) {
-			return "First Banke Name Error ";
+			return "First Branch not found";
 		}
 		if(errCode ==  -321) {
 			return "Second Bank not found ";
 		}
 		if(errCode ==  -322) {
-			return "Second Bank Name Error ";
+			return "Second Branch not found ";
 		}
 		if(errCode ==  -4) {
 			return "The CheckId is already used";

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.example.MasterService;
+import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
@@ -16,6 +17,7 @@ public class User implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	 @Convert(converter = IntEncryptDecryptConverter.class)
 	private int UserID ;
 
 	@Column(nullable = false )

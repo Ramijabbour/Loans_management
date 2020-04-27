@@ -14,6 +14,7 @@ public class Chaque {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) 
+    @Convert(converter = IntEncryptDecryptConverter.class)
     private int id;
     
     @Column(nullable = false )
@@ -52,9 +53,11 @@ public class Chaque {
     private  LocalDateTime localDateTime = MasterService.getCurrDateTime() ;
     
     @Column(nullable = false )
+    @Convert(converter = StringEncryptDecryptConverter.class)
     private  String UserName ; 
     
     @Column(nullable = false )
+    @Convert(converter = IntEncryptDecryptConverter.class)
     private  int UserID ; 
     
 	private boolean active = false ;
