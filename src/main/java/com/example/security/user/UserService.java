@@ -127,17 +127,21 @@ public class UserService extends MasterService implements MasterBackUpService {
 	}
 	
 	//update current user // 
-	public void updateUser(User user) {
-		System.out.println("trace Update User with object : ");
-		user.flatUserDetailes();
+	public String updateUser(User user) {
+		String result = "";
 		try {
 			if(this.userRepository.findById(user.getUserID()) != null) {
-					this.userRepository.save(user); 
+				result = validateUserInfo(user); 
+				if(result.equalsIgnoreCase("ok")){
+				this.userRepository.save(user); 
+				return "ok";
 				}
+			}
 		}catch(Exception e ) {
 			System.out.println("NullPointerException Handled at User Service / Update User -- call for null User ");
 			e.printStackTrace();
 		}
+		return result ;  
 	}
 	
 	//delete user//

@@ -77,16 +77,7 @@ public class UserController {
 	}
 	
 	
-	///update user ///
-	/*
-	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/update/{userid}")
-	public ModelAndView updateUserRequest(@PathVariable int userid) throws IOException {
-		ModelAndView mav = new ModelAndView("User/update");
-		User user = this.userService.getUserByID(userid);
-		mav.addObject("user",user);
-		return mav ; 
-	}*/
-	
+	///update user ///	
 	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/update/{id}")
 	public ModelAndView updateUserRequest(@PathVariable int id ) throws IOException {
 		ModelAndView mav = new ModelAndView("User/update");
@@ -96,11 +87,16 @@ public class UserController {
 	
 	}
 	
-	
 	@RequestMapping(method = RequestMethod.POST , value="/adminstration/users/update")
-	public void updateUser(@ModelAttribute User user,HttpServletResponse response ) throws IOException {
-		this.userService.updateUser(user);
-		response.sendRedirect("/adminstration/users/all");
+	public ModelAndView updateUser(@ModelAttribute User user) {
+		String response = this.userService.updateUser(user);
+		if(response.equalsIgnoreCase("ok")) {
+			return this.getAllUsers() ; 
+		}else {
+		ModelAndView mav = new ModelAndView("Errors/userError");
+		mav.addObject("msg",response);
+		return mav ; 
+		}
 	}
 	
 	
