@@ -80,6 +80,10 @@ public class VoucherController {
 	{
 		ModelAndView mav = new ModelAndView("Vouchers/OneVoucher");
 		Vouchers voucher= voucherService.GetVoucherById(id);
+		boolean checkStatus =false ;
+		if(voucher.getStatus().equalsIgnoreCase("Open"))
+			checkStatus=true;
+		mav.addObject("status",checkStatus);
 		mav.addObject("voucher", voucher);
 		return mav; 
 	}
@@ -142,6 +146,10 @@ public class VoucherController {
 			return false;
 	}
 	
-
+	
+	
+	
+	
+	
 	
 }

@@ -30,7 +30,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title" style="width: 70%">معلومات السند  </h3>
-              <form action="#" th:action="@{/Vouchers/Paid/}+ ${{voucher.VoucherID}}" method="get">
+              <form  th:if="${status}" th:action="@{/Vouchers/Paid/}+ ${{voucher.VoucherID}}" method="get">
                         <button th:id="'table_entry_childs_button_' + ${voucher.VoucherID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                             <i>دفع</i>
                         </button>
