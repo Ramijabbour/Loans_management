@@ -16,9 +16,9 @@ public class User implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Convert(converter = IntEncryptDecryptConverter.class)
-	private int UserID ;
+	private int id ;
 
 	@Column(nullable = false )
 	@Convert(converter = StringEncryptDecryptConverter.class)
@@ -67,16 +67,16 @@ public class User implements java.io.Serializable {
 	
 	
 	public void flatUserDetailes() {
-		System.out.println("user ID : "+this.UserID+" username :"+this.username+" user email : "+this.email+" gender : "
+		System.out.println("user ID : "+this.id+" username :"+this.username+" user email : "+this.email+" gender : "
 	+this.Gender+" role "+this.UserRoles +" permissions : "+this.UserPermissions);
 	}
 	
 	public int getUserID() {
-		return UserID;
+		return id;
 	}
 
 	public void setUserID(int userID) {
-		UserID = userID;
+		id = userID;
 	}
 
 	public String getEmail() {

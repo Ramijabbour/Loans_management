@@ -23,7 +23,7 @@ public class RolesPermissionsService {
 	public void addRolePermission(Permissions permission,Roles role ) {
 		List<Permissions> rolePermissionsList = this.getPermissionsOfRole(role);
 		for(Permissions tempPermission : rolePermissionsList ) {
-			if(tempPermission.getPermissionID() == permission.getPermissionID()) {
+			if(tempPermission.getId() == permission.getId()) {
 			 return ; 
 			}
 		}
@@ -47,7 +47,7 @@ public class RolesPermissionsService {
 		List<Roles> rolesWithPermissionList = new ArrayList<Roles>() ; 
 		List<RolePermission> rolePermissionList = this.rolePermissionRepository.findAll() ; 
 		for(RolePermission rolePermission : rolePermissionList) {
-			if(rolePermission.getPermission().getPermissionID() == permission.getPermissionID()) {
+			if(rolePermission.getPermission().getId() == permission.getId()) {
 				rolesWithPermissionList.add(rolePermission.getRole());
 			}
 		}	
@@ -82,7 +82,7 @@ public class RolesPermissionsService {
 	public void revokePermissionFromRole (Roles role , Permissions permission) {
 		List<RolePermission> rolePermissionsList = this.rolePermissionRepository.findAll() ; 
 		for(RolePermission rolePermission : rolePermissionsList ) {
-			if(rolePermission.getRole().getRoleID() == role.getRoleID() && rolePermission.getPermission().getPermissionID() == permission.getPermissionID()) {
+			if(rolePermission.getRole().getId() == role.getId() && rolePermission.getPermission().getId() == permission.getId()) {
 				this.rolesService.revokePermissionFromRoles(permission, role);
 				this.rolePermissionRepository.delete(rolePermission);
 				return ; 

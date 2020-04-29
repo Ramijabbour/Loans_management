@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.SiteConfiguration;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
 import com.example.security.rolesPermissions.RolesPermissionsService;
+
 
 
 @RestController 
@@ -33,10 +36,17 @@ public class RolesController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/security/roles/all")
-	public ModelAndView getAllRoles() {
+	public ModelAndView getAllRoles(@Param(value ="index") int index) {
 		ModelAndView mav = new ModelAndView("Roles/allRoles");
-		mav.addObject("roleslist",this.rolesService.getAllRoles());
-		return mav;
+		List<Roles> rolesList =  this.rolesService.getAllRoles(index); 
+		mav.addObject("roleslist",rolesList);
+		if(rolesList.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav ; 
+		
 	}
 	
 	
@@ -81,7 +91,7 @@ public class RolesController {
 		Roles role = this.rolesService.getRoleByID(roleid);
 		Permissions permission = this.permissionsService.getPermissionById(permissionid); 
 		this.rolesPermissionsService.revokePermissionFromRole(role, permission);
-		String redirectPath = "/security/roles/viewrole/"+role.getRoleID();
+		String redirectPath = "/security/roles/viewrole/"+role.getId();
 		response.sendRedirect(redirectPath);
 	}
 	
@@ -100,7 +110,7 @@ public class RolesController {
 	public ModelAndView grantpermissionToRole(@PathVariable int roleid) {
 		Roles role = this.rolesService.getRoleByID(roleid);
 		ModelAndView mav = new ModelAndView("Permissions/grantpermissiontorole");
-		List<Permissions> allPermissions = this.permissionsService.getAllPermissions();
+		List<Permissions> allPermissions = this.permissionsService.getAllPermissions(0);
 		List<Permissions> currentPermissions =  this.rolesPermissionsService.getPermissionsOfRole(role);
 		List<Permissions> uniquePermissions = new ArrayList<Permissions>();
 		for(Permissions permission : allPermissions ) {

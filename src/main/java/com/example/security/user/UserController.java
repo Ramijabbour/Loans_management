@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.SiteConfiguration;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
@@ -49,9 +51,15 @@ public class UserController {
 	
 	///all users ///
 	@RequestMapping(method = RequestMethod.GET , value = "/adminstration/users/all")
-	public ModelAndView getAllUsers() {  
+	public ModelAndView getAllUsers(@Param(value ="index") int index) {  
 		ModelAndView mav = new ModelAndView("User/AllUsers");
-		mav.addObject("userslist",this.userService.getAllUsers());
+		List<User> usersList =  this.userService.getAllUsers(index) ; 
+		mav.addObject("userslist",usersList);
+		if(usersList.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
 		return mav ; 
 	}
 	
@@ -68,7 +76,7 @@ public class UserController {
 	public ModelAndView addNewUser(@ModelAttribute User user)  {
 		String response = this.userService.addUser(user); 
 		if(response.equalsIgnoreCase("ok")) {
-			return this.getAllUsers(); 
+			return this.getAllUsers(0); 
 		}else {
 			ModelAndView mav = new ModelAndView("Errors/userError");
 			mav.addObject("msg",response);
@@ -91,7 +99,7 @@ public class UserController {
 	public ModelAndView updateUser(@ModelAttribute User user) {
 		String response = this.userService.updateUser(user);
 		if(response.equalsIgnoreCase("ok")) {
-			return this.getAllUsers() ; 
+			return this.getAllUsers(0) ; 
 		}else {
 		ModelAndView mav = new ModelAndView("Errors/userError");
 		mav.addObject("msg",response);
@@ -103,9 +111,9 @@ public class UserController {
 	///delete User ///
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST , value="/adminstration/users/delete/{userid}")
-	public void deleteUser(@PathVariable int userid,HttpServletResponse response) throws IOException {
+	public ModelAndView deleteUser(@PathVariable int userid){
 		this.userService.deleteUser(this.userService.getUserByID(userid));
-		response.sendRedirect("/adminstration/users/all");
+		return this.getAllUsers(0);
 	}
 	
 	
@@ -131,7 +139,7 @@ public class UserController {
 		User user = this.userService.getUserByID(userid);
 		ModelAndView mav = new ModelAndView("Permissions/grantpermissions");
 		List<Permissions>userPermissionsList = this.userPermissionsService.getPermissionsOfUser(user);
-		List<Permissions> allPermissionsList =  this.permissionsService.getAllPermissions() ; 
+		List<Permissions> allPermissionsList =  this.permissionsService.getAllPermissions(0) ; 
 		List<Permissions> uniquePermissionsList = new ArrayList<Permissions>() ; 
 		for(Permissions permission : allPermissionsList ) {
 			if(!userPermissionsList.contains(permission))
@@ -158,7 +166,7 @@ public class UserController {
 	public ModelAndView grantRoleToUserRequest(@PathVariable int userid) {
 		User user = this.userService.getUserByID(userid);
 		ModelAndView mav = new ModelAndView("Roles/grantroles");
-		List<Roles> allRoles = this.rolesService.getAllRoles() ; 
+		List<Roles> allRoles = this.rolesService.getAllRoles(0) ; 
 		List<Roles> currentUserRoles = this.userRoleService.getRolesOfUsers(user); 
 		List<Roles> uniqueRoles = new ArrayList<Roles>() ; 
 		for(Roles role : allRoles ) {

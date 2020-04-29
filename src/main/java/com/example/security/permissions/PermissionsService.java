@@ -5,8 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.SiteConfiguration;
 import com.example.aspect.DataDuplicationException;
 import com.example.aspect.ItemNotFoundException;
 import com.example.security.roles.Roles;
@@ -44,8 +49,14 @@ public class PermissionsService {
 		return this.permissionsRepository.findAll().size() ; 
 	}
 	
-	public List<Permissions> getAllPermissions(){
-		return this.permissionsRepository.findAll() ; 
+	public List<Permissions> getAllPermissions(int PageNumber){
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Page<Permissions> pagedResult = this.permissionsRepository.findAll(paging);
+		if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Permissions>();
+        }
 	}
 	
 	public void addPermission(Permissions permission ) {
@@ -56,7 +67,7 @@ public class PermissionsService {
 	}
 	
 	public void updatePermission(Permissions permission ) {
-		if (this.permissionsRepository.findById(permission.getPermissionID()) == null ) {
+		if (this.permissionsRepository.findById(permission.getId()) == null ) {
 			throw new ItemNotFoundException();
 		}else 
 			{
@@ -98,7 +109,7 @@ public class PermissionsService {
 	public Permissions getPermissionById(int permissionID) {
 		List<Permissions> permissionsList = this.permissionsRepository.findAll(); 
 		for(Permissions permission : permissionsList ) {
-			if(permission.getPermissionID() == permissionID) {
+			if(permission.getId() == permissionID) {
 				return permission ; 
 			}
 		}

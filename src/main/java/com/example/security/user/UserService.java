@@ -9,17 +9,21 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.MasterBackUpService;
 import com.example.MasterService;
+import com.example.SiteConfiguration;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
 import com.example.security.roles.Roles;
 import com.example.security.userPermissions.UserPermissionsService;
-
 @Service
 public class UserService extends MasterService implements MasterBackUpService {
 
@@ -54,8 +58,14 @@ public class UserService extends MasterService implements MasterBackUpService {
 	
 	
 	//all Users// 
-	public List<User> getAllUsers() {
-		return this.userRepository.findAll();
+	public List<User> getAllUsers(int PageNumber) {
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Page<User> pagedResult = this.userRepo.findAll(paging);
+		if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<User>();
+        }
 	}
 	
 	//find user by id // 

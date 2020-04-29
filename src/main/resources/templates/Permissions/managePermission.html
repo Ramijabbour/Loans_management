@@ -36,7 +36,7 @@
   			<div class = "container">
               <div class="form-group">
                    <label for="exampleInputPassword1">المعرف</label>
-                   <input type="text" name="PermissionID" class="form-control" th:field="*{permission.PermissionID}" readonly>
+                   <input type="text" name="PermissionID" class="form-control" th:field="*{permission.id}" readonly>
                   </div>
                <div class="form-group">
                    <label for="exampleInputPassword1">اسم الصلاحية</label>
@@ -58,7 +58,7 @@
                         <td colspan="2"> لا يوجد مستخدمين يملكون هذه الصلاحية</td>
                     </tr>
                     <tr th:each="user : ${userslist}">
-                        <td><span th:text="${user.UserID}"> ID </span></td>
+                        <td><span th:text="${user.id}"> ID </span></td>
                         <td><span th:text="${user.username}"> UserName </span></td>
                         <td><span th:text="${user.Active}"> Active </span></td>
                     </tr>
@@ -85,7 +85,7 @@
                         <td colspan="2">لا يوجد أدوار تحمل هذه الصلاحية</td>
                     </tr>
                     <tr th:each="role : ${rolesList}">
-                        <td><span th:text="${role.RoleID}"> PermissionID </span></td>
+                        <td><span th:text="${role.id}"> PermissionID </span></td>
                         <td><span th:text="${role.RoleName}"> PermissionName </span></td>
                     </tr>
                 </tbody>

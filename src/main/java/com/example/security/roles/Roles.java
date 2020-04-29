@@ -16,9 +16,9 @@ import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 public class Roles {
 	//attributes 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Convert(converter = IntEncryptDecryptConverter.class)
-	private int RoleID ;
+	private int id ;
 	
 	@Convert(converter = StringEncryptDecryptConverter.class)
     private String RoleName=" ";
@@ -46,12 +46,9 @@ public class Roles {
 		return assignedPermissionsList; 
 	}
 	
-	public int getRoleID() {
-		return RoleID;
-	}
-
-	public void setRoleID(int roleID) {
-		RoleID = roleID;
+	
+	public int getId() {
+		return id;
 	}
 
 	public String getRoleName() {
