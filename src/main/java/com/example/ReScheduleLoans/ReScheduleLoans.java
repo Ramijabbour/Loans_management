@@ -20,6 +20,15 @@ public class ReScheduleLoans {
 	@ManyToOne
 	private Loans loan=null;
 
+	
+	
+	public ReScheduleLoans() {
+	}
+
+	public ReScheduleLoans(Loans loan) {
+		this.loan = loan;
+	}
+
 	public int getReScheduleLoanID() {
 		return ReScheduleLoanID;
 	}

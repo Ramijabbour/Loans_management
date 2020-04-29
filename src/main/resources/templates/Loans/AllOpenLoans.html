@@ -38,7 +38,6 @@
                 <tr>
                   <th>رقم الرهن</th>
                   <th>رقم السلفة</th>
-                  <th>تاريخ العمل</th>
                   <th>تاريخ السلفة</th>
                   <th>نوع التمويل</th>
                   <th>نوع السلفة</th>
@@ -47,8 +46,7 @@
                   <th>القيمة الصافية</th>
                   <th></th>
                   <th></th>
-                  <th></th>
-                   <th></th>
+            
                   
 
                 </tr>
@@ -57,7 +55,6 @@
                 <tr th:each ="loan : ${allloans}">
                   <td th:text="${loan.loan.Name}"></td>
                   <td th:text="${loan.loan.LoanNumber}"></td>
-                  <td th:text="${loan.loan.WorkDate}"></td>
                   <td th:text="${loan.loan.LoanDate}"></td>
                   <td th:text="${loan.loan.financeType.TypeName}"></td>
                   <td th:text="${loan.loan.loanType.TypeName}"></td>
@@ -71,21 +68,7 @@
                           </button>
                       </form>
                   </td>
-                  <td>
-                      <form action="#" th:action="@{/Loans/delete/} + ${{loan.loan.LoanID}}" method="get">
-                          <button th:id="'table_entry_childs_button_' + ${loan.loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                              <i>حذف</i>
-                          </button>
-                      </form>
-                  </td>
-                        
-                  <td>
-                    <form action="#" th:action="@{/Loans/edit/}+ ${{loan.loan.LoanID}}" method="get">
-                        <button th:id="'table_entry_childs_button_' + ${loan.loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                            <i>تعديل</i>
-                        </button>
-                    </form>
-                </td>
+                
                 
                 <td>
                     <form action="#" th:action="@{/Loan/AddVoucher/}+ ${{loan.loan.LoanID}}" method="get">

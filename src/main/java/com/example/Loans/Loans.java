@@ -93,8 +93,39 @@ public class Loans {
     
     
     public Loans() {}
+    
+    
 
-    public int getLoanID() {
+    public Loans(String name, String firstSide, String secondSide, String loanNumber,
+			String interestRate, String delayInterestRate, String clearanceNumber, String totalAmmount,
+			String totalAmmountAsString, String netAmmount, String netAmmountAsString, String numberOfVoucherAsString,
+			String numberOfVoucher, String purpose, Clients client, Branches branche, User user, LoansType loanType,
+			FinanceType financeType) {
+		super();
+		Name = name;
+		FirstSide = firstSide;
+		SecondSide = secondSide;
+		LoanNumber = loanNumber;
+		InterestRate = interestRate;
+		DelayInterestRate = delayInterestRate;
+		ClearanceNumber = clearanceNumber;
+		TotalAmmount = totalAmmount;
+		TotalAmmountAsString = totalAmmountAsString;
+		NetAmmount = netAmmount;
+		NetAmmountAsString = netAmmountAsString;
+		NumberOfVoucherAsString = numberOfVoucherAsString;
+		NumberOfVoucher = numberOfVoucher;
+		this.purpose = purpose;
+		this.client = client;
+		this.branche = branche;
+		this.user = user;
+		this.loanType = loanType;
+		this.financeType = financeType;
+	}
+
+
+
+	public int getLoanID() {
         return LoanID;
     }
 

@@ -1,6 +1,8 @@
 package com.example.Loans;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +30,10 @@ import com.example.LoansType.LoansType;
 import com.example.LoansType.LoansTypeService;
 import com.example.OpenLoans.OpenLoans;
 import com.example.OpenLoans.OpenLoansService;
+import com.example.ReScheduleLoans.ReScheduleLoans;
+import com.example.ReScheduleLoans.ReScheduleLoansService;
 import com.example.Vouchers.VoucherService;
+import com.example.Vouchers.Vouchers;
 
 @RestController
 public class LoansController {
@@ -48,6 +53,8 @@ public class LoansController {
 	OpenLoansService openLoanService; 
 	@Autowired
 	CloseLoanService closeLoanService ;
+	@Autowired
+	ReScheduleLoansService reScheduleLoanService;
 	
 	@Autowired
 	VoucherService voucherService;
@@ -69,6 +76,16 @@ public class LoansController {
 		mav.addObject("allloans",allCloseloans);
 		return mav; 
 	}
+	// -------------------------------------------------------------------
+	
+	//get All ReSchedule Loans ------------------------------------------------------
+		@RequestMapping(method = RequestMethod.GET , value="/Loans/all/ReSchedule")
+		public ModelAndView ShowAllReScheduleLoans() { 
+			ModelAndView mav = new ModelAndView("Loans/AllReScheduleLoan");
+			List<ReScheduleLoans> allReScheduleloans=reScheduleLoanService.getAllReScheduleLoans();
+			mav.addObject("allloans",allReScheduleloans);
+			return mav; 
+		}
 	// -------------------------------------------------------------------
 
 	
@@ -109,17 +126,72 @@ public class LoansController {
 		
 		else {
 			System.out.println("NullPointerException Handled at loan Service / Add loan -- call for low allocation");
-			response.sendRedirect("/Loans/addLoan");
+			response.sendRedirect("/Loans/addLoan/Error");
 		}
 	}
+	//ReSchedule Loan-----------------------------------------------------------------------------------------
+	@RequestMapping(method = RequestMethod.GET , value="/Loans/ReSchedule/{id}")
+	public ModelAndView ShowRescheduleLoan(@PathVariable int id)
+	{
+		ModelAndView mav = new ModelAndView("Loans/ReSchedule");
+		Loans loan=loansService.getOneByID(id);
+		mav.addObject("loan",loan);
+		return mav ;
+		
+		
+	}
+	@RequestMapping(method = RequestMethod.POST , value="/Loans/ReSchedule/{id}")
+	public void RescheduleLoan(@ModelAttribute Loans loan,@PathVariable int id, HttpServletResponse response) throws IOException
+	{
+		Loans oldLoan=loansService.getOneByID(id);
+		
+		OpenLoans open = openLoanService.getOpenLoanFromLoan(id);
+		openLoanService.DeleteOpenLoan(open);
+		
+		CloseLoans close = new CloseLoans(oldLoan);
+		close.setStatus("مرسوم لنقل السلفة الى السلف المجدولة");
+		closeLoanService.addLoan(close);
+		
+		
+		Loans NewLoan=new Loans(oldLoan.getName(),oldLoan.getFirstSide(),oldLoan.getSecondSide(),oldLoan.getLoanNumber(),oldLoan.getInterestRate(),oldLoan.getDelayInterestRate(),oldLoan.getClearanceNumber(),oldLoan.getTotalAmmount(),oldLoan.getTotalAmmountAsString()
+		,oldLoan.getNetAmmount(),oldLoan.getNetAmmountAsString(),oldLoan.getNumberOfVoucherAsString(),oldLoan.getNumberOfVoucher(),oldLoan.getPurpose(),oldLoan.getClient(),oldLoan.getBranche(),oldLoan.getUser(),oldLoan.getLoanType(),oldLoan.getFinanceType());
+		NewLoan.setLoanDate(loan.getLoanDate());
+		Date currentDate = new Date();
+		NewLoan.setWorkDate(currentDate.toString());
+		loansService.addLoan(NewLoan);
+		
+		ReScheduleLoans scheduleLoan=new ReScheduleLoans(NewLoan);
+		reScheduleLoanService.addLoan(scheduleLoan);
+		
+		List<Vouchers> loanVouchers=voucherService.getVoucherForThisLoan(id);
+		
+		
+		response.sendRedirect("/Loans/all/ReSchedule");
+	}
+	//Allocation small -------------------------------------------------------------------
+	
+	
+	@RequestMapping(method = RequestMethod.GET , value="/Loans/addLoan/Error")
+	public ModelAndView ShowErrorLoans() { 
+		ModelAndView mav = new ModelAndView("Loans/Error");
+		return mav; 
+	}
 	// -------------------------------------------------------------------
+
+	
+	
 	
 	//display loan ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/Loan/{id}")
 	public ModelAndView ShowLoan(@PathVariable int id) { 
 		ModelAndView mav = new ModelAndView("Loans/oneLoan");
 		  Loans l = loansService.getOneByID(id);
-		  System.out.println(l.getLoanID()+"------------------------ ");
+		  boolean checkLoan=false ;
+		  OpenLoans o = openLoanService.getOpenLoanFromLoan(id);
+		  if(o!=null)
+			  checkLoan=true;
+		  
+		  mav.addObject("checkLoan", checkLoan);
 		  mav.addObject("loan",l);
 		return mav; 
 	}
@@ -142,7 +214,7 @@ public class LoansController {
 		return mav; 
 	} 
 	
-	
+
 	@RequestMapping(method = RequestMethod.POST , value="/Loans/update/{id}")
 	public void UpdateLoan(@Valid Loans loan,HttpServletResponse response) throws IOException {
 		System.out.println("posted to /Loans/update/id ");
@@ -157,7 +229,7 @@ public class LoansController {
 	
 	//----------------------------------------------------------------
 	
-	//delete Bank ----------------------------------------------------------  
+	//delete Loan ----------------------------------------------------------  
 	@RequestMapping(method = RequestMethod.GET, value="/Loans/delete/{id}")
 	public void deleteLoan(@PathVariable int id,HttpServletResponse response) throws IOException
 	{
@@ -175,6 +247,7 @@ public class LoansController {
 		Loans loan = loansService.getOneByID(id);
 		OpenLoans open=openLoanService.getOpenLoanFromLoan(id);
 		CloseLoans closeloan=new CloseLoans(loan);
+		closeloan.setStatus("اغلقت وسددت بالكامل");
 		if (voucherService.AllVoucherPaid(id))
 		{
 			closeLoanService.addLoan(closeloan);
@@ -183,11 +256,7 @@ public class LoansController {
 		response.sendRedirect("/Vouchers/all/"+loan.getLoanID());
 	}
 	
-	
-	// check to Close Loan 
-	
 
-	
 
 	
 }
