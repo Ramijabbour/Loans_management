@@ -55,7 +55,7 @@
                         <td colspan="2"> لا يوجد شيكات حاليا</td>
                     </tr>
                     <tr th:each="check : ${checksList}">
-                        <td><span th:text="${check.CheckId}"> CheckId </span></td>
+                        <td><span th:text="${check.id}"> id </span></td>
                         <td><span th:text="${check.FirstBankName}"> FirstBankName </span></td>
                         <td><span th:text="${check.FirstBranchName}">FirstBranchName</span></td>
                         <td><span th:text="${check.FirstBranchCode}"> FirstBranchCode </span></td>
@@ -70,6 +70,8 @@
                     </tr>
                 </tbody>
             </table>
+            		<a th:href="@{|/settlement/checks/all?index=${nxt}|}" class="btn btn-inverse-primary btn-fw">&laquo; التالي </a>
+					<a th:href="@{|/settlement/checks/all?index=${prev}|}" class="btn btn-inverse-danger btn-fw">السابق&raquo;</a>
               </div>
               <!-- /.card-header -->
               <!-- form start -->

@@ -13,7 +13,7 @@ import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 public class Chaque {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) 
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     @Convert(converter = IntEncryptDecryptConverter.class)
     private int id;
     

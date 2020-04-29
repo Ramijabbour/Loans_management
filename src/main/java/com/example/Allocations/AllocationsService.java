@@ -1,8 +1,13 @@
 package com.example.Allocations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.SiteConfiguration;
 import com.example.Banks.Banks;
 
 import java.util.ArrayList;
@@ -14,8 +19,14 @@ public class AllocationsService {
     @Autowired
     private AllocationsRepository allocationsRepository;
 
-    public List<Allocations> getAllAllocations() {
-        return allocationsRepository.findAll();
+    public List<Allocations> getAllAllocations(int PageNumber) {
+        Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Page<Allocations> pagedResult = this.allocationsRepository.findAll(paging);
+		if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Allocations>();
+        }
     }
 
     
@@ -33,7 +44,7 @@ public class AllocationsService {
     
 	public void updateAllocation(Allocations allocation) {
 		try {
-			if(allocationsRepository.findById(allocation.getAllocationID()) != null) {
+			if(allocationsRepository.findById(allocation.getId()) != null) {
 					allocationsRepository.save(allocation); 
 				}
 		}catch(Exception e ) {
@@ -50,7 +61,7 @@ public class AllocationsService {
 			return null ;  
 		}
 		for(Allocations allocation : allAllocations) {
-			if(allocation.getAllocationID() ==id){
+			if(allocation.getId() ==id){
 				return allocation  ; 
 			}
 		}

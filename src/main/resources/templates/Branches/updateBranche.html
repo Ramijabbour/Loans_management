@@ -47,12 +47,12 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form  action="#"  th:action="@{/Banks/Branches/update/}+${{branche.BrancheID}}" th:object="${branche}" method="post">
+              <form  action="#"  th:action="@{/Banks/Branches/update/}+${{branche.id}}" th:object="${branche}" method="post">
                 <div class="card-body">
                 
                <div class="form-group">
                   <label for="exampleInputEmail1">ID</label>
-                  <input type="number" name="BankName" class="form-control" id="exampleInputEmail1" placeholder="" th:field="*{BrancheID}" readonly>
+                  <input type="number" name="BankName" class="form-control" id="exampleInputEmail1" placeholder="" th:field="*{id}" readonly>
                </div>
                 
                <div class="form-group">

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.BankBranches.Branches;
-import com.example.Banks.Banks;
 
 @Service
 public class LoanService {
@@ -16,7 +15,7 @@ public class LoanService {
 	private LoansRepository loansRepository;
 	
 	
-	public List<Loans> getAllLoans()
+	public List<Loans> getAllLoans(int PageNumber)
 	{
 		return loansRepository.findAll();
 	}
@@ -32,7 +31,7 @@ public class LoanService {
 		}
 		for(Loans loan : allLoans)
 		{
-			if(loan.getLoanID()==id)
+			if(loan.getId()==id)
 				return loan ;
 		}
 		System.out.println("loan is not exist");
@@ -52,7 +51,7 @@ public class LoanService {
 	public void updateLoan(Loans loan) 
 	{
 		try {
-			if(loansRepository.findById(loan.getLoanID()) != null) {
+			if(loansRepository.findById(loan.getId()) != null) {
 					loansRepository.save(loan); 
 				}
 		}catch(Exception e ) {
@@ -64,7 +63,7 @@ public class LoanService {
 	public List<Loans> getBrancheLoans(Branches branche){
 		List<Loans> brancheLoans = new ArrayList<Loans>();
 		for(Loans loan : this.loansRepository.findAll()) {
-			if(loan.getBranche().getBrancheID() == branche.getBrancheID()) {
+			if(loan.getBranche().getId() == branche.getId()) {
 				brancheLoans.add(loan); 
 			}
 		}

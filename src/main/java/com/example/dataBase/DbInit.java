@@ -9,6 +9,7 @@ import com.example.FinanceType.FinanceTypeRepository;
 import com.example.LoansType.LoansType;
 import com.example.LoansType.LoansTypeRepository;
 import com.example.security.roles.RolesRepository;
+import com.example.security.user.User;
 import com.example.security.user.UserRepository;
 import com.example.settelmets.Models.Chaque;
 import com.example.settelmets.Repositories.OnHoldCheckRepository;
@@ -84,10 +85,12 @@ public class DbInit implements CommandLineRunner{
 		Chaque check10 = 
 		new Chaque(10,"bank5","bank1","br5","#br5","br1","#br1",300,"admin",4,false);
 		this.onHoldRepo.save(check10);
-		*/
+	*/
 		
-		//User admin = new User("admin@email.com",passwordEncoder.encode("admin123"),"admin","male","ACCESS_TEST1,ACCESS_TEST2","ADMIN",true);
-		//this.userRepository.save(admin);
+		/*for(int i = 0 ; i < 60 ; i ++) {
+		User admin = new User("admin@email.com"+String.valueOf(i),passwordEncoder.encode("admin123"),"admin"+String.valueOf(i),"male","ACCESS_TEST1,ACCESS_TEST2","ADMIN",true);
+		this.userRepository.save(admin);
+		}*/
 		//User tester = new User("tester@email.com",passwordEncoder.encode("tester123"),"tester","male","getAllUsers","TESTER",true);
 		//this.userRepository.save(tester);
 		//Roles testRole = new Roles("TEST","test1,test2,test3");

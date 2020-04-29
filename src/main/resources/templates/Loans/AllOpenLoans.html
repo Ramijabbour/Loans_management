@@ -62,8 +62,8 @@
                   <td th:text ="${loan.loan.branche.bank.BankName}+' '+${loan.loan.branche.BranchName}"></td>
                   <td th:text="${loan.loan.NetAmmount}"></td>
                   <td>
-                      <form action="#" th:action="@{/Loans/Loan/} + ${{loan.loan.LoanID}}" method="get">
-                          <button th:id="'table_entry_childs_button_' + ${loan.loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                      <form action="#" th:action="@{/Loans/Loan/} + ${{loan.loan.id}}" method="get">
+                          <button th:id="'table_entry_childs_button_' + ${loan.loan.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                               <i>عرض</i>
                           </button>
                       </form>
@@ -71,8 +71,8 @@
                 
                 
                 <td>
-                    <form action="#" th:action="@{/Loan/AddVoucher/}+ ${{loan.loan.LoanID}}" method="get">
-                        <button th:id="'table_entry_childs_button_' + ${loan.loan.LoanID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                    <form action="#" th:action="@{/Loan/AddVoucher/}+ ${{loan.loan.id}}" method="get">
+                        <button th:id="'table_entry_childs_button_' + ${loan.loan.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                             <i>اضافة سند</i>
                         </button>
                     </form>
@@ -81,6 +81,8 @@
                 </tbody>
         
               </table>
+               <a th:href="@{|/Loans/all/Open?index=${nxt}|}" class="btn btn-inverse-primary btn-fw">&laquo; التالي </a>
+			   <a th:href="@{|/Loans/all/Open?index=${prev}|}" class="btn btn-inverse-danger btn-fw">السابق&raquo;</a>
             </div>
             <!-- /.card-body -->
           </div>

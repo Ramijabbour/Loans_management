@@ -44,8 +44,9 @@ public class NotificationsService extends MasterService{
 		}
 		List<Notification> roleNotificationsList = new ArrayList<Notification>();
 		List<Notification> allNotifications = this.notificationsRepository.findAll() ; 
+		String userRoles = super.get_current_User().getUserRoles() ; 
 		for(Notification notification : allNotifications) {
-			if(notification.containRolesList(super.get_current_User().getUserRoles())) {
+			if(notification.containRolesList(userRoles)) {
 				roleNotificationsList.add(notification);
 			}
 		}	
@@ -55,7 +56,7 @@ public class NotificationsService extends MasterService{
 	public Notification getNotificationsByID(int id) {
 		List<Notification> all = this.notificationsRepository.findAll(); 
 		for(Notification notification : all ) {
-			if(notification.getNotificationId() == id ) {
+			if(notification.getId() == id ) {
 				return notification ; 
 			}
 		}

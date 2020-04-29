@@ -6,10 +6,15 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.example.MasterService;
+import com.example.SiteConfiguration;
 import com.example.BankBranches.BrancheService;
 import com.example.BankBranches.Branches;
 import com.example.Banks.BankService;
@@ -224,17 +229,45 @@ public class SettlementService extends MasterService {
 	}
 */
 	
-	public List<Chaque> getOnHoldChecks(){	
-		return this.onHoldChecksRepository.findByActiveFalse() ; 
+	
+	
+	public List<Chaque> getOnHoldChecks(int PageNumber){	
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));		
+		Page<Chaque> pagedResult = this.onHoldChecksRepository.findAll(paging);
+		List<Chaque> allList = new ArrayList<Chaque>() ; 
+		if (pagedResult.hasContent()) {
+			for(Chaque check : pagedResult.getContent() ) {
+				if(!check.isActive())
+				allList.add(check);
+			}
+            return allList; 
+        } else {
+            return new ArrayList<Chaque>();
+        }
 	}
 	
-	public List<SettledChaque> getSettledChecks(){
-		return this.settledChecksRepository.findAll(); 
+	public List<SettledChaque> getSettledChecks(int PageNumber){
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));		
+		Page<SettledChaque> pagedResult = this.settledChecksRepository.findAll(paging);
+		if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<SettledChaque>();
+        }
 	}
 	
-	public List<Chaque> getAllChecks(){
-		return this.onHoldChecksRepository.findAll() ; 
+	public List<Chaque> getAllChecks(int PageNumber){
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));		
+		Page<Chaque> pagedResult = this.onHoldChecksRepository.findAll(paging);
+		if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Chaque>();
+        }
 	}
+	
+	
+	
 
 	public SettledChaque findCheckByID(int id ) {
 		List<SettledChaque> all = this.settledChecksRepository.findAll() ; 

@@ -13,9 +13,9 @@ import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 public class ReportsLinkModel {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Convert(converter = IntEncryptDecryptConverter.class)
-	private int EntryId ; 
+	private int id ; 
 	
 	@Convert(converter = IntEncryptDecryptConverter.class)
 	private int ReportId ;
@@ -36,11 +36,11 @@ public class ReportsLinkModel {
 	
 	public ReportsLinkModel() {}
 
-	public int getReportId() {
+	public int getId() {
 		return ReportId;
 	}
 
-	public void setReportId(int reportId) {
+	public void setId(int reportId) {
 		ReportId = reportId;
 	}
 
@@ -53,7 +53,7 @@ public class ReportsLinkModel {
 	}
 
 	public int getEntryId() {
-		return EntryId;
+		return id;
 	}
 
 	public int getType() {

@@ -46,13 +46,13 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form th:action="@{/Allocation/update/}+${allocation.AllocationID}"  th:object="${allocation}" method="post">
+              <form th:action="@{/Allocation/update/}+${allocation.id}"  th:object="${allocation}" method="post">
                 <div class="card-body">
                 
                 
                   <div class="form-group">
                     <label for="exampleInputEmail1">ID </label>
-                    <input type="number" name="ID" class="form-control" th:field="*{AllocationID}" readonly>
+                    <input type="number" name="ID" class="form-control" th:field="*{id}" readonly>
                   </div>
 					                
                   <div class="form-group">

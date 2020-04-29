@@ -20,7 +20,7 @@ public class Notification {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	@Convert(converter = IntEncryptDecryptConverter.class)
-    public int NotificationId;
+    public int id;
 	
 	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String NotificationTitle ; 
@@ -76,8 +76,8 @@ public class Notification {
 		this.localDateTime = MasterService.getCurrDateTime() ;
 	}
 
-	public int getNotificationId() {
-		return NotificationId;
+	public int getId() {
+		return id;
 	}
 	
 	public String getNotificationTitle() {

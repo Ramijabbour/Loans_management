@@ -27,8 +27,8 @@ import java.util.Date;
 public class Loans {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public int LoanID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int id;
     
     @Convert(converter = StringEncryptDecryptConverter.class)
     public String Name ;
@@ -125,12 +125,12 @@ public class Loans {
 
 
 
-	public int getLoanID() {
-        return LoanID;
+	public int getId() {
+        return id;
     }
 
-    public void setLoanID(int loanID) {
-        LoanID = loanID;
+    public void setId(int loanID) {
+        id = loanID;
     }
 
     public String getFirstSide() {

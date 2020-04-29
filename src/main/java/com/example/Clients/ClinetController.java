@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.SiteConfiguration;
 import com.example.Clients.Clients;
+
 
 @RestController
 public class ClinetController {
@@ -59,11 +62,16 @@ public class ClinetController {
 	
 	//get All Clients ------------------------------------------------------
 		@RequestMapping(method = RequestMethod.GET , value="/Clients/all")
-		public ModelAndView ShowAllClient() {
+		public ModelAndView ShowAllClient(@Param(value ="index") int index) {
 			ModelAndView mav = new ModelAndView("Clients/AllClients");
-			List<Clients> allclients=clientservice.GetAllClients();
+			List<Clients> allclients=clientservice.GetAllClients(index);
 			mav.addObject("allclients",allclients);
-			return mav; 
+			if(allclients.size() > 0 ) {
+				SiteConfiguration.addSequesnceVaraibles(mav, index);
+			}else {
+				SiteConfiguration.addSequesnceVaraibles(mav, -1);
+			}
+			return mav;  
 		}
    // -------------------------------------------------------------------
 	

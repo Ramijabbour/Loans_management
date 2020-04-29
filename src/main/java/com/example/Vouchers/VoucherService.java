@@ -78,7 +78,7 @@ public class VoucherService {
 		for(Vouchers voucher : allVoucher )
 		{
 			if(voucher.getLoan() !=null) {
-				if(voucher.getLoan().getLoanID()==id)
+				if(voucher.getLoan().getId()==id)
 					LoanVoucher.add(voucher);
 			}
 		}
@@ -93,7 +93,7 @@ public class VoucherService {
 		for(Vouchers voucher : allVoucher )
 		{
 			if(voucher.getLoan() !=null) {
-				if(voucher.getLoan().getLoanID()==id)
+				if(voucher.getLoan().getId()==id)
 					if(!voucher.getStatus().equalsIgnoreCase("paid"))
 					  return false ;
 			}

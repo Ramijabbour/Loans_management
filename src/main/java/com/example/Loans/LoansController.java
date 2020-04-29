@@ -1,7 +1,6 @@
 package com.example.Loans;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.SiteConfiguration;
 import com.example.BankBranches.BrancheService;
 import com.example.BankBranches.Branches;
-import com.example.Banks.BankService;
 import com.example.Banks.Banks;
 import com.example.Clients.ClientService;
 import com.example.Clients.Clients;
@@ -61,29 +61,44 @@ public class LoansController {
 	
 	//get All Open Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open")
-	public ModelAndView ShowAllOpenLoans() { 
+	public ModelAndView ShowAllOpenLoans(@Param(value ="index") int index) { 
 		ModelAndView mav = new ModelAndView("Loans/AllOpenLoans");
-		List<OpenLoans> allOpenloans=openLoanService.GetAllOpenLoan();
+		List<OpenLoans> allOpenloans=openLoanService.GetAllOpenLoan(index);
 		mav.addObject("allloans",allOpenloans);
+		if(allOpenloans.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
 		return mav; 
 	}
 	// -------------------------------------------------------------------
 	//get All Close Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Close")
-	public ModelAndView ShowAllCloseLoans() { 
+	public ModelAndView ShowAllCloseLoans(@Param(value ="index") int index) { 
 		ModelAndView mav = new ModelAndView("Loans/AllCloseLoan");
-		List<CloseLoans> allCloseloans=closeLoanService.GetAllCloseLoan();
+		List<CloseLoans> allCloseloans=closeLoanService.GetAllCloseLoan(index);
 		mav.addObject("allloans",allCloseloans);
+		if(allCloseloans.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
 		return mav; 
 	}
 	// -------------------------------------------------------------------
 	
 	//get All ReSchedule Loans ------------------------------------------------------
 		@RequestMapping(method = RequestMethod.GET , value="/Loans/all/ReSchedule")
-		public ModelAndView ShowAllReScheduleLoans() { 
+		public ModelAndView ShowAllReScheduleLoans(@Param(value ="index") int index) { 
 			ModelAndView mav = new ModelAndView("Loans/AllReScheduleLoan");
-			List<ReScheduleLoans> allReScheduleloans=reScheduleLoanService.getAllReScheduleLoans();
+			List<ReScheduleLoans> allReScheduleloans=reScheduleLoanService.getAllReScheduleLoans(index);
 			mav.addObject("allloans",allReScheduleloans);
+			if(allReScheduleloans.size() > 0 ) {
+				SiteConfiguration.addSequesnceVaraibles(mav, index);
+			}else {
+				SiteConfiguration.addSequesnceVaraibles(mav, -1);
+			}
 			return mav; 
 		}
 	// -------------------------------------------------------------------
@@ -93,8 +108,8 @@ public class LoansController {
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/addLoan")
 	public ModelAndView AddLoan() { 
 		ModelAndView mav = new ModelAndView("Loans/AddLoan");
-		List<Clients> allclient = clientService.GetAllClients();
-		List<Branches> allbranche=brancheService.getAllBranche();
+		List<Clients> allclient = clientService.GetAllClientsNoPage();
+		List<Branches> allbranche=brancheService.getAllBrancheNoPage();
 		List<LoansType> allloanType = loansTypeService.getAllType();
 		List<FinanceType> allfinanceType= financeTypeService.getAllFinanceType();
 	    mav.addObject("allclient",allclient);
@@ -202,8 +217,8 @@ public class LoansController {
 	public ModelAndView ShowUpdateLoan(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView("Loans/UpdateLoan");
 		Loans loan=loansService.getOneByID(id);
-		List<Clients> allclient = clientService.GetAllClients();
-		List<Branches> allbranche=brancheService.getAllBranche();
+		List<Clients> allclient = clientService.GetAllClientsNoPage();
+		List<Branches> allbranche=brancheService.getAllBrancheNoPage();
 		List<LoansType> allloanType = loansTypeService.getAllType();
 		List<FinanceType> allfinanceType= financeTypeService.getAllFinanceType();
 		mav.addObject("allbranche",allbranche);
@@ -219,7 +234,7 @@ public class LoansController {
 	public void UpdateLoan(@Valid Loans loan,HttpServletResponse response) throws IOException {
 		System.out.println("posted to /Loans/update/id ");
 		loansService.updateLoan(loan);
-		if(openLoanService.getOpenLoanFromLoan(loan.getLoanID())!=null)
+		if(openLoanService.getOpenLoanFromLoan(loan.getId())!=null)
 			response.sendRedirect("/Loans/all/Open");
 		else 
 			response.sendRedirect("/Loans/all/Close");
@@ -253,7 +268,7 @@ public class LoansController {
 			closeLoanService.addLoan(closeloan);
 			openLoanService.DeleteOpenLoan(open);
 		}
-		response.sendRedirect("/Vouchers/all/"+loan.getLoanID());
+		response.sendRedirect("/Vouchers/all/"+loan.getId());
 	}
 	
 

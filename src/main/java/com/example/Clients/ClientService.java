@@ -1,11 +1,17 @@
 package com.example.Clients;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.Clients.ClientsRepository;
+import com.example.SiteConfiguration;
 import com.example.Clients.Clients;
 
 @Service
@@ -15,10 +21,22 @@ public class ClientService {
 	private ClientsRepository clientRepository;
 	
 	
-	public List<Clients> GetAllClients() {
+	public List<Clients> GetAllClients(int PageNumber) {
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Page<Clients> pagedResult = this.clientRepository.findAll(paging);
+		if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Clients>();
+        }
+	}
+	
+	public List<Clients> GetAllClientsNoPage() {
+		
 		List<Clients> clients=clientRepository.findAll();
 		return clients;
 	}
+	
 	
 	public Clients GetClientById(int id)
 	{
@@ -30,7 +48,7 @@ public class ClientService {
 		}
 		for (Clients client : allclient)
 		{
-			if(client.getClientID()==id)
+			if(client.getId()==id)
 				return client;
 		}
 		System.out.println("requested client not found ");
@@ -57,7 +75,7 @@ public class ClientService {
 
 	public void updateClient(Clients client) {
 		try {
-			if(clientRepository.findById(client.getClientID()) != null) {
+			if(clientRepository.findById(client.getId()) != null) {
 					clientRepository.save(client); 
 				}
 		}catch(Exception e ) {

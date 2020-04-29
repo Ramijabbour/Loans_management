@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.SiteConfiguration;
 import com.example.BankBranches.BrancheService;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
@@ -54,12 +56,15 @@ public class AllocationsController {
 
 		//Get All Allocation -----------------------------------------------------
 		@RequestMapping(method = RequestMethod.GET , value="/Allocation/all")
-		public ModelAndView AllAllocation() {
+		public ModelAndView AllAllocation(@Param(value ="index") int index) {
 			ModelAndView mav = new ModelAndView("Banks/AllAllocations");
-			  List<Allocations> allAllocations=allocationService.getAllAllocations();
-			  System.out.println(allAllocations.size()+"----------------------");
+			  List<Allocations> allAllocations=allocationService.getAllAllocations(index);
 			  mav.addObject("AllAllocations",allAllocations);
-			 
+			  if(allAllocations.size() > 0 ) {
+					SiteConfiguration.addSequesnceVaraibles(mav, index);
+				}else {
+					SiteConfiguration.addSequesnceVaraibles(mav, -1);
+				}
 			return mav; 
 		}
 

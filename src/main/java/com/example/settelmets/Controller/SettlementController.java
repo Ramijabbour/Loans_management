@@ -1,13 +1,19 @@
 package com.example.settelmets.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.SiteConfiguration;
+import com.example.settelmets.Models.Chaque;
 import com.example.settelmets.Models.CheckDisposableModel;
+import com.example.settelmets.Models.SettledChaque;
 import com.example.settelmets.Services.SettlementService;
 
 @RestController
@@ -96,24 +102,41 @@ public class SettlementController {
 	
 
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/all")
-	public ModelAndView getAllChecks() {
+	public ModelAndView getAllChecks(@Param(value ="index") int index) {
 		ModelAndView mav = new ModelAndView("settlement/allChecks");
-		mav.addObject("checksList",this.settlementService.getAllChecks());
+		List<Chaque> allchecks = this.settlementService.getAllChecks(index);
+		mav.addObject("checksList",allchecks);
+		if(allchecks.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
 		return mav ; 
-
 	}
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled")
-	public ModelAndView getSettledChecks() {
+	public ModelAndView getSettledChecks(@Param(value ="index") int index) {
 		ModelAndView mav = new ModelAndView("settlement/settled");
-		mav.addObject("checksList",this.settlementService.getSettledChecks());
+		List<SettledChaque> allcheck = this.settlementService.getSettledChecks(index);
+		mav.addObject("checksList",allcheck);
+		if(allcheck.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
 		return mav ; 
 	}	
 		
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/onhold")
-	public ModelAndView getonHoldChecks() {
+	public ModelAndView getonHoldChecks(@Param(value ="index") int index) {
 		ModelAndView mav = new ModelAndView("settlement/onHold");
-		mav.addObject("checksList",this.settlementService.getOnHoldChecks());
+		List<Chaque> allchecks = this.settlementService.getOnHoldChecks(index);
+		mav.addObject("checksList",allchecks);
+		if(allchecks.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
 		return mav ; 
 	}
 	
