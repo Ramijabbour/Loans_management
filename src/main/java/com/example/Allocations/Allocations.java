@@ -4,7 +4,6 @@ package com.example.Allocations;
 
 import ValidContent_Visitor.Visitor;
 
-import com.example.BankBranches.Branches;
 import com.example.Banks.Banks;
 
 import javax.persistence.Entity;
@@ -19,8 +18,8 @@ import javax.persistence.ManyToOne;
 public class Allocations {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int AllocationID ;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id ;
 	
 	public String AllocationDate;
 	
@@ -37,12 +36,12 @@ public class Allocations {
 		this.bank = bank ; 
 	}
 	
-	public int getAllocationID() {
-		return AllocationID;
+	public int getId() {
+		return id;
 	}
 
-	public void setAllocationID(int allocationID) {
-		AllocationID = allocationID;
+	public void setId(int allocationID) {
+		id = allocationID;
 	}
 
 	public String getAllocationDate() {

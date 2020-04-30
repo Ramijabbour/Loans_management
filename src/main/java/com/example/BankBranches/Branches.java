@@ -14,8 +14,8 @@ import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 public class Branches {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int BrancheID ;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int id ;
 	
 	@Convert(converter = StringEncryptDecryptConverter.class)
 	public String BranchName="";
@@ -41,14 +41,14 @@ public class Branches {
 
 
 
-	public int getBrancheID() {
-		return BrancheID;
+	public int getId() {
+		return id;
 	}
 
 
 
-	public void setBrancheID(int brancheID) {
-		BrancheID = brancheID;
+	public void setId(int brancheID) {
+		id = brancheID;
 	}
 
 

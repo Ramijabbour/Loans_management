@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.example.MasterService;
+import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
@@ -15,15 +16,15 @@ public class User implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int UserID ;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Convert(converter = IntEncryptDecryptConverter.class)
+	private int id ;
 
 	@Column(nullable = false )
 	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String email=" ";
 
 	@Column(nullable = false )
-	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String password = " ";
 	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String username ;
@@ -66,16 +67,16 @@ public class User implements java.io.Serializable {
 	
 	
 	public void flatUserDetailes() {
-		System.out.println("user ID : "+this.UserID+" username :"+this.username+" user email : "+this.email+" gender : "
+		System.out.println("user ID : "+this.id+" username :"+this.username+" user email : "+this.email+" gender : "
 	+this.Gender+" role "+this.UserRoles +" permissions : "+this.UserPermissions);
 	}
 	
 	public int getUserID() {
-		return UserID;
+		return id;
 	}
 
 	public void setUserID(int userID) {
-		UserID = userID;
+		id = userID;
 	}
 
 	public String getEmail() {

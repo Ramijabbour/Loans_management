@@ -43,7 +43,7 @@ public class VoucherController {
 		else {
 		ModelAndView mav = new ModelAndView("Vouchers/AddVoucher");
 		Loans myloan = loanService.getOneByID(id);
-		List<Clients> allclient = clientService.GetAllClients();
+		List<Clients> allclient = clientService.GetAllClientsNoPage();
 		mav.addObject("voucher", new Vouchers());
 		mav.addObject("allclient", allclient);
 		mav.addObject("myloan", myloan);
@@ -80,6 +80,10 @@ public class VoucherController {
 	{
 		ModelAndView mav = new ModelAndView("Vouchers/OneVoucher");
 		Vouchers voucher= voucherService.GetVoucherById(id);
+		boolean checkStatus =false ;
+		if(voucher.getStatus().equalsIgnoreCase("Open"))
+			checkStatus=true;
+		mav.addObject("status",checkStatus);
 		mav.addObject("voucher", voucher);
 		return mav; 
 	}
@@ -88,7 +92,7 @@ public class VoucherController {
 	@RequestMapping(method=RequestMethod.GET , value="/Vouchers/delete/{id}")
 	public void DeleteVoucher(@PathVariable int id ,HttpServletResponse response) throws IOException
 	{
-		int loanid = voucherService.GetVoucherById(id).getLoan().getLoanID();
+		int loanid = voucherService.GetVoucherById(id).getLoan().getId();
 		voucherService.deleteVoucher(id);
 		response.sendRedirect("/Vouchers/all/"+loanid);
 		
@@ -101,7 +105,7 @@ public class VoucherController {
 	{
 		ModelAndView mav = new ModelAndView("Vouchers/UpdateVoucher");
 		Vouchers voucher = voucherService.GetVoucherById(id);
-		List<Clients> allclient = clientService.GetAllClients();
+		List<Clients> allclient = clientService.GetAllClientsNoPage();
 		mav.addObject("voucher", voucher);
 		mav.addObject("allclient", allclient);
 		return mav;
@@ -110,7 +114,7 @@ public class VoucherController {
 	@RequestMapping(method=RequestMethod.POST ,value="/Vouchers/update/{id}")
 	public void updateVoucher(@PathVariable int id,@Valid Vouchers voucher , HttpServletResponse response) throws IOException
 	{
-		int loanid=voucherService.GetVoucherById(id).getLoan().getLoanID();
+		int loanid=voucherService.GetVoucherById(id).getLoan().getId();
 		voucherService.updateVoucher(voucher);
 		
 		response.sendRedirect("/Vouchers/all/"+loanid);
@@ -126,7 +130,7 @@ public class VoucherController {
 		voucher.setStatus("paid");
 		
 		voucherService.updateVoucher(voucher);
-		int  loanid = voucher.getLoan().getLoanID();
+		int  loanid = voucher.getLoan().getId();
 		
 		response.sendRedirect("/Loans/CheckCloseLoan/"+loanid);
 		 
@@ -142,6 +146,10 @@ public class VoucherController {
 			return false;
 	}
 	
-
+	
+	
+	
+	
+	
 	
 }

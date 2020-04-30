@@ -1,20 +1,26 @@
 package com.example.security.permissions;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
+
 @Entity
 public class Permissions {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int PermissionID ;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Convert(converter = IntEncryptDecryptConverter.class)
+	private int id ;
 
+	 @Convert(converter = StringEncryptDecryptConverter.class)
     private String PermissionName=" ";
 
-	
+	 @Convert(converter = StringEncryptDecryptConverter.class)
 	private String PermissionType=" ";
 
 	public Permissions(String permissionName ) {
@@ -23,15 +29,10 @@ public class Permissions {
 	
 	public Permissions(){}
 	
-	public int getPermissionID() {
-		return PermissionID;
+
+	public int getId() {
+		return id;
 	}
-
-
-	public void setPermissionID(int permissionID) {
-		PermissionID = permissionID;
-	}
-
 
 	public String getPermissionName() {
 		return PermissionName;

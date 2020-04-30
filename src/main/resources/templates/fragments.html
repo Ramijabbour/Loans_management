@@ -214,8 +214,8 @@
                 </a>
 				 <div class="submenu">
                       <ul>
+                          <li class="nav-item"><a class="nav-link" href="/adminstration/users/all?index=0">كل المستخدمين</a></li>
                           <li class="nav-item"><a class="nav-link" href="/adminstration/users/adduser">أضف مستخدماً</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/adminstration/users/all">كل المستخدمين</a></li>
                           <li class="nav-item"><a class="nav-link" href="/adminstration/users/active">الحسابات النشطة</a></li>
                           <li class="nav-item"><a class="nav-link" href="/adminstration/users/nonactive">الحسابات غيرالنشطة</a></li>
                       </ul>
@@ -228,9 +228,9 @@
                 </a>
 				 <div class="submenu">
                       <ul>
-                          <li class="nav-item"><a class="nav-link" href="/security/roles/all">إدارة الأدوار</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/security/roles/all?index=0">إدارة الأدوار</a></li>
                           <li class="nav-item"><a class="nav-link" href="/security/roles/addrole">إضافة دور</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/security/permissions/all">إدارة الصلاحيات</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/security/permissions/all?index=0">إدارة الصلاحيات</a></li>
                           <li class="nav-item"><a class="nav-link" href="/security/permissions/commit">تأكيد الصلاحيات المعلقة</a></li>
                       </ul>
                   </div>
@@ -240,18 +240,43 @@
                   <i class="mdi mdi-file-document-box menu-icon"></i>
                   <span class="menu-title">السلف</span>
                 </a>
+                 <div class="submenu">
+                      <ul>
+                          <li class="nav-item"><a class="nav-link" href="/Loans/all/Open?index=0">عرض السلف المفتوحة</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/Loans/all/Close?index=0">عرض السلف المغلقة</a></li>
+                           <li class="nav-item"><a class="nav-link" href="/Loans/all/ReSchedule?index=0">عرض السلف المجدولة</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/Loans/addLoan">اضافة سلفة </a></li>
+                      </ul>
+               </div>       
               </li>
 			   <li class="nav-item">
-                <a class="nav-link" href="../../index.html">
+                <a class="nav-link" href="">
                   <i class="mdi mdi-file-document-box menu-icon"></i>
                   <span class="menu-title">البنوك</span>
                 </a>
+                <div class="submenu">
+                      <ul>
+                          <li class="nav-item"><a class="nav-link" href="/Banks/all">عرض البنوك</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/Banks/Branches/all?index=0">عرض الفروع</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/Banks/addBank">اضافة بنك</a></li>
+                           <li class="nav-item"><a class="nav-link" href="/Allocation/all?index=0">عرض سجل المخصصات</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/Allocation/addAllocation">اضافة مخصصات </a></li>
+                      </ul>
+               </div>       
               </li>
+            
 			   <li class="nav-item">
-                <a class="nav-link" href="../../index.html">
+                <a class="nav-link" href="">
                   <i class="mdi mdi-file-document-box menu-icon"></i>
                   <span class="menu-title">المتعاملين</span>
                 </a>
+                <div class="submenu">
+                      <ul>
+                          <li class="nav-item"><a class="nav-link" href="/Clients/all?index=0">عرض المتعاملين</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/Clients/addClient">اضافة متعامل</a></li>
+
+                      </ul>
+                </div>
               </li>
 			  <li class="nav-item">
                 <a class="nav-link" href="#">
@@ -261,9 +286,9 @@
                  <div class="submenu">
                       <ul>
                           <li class="nav-item"><a class="nav-link" href="/settlement/checks/add">أضافة شيك</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/settlement/checks/all">عرض كل الشيكات</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/settlement/checks/settled">عرض الشيكات المسددة</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/settlement/checks/onhold">عرض الشيكات الغير مسددة</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/settlement/checks/all?index=0">عرض كل الشيكات</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/settlement/checks/settled?index=0">عرض الشيكات المسددة</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/settlement/checks/onhold?index=0">عرض الشيكات الغير مسددة</a></li>
                       </ul>
                   </div>
               </li>

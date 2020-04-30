@@ -7,13 +7,19 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.SiteConfiguration;
 import com.example.aspect.ItemNotFoundException;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
 import com.example.security.rolesPermissions.RolesPermissionsService;
+import com.example.security.user.User;
 
 @Service
 public class RolesService {
@@ -40,8 +46,14 @@ public class RolesService {
 	}
 	
 	
-	public List<Roles> getAllRoles(){
-		return this.rolesRepository.findAll() ; 
+	public List<Roles> getAllRoles(int PageNumber){
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Page<Roles> pagedResult = this.rolesRepository.findAll(paging);
+		if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Roles>();
+        }
 	}
 	
 	public Roles getRoleByID(int roleid) {
@@ -50,7 +62,7 @@ public class RolesService {
 			return null ; 
 		}else {
 			for(Roles role : rolesList ) {
-				if(role.getRoleID() == roleid ) {
+				if(role.getId() == roleid ) {
 					return role ; 
 				}
 			}
@@ -82,7 +94,7 @@ public class RolesService {
 	
 	@Transactional
 	public void deleteRole(Roles role ) {
-		if (this.rolesRepository.findById(role.getRoleID()) == null ) {
+		if (this.rolesRepository.findById(role.getId()) == null ) {
 			throw new ItemNotFoundException();
 		}else {
 			this.userRoleService.deleteRole(role);

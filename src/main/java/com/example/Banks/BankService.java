@@ -62,7 +62,6 @@ public class BankService {
 		}
 	}
 
-
 	public Banks getBankByID(int bankId) {
 		List<Banks> banksList = this.bankRepository.findAll() ; 
 		for(Banks bank : banksList) {
@@ -72,5 +71,14 @@ public class BankService {
 		}
 		return null ; 
 	}	
+	
+	public Banks getBankByName(String bankName ) {
+		for(Banks bank : this.bankRepository.findAll()) {
+			if(bank.getBankName().equalsIgnoreCase(bankName)) {
+				return bank ; 
+			}
+		}
+		return null ; 
+	}
 	
 }

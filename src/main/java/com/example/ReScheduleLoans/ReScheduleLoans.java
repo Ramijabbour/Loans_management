@@ -14,18 +14,27 @@ import javax.persistence.ManyToOne;
 public class ReScheduleLoans {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int ReScheduleLoanID ;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id ;
 	
 	@ManyToOne
 	private Loans loan=null;
 
-	public int getReScheduleLoanID() {
-		return ReScheduleLoanID;
+	
+	
+	public ReScheduleLoans() {
 	}
 
-	public void setReScheduleLoanID(int reScheduleLoanID) {
-		ReScheduleLoanID = reScheduleLoanID;
+	public ReScheduleLoans(Loans loan) {
+		this.loan = loan;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int reScheduleLoanID) {
+		id = reScheduleLoanID;
 	}
 
 	public Loans getLoan() {

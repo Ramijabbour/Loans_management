@@ -51,7 +51,7 @@
                         <td colspan="2">لا يوجد مستخدمين فعالين </td>
                     </tr>
                     <tr th:each="user : ${userslist}">
-                        <td><span th:text="${user.UserID}"> ID </span></td>
+                        <td><span th:text="${user.id}"> ID </span></td>
                         <td><span th:text="${user.username}"> UserName </span></td>
                         <td><span th:text="${user.Gender}"> Gender </span></td>
                         <td><span th:text="${user.email}"> Email </span></td>
@@ -59,15 +59,15 @@
                         <td><span th:text="${user.createdAt}"> CreatedAt </span></td>
                         <td><span th:text="${user.Active}"> Active </span></td>
                       <td>
-                          <form action="#" th:action="@{/adminstration/users/user/deactivate/} + ${{user.UserID}}" method="post">
-                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                          <form action="#" th:action="@{/adminstration/users/user/deactivate/} + ${{user.id}}" method="post">
+                              <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                                   <i>تعطيل المستخدم</i>
                               </button>
                           </form>
                       </td>
                        <td>
-                          <form action="#" th:action="@{/adminstration/users/delete/} + ${{user.UserID}}" method="post">
-                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                          <form action="#" th:action="@{/adminstration/users/delete/} + ${{user.id}}" method="post">
+                              <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                                   <i>حذف</i>
                               </button>
                           </form>
@@ -75,6 +75,7 @@
                     </tr>
                 </tbody>
             </table>
+           			
               </div>
               <!-- /.card-header -->
               <!-- form start -->

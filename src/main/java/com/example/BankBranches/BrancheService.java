@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.SiteConfiguration;
 import com.example.Banks.Banks;
 
 @Service
@@ -19,7 +24,20 @@ public class BrancheService {
 		this.brancheRepository.save(branche);
 	}
 	
-	public List<Branches> getAllBranche()
+	public List<Branches> getAllBranche(int PageNumber)
+	{
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));		
+		Page<Branches> pagedResult = this.brancheRepository.findAll(paging);
+		if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Branches>();
+        }
+	
+	}
+	
+	
+	public List<Branches> getAllBrancheNoPage()
 	{
 		return this.brancheRepository.findAll();
 	}
@@ -32,7 +50,7 @@ public class BrancheService {
 	public void UpdateBracnhe(Branches branche)
 	{
 		try {
-			if(brancheRepository.findById(branche.getBrancheID()) != null) {
+			if(brancheRepository.findById(branche.getId()) != null) {
 					brancheRepository.save(branche); 
 				}
 		}catch(Exception e ) {
@@ -46,7 +64,7 @@ public class BrancheService {
 		
 		for(Branches branche : allBranches)
 		{
-			if(branche.getBrancheID()==id)
+			if(branche.getId()==id)
 				return branche;
 		}
 		return null;		

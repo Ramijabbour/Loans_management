@@ -2,25 +2,34 @@ package com.example.security.Activities;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.example.MasterService;
+import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
 public class UserActivity {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+	@Convert(converter = IntEncryptDecryptConverter.class)
 	private int EntryId ; 
+	
+	@Convert(converter = IntEncryptDecryptConverter.class)
 	private int UserId ; 
+	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String UserName ; 
+	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String Activity ; 
+	
 	private LocalDateTime TimeStamp ;
-	
-	
 	
 	public UserActivity() {
 		super();

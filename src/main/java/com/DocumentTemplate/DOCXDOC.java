@@ -1,11 +1,12 @@
 package com.DocumentTemplate;
 
-import com.example.MQ.SettledChaque;
-
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STOnOff;
+
+import com.example.settelmets.Models.SettledChaque;
+
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,7 +20,7 @@ public class DOCXDOC implements CreateDocTemplate {
 	
     @Override
     public String CreateRTGSDoc(SettledChaque settledChaque) {
-        String Path= System.getProperty("user.dir")+"\\";
+    /*    String Path= System.getProperty("user.dir")+"\\";
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Date date = new Date();
         String Filename=settledChaque.getFirstBankSW()+dateFormat.format(date);
@@ -126,8 +127,9 @@ public class DOCXDOC implements CreateDocTemplate {
         System.out.println("fontstyle.docx written successully");
         
         return returnPath ; 
-
-
+     */
+    	//remove return stmt after fix 
+    		return null ; 
     }
 
 }

@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
 public interface BanksRepository extends JpaRepository<Banks,Integer>{
 
 
-
 }

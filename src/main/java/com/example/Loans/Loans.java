@@ -27,8 +27,8 @@ import java.util.Date;
 public class Loans {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public int LoanID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int id;
     
     @Convert(converter = StringEncryptDecryptConverter.class)
     public String Name ;
@@ -93,13 +93,44 @@ public class Loans {
     
     
     public Loans() {}
+    
+    
 
-    public int getLoanID() {
-        return LoanID;
+    public Loans(String name, String firstSide, String secondSide, String loanNumber,
+			String interestRate, String delayInterestRate, String clearanceNumber, String totalAmmount,
+			String totalAmmountAsString, String netAmmount, String netAmmountAsString, String numberOfVoucherAsString,
+			String numberOfVoucher, String purpose, Clients client, Branches branche, User user, LoansType loanType,
+			FinanceType financeType) {
+		super();
+		Name = name;
+		FirstSide = firstSide;
+		SecondSide = secondSide;
+		LoanNumber = loanNumber;
+		InterestRate = interestRate;
+		DelayInterestRate = delayInterestRate;
+		ClearanceNumber = clearanceNumber;
+		TotalAmmount = totalAmmount;
+		TotalAmmountAsString = totalAmmountAsString;
+		NetAmmount = netAmmount;
+		NetAmmountAsString = netAmmountAsString;
+		NumberOfVoucherAsString = numberOfVoucherAsString;
+		NumberOfVoucher = numberOfVoucher;
+		this.purpose = purpose;
+		this.client = client;
+		this.branche = branche;
+		this.user = user;
+		this.loanType = loanType;
+		this.financeType = financeType;
+	}
+
+
+
+	public int getId() {
+        return id;
     }
 
-    public void setLoanID(int loanID) {
-        LoanID = loanID;
+    public void setId(int loanID) {
+        id = loanID;
     }
 
     public String getFirstSide() {

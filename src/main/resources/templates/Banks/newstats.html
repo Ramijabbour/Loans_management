@@ -184,7 +184,7 @@
                 <tr th:each ="allocation : ${bankstats.AllAllocations}" >
                    <td th:text="${allocation.AllocationAmmount}"></td>
                   <td th:text="${allocation.AllocationDate}"></td>
-                  <td th:text="${allocation.banks.BankName}+' '+${allocation.banks.BranchName}"></td>
+                  <td th:text="${allocation.bank.BankName}"></td>
                 </tr>
                 </tbody>
               </table>
@@ -216,7 +216,7 @@
                   <td th:text="${loan.loan.financeType.TypeName}"></td>
                   <td th:text="${loan.loan.loanType.TypeName}"></td>
                   <td th:text="${loan.loan.InterestRate}"></td>
-                  <td th:text ="${loan.loan.bank.BankName}+' '+${loan.loan.bank.BranchName}"></td>
+                  <td th:text ="${loan.loan.branche.bank.BankName}+' '+${loan.loan.branche.BranchName}"></td>
                   <td th:text="${loan.loan.NetAmmount}"></td>
                 </tr>
                 </tbody>
@@ -250,7 +250,7 @@
                   <td th:text="${loan.loan.financeType.TypeName}"></td>
                   <td th:text="${loan.loan.loanType.TypeName}"></td>
                   <td th:text="${loan.loan.InterestRate}"></td>
-                  <td th:text ="${loan.loan.bank.BankName}+' '+${loan.loan.bank.BranchName}"></td>
+                  <td th:text ="${loan.loan.branche.bank.BankName}+' '+${loan.loan.branche.BranchName}"></td>
                   <td th:text="${loan.loan.NetAmmount}"></td>
 
                 </tr>

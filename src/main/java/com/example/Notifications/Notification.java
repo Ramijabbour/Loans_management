@@ -4,22 +4,33 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.example.MasterService;
+import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
+import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 import com.example.security.roles.Roles;
 
 @Entity
 public class Notification {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int NotificationId;
+	@Convert(converter = IntEncryptDecryptConverter.class)
+    public int id;
+	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String NotificationTitle ; 
+	
+	@Convert(converter = StringEncryptDecryptConverter.class)	
 	private String Link ; 
+	
+	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String TargetedRoles ="";
+	
 	private boolean Status = false ; 
 	private LocalDateTime localDateTime ; 
 	
@@ -65,8 +76,8 @@ public class Notification {
 		this.localDateTime = MasterService.getCurrDateTime() ;
 	}
 
-	public int getNotificationId() {
-		return NotificationId;
+	public int getId() {
+		return id;
 	}
 	
 	public String getNotificationTitle() {

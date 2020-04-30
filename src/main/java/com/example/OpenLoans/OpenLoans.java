@@ -13,8 +13,8 @@ import javax.persistence.ManyToOne;
 public class OpenLoans {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int OpenLoanID ;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id ;
 	
 	@ManyToOne
 	private Loans loan=null;
@@ -28,12 +28,12 @@ public class OpenLoans {
 		this.loan = loan;
 	}
 
-	public int getOpenLoanID() {
-		return OpenLoanID;
+	public int getId() {
+		return id;
 	}
 
-	public void setOpenLoanID(int openLoanID) {
-		OpenLoanID = openLoanID;
+	public void setId(int openLoanID) {
+		id = openLoanID;
 	}
 
 	public Loans getLoan() {

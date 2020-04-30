@@ -12,8 +12,8 @@ import javax.persistence.ManyToOne;
 public class CloseLoans {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int CloseLoanID ;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id ;
 	
 	private String Status;
 	
@@ -28,12 +28,12 @@ public class CloseLoans {
 		this.loan = loan;
 	}
 
-	public int getCloseLoanID() {
-		return CloseLoanID;
+	public int getId() {
+		return id;
 	}
 
-	public void setCloseLoanID(int closeLoanID) {
-		CloseLoanID = closeLoanID;
+	public void setId(int closeLoanID) {
+		id = closeLoanID;
 	}
 
 	public Loans getLoan() {

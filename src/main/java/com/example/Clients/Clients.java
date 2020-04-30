@@ -19,8 +19,8 @@ public class Clients {
 
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int ClientID ;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int id ;
 	@Convert(converter = StringEncryptDecryptConverter.class)
 
 	public String ClientName ;
@@ -74,12 +74,12 @@ public class Clients {
 	}
 
 
-	public int getClientID() {
-		return ClientID;
+	public int getId() {
+		return id;
 	}
 
-	public void setClientID(int clientID) {
-		ClientID = clientID;
+	public void setId(int clientID) {
+		id = clientID;
 	}
 
 	public String getClientName() {

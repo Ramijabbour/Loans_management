@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.SiteConfiguration;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
 
@@ -47,9 +49,25 @@ public class BracheController {
 	
 	//get All Branches ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/Branches/all")
-	public ModelAndView ShowAllBranches() {
+	public ModelAndView getAllBranches(@Param(value ="index") int index) {
 		ModelAndView mav = new ModelAndView("Branches/AllBranche");
-	    List<Branches> allbranche=brancheService.getAllBranche();
+	    List<Branches> allbranche=brancheService.getAllBranche(index);
+		mav.addObject("allbranches",allbranche);
+		if(allbranche.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav; 
+	}
+	
+	
+	//get Bank Branches ------------------------------------------------------
+	@RequestMapping(method = RequestMethod.GET , value="/BankBranches/{id}")
+	public ModelAndView ShowAllBranches(@PathVariable int id) {
+		ModelAndView mav = new ModelAndView("Branches/AllBranche");
+		Banks bank = bankservice.getBankById(id);
+	    List<Branches> allbranche=brancheService.getBankBranches(bank);
 		mav.addObject("allbranches",allbranche);
 		return mav; 
 	}

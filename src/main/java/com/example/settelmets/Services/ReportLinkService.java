@@ -1,7 +1,10 @@
-package com.example.settelmets;
+package com.example.settelmets.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.settelmets.Models.ReportsLinkModel;
+import com.example.settelmets.Repositories.ReportsLinkRepository;
 
 @Service 
 public class ReportLinkService {
@@ -13,7 +16,7 @@ public class ReportLinkService {
 	
 	public ReportsLinkModel getRportLinkModel(int reportId , int type ) {
 		for(ReportsLinkModel model : this.reportsLinkRepository.findAll()) {
-			if(model.getReportId() == reportId && model.getType() == type ) {
+			if(model.getId() == reportId && model.getType() == type ) {
 				return model ; 
 			}
 		}
@@ -21,7 +24,7 @@ public class ReportLinkService {
 	}
 	
 	public void addReportLinkModel(ReportsLinkModel reportLinkModel , int type  ) {
-		if(this.getRportLinkModel(reportLinkModel.getReportId(), type ) == null ) {
+		if(this.getRportLinkModel(reportLinkModel.getId(), type ) == null ) {
 			reportLinkModel.setType(type);
 			this.reportsLinkRepository.save(reportLinkModel); 
 		}

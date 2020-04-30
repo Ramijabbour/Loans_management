@@ -9,18 +9,21 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.MasterBackUpService;
 import com.example.MasterService;
-import com.example.aspect.DataDuplicationException;
+import com.example.SiteConfiguration;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
 import com.example.security.roles.Roles;
 import com.example.security.userPermissions.UserPermissionsService;
-
 @Service
 public class UserService extends MasterService implements MasterBackUpService {
 
@@ -55,8 +58,14 @@ public class UserService extends MasterService implements MasterBackUpService {
 	
 	
 	//all Users// 
-	public List<User> getAllUsers() {
-		return this.userRepository.findAll();
+	public List<User> getAllUsers(int PageNumber) {
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Page<User> pagedResult = this.userRepo.findAll(paging);
+		if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<User>();
+        }
 	}
 	
 	//find user by id // 
@@ -87,32 +96,62 @@ public class UserService extends MasterService implements MasterBackUpService {
 	
 	//add new user // 
 	@Transactional
-	public void addUser(User user ) {
+	public String addUser(User user ) {
 		user.flatUserDetailes();
 		if(checkUserinforDuplication(user)) {
-			throw new DataDuplicationException();
-		}else {
+			return "User already exist in the system";
+		}
+		else if(!validateUserInfo(user).equalsIgnoreCase("ok")) {
+			return validateUserInfo(user); 
+		}
+		else {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			user.setActive(false);
 			this.userRepository.save(user);
 			super.notificationsService.addNotification("New User need Activation", "/adminstration/users/nonactive", "ADMIN,SUPER");
-			
+			return "ok";
 		}
 		
 	}
 	
+	private String validateUserInfo(User user) {
+		if(user.getUsername().length() < 6 || user.getUsername().length() > 20) {
+			return "userName length should be between 6 and 20 " ; 
+		}
+		if(user.getPassword().length() < 8 || user.getPassword().length() > 20 ) {
+			return "password length should be between 8 and 20" ; 
+		}
+		if(!user.getGender().equalsIgnoreCase("M")) {
+			if(!user.getGender().equalsIgnoreCase("F"))
+			return "unknown gender";
+		}
+		for(char c : user.getUsername().toCharArray()) {
+			if(!Character.isAlphabetic(c) || !Character.isDigit(c)) {
+				return "userName Contains Illegal characters";
+			}
+		}
+		if(validatePassword(user.getPassword())) {
+			return "password contains illegal characters";
+		}
+		return "ok";
+	}
+	
 	//update current user // 
-	public void updateUser(User user) {
-		System.out.println("trace Update User with object : ");
-		user.flatUserDetailes();
+	public String updateUser(User user) {
+		String result = "";
 		try {
 			if(this.userRepository.findById(user.getUserID()) != null) {
-					this.userRepository.save(user); 
+				result = validateUserInfo(user); 
+				if(result.equalsIgnoreCase("ok")){
+				this.userRepository.save(user); 
+				return "ok";
 				}
+			}
 		}catch(Exception e ) {
 			System.out.println("NullPointerException Handled at User Service / Update User -- call for null User ");
 			e.printStackTrace();
 		}
+		return result ;  
 	}
 	
 	//delete user//
@@ -123,7 +162,7 @@ public class UserService extends MasterService implements MasterBackUpService {
 	}
 	
 	
-	//User Duplication Check 
+	//User Info Check 
 	//check if the user is currently in the system // 
 	public boolean checkUserinforDuplication(User user ) {
 		List<User> usersList = this.userRepository.findAll() ; 
@@ -139,6 +178,27 @@ public class UserService extends MasterService implements MasterBackUpService {
 		return false ; 
 	}
 
+	//check if the password contains illegal characters 
+	private boolean validatePassword(String password) {
+		boolean num = false ,
+				lower = false ,
+				upper = false; 
+		for(char c : password.toCharArray()) {
+			if(Character.isLowerCase(c)) {
+				lower = true ; 
+			}else if(Character.isUpperCase(c)) {
+				upper = true ; 
+			}else if(Character.isDigit(c)) {
+				num = true ; 
+			}else {
+				return false ; 
+			}
+		}
+		if(num && lower && upper ) {
+			return true ; 
+		}
+		return false ; 
+	}	
 	
 	//User Access Control Section 
 	

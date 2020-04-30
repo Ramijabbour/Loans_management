@@ -1,4 +1,4 @@
-package com.example.settelmets;
+package com.example.settelmets.Controller;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.MQ.SettledChaque;
-import com.example.settelmets.SettlementService;
+import com.example.settelmets.Models.ReportsLinkModel;
+import com.example.settelmets.Models.SettledChaque;
+import com.example.settelmets.Services.ReportLinkService;
+import com.example.settelmets.Services.ReportsService;
+import com.example.settelmets.Services.SettlementService;
+
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 @RestController

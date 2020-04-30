@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.SiteConfiguration;
 import com.example.BankBranches.Branches;
-import com.example.Banks.Banks;
 
 @Service
 public class OpenLoansService {
@@ -16,9 +20,15 @@ public class OpenLoansService {
 	@Autowired 
 	private OpenLoansRepository openLoanRepository;
 	
-	public List<OpenLoans> GetAllOpenLoan()
+	public List<OpenLoans> GetAllOpenLoan(int PageNumber)
 	{
-		return openLoanRepository.findAll();
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Page<OpenLoans> pagedResult = this.openLoanRepository.findAll(paging);
+		if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<OpenLoans>();
+        }
 	}
 	
 	
@@ -38,7 +48,7 @@ public class OpenLoansService {
 		
 		for(OpenLoans o : allOpenLoans)
 		{
-			if(o.getLoan().getLoanID()==id)
+			if(o.getLoan().getId()==id)
 				return o;
 		}
 		return null;
@@ -48,7 +58,7 @@ public class OpenLoansService {
 	public List<OpenLoans> getBrancheOpenLoans(Branches branche){
 		List<OpenLoans> brancheLoans = new ArrayList<OpenLoans>();
 		for(OpenLoans loan : this.openLoanRepository.findAll()) {
-			if(loan.getLoan().getBranche().getBrancheID() == branche.getBrancheID()) {
+			if(loan.getLoan().getBranche().getId() == branche.getId()) {
 				brancheLoans.add(loan); 
 			}
 		}

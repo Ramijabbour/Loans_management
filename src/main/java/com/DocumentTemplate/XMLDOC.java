@@ -1,7 +1,8 @@
 package com.DocumentTemplate;
 
-import com.example.MQ.SettledChaque;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.example.settelmets.Models.SettledChaque;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,7 +13,7 @@ import java.util.Map;
 public class XMLDOC implements ViewDocTemplate {
     @Override
     public ModelAndView ViewRTGSDOC(SettledChaque settledChaque) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    /*    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
 
         String viewName = "DOC/greeting";
@@ -29,5 +30,7 @@ public class XMLDOC implements ViewDocTemplate {
 
         
         return new ModelAndView(viewName , model);
+        */ 
+    	return null ; 
     }
 }

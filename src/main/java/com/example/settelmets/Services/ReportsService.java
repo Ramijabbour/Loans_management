@@ -1,4 +1,4 @@
-package com.example.settelmets;
+package com.example.settelmets.Services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -6,7 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.DocumentTemplate.DOCXDOC;
 import com.DocumentTemplate.PDFDOC;
 import com.DocumentTemplate.XMLDOC;
-import com.example.MQ.SettledChaque;
+import com.example.settelmets.Models.SettledChaque;
 
 @Service
 public class ReportsService {
