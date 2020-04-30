@@ -1,6 +1,7 @@
 package com.example.Vouchers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -146,6 +147,31 @@ public class VoucherController {
 			return false;
 	}
 	
+	
+	
+	
+	@RequestMapping(method = RequestMethod.GET ,value = "/Vouchers/req/add/{lid}")
+	public ModelAndView addVoucherRequest(@PathVariable int lid) {
+		ModelAndView mav = new ModelAndView("Vouchers/addSequence");
+		mav.addObject("lid", lid);
+		Loans loan = loanService.getOneByID(lid);
+		List<Vouchers> vouchersList = new ArrayList<Vouchers>(); 
+		for(int i = 0 ; i < Integer.valueOf(loan.getNumberOfVoucher());i++) {
+			vouchersList.add(new Vouchers());
+		}
+		mav.addObject("vlist",vouchersList);
+		return mav; 
+	}
+	
+	@RequestMapping(method = RequestMethod.POST ,value = "/Vouchers/add/sequence/{lid}")
+	public ModelAndView addVoucherSequence(@ModelAttribute List<Vouchers> vouchersList ,@PathVariable int lid) {
+		
+		for(Vouchers voucher : vouchersList ) {
+			System.out.println("voucher recieved with ammount  : "+voucher.getVoucherAmmount());
+		}
+		
+		return null ; 
+	}
 	
 	
 	
