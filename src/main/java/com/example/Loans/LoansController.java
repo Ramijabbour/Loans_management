@@ -78,6 +78,7 @@ public class LoansController {
 		return mav; 
 	}
 	// -------------------------------------------------------------------
+
 	//get All Close Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Close")
 	public ModelAndView ShowAllCloseLoans(@Param(value ="index") int index) { 
@@ -190,7 +191,7 @@ public class LoansController {
 		List<Vouchers> loanVouchers=voucherService.getVoucherForThisLoan(id);
 		
 		
-		response.sendRedirect("/Loans/all/ReSchedule");
+		response.sendRedirect("/Loans/all/ReSchedule?index=0");
 	}
 	//Allocation small -------------------------------------------------------------------
 	
@@ -202,9 +203,6 @@ public class LoansController {
 	}
 	// -------------------------------------------------------------------
 
-	
-	
-	
 	//display loan ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/Loan/{id}")
 	public ModelAndView ShowLoan(@PathVariable int id) { 
@@ -244,9 +242,9 @@ public class LoansController {
 		System.out.println("posted to /Loans/update/id ");
 		loansService.updateLoan(loan);
 		if(openLoanService.getOpenLoanFromLoan(loan.getId())!=null)
-			response.sendRedirect("/Loans/all/Open");
+			response.sendRedirect("/Loans/all/Open?index=0");
 		else 
-			response.sendRedirect("/Loans/all/Close");
+			response.sendRedirect("/Loans/all/Close?index=0");
 	}
 	
 
