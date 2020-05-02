@@ -86,13 +86,13 @@
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">السلفة </label>
-                    <input type="number" name="LoanId" class="form-control" placeholder="Enter Total Ammount" th:field="*{Loan.LoanID}">
+                    <input type="number" name="LoanId" class="form-control" placeholder="Enter Total Ammount" th:field="*{Loan.id}">
                   </div>
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">المتعامل</label><br>
                     <select th:field="*{client}">
-                      <option th:each="client : ${allclient}" th:value="${client.ClientID}" th:text="${client.ClientName}"></option>
+                      <option th:each="client : ${allclient}" th:value="${client.id}" th:text="${client.ClientName}"></option>
                     </select>
                   </div>
 

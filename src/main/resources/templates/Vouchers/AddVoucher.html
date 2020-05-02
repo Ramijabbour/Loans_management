@@ -47,7 +47,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="#"  th:action="@{/Loan/AddVoucher/}+${{myloan.LoanID}}"  method="post" th:object="${voucher}">
+              <form action="#"  th:action="@{/Loan/AddVoucher/}+${{myloan.id}}"  method="post" th:object="${voucher}">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">تاريخ السند </label>
@@ -75,7 +75,7 @@
                   <div class="form-group">
                     <label for="exampleInputPassword1">المتعامل</label><br>
                     <select th:field="*{client}">
-                      <option th:each="client : ${allclient}" th:value="${client.ClientID}" th:text="${client.ClientName}"></option>
+                      <option th:each="client : ${allclient}" th:value="${client.id}" th:text="${client.ClientName}"></option>
                     </select>
                   </div>
 
@@ -85,14 +85,7 @@
                     <input type="number" name="FundingRatio" class="form-control" placeholder="ادخل نسبة التمويل" th:field="*{FundingRatio}">
                   </div>
                   
-                 <!--   <div class="form-group" hidden:true>
-                    <label for="exampleInputPassword1" hidden=true>Loan ID</label><br>
-                    <select th:field="*{Loan}" hidden=true>
-                      <option th:value="${myloan.LoanID}" th:text="${myloan.LoanID}" hidden=true></option>	  
-                    </select>
-                  </div> 
-				-->
- 
+       
                 <!-- /.card-body -->
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">تأكيد</button>
