@@ -44,6 +44,24 @@ public class Vouchers {
 	private Loans Loan =null ;
 	
 	
+	public Vouchers() {
+		Status= "";
+		FundingRatio = "";
+		NetAmmount = "";
+		VoucherDate = "";
+		VoucherAmmount = "" ;
+		Total = "";
+	}
+	
+	public void initWithZeroValues() {
+		Status= "NA";
+		FundingRatio = "NA";
+		NetAmmount = "NA";
+		VoucherDate = "NA";
+		VoucherAmmount = "NA" ;
+		Total = "NA";
+	}
+	
 	public int getVoucherID() {
 		return VoucherID;
 	}
@@ -124,7 +142,5 @@ public class Vouchers {
 	public void setLoan(Loans loan) {
 		Loan = loan;
 	}
-
-	
 	
 }

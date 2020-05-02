@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import com.example.OpenLoans.OpenLoans;
 import com.example.OpenLoans.OpenLoansService;
 import com.example.ReScheduleLoans.ReScheduleLoans;
 import com.example.ReScheduleLoans.ReScheduleLoansService;
+import com.example.Vouchers.VoucherController;
 import com.example.Vouchers.VoucherService;
 import com.example.Vouchers.Vouchers;
 
@@ -58,6 +60,9 @@ public class LoansController {
 	
 	@Autowired
 	VoucherService voucherService;
+	
+	@Autowired 
+	VoucherController voucherController ; 
 	
 	//get All Open Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open")
@@ -120,8 +125,9 @@ public class LoansController {
 		return mav; 
 	}
 	
+	@Transactional
 	@RequestMapping(method = RequestMethod.POST , value="/Loans/addLoan")
-	public void addNewLoan(@ModelAttribute Loans loan,HttpServletResponse response) throws IOException {
+	public ModelAndView addNewLoan(@ModelAttribute Loans loan,HttpServletResponse response) throws IOException {
 	
 		Banks bank=loan.getBranche().getBank();
 		
@@ -135,13 +141,16 @@ public class LoansController {
 			loansService.addLoan(loan);	
 		    OpenLoans ol =new OpenLoans(loan);
 		    openLoanService.addOpenLoan(ol);
-			response.sendRedirect("/Loans/all/Open");
+		    return this.voucherController.addVoucherSequence(loan.getId(),Integer.valueOf(loan.getNumberOfVoucher()));
+			//response.sendRedirect("/Loans/all/Open");
 		}
 			
 		
 		else {
 			System.out.println("NullPointerException Handled at loan Service / Add loan -- call for low allocation");
-			response.sendRedirect("/Loans/addLoan/Error");
+			//response.sendRedirect("/Loans/addLoan/Error");
+			ModelAndView mav = new ModelAndView("Loans/Error");
+			return mav; 
 		}
 	}
 	//ReSchedule Loan-----------------------------------------------------------------------------------------
