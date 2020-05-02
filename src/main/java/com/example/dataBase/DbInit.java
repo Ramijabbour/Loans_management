@@ -95,7 +95,7 @@ public class DbInit implements CommandLineRunner{
 		//this.userRepository.save(tester);
 		//Roles testRole = new Roles("TEST","test1,test2,test3");
 		//this.rolesRepo.save(testRole);
-		/*
+		
 		LoansType l = new LoansType("مرخص");
 		this.TypeRepo.save(l);
 		LoansType l1 = new LoansType("معفى");
@@ -112,7 +112,7 @@ public class DbInit implements CommandLineRunner{
 		FinanceType f2=new FinanceType("قصير","80");
 		 
 		this.financeRepo.save(f2);
-		*/
+		
 
 		
 		
