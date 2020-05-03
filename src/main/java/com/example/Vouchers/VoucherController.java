@@ -1,8 +1,6 @@
 package com.example.Vouchers;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.MasterService;
 import com.example.Clients.ClientService;
 import com.example.Clients.Clients;
 import com.example.Loans.LoanService;
@@ -169,10 +166,33 @@ public class VoucherController {
 	
 	@RequestMapping(method = RequestMethod.POST, value ="/Vouchers/add/sequence/{loanid}/{sequenceNumber}")
 	public ModelAndView addVoucherSequenceResponse(@PathVariable int loanid , @PathVariable int sequenceNumber,@ModelAttribute Vouchers voucher) {
-		//	step #0  check voucher info 
-		//voucher.checkinfo(); // date / values / total loan value / below zero 
-		//step #1 add the voucher 
+		
+		/* step #0 check if total loan value is bigger than total vouchers value  
+		 * conflict resolver will interrupt in that case
+		 * we redirect to resolver view and it should return 
+		 * a choice to send to conflict resolver method */ 
+		
 		Loans loan=loanService.getOneByID(loanid);
+		if(!this.voucherService.checkLoanVouchersTotalValue(loan, this.voucherService.getVouchersValueForLoan(loanid))) {
+			return this.interruptVoucherAddingSequence(sequenceNumber, loanid, loan);
+		}
+		
+		
+		/*step #01 if the total vouchers value is less than the loan value we proceed 
+		 * check if the voucher info are valid 
+		*/
+		String dataValidationResult =this.voucherService.validateVoucherInfo(voucher) ;  
+		if(!dataValidationResult.equalsIgnoreCase("ok")){
+			//return error view with reason 
+			//then return to the same voucher adding sequece  
+			ModelAndView mav = new ModelAndView("voucherDataError");
+			mav.addObject("msg", dataValidationResult);
+			mav.addObject("loanid",loanid);
+			mav.addObject("seq",sequenceNumber);
+			return mav ; 
+		}
+		
+		//step #1 add the voucher 
 		voucher.setStatus("Open");
 		voucher.setLoan(loan);
 		voucherService.addVoucher(voucher);
@@ -191,121 +211,68 @@ public class VoucherController {
 		}
 	}
 	
-	
 	//conflict resolver methods 
-	
-	private ModelAndView conflictResolver(int choice, int loanId,int numOfRemaining) {
+		
+	@RequestMapping(method = RequestMethod.GET , value = "/Vouchers/add/seq/conf/{loanId}/{numOfRemaining}/{choice}")
+	public ModelAndView conflictResolver(@PathVariable int choice,@PathVariable int loanId,@PathVariable int numOfRemaining) {
 		switch(choice) {
+			//case 0 re-enter the voucher
+			case 0 : {
+			return addVoucherSequence(loanId,numOfRemaining);
+			}	
 			//case 1 : remove everything 
 			case 1 : {
-				removeLoanPermenant(loanId); 
+				this.voucherService.removeLoanPermenant(loanId); 
 				//redirect to all loans 
 				return this.loansController.ShowAllOpenLoans(0);
 			}
 			//case 2 : remove vouchers only and re-enter them 
 			case 2 : {
-				removeVouchersOnly(loanId);
+				this.voucherService.removeVouchersOnly(loanId);
 				return addVoucherSequence(loanId,Integer.valueOf(loanService.getOneByID(loanId).getNumberOfVoucher())); 
 			}
 			//case 3 : fill the remaining vouchers with zero values 
 			case 3 : {
-				fillVouchersZeroValues(loanId,numOfRemaining);
+				this.voucherService.fillVouchersZeroValues(loanId,numOfRemaining);
 				return this.allVouchers(loanId);
 			}
-			default : return null;
-		}
-	}
-	 
-	//remove the loan and its vouchers 
-	private void removeLoanPermenant(int loanId) {
-		List<Vouchers> loanVouchers = voucherService.getVoucherForThisLoan(loanId);
-		for(Vouchers voucher : loanVouchers) {
-			voucherService.deleteVoucher(voucher.getVoucherID());
-		}
-		loanService.DeleteLoan(loanId);
-	}
-	
-	//remove the loan vouchers only 
-	private void removeVouchersOnly(int loanId) {
-		List<Vouchers> loanVouchers = voucherService.getVoucherForThisLoan(loanId);
-		for(Vouchers voucher : loanVouchers) {
-			voucherService.deleteVoucher(voucher.getVoucherID());
+			default : return new ModelAndView("Errors/VoucherPathError");
 		}
 	}
 	
-	//create new voucher Objects and fill them with zero values and link them to the loan object 
-	private void fillVouchersZeroValues(int loanId,int numOfRemainingVouchers) {
-		for(int i  = 0 ; i < numOfRemainingVouchers ; i++) {
-		Vouchers voucher = new Vouchers();
-		voucher.setLoan(loanService.getOneByID(loanId));
-		voucher.initWithZeroValues(); 
-		voucherService.addVoucher(voucher);
-		}
+	private ModelAndView interruptVoucherAddingSequence(int sequenceNumber, int loanid, Loans loan) {
+		ModelAndView mav = new ModelAndView("Vouchers/conflictResolver");
+		mav.addObject("loanid",loanid);
+		mav.addObject("numofremain",sequenceNumber );
+		return mav ; 
 	}
-
+	
 	//end of conflict resolvers
 	
 	//data check section // 
-	private String validateVoucherInfo(Vouchers voucher) {
-		if(!checkDateValidation(voucher.getVoucherDate())){
-			return "voucher date should be bigger than the current date";
-		}
-		if(voucher.getClient() == null ) {
-			return "client is empty ";
-		}
-		if(voucher.getFundingRatio().equalsIgnoreCase("") || voucher.getFundingRatio().equalsIgnoreCase(" ")) {
-			return "funcing ratio is not valid";
-		}
-		if(!checkFloatOrDoubleData(voucher.getFundingRatio())) {
-			return "funcing ratio is not valid";
-		}
-		if(voucher.getLoan() == null ) {
-			return "loan not found";
-		}
-		if(!checkIntegerData(voucher.getNetAmmount())) {
-			return "net amount should be an integer value";
-		}
-		//continue from here ---------------------------------- data check not finished 
-		return "ok";
-	}
 	
-	
-	
-	//this method checks for the float or double values // the point character is allowed once only (example : 1.5)
-	public boolean checkFloatOrDoubleData(String data) {
-		int pointCounter = 0 ; 
-		for(char c : data.toCharArray()) {
-			if(!Character.isDigit(c) || c != '.') {
-				return false ; 
-			}
-			if( c == '.' && pointCounter !=  0) {
-				return false ; 
-			}
-			if(c == '.' && pointCounter ==  0) {
-				pointCounter++ ; 
-			}
+	@RequestMapping(method = RequestMethod.GET ,value="/Vouchers/add/data/err/{loanid}/{sequence}/{choice}")
+	public ModelAndView handleVoucherDataErr(@PathVariable int loanid,@PathVariable int sequence,@PathVariable int choice)
+	{
+		switch(choice) {
+		//re-enter the same voucher 
+		case 0 : {
+			return this.addVoucherSequence(loanid, sequence);
 		}
-		return true ; 
-	}
-	
-	//only allow integer values
-	public boolean checkIntegerData(String data) {
-		for(char c : data.toCharArray()) {
-			if(!Character.isDigit(c)) {
-				return false ; 
-			}
+		//re-enter all vouchers 
+		case 1 : {
+			this.voucherService.removeVouchersOnly(loanid);
+			return addVoucherSequence(loanid,Integer.valueOf(loanService.getOneByID(loanid).getNumberOfVoucher()));
 		}
-		return true ; 
-	}
-	
-	//check if the entered date is after the current date 
-	public boolean checkDateValidation(String date) {
-		LocalDateTime CurrentDate = MasterService.getCurrDateTime();
-		LocalDateTime voucherDate = LocalDateTime.parse(date);
-		if(CurrentDate.isAfter(voucherDate)) {
-			return false ; 
+		//revoke the loan and vouchers
+		case 2 : {
+			this.voucherService.removeLoanPermenant(loanid); 
+			//redirect to all loans 
+			return this.loansController.ShowAllOpenLoans(0);
+		}	
+		
+		default : return new ModelAndView("Errors/VoucherPathError");
 		}
-		return true ; 
 	}
 	
 	//end of data check section // 
