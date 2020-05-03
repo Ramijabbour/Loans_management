@@ -142,6 +142,7 @@ public class VoucherService {
 		}
 	}
 	
+	/*
 	//create new voucher Objects and fill them with zero values and link them to the loan object 
 	public void fillVouchersZeroValues(int loanId,int numOfRemainingVouchers) {
 		for(int i  = 0 ; i < numOfRemainingVouchers ; i++) {
@@ -151,7 +152,8 @@ public class VoucherService {
 		this.addVoucher(voucher);
 		}
 	}
-
+	*/
+	
 	public boolean checkLoanVouchersTotalValue(Loans loan , int totalVouchersValue) {
 		if(Integer.valueOf(loan.getNetAmmount()) <= totalVouchersValue )
 			return false ; 

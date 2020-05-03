@@ -173,7 +173,7 @@ public class VoucherController {
 		 * a choice to send to conflict resolver method */ 
 		
 		Loans loan=loanService.getOneByID(loanid);
-		if(!this.voucherService.checkLoanVouchersTotalValue(loan, this.voucherService.getVouchersValueForLoan(loanid))) {
+		if(!this.voucherService.checkLoanVouchersTotalValue(loan, this.voucherService.getVouchersValueForLoan(loanid) + Integer.valueOf(voucher.getNetAmmount()))) {
 			return this.interruptVoucherAddingSequence(sequenceNumber, loanid, loan);
 		}
 		voucher.setLoan(loan);
@@ -231,11 +231,13 @@ public class VoucherController {
 				this.voucherService.removeVouchersOnly(loanId);
 				return addVoucherSequence(loanId,Integer.valueOf(loanService.getOneByID(loanId).getNumberOfVoucher())); 
 			}
-			//case 3 : fill the remaining vouchers with zero values 
+			
+			//this case is commented because the new voucher may have bigger value than the loan itself so we cannot accept it 
+			/*//case 3 : fill the remaining vouchers with zero values 
 			case 3 : {
 				this.voucherService.fillVouchersZeroValues(loanId,numOfRemaining);
 				return this.allVouchers(loanId);
-			}
+			}*/
 			default : return new ModelAndView("Errors/VoucherPathError");
 		}
 	}
