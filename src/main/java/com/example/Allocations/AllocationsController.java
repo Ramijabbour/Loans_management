@@ -41,9 +41,10 @@ public class AllocationsController {
 			  mav.addObject("allbank",allbank);
 			return mav; 
 		}
-		  
 		
-		@RequestMapping(method = RequestMethod.POST , value="/Allocation/addAllocation")
+		
+		
+	/*	@RequestMapping(method = RequestMethod.POST , value="/Allocation/addAllocation")
 		public void addNewAllocation(@ModelAttribute Allocations Allocation,HttpServletResponse response) throws IOException {
 			System.out.println("posted to /Allocation/addAllocation ");
 			Banks bank=bankservice.getBankByID(Allocation.getBank().getBankID());
@@ -51,7 +52,38 @@ public class AllocationsController {
 			System.out.println("Done");
 			allocationService.addAllocation(Allocation);
 			response.sendRedirect("/Banks/all");
+		}*/
+		
+		
+		@RequestMapping(method = RequestMethod.POST , value="/Allocation/addAllocation")
+		public ModelAndView ConfirmeaddNewAllocation(@ModelAttribute Allocations Allocation,HttpServletResponse response) throws IOException {
+			System.out.println("posted to /Allocation/addAllocation ");
+			//Banks bank=bankservice.getBankByID(Allocation.getBank().getBankID());
+			//bank.setFinancialAllocations(Allocation.getAllocationAmmount());
+			//System.out.println("Done");
+			//allocationService.addAllocation(Allocation);
+			ModelAndView mav = new ModelAndView("Banks/ConfirmeAllocation");
+			mav.addObject("allocation", Allocation);
+			Banks bank=Allocation.getBank();
+			  mav.addObject("bank",bank);
+			return mav;
+			//response.sendRedirect("/Allocation/ConfirmeAllocation");
 		}
+		
+		
+
+		@RequestMapping(method = RequestMethod.POST , value="/Allocation/ConfirmeAllocation")
+		public void addNewAllocation(@ModelAttribute Allocations Allocation,HttpServletResponse response) throws IOException {
+			System.out.println("posted to /Allocation/addAllocation ");
+			Banks bank=bankservice.getBankByID(Allocation.getBank().getBankID());
+			bank.setFinancialAllocations(Allocation.getAllocationAmmount());
+			System.out.println("Done");
+			allocationService.addAllocation(Allocation);
+			response.sendRedirect("/Banks/all");		}
+		
+		
+	
+		
 		// -----------------------------------------------------------------------   
 
 		//Get All Allocation -----------------------------------------------------

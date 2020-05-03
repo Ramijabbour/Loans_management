@@ -79,6 +79,43 @@ public class LoansController {
 	}
 	// -------------------------------------------------------------------
 
+	
+	//get All NotConfirmed Open Loans ------------------------------------------------------
+	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open/NotConfirmed")
+	public ModelAndView ShowAllNotConfirmedOpenLoans(@Param(value ="index") int index) { 
+		ModelAndView mav = new ModelAndView("Loans/AllOpenLoans");
+		List<OpenLoans> allOpenloans=openLoanService.GetNotConfirmedLoans();
+		mav.addObject("allloans",allOpenloans);
+		boolean check=true;
+		mav.addObject("check", check);
+		/*if(allOpenloans.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}*/
+		return mav; 
+	}
+	// -------------------------------------------------------------------
+
+	
+	//get All Confirmed Open Loans ------------------------------------------------------
+	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open/Confirmed")
+	public ModelAndView ShowAllConfirmedOpenLoans(@Param(value ="index") int index) { 
+		ModelAndView mav = new ModelAndView("Loans/AllOpenLoans");
+		List<OpenLoans> allOpenloans=openLoanService.GetConfirmedLoans();
+		mav.addObject("allloans",allOpenloans);
+		/*if(allOpenloans.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}*/
+		return mav; 
+	}
+	// -------------------------------------------------------------------
+
+	
+	
+	
 	//get All Close Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Close")
 	public ModelAndView ShowAllCloseLoans(@Param(value ="index") int index) { 
@@ -139,10 +176,11 @@ public class LoansController {
 		if(NewAllocation>=0) {
 			System.out.println("posted to /Loans/addLoan "); 
 			bank.setFinancialAllocations(Integer.toString(NewAllocation));
+			loan.setStatus("NotConfirmed");
 			loansService.addLoan(loan);	
 		    OpenLoans ol =new OpenLoans(loan);
 		    openLoanService.addOpenLoan(ol);
-		    return this.voucherController.addVoucherSequence(loan.getId(),Integer.valueOf(loan.getNumberOfVoucher()));
+		    return this.voucherController.addVoucherSequence(loan.getId(),Integer.valueOf(loan.getNumberOfVoucher())-1);
 			//response.sendRedirect("/Loans/all/Open");
 		}
 			
@@ -279,6 +317,19 @@ public class LoansController {
 	}
 	
 
+	
+	
+	
+	
+	
+	@RequestMapping(method = RequestMethod.GET , value="/Loan/Confirme/{id}")
+	public void ConfirmLoan(@PathVariable int id, HttpServletResponse response) throws IOException
+	{
+		Loans Loan=loansService.getOneByID(id);
+		Loan.setStatus("Confirmed");
+		loansService.updateLoan(Loan);
+		response.sendRedirect("/Loans/all/Open/Confirmed?index=0");
+	}
 
 	
 }

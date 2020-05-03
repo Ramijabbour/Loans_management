@@ -163,6 +163,7 @@ public class VoucherController {
 		mav.addObject("myloan", myloan);
 		mav.addObject("id", loanId);
 		mav.addObject("seq", sequence);
+		
 		return mav;	
 	}	
 	
