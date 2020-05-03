@@ -176,7 +176,7 @@ public class VoucherController {
 		if(!this.voucherService.checkLoanVouchersTotalValue(loan, this.voucherService.getVouchersValueForLoan(loanid))) {
 			return this.interruptVoucherAddingSequence(sequenceNumber, loanid, loan);
 		}
-		
+		voucher.setLoan(loan);
 		
 		/*step #01 if the total vouchers value is less than the loan value we proceed 
 		 * check if the voucher info are valid 
@@ -185,7 +185,7 @@ public class VoucherController {
 		if(!dataValidationResult.equalsIgnoreCase("ok")){
 			//return error view with reason 
 			//then return to the same voucher adding sequece  
-			ModelAndView mav = new ModelAndView("voucherDataError");
+			ModelAndView mav = new ModelAndView("Errors/voucherDataError");
 			mav.addObject("msg", dataValidationResult);
 			mav.addObject("loanid",loanid);
 			mav.addObject("seq",sequenceNumber);
@@ -194,7 +194,7 @@ public class VoucherController {
 		
 		//step #1 add the voucher 
 		voucher.setStatus("Open");
-		voucher.setLoan(loan);
+		
 		voucherService.addVoucher(voucher);
 		//step #2 check the remaining voucher to add 
 		//stop condition -- all vouchers added 

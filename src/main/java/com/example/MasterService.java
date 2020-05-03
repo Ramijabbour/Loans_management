@@ -1,6 +1,7 @@
 package com.example;
 
 
+import java.time.LocalDate;
 /*
 import java.util.Base64;
 import java.lang.reflect.Field;
@@ -61,6 +62,13 @@ public class MasterService {
 	public static LocalDateTime getCurrDateTime() {
 		   //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 		   LocalDateTime now = LocalDateTime.now();  
+		   //System.out.println("current request time :"+dtf.format(now));
+		   return now ; 
+	}
+	
+	public static LocalDate getCurrDate() {
+		   //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		   LocalDate now = LocalDate.now();  
 		   //System.out.println("current request time :"+dtf.format(now));
 		   return now ; 
 	}

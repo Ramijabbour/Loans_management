@@ -126,11 +126,12 @@ public class UserService extends MasterService implements MasterBackUpService {
 			return "unknown gender";
 		}
 		for(char c : user.getUsername().toCharArray()) {
-			if(!Character.isAlphabetic(c) || !Character.isDigit(c)) {
+			if(!Character.isAlphabetic(c) ) {
+				if(!Character.isDigit(c))
 				return "userName Contains Illegal characters";
 			}
 		}
-		if(validatePassword(user.getPassword())) {
+		if(!validatePassword(user.getPassword())) {
 			return "password contains illegal characters";
 		}
 		return "ok";

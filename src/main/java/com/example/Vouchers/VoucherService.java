@@ -1,5 +1,6 @@
 package com.example.Vouchers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -170,7 +171,7 @@ public class VoucherService {
 			return "client is empty ";
 		}
 		if(voucher.getFundingRatio().equalsIgnoreCase("") || voucher.getFundingRatio().equalsIgnoreCase(" ")) {
-			return "funcing ratio is not valid";
+			return "funding ratio is not valid";
 		}
 		if(!checkFloatOrDoubleData(voucher.getFundingRatio())) {
 			return "funcing ratio is not valid";
@@ -191,8 +192,10 @@ public class VoucherService {
 	public boolean checkFloatOrDoubleData(String data) {
 		int pointCounter = 0 ; 
 		for(char c : data.toCharArray()) {
-			if(!Character.isDigit(c) || c != '.') {
-				return false ; 
+			if(!Character.isDigit(c)) {
+				if(c != '.') {
+				return false ;
+				} 
 			}
 			if( c == '.' && pointCounter !=  0) {
 				return false ; 
@@ -216,8 +219,8 @@ public class VoucherService {
 	
 	//check if the entered date is after the current date 
 	public boolean checkDateValidation(String date) {
-		LocalDateTime CurrentDate = MasterService.getCurrDateTime();
-		LocalDateTime voucherDate = LocalDateTime.parse(date);
+		LocalDate CurrentDate = MasterService.getCurrDate();
+		LocalDate voucherDate = LocalDate.parse(date);
 		if(CurrentDate.isAfter(voucherDate)) {
 			return false ; 
 		}
