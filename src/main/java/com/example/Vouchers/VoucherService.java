@@ -1,7 +1,6 @@
 package com.example.Vouchers;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,7 +154,7 @@ public class VoucherService {
 	*/
 	
 	public boolean checkLoanVouchersTotalValue(Loans loan , int totalVouchersValue) {
-		if(Integer.valueOf(loan.getNetAmmount()) <= totalVouchersValue )
+		if(Integer.valueOf(loan.getNetAmmount()) < totalVouchersValue )
 			return false ; 
 		return true ; 
 	}
