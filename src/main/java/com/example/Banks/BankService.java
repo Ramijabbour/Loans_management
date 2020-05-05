@@ -1,10 +1,14 @@
 package com.example.Banks;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.Allocations.AllocationsService;
 
 
 @Service
@@ -13,6 +17,8 @@ public class BankService {
 	@Autowired
 	private BanksRepository bankRepository;
 	
+	@Autowired
+	private AllocationsService allocationService;
 	
 	public List<Banks> GetAllBanks() {
 		List<Banks> banks=bankRepository.findAll();
@@ -80,5 +86,23 @@ public class BankService {
 		}
 		return null ; 
 	}
+	
+	
+	
+	public List<Banks> GetBankForAllocation() throws ParseException
+	{
+		List<Banks> allBanks=bankRepository.findAll();
+		List<Banks> availableBanks = new ArrayList<Banks>();
+		
+		for(Banks bank : allBanks) {
+			if(allocationService.CheckDateMoreThanYear(bank))
+			{	System.out.println("step 1 ");
+				availableBanks.add(bank);
+			}	}
+		return availableBanks;		
+		
+	}
+	
+	
 	
 }

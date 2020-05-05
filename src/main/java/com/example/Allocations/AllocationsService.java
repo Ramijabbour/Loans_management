@@ -7,11 +7,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.MasterService;
 import com.example.SiteConfiguration;
+
 import com.example.Banks.Banks;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class AllocationsService {
@@ -69,6 +78,37 @@ public class AllocationsService {
 		return null ; 
 	 
 	}
+	
+	
+	
+	
+	public boolean CheckDateMoreThanYear(Banks bank ) throws ParseException 
+	{
+		List<Allocations> allAllocation =getBankAllocations(bank);
+		//System.out.println("all allocation for bank is "+allAllocation.size());
+		if(allAllocation.isEmpty()) {
+			//System.out.println("from allocation 1");
+			return true;
+			}
+		Allocations lastAllocation =allAllocation.get(allAllocation.size()-1);
+		//System.out.println("last allocation for "+bank.getBankName()+" "+lastAllocation.getAllocationDate());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM");	 
+		//System.out.println("form in table " +lastAllocation.getAllocationDate());
+	    Date firstDate = sdf.parse(lastAllocation.getAllocationDate());
+	//	System.out.println("first date "+ firstDate);
+		
+		Date date = new Date();
+		//System.out.println("second date "+sdf.format(date));
+	   long diffInMillies = Math.abs(date.getTime() - firstDate.getTime());
+	   long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	//   System.out.println("diff is "+diff);
+	   if(diff>=366)
+		    return true;
+	   
+	   
+	   return false ;
+}	
 
 	
 	public List<Allocations> getBankAllocations(Banks bank){
@@ -81,4 +121,7 @@ public class AllocationsService {
 		return bankAllocations ; 
 	}
 
+	
+	
+	
 }
