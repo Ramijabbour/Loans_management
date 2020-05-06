@@ -83,7 +83,8 @@ public class AllocationsController {
 		public void addNewAllocation(@ModelAttribute Allocations Allocation,HttpServletResponse response) throws IOException {
 			System.out.println("posted to /Allocation/addAllocation ");
 			Banks bank=bankservice.getBankByID(Allocation.getBank().getBankID());
-			bank.setFinancialAllocations(Allocation.getAllocationAmmount());
+			int newallocation = Integer.parseInt(Allocation.getAllocationAmmount())+Integer.parseInt(bank.getFinancialAllocations());
+			bank.setFinancialAllocations(Integer.toString(newallocation));
 			System.out.println("Done");
 			allocationService.addAllocation(Allocation);
 			response.sendRedirect("/Banks/all");		}
