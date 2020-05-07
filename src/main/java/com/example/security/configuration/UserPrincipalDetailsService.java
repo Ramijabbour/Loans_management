@@ -24,7 +24,7 @@ public class UserPrincipalDetailsService extends MasterService implements UserDe
 		if(user == null ) {
 			user = new User();
 		}else {
-			super.activityService.addActivityLog(user.getUserID(),user.getUsername() , "Login");
+			super.activityService.addActivityLog(user.getId(),user.getUsername() , "Login");
 		}
 		UserPrincipal userPrincipal = new UserPrincipal(user) ;  
 		

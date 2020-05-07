@@ -38,7 +38,7 @@
               	
               	<div class="form-group">
                    <label for="exampleInputPassword1">المعرف</label>
-                   <input type="text" name="UserID" class="form-control"  th:field="*{user.id}" readonly>
+                   <input type="text" name="id" class="form-control"  th:field="*{user.id}" readonly>
                   </div>
               	
               	<div class="form-group">
@@ -75,11 +75,11 @@
                         <td colspan="2"> المستخدم لا يملك صلاحيات  </td>
                     </tr>
                     <tr th:each="userrole : ${userRoles}">
-                       <td><span th:text="${userrole.RoleID}"> RoleID </span></td>
+                       <td><span th:text="${userrole.id}"> id </span></td>
                         <td><span th:text="${userrole.RoleName}"> RoleName </span></td>
                     	<td>
-                          <form action="#" th:action="@{/admistration/users/user/roles/revoke/}+ ${{user.UserID}} + @{/} + ${{userrole.RoleID}}" method="post">
-                              <button th:id="'table_entry_childs_button_'+ ${{user.UserID}} + ${userrole.RoleID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                          <form action="#" th:action="@{/admistration/users/user/roles/revoke/}+ ${{user.id}} + @{/} + ${{userrole.id}}" method="post">
+                              <button th:id="'table_entry_childs_button_'+ ${{user.id}} + ${userrole.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                                   <i>سحب الدور</i>
                               </button>
                           </form>
@@ -88,8 +88,8 @@
                     </tr>
                 </tbody>
             </table>
-             <form action="#" th:action="@{/admistration/users/user/roles/grant/} + ${{user.UserID}}" method="get">
-                    <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+             <form action="#" th:action="@{/admistration/users/user/roles/grant/} + ${{user.id}}" method="get">
+                    <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                     	<i>إضافة دور</i>
                      </button>
               </form>
@@ -110,11 +110,11 @@
                         <td colspan="2"> المسخدم لا يملك صلاحيات  </td>
                     </tr>
                     <tr th:each="userpermission : ${userPermissions}">
-                       <td><span th:text="${userpermission.PermissionID}"> PermissionID </span></td>
+                       <td><span th:text="${userpermission.id}"> id </span></td>
                         <td><span th:text="${userpermission.PermissionName}"> PermissionName </span></td>
                     	<td>
-                          <form action="#" th:action="@{/admistration/users/user/permissions/revoke/}+ ${{user.UserID}} + @{/} + ${{userpermission.PermissionID}}" method="post">
-                              <button th:id="'table_entry_childs_button_'+ ${{user.UserID}} + ${userpermission.PermissionID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                          <form action="#" th:action="@{/admistration/users/user/permissions/revoke/}+ ${{user.id}} + @{/} + ${{userpermission.id}}" method="post">
+                              <button th:id="'table_entry_childs_button_'+ ${{user.id}} + ${userpermission.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                                   <i>سحب الصلاحية</i>
                               </button>
                           </form>
@@ -122,14 +122,14 @@
                     </tr>
                 </tbody>
             </table>
-             <form action="#" th:action="@{/admistration/users/user/permissions/grant/} + ${{user.UserID}}" method="get">
-                    <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+             <form action="#" th:action="@{/admistration/users/user/permissions/grant/} + ${{user.id}}" method="get">
+                    <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                     	<i>إضافة صلاحية</i>
                      </button>
               </form>
               <p></p>
-              <form action="#" th:action="@{/adminstration/logs/userlogs/} + ${{user.UserID}}" method="get">
-                    <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+              <form action="#" th:action="@{/adminstration/logs/userlogs/} + ${{user.id}}" method="get">
+                    <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                     	<i>عرض سجل المستخدم</i>
                      </button>
               </form>

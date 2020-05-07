@@ -6,6 +6,10 @@ import java.lang.reflect.Method;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +42,9 @@ public class UserService extends MasterService implements MasterBackUpService {
 	
 	private PasswordEncoder passwordEncoder ;
 	
+	@PersistenceContext
+	private EntityManager entityManager;
+	
 	//Service permissions Injection 
 	public UserService(PasswordEncoder passwordEncoder ) {
 		System.out.println("user service init ------------------------>>>>>>>>");
@@ -56,6 +63,9 @@ public class UserService extends MasterService implements MasterBackUpService {
 	}
 	//
 	
+	public List<User> getAllActuator(){
+		return this.userRepo.findAll() ; 
+	}
 	
 	//all Users// 
 	public List<User> getAllUsers(int PageNumber) {
@@ -69,6 +79,7 @@ public class UserService extends MasterService implements MasterBackUpService {
 	}
 	
 	//find user by id // 
+	@Transactional
 	public User getUserByID(int id ) {
 		List<User> allUsers = this.userRepository.findAll() ; 
 		if(allUsers.isEmpty()) {
@@ -76,7 +87,7 @@ public class UserService extends MasterService implements MasterBackUpService {
 			return null ;  
 		}
 		for(User user : allUsers) {
-			if(user.getUserID() == id ){
+			if(user.getId() == id ){
 				return user  ; 
 			}
 		}
@@ -138,10 +149,11 @@ public class UserService extends MasterService implements MasterBackUpService {
 	}
 	
 	//update current user // 
+	@Transactional
 	public String updateUser(User user) {
 		String result = "";
 		try {
-			if(this.userRepository.findById(user.getUserID()) != null) {
+			if(this.userRepository.findById(user.getId()) != null) {
 				result = validateUserInfo(user); 
 				if(result.equalsIgnoreCase("ok")){
 				this.userRepository.save(user); 
@@ -159,7 +171,7 @@ public class UserService extends MasterService implements MasterBackUpService {
 	public void deleteUser(User user ) {
 		this.userPermissionsService.deleteUser(user);
 		this.userRoleService.deleteUser(user);
-		this.userRepository.deleteById(user.getUserID());
+		this.userRepository.deleteById(user.getId());
 	}
 	
 	

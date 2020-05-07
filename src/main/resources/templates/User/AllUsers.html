@@ -49,7 +49,7 @@
                         <td colspan="2"> لا يوجد مستخدمين  </td>
                     </tr>
                     <tr th:each="user : ${userslist}">
-                        <td><span th:text="${user.UserID}" > ID </span></td>
+                        <td><span th:text="${user.id}" > ID </span></td>
                         <td><span th:text="${user.username}"> UserName </span></td>
                         <td><span th:text="${user.Gender}"> Gender </span></td>
                         <td><span th:text="${user.email}"> Email </span></td>
@@ -58,23 +58,23 @@
                         <td><span th:text="${user.Active}"> Active </span></td>
                         
                         <td>
-                          <form action="#" th:action="@{/admistration/users/user/viewuser/} + ${{user.UserID}}" method="get">
-                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-inverse-primary btn-sm" type="submit">
+                          <form action="#" th:action="@{/admistration/users/user/viewuser/} + ${{user.id}}" method="get">
+                              <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-inverse-primary btn-sm" type="submit">
                                   <i>عرض</i>
                               </button>
                           </form>
                       </td>
                         
                         <td>
-                          <form action="#" th:action="@{/adminstration/users/update/} + ${{user.UserID}}" method="get">
-                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-inverse-primary btn-sm" type="submit">
+                          <form action="#" th:action="@{/adminstration/users/update/} + ${{user.id}}" method="get">
+                              <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-inverse-primary btn-sm" type="submit">
                                   <i>تعديل</i>
                               </button>
                           </form>
                       </td>
                       <td>
-                          <form action="#" th:action="@{/adminstration/users/delete/} + ${{user.UserID}}" method="post">
-                              <button th:id="'table_entry_childs_button_' + ${user.UserID}" class="btn btn-inverse-primary btn-sm" type="submit">
+                          <form action="#" th:action="@{/adminstration/users/delete/} + ${{user.id}}" method="post">
+                              <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-inverse-primary btn-sm" type="submit">
                                   <i>حذف</i>
                               </button>
                           </form>

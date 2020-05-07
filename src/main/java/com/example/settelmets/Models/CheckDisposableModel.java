@@ -9,12 +9,12 @@ public class CheckDisposableModel {
 	    private  String FirstBranchCode;
 	    private  String SecondBranchName;
 	    private  String SecondBranchCode;
-	    private double Amount;
+	    private long Amount;
 	
 	    public CheckDisposableModel() {}
 	
 		public CheckDisposableModel(int checkId, String firstBankName, String secondBankName, String firstBranchName,
-				String firstBranchCode, String secondBranchName, String secondBranchCode, double amount) {
+				String firstBranchCode, String secondBranchName, String secondBranchCode, long amount) {
 			super();
 			CheckId = checkId;
 			FirstBankName = firstBankName;
@@ -55,7 +55,7 @@ public class CheckDisposableModel {
 		}
 
 
-		public double getAmount() {
+		public long getAmount() {
 			return Amount;
 		}
 
@@ -109,7 +109,7 @@ public class CheckDisposableModel {
 			SecondBranchCode = secondBranchCode;
 		}
 
-		public void setAmount(double amount) {
+		public void setAmount(long amount) {
 			Amount = amount;
 		}   
 		

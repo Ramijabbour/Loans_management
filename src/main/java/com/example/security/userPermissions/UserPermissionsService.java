@@ -70,7 +70,7 @@ public class UserPermissionsService {
 	public void deleteUser(User user ) {
 		List<UserPermission> userPermissionsList = this.userPermissionsRepository.findAll(); 
 		for(UserPermission userPermission : userPermissionsList) {
-			if(userPermission.getUser().getUserID() == user.getUserID()) {
+			if(userPermission.getUser().getId() == user.getId()) {
 				this.userPermissionsRepository.delete(userPermission);
 			}else {
 				continue ; 

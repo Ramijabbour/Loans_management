@@ -71,11 +71,11 @@ public class User implements java.io.Serializable {
 	+this.Gender+" role "+this.UserRoles +" permissions : "+this.UserPermissions);
 	}
 	
-	public int getUserID() {
+	public int getId() {
 		return id;
 	}
 
-	public void setUserID(int userID) {
+	public void setId(int userID) {
 		id = userID;
 	}
 

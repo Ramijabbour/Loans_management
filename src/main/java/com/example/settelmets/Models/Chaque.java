@@ -46,8 +46,8 @@ public class Chaque {
     private  String SecondBranchCode;
     
     @Column(nullable = false )
-    @Convert(converter = DoubleEncryptDecryptConverter.class)
-    private  double Amount;
+    //@Convert(converter = DoubleEncryptDecryptConverter.class)
+    private  long Amount;
 	
     @Column(nullable = false )
     private  LocalDateTime localDateTime = MasterService.getCurrDateTime() ;
@@ -66,7 +66,7 @@ public class Chaque {
 	public Chaque() {}
 	
 	public Chaque(int checkId, String firstBankName, String secondBankName, String firstBranchName,
-			String firstBranchCode, String secondBranchName, String secondBranchCode, double amount, String userName,
+			String firstBranchCode, String secondBranchName, String secondBranchCode, long amount, String userName,
 			int userID, boolean active) {
 		super();
 		CheckId = checkId;
@@ -122,7 +122,7 @@ public class Chaque {
 		return SecondBranchCode;
 	}
 
-	public double getAmount() {
+	public long getAmount() {
 		return Amount;
 	}
 
