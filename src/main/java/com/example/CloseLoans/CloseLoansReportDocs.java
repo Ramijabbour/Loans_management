@@ -26,13 +26,13 @@ public class  CloseLoansReportDocs implements CreateCloseDocTemplate {
 	}
 	
 	  @Override
-	  public String CreateCloseLoanDoc(Loans Loan , Vouchers voucher , List<Vouchers> allvouchers) {
+	  public String CreateCloseLoanDoc( Vouchers voucher , List<Vouchers> allvouchers) {
 
-
+		  Loans Loan = voucher.getLoan();
 	        String Path= System.getProperty("user.dir")+"\\";
 	        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 	        Date date = new Date();
-	        String Filename="close_Loan_"+Loan.getLoanID()+dateFormat.format(date)  ;
+	        String Filename="close_Loan_"+Loan.getId()+dateFormat.format(date)  ;
 	        String returnPath = Path+Filename+".docx";
 	        //Blank Document
 	        XWPFDocument document = new XWPFDocument();
@@ -248,7 +248,7 @@ public class  CloseLoansReportDocs implements CreateCloseDocTemplate {
 	        	        if (ctppr14 == null) ctppr14 = ctp14.addNewPPr();
 	        	        ctppr14.addNewBidi().setVal(STOnOff.ON);        	        
 	        			XWPFRun r14 = p14.createRun();
-	        			r14.setText(""+Loan.getLoanID()); // رقم الرهن
+	        			r14.setText(""+Loan.getName()); // رقم الرهن
 	        			r14.setColor("101010");
 	        	        r14.setFontSize(14);
 	        			

@@ -29,7 +29,7 @@ public class  RegularOpenLoansReportDocs implements CreateOpenDocTemplate {
 	        String Path= System.getProperty("user.dir")+"\\";
 	        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 	        Date date = new Date();
-	        String Filename="Regopen_Loan_"+Loan.getLoanID()+dateFormat.format(date)  ;
+	        String Filename="Regopen_Loan_"+Loan.getId()+dateFormat.format(date)  ;
 	        String returnPath = Path+Filename+".docx";
 	        //Blank Document
 	        XWPFDocument document = new XWPFDocument();
@@ -100,7 +100,7 @@ public class  RegularOpenLoansReportDocs implements CreateOpenDocTemplate {
 	         paragraphbody.addBreak();
 	         paragraphbody.setText("السلفة  رقم  : " );
 	         paragraphbody.addTab();
-	         paragraphbody.setText(""+Loan.getLoanID());
+	         paragraphbody.setText(""+Loan.getLoanNumber());
 	         paragraphbody.addTab();
 	         paragraphbody.setText("التاريخ :  ");
 	         paragraphbody.addTab();

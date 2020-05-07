@@ -40,7 +40,7 @@ public class RegularOpenLoansReportPDF implements CreateOpenDocTemplate{
         normal3.setColor(BaseColor.GRAY.darker());
         Document document = new Document();
         String Path=System.getProperty("user.dir")+"//";
-        String Filename="open_Loan_"+Loan.getLoanID()+dateFormat.format(date)  ;
+        String Filename="open_Loan_"+Loan.getId()+dateFormat.format(date)  ;
         String returnPath = Path+Filename+".pdf" ; 
 
         
@@ -52,7 +52,7 @@ public class RegularOpenLoansReportPDF implements CreateOpenDocTemplate{
             PdfPCell cell = new PdfPCell();
             Paragraph p = new Paragraph("الجمهورية العربية السورية \nمصرف سورية المركزي\n قسم التسليف \n\n                         قيد نظامي فتح سلفة \n\n", normal);
             Paragraph p1 = new Paragraph("\n\n\n");
-            Paragraph p2=new Paragraph("السلفة رقم: " + Loan.getLoanID() +"   " + "التاريخ : " + Loan.getLoanDate()+"   " +" المصرف  : "+Loan.getBranche().getBank().getBankName()+" - " + Loan.getBranche().getBranchName()+"\n"+
+            Paragraph p2=new Paragraph("السلفة رقم: " + Loan.getLoanNumber() +"   " + "التاريخ : " + Loan.getLoanDate()+"   " +" المصرف  : "+Loan.getBranche().getBank().getBankName()+" - " + Loan.getBranche().getBranchName()+"\n"+
             		" لصالح  : "+Loan.getClient().getClientName()+"\n\n"+
             		" الجهة المدينة  :لضمانات لقاء القروض والسلف"+"\n"+
             		"السندات التجارية"+"\n\n"+

@@ -41,7 +41,7 @@ public class LoanInfoPDF implements CreateInfoDocTemplate{
 	        normal3.setColor(BaseColor.GRAY.darker());
 	        Document document = new Document();
 	        String Path=System.getProperty("user.dir")+"//";
-	        String Filename="Loan_info_"+Loan.getLoanID()+dateFormat.format(date)  ;
+	        String Filename="Loan_info_"+Loan.getId()+dateFormat.format(date)  ;
 	        String returnPath = Path+Filename+".pdf" ; 
 
 	        
@@ -54,7 +54,7 @@ public class LoanInfoPDF implements CreateInfoDocTemplate{
 		
 	            Paragraph p = new Paragraph("الجمهورية العربية السورية \nمصرف سورية المركزي\n قسم التسليف \n\n                             معلومات سلفة \n\n", normal);
 	            Paragraph p1 = new Paragraph("\n\n\n");
-	            Paragraph p2=new Paragraph("رقم  الرهن: " + Loan.getLoanID() +"\n" + "المصرف : " + Loan.getBranche().getBank().getBankName()+" - "+Loan.getBranche().getBranchName() +" \n" +
+	            Paragraph p2=new Paragraph("رقم  الرهن: " + Loan.getName() +"\n" + "المصرف : " + Loan.getBranche().getBank().getBankName()+" - "+Loan.getBranche().getBranchName() +" \n" +
 	            		
 	            	    "            " + "عدد السندات "+ "                     "+"المبلغ الاجمالي"+ "                     "+"المبلغ الصافي" +"\n"+
 	            	    "       " +"__________________________________________"+"\n",normal2);

@@ -33,9 +33,9 @@ public class CloseLoansReportPDF implements CreateCloseDocTemplate{
 	    public static Font normal3 = FontFactory.getFont(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\new\\fonts\\sourcesanspro\\arabtype.ttf", BaseFont.IDENTITY_H, 18);
 
 	@Override
-	public String CreateCloseLoanDoc(Loans Loan, Vouchers voucher,List<Vouchers> allvouchers)  
+	public String CreateCloseLoanDoc( Vouchers voucher,List<Vouchers> allvouchers)  
 	 {
-		
+		Loans Loan = voucher.getLoan();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         normal.setColor(BaseColor.BLACK.darker());
@@ -43,7 +43,7 @@ public class CloseLoansReportPDF implements CreateCloseDocTemplate{
         normal3.setColor(BaseColor.GRAY.darker());
         Document document = new Document();
         String Path=System.getProperty("user.dir")+"//";
-        String Filename="close_Loan_"+Loan.getLoanID()+dateFormat.format(date)  ;
+        String Filename="close_Loan_"+Loan.getId()+dateFormat.format(date)  ;
         String returnPath = Path+Filename+".pdf" ; 
 
         
@@ -185,7 +185,7 @@ public class CloseLoansReportPDF implements CreateCloseDocTemplate{
             
             
             PdfPCell cell14 = new PdfPCell();
-            Paragraph r14 = new Paragraph(""+Loan.getLoanID(), normal3); // رقم الرهن
+            Paragraph r14 = new Paragraph(""+Loan.getName(), normal3); // رقم الرهن
             r14.setAlignment(PdfPCell.ALIGN_LEFT);
             cell14.addElement(r14);
             

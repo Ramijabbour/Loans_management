@@ -7,6 +7,6 @@ import com.example.Vouchers.Vouchers;
 
 public interface CreateCloseDocTemplate {
 
-    public String CreateCloseLoanDoc(Loans Loan , Vouchers voucher , List<Vouchers> allvouchers);
+    public String CreateCloseLoanDoc( Vouchers voucher , List<Vouchers> allvouchers);
 
 }

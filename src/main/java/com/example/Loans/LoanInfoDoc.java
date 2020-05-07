@@ -34,7 +34,7 @@ public class LoanInfoDoc implements CreateInfoDocTemplate {
         String Path= System.getProperty("user.dir")+"\\";
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Date date = new Date();
-        String Filename="Loan_info_"+Loan.getLoanID()+dateFormat.format(date)  ;
+        String Filename="Loan_info_"+Loan.getId()+dateFormat.format(date)  ;
         String returnPath = Path+Filename+".docx";
         //Blank Document
         XWPFDocument document = new XWPFDocument();
@@ -105,7 +105,7 @@ public class LoanInfoDoc implements CreateInfoDocTemplate {
         paragraphbody.addBreak();
         paragraphbody.setText( " رقم الرهن : "  );
         paragraphbody.addTab();
-        paragraphbody.setText(""+Loan.getLoanID());
+        paragraphbody.setText(""+Loan.getName());
         paragraphbody.addBreak();
         paragraphbody.setText("المصرف  : ");
         paragraphbody.addTab();
