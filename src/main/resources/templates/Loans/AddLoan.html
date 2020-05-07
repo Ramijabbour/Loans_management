@@ -90,7 +90,7 @@
                   <div class="form-group">
                     <label for="exampleInputPassword1">المتعامل</label><br>
                     <select th:field="*{client}">
-                      <option th:each="client : ${allclient}" th:value="${client.ClientID}" th:text="${client.ClientName}"></option>
+                      <option th:each="client : ${allclient}" th:value="${client.id}" th:text="${client.ClientName}"></option>
   					  
                     </select>
                   </div>
@@ -99,7 +99,7 @@
                   <div class="form-group">
                     <label for="exampleInputPassword1">البنك</label><br>
                     <select th:field="*{branche}">
-                      <option th:each="branche : ${allbranche}" th:value="${branche.BrancheID}" th:text="${branche.bank.BankName}+ ' '+ ${branche.BranchName} "></option>	  
+                      <option th:each="branche : ${allbranche}" th:value="${branche.id}" th:text="${branche.bank.BankName}+ ' '+ ${branche.BranchName} "></option>	  
                     </select>
                   </div>
 

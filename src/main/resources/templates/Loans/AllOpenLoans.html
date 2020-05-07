@@ -44,6 +44,7 @@
                   <th>معدل الفائدة</th>
                   <th>البنك</th>
                   <th>القيمة الصافية</th>
+                  <th>حالة السلفة</th>
                   <th></th>
                   <th></th>
             
@@ -61,6 +62,7 @@
                   <td th:text="${loan.loan.InterestRate}"></td>
                   <td th:text ="${loan.loan.branche.bank.BankName}+' '+${loan.loan.branche.BranchName}"></td>
                   <td th:text="${loan.loan.NetAmmount}"></td>
+                  <td th:text="${loan.loan.Status}"></td>
                   <td>
                       <form action="#" th:action="@{/Loans/Loan/} + ${{loan.loan.id}}" method="get">
                           <button th:id="'table_entry_childs_button_' + ${loan.loan.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
@@ -71,9 +73,9 @@
                 
                 
                 <td>
-                    <form action="#" th:action="@{/Loan/AddVoucher/}+ ${{loan.loan.id}}" method="get">
+                    <form th:if="${check}" action="#" th:action="@{/Loan/Confirme/}+ ${{loan.loan.id}}" method="get">
                         <button th:id="'table_entry_childs_button_' + ${loan.loan.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                            <i>اضافة سند</i>
+                            <i>تأكيد</i>
                         </button>
                     </form>
                 </td>

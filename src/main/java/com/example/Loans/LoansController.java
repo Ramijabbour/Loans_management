@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import com.example.OpenLoans.OpenLoans;
 import com.example.OpenLoans.OpenLoansService;
 import com.example.ReScheduleLoans.ReScheduleLoans;
 import com.example.ReScheduleLoans.ReScheduleLoansService;
+import com.example.Vouchers.VoucherController;
 import com.example.Vouchers.VoucherService;
 import com.example.Vouchers.Vouchers;
 
@@ -59,6 +61,9 @@ public class LoansController {
 	@Autowired
 	VoucherService voucherService;
 	
+	@Autowired 
+	VoucherController voucherController ; 
+	
 	//get All Open Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open")
 	public ModelAndView ShowAllOpenLoans(@Param(value ="index") int index) { 
@@ -73,6 +78,44 @@ public class LoansController {
 		return mav; 
 	}
 	// -------------------------------------------------------------------
+
+	
+	//get All NotConfirmed Open Loans ------------------------------------------------------
+	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open/NotConfirmed")
+	public ModelAndView ShowAllNotConfirmedOpenLoans(@Param(value ="index") int index) { 
+		ModelAndView mav = new ModelAndView("Loans/AllOpenLoans");
+		List<OpenLoans> allOpenloans=openLoanService.GetNotConfirmedLoans();
+		mav.addObject("allloans",allOpenloans);
+		boolean check=true;
+		mav.addObject("check", check);
+		/*if(allOpenloans.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}*/
+		return mav; 
+	}
+	// -------------------------------------------------------------------
+
+	
+	//get All Confirmed Open Loans ------------------------------------------------------
+	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open/Confirmed")
+	public ModelAndView ShowAllConfirmedOpenLoans(@Param(value ="index") int index) { 
+		ModelAndView mav = new ModelAndView("Loans/AllOpenLoans");
+		List<OpenLoans> allOpenloans=openLoanService.GetConfirmedLoans();
+		mav.addObject("allloans",allOpenloans);
+		/*if(allOpenloans.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}*/
+		return mav; 
+	}
+	// -------------------------------------------------------------------
+
+	
+	
+	
 	//get All Close Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Close")
 	public ModelAndView ShowAllCloseLoans(@Param(value ="index") int index) { 
@@ -120,8 +163,9 @@ public class LoansController {
 		return mav; 
 	}
 	
+	@Transactional
 	@RequestMapping(method = RequestMethod.POST , value="/Loans/addLoan")
-	public void addNewLoan(@ModelAttribute Loans loan,HttpServletResponse response) throws IOException {
+	public ModelAndView addNewLoan(@ModelAttribute Loans loan,HttpServletResponse response) throws IOException {
 	
 		Banks bank=loan.getBranche().getBank();
 		
@@ -132,16 +176,20 @@ public class LoansController {
 		if(NewAllocation>=0) {
 			System.out.println("posted to /Loans/addLoan "); 
 			bank.setFinancialAllocations(Integer.toString(NewAllocation));
+			loan.setStatus("NotConfirmed");
 			loansService.addLoan(loan);	
 		    OpenLoans ol =new OpenLoans(loan);
 		    openLoanService.addOpenLoan(ol);
-			response.sendRedirect("/Loans/all/Open");
+		    return this.voucherController.addVoucherSequence(loan.getId(),Integer.valueOf(loan.getNumberOfVoucher())-1);
+			//response.sendRedirect("/Loans/all/Open");
 		}
 			
 		
 		else {
 			System.out.println("NullPointerException Handled at loan Service / Add loan -- call for low allocation");
-			response.sendRedirect("/Loans/addLoan/Error");
+			//response.sendRedirect("/Loans/addLoan/Error");
+			ModelAndView mav = new ModelAndView("Loans/Error");
+			return mav; 
 		}
 	}
 	//ReSchedule Loan-----------------------------------------------------------------------------------------
@@ -156,7 +204,7 @@ public class LoansController {
 		
 	}
 	@RequestMapping(method = RequestMethod.POST , value="/Loans/ReSchedule/{id}")
-	public void RescheduleLoan(@ModelAttribute Loans loan,@PathVariable int id, HttpServletResponse response) throws IOException
+	public ModelAndView RescheduleLoan(@ModelAttribute Loans loan,@PathVariable int id) throws IOException
 	{
 		Loans oldLoan=loansService.getOneByID(id);
 		
@@ -177,13 +225,12 @@ public class LoansController {
 		
 		ReScheduleLoans scheduleLoan=new ReScheduleLoans(NewLoan);
 		reScheduleLoanService.addLoan(scheduleLoan);
+				
+		return this.voucherController.addVoucherSequenceForSchedualLoan(oldLoan.getId(), NewLoan.getId(),Integer.valueOf(oldLoan.getNumberOfVoucher())-1);
 		
-		List<Vouchers> loanVouchers=voucherService.getVoucherForThisLoan(id);
-		
-		
-		response.sendRedirect("/Loans/all/ReSchedule");
+		//response.sendRedirect("/Loans/all/ReSchedule?index=0");
 	}
-	//Allocation small -------------------------------------------------------------------
+	// -------------------------------------------------------------------
 	
 	
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/addLoan/Error")
@@ -193,9 +240,6 @@ public class LoansController {
 	}
 	// -------------------------------------------------------------------
 
-	
-	
-	
 	//display loan ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/Loan/{id}")
 	public ModelAndView ShowLoan(@PathVariable int id) { 
@@ -235,9 +279,9 @@ public class LoansController {
 		System.out.println("posted to /Loans/update/id ");
 		loansService.updateLoan(loan);
 		if(openLoanService.getOpenLoanFromLoan(loan.getId())!=null)
-			response.sendRedirect("/Loans/all/Open");
+			response.sendRedirect("/Loans/all/Open?index=0");
 		else 
-			response.sendRedirect("/Loans/all/Close");
+			response.sendRedirect("/Loans/all/Close?index=0");
 	}
 	
 
@@ -261,17 +305,43 @@ public class LoansController {
 	{
 		Loans loan = loansService.getOneByID(id);
 		OpenLoans open=openLoanService.getOpenLoanFromLoan(id);
-		CloseLoans closeloan=new CloseLoans(loan);
-		closeloan.setStatus("اغلقت وسددت بالكامل");
-		if (voucherService.AllVoucherPaid(id))
-		{
-			closeLoanService.addLoan(closeloan);
-			openLoanService.DeleteOpenLoan(open);
-		}
-		response.sendRedirect("/Vouchers/all/"+loan.getId());
+			if(open==null)
+			{
+				ReScheduleLoans r= reScheduleLoanService.getReScheduleLoanFromLoan(id);
+				CloseLoans closeloan=new CloseLoans(loan);
+				closeloan.setStatus("سلفة مجدولة اغلقت وسددت بالكامل");
+				if (voucherService.AllVoucherPaid(id))
+				{
+					closeLoanService.addLoan(closeloan);
+					reScheduleLoanService.DeleteLoan(r);
+				}
+				response.sendRedirect("/Vouchers/all/"+loan.getId());
+			}
+			else {
+			CloseLoans closeloan=new CloseLoans(loan);
+			closeloan.setStatus("اغلقت وسددت بالكامل");
+			if (voucherService.AllVoucherPaid(id))
+			{
+				closeLoanService.addLoan(closeloan);
+				openLoanService.DeleteOpenLoan(open);
+			}
+			response.sendRedirect("/Vouchers/all/"+loan.getId());
 	}
-	
+	}
 
+	
+	
+	
+	
+	
+	@RequestMapping(method = RequestMethod.GET , value="/Loan/Confirme/{id}")
+	public void ConfirmLoan(@PathVariable int id, HttpServletResponse response) throws IOException
+	{
+		Loans Loan=loansService.getOneByID(id);
+		Loan.setStatus("Confirmed");
+		loansService.updateLoan(Loan);
+		response.sendRedirect("/Loans/all/Open/Confirmed?index=0");
+	}
 
 	
 }

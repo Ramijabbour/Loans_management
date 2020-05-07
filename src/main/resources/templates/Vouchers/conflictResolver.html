@@ -43,54 +43,27 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-                <h4>ادخل معلومات السند </h4>
+                <h4>حصل خطأ أثناء إضافة السند  </h4>
               </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form action="#"  th:action="@{/Vouchers/add/sequence/}+${{id}}+@{/}+${{seq}}"  method="post" th:object="${voucher}">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">تاريخ السند </label>
-                    <input type="date" name="VoucherDate" class="form-control" th:field="*{VoucherDate}">
-                  </div>
-
-					
-                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">قيمة السند </label>
-                    <input type="number" name="VoucherAmmount" class="form-control" placeholder="ادخل قيمة السند" th:field="*{VoucherAmmount}">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">الاجمالي </label>
-                    <input type="number" name="Total" class="form-control" placeholder="ادخل الاجمالي"  th:field="*{Total}">
-                  </div>
-
-
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">القيمة الصافية </label>
-                    <input type="number" name="NetAmmount" class="form-control" placeholder="Enter Total Ammount" th:field="*{NetAmmount}">
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">المتعامل</label><br>
-                    <select th:field="*{client}">
-                      <option th:each="client : ${allclient}" th:value="${client.id}" th:text="${client.ClientName}"></option>
-                    </select>
-                  </div>
-
-                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">نسبة التمويل </label>
-                    <input type="number" name="FundingRatio" class="form-control" placeholder="ادخل نسبة التمويل" th:field="*{FundingRatio}">
-                  </div>
-                  
-       
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">تأكيد</button>
+                <div class="form-group">
+                   <h4>مجموع قيمة السندات أصبح أكبر من القيمة الصافية للسلفة</h4>
+                   <h5>الرجاء اختيار إحدى الحلول التالية</h5>
+                	<form action="#" th:action="@{/Vouchers/add/seq/conf/} + ${{loanid}} + @{/} + ${{numofremain}} +  @{/0} " method="get">
+                          <button th:id="'table_entry_childs_button_' + ${loanid}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                              <i>إعادة إدخال السند</i>
+                          </button>
+                    </form>
+                	<form action="#" th:action="@{/Vouchers/add/seq/conf/} + ${{loanid}} + @{/} + ${{numofremain}} +  @{/1}" method="get">
+                          <button th:id="'table_entry_childs_button_' + ${loanid}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                              <i>حذف السلفة مع كامل السندات</i>
+                          </button>
+                    </form>
+                    <form action="#" th:action="@{/Vouchers/add/seq/conf/} + ${{loanid}}  + @{/} + ${{numofremain}} +  @{/2}" method="get">
+                          <button th:id="'table_entry_childs_button_' + ${loanid}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                              <i>إعادة إدخال سندات السلفة</i>
+                          </button>
+                     </form>
                 </div>
-              </form>
             </div>
             <!-- /.card -->
             </div>

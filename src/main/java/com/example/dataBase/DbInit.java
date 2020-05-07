@@ -113,7 +113,6 @@ public class DbInit implements CommandLineRunner{
 		 
 		this.financeRepo.save(f2);
 		*/
-
 		
 		
 	}

@@ -1,9 +1,10 @@
-package com.example.Banks;
+package com.example.Banks.Stats;
 
 import java.util.List ;
 
 import com.example.Allocations.Allocations;
 import com.example.BankBranches.Branches;
+import com.example.Banks.Banks;
 import com.example.CloseLoans.CloseLoans;
 import com.example.Loans.Loans;
 import com.example.OpenLoans.OpenLoans;

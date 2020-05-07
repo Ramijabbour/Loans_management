@@ -83,7 +83,7 @@ public class UserRoleService {
 	public void deleteUser(User user ) {
 		List<UserRole> userRolesList = this.userRoleRepository.findAll() ; 
 		for(UserRole userRole : userRolesList) {
-			if(userRole.getUser().getUserID() == user.getUserID() ) {
+			if(userRole.getUser().getId() == user.getId() ) {
 				this.userRoleRepository.delete(userRole);
 			}else {
 				continue ;

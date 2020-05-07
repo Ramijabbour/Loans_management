@@ -48,8 +48,8 @@ public class SettledChaque {
 	 	private String SecondBranchCode;
 	 	
 	 	@Column(nullable = false )
-	 	@Convert(converter = DoubleEncryptDecryptConverter.class)
-	 	private double Amount;
+	 	//@Convert(converter = DoubleEncryptDecryptConverter.class)
+	 	private long Amount;
 
 	 	@Column(nullable = false )
 	 	private LocalDateTime localDateTime ; 
@@ -60,7 +60,7 @@ public class SettledChaque {
 	    }
 	    
 		public SettledChaque(String firstBankName, String firstBranchName, String firstBranchCode,
-				String secondBankName, String secondBranchName, String secondBranchCode, double amount) {
+				String secondBankName, String secondBranchName, String secondBranchCode, long amount) {
 			super();
 			FirstBankName = firstBankName;
 			FirstBranchName = firstBranchName;
@@ -103,7 +103,7 @@ public class SettledChaque {
 			return SecondBranchCode;
 		}
 
-		public double getAmount() {
+		public long getAmount() {
 			return Amount;
 		}
 

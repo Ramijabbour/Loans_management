@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -157,7 +158,7 @@ public class UserController {
 		User user = this.userService.getUserByID(userid);
 		Permissions permission = this.permissionsService.getPermissionById(permissionsid);
 		this.userPermissionsService.grantPermissionsToUser(permission, user);
-		String redirectPath = "/admistration/users/user/permissions/grant/"+user.getUserID();
+		String redirectPath = "/admistration/users/user/permissions/grant/"+user.getId();
 		response.sendRedirect(redirectPath);
 	}
 	
@@ -184,7 +185,7 @@ public class UserController {
 		Roles role = this.rolesService.getRoleByID(roleid);
 		User user = this.userService.getUserByID(userid);
 		this.userRoleService.grantRoleToUser(role, user);
-		String redirectPath = "/admistration/users/user/roles/grant/"+user.getUserID();
+		String redirectPath = "/admistration/users/user/roles/grant/"+user.getId();
 		response.sendRedirect(redirectPath);
 	}
 	
@@ -195,7 +196,7 @@ public class UserController {
 		User user = this.userService.getUserByID(userid);
 		Roles role = this.rolesService.getRoleByID(roleid);
 		this.userRoleService.revokeRoleFromUser(user, role);
-		String redirectPath = "/admistration/users/user/viewuser/"+user.getUserID(); 
+		String redirectPath = "/admistration/users/user/viewuser/"+user.getId(); 
 		response.sendRedirect(redirectPath);
 	}
 	
@@ -205,7 +206,7 @@ public class UserController {
 		User user = this.userService.getUserByID(userid);
 		Permissions permission = this.permissionsService.getPermissionById(permissionid);
 		this.userPermissionsService.revokePermissionFromUser(user, permission);
-		String redirectPath = "/admistration/users/user/viewuser/"+user.getUserID(); 
+		String redirectPath = "/admistration/users/user/viewuser/"+user.getId(); 
 		response.sendRedirect(redirectPath);
 	}
 	
@@ -239,12 +240,19 @@ public class UserController {
 	
 	public ModelAndView returnUserView(User user ) {
 		ModelAndView mav = new ModelAndView("adminstration/users/user");
-		mav.addObject("user",this.userService.getUserByID(user.getUserID()));
+		mav.addObject("user",this.userService.getUserByID(user.getId()));
 		mav.addObject("userroleslist",this.userRoleService.getRolesOfUsers(user));
 		mav.addObject("userpermissionslist",this.userPermissionsService.getPermissionsOfUser(user));	
 		return mav ; 
 	}
 	
-	
+	@RequestMapping(method = RequestMethod.GET , value = "/testper")
+	public void testper(){
+		final StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		this.userService.getAllActuator();
+		stopWatch.stop();
+		System.out.println("runtime : "+stopWatch.getTotalTimeMillis() + "ms");
+	}
 	
 }

@@ -1,4 +1,4 @@
-package com.example.Banks;
+package com.example.Banks.Stats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.Allocations.AllocationsService;
 import com.example.BankBranches.BrancheService;
 import com.example.BankBranches.Branches;
+import com.example.Banks.Banks;
 import com.example.CloseLoans.CloseLoanService;
 import com.example.CloseLoans.CloseLoans;
 import com.example.Loans.LoanService;

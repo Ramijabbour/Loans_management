@@ -38,7 +38,7 @@ public class SettlementService extends MasterService {
 	@Autowired
 	private BrancheService branchesService ; 
 	
-	private int[][] toSettleChecks ; 
+	private long[][] toSettleChecks ; 
 	private int ParticipantsCount ; 
 	private List<String> ParticipantsIds ; 
 	private List<String> BanksNames ; 
@@ -54,7 +54,7 @@ public class SettlementService extends MasterService {
 		ParticipantsCount = ParticipantsIds.size() ; 
 		
 		//initialize toSettleChecks array with zero values 
-		toSettleChecks = new int[ParticipantsCount][ParticipantsCount]; 
+		toSettleChecks = new long[ParticipantsCount][ParticipantsCount]; 
 		for(int i = 0 ; i < ParticipantsCount ; i++) {
 		for(int j = 0 ; j < ParticipantsCount ; j++) {
 				toSettleChecks[i][j] = 0 ; 
@@ -96,23 +96,27 @@ public class SettlementService extends MasterService {
 	}
 	
 	//change schedule invoke time and isolate it in another thread 
-	@Scheduled(fixedRate = 7000000)
+	//@Scheduled(fixedRate = 7000000)
 	@Transactional
 	public void settleChecks() {
-		System.out.println("ettlement invoked at : "+MasterService.getCurrDateTime());
+		System.out.println("settlement invoked at : "+MasterService.getCurrDateTime());
 		List<Chaque> onHoldChecks = initSettlementOperation(); 
 		SettelmentHandler.setNumberOfParticipants(this.ParticipantsCount);
 		if(ParticipantsIds.size() != 0 ) {
-			List<SettledChaque> resultList = SettelmentHandler.minCashFlow(toSettleChecks,ParticipantsIds,BanksNames,BranchesNames);
-			this.settledChecksRepository.saveAll(resultList);
+			List<SettledChaque> resultList = SettelmentHandler.invokeSettlementSequence(toSettleChecks,ParticipantsIds,BanksNames,BranchesNames);
+			if(resultList == null ) {
+				super.notificationsService.addNotification("Settlement Operation Failed duo to data check failuer reviewing the checks is needed! ", "/settlement/checks/reports", "SUPER");
+			}else {
 			
+			this.settledChecksRepository.saveAll(resultList);
 			for(Chaque check : onHoldChecks) {
 				check.setActive(true);
 			}
 			this.onHoldChecksRepository.saveAll(onHoldChecks); 
 		}
-		super.notificationsService.addNotification("Gross Settlement reports ready", "/settlement/checks/reports", "SUPER");
+		super.notificationsService.addNotification("Gross Settlement Operation passed data check Stage continue to review results reports", "/settlement/checks/reports", "SUPER");
 		// add result validation 
+		}
 	}
 	
 	@Transactional
@@ -121,7 +125,7 @@ public class SettlementService extends MasterService {
 		if(result == 0 ) {
 			Chaque finalCheck = new Chaque(check.getCheckId(),check.getFirstBankName(), check.getSecondBankName(),check.getFirstBranchName(),
 					check.getFirstBranchCode(),check.getSecondBranchName(),check.getSecondBranchCode(),check.getAmount(),super.get_current_User().getUsername(),
-					super.get_current_User().getUserID(),false);
+					super.get_current_User().getId(),false);
 			this.onHoldChecksRepository.save(finalCheck);
 			super.notificationsService.addNotification("check added to settlement Service", "/settlement/checks/all", "SUPER");
 			return 0 ; 
@@ -210,26 +214,7 @@ public class SettlementService extends MasterService {
 		}	
 		return 0 ; 
 	}
-	
-	/*
-	public boolean resultDataCheck(List<Chaque> results,List<Chaque> input) {
-		List<Integer> banks = new ArrayList<Integer>();
-
-		banks = this.findNumberOfParticipants(input); 
 		
-		double[] debts = new double[banks.size()] ; 
-		double[] pays = new double[banks.size()] ; 
-		
-		for(Chaque check : input) {
-			debts[banks.indexOf(check.getFirstBankSW())] += check.getAmount() ; 
-			pays[banks.indexOf(check.getSecondBankSW())] += check.getAmount();
-		}
-		
-		return false ; 
-	}
-*/
-	
-	
 	
 	public List<Chaque> getOnHoldChecks(int PageNumber){	
 		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));		
@@ -266,8 +251,6 @@ public class SettlementService extends MasterService {
         }
 	}
 	
-	
-	
 
 	public SettledChaque findCheckByID(int id ) {
 		List<SettledChaque> all = this.settledChecksRepository.findAll() ; 
@@ -279,4 +262,6 @@ public class SettlementService extends MasterService {
 		return null ; 
 	}
 	
+	
+
 }

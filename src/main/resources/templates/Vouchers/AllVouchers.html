@@ -39,7 +39,7 @@
                   <th>تاريخ السند</th>
                   <th>قيمة السند</th>
                   <th>القيمة الصافية</th>
-                  <th>Total</th>
+                  <th>المجموع</th>
                   <th>المتعامل</th>
                   <th>نسبة التمويل</th>
                   <th>السلفة</th>
@@ -57,7 +57,7 @@
                   <td th:text="${v.Total}"></td>
                   <td th:text="${v.client.ClientName}"></td>
                   <td th:text="${v.FundingRatio}"></td>
-                  <td th:text="${v.Loan.LoanID}"></td>
+                  <td th:text="${v.Loan.id}"></td>
                   <td th:text="${v.Status}"></td>
                    <td>
                       <form action="#" th:action="@{/Vouchers/} + ${{v.VoucherID}}" method="get">

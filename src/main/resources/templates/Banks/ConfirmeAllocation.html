@@ -26,10 +26,13 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-         
+          <div class="col-sm-6">
+            <h3> تأكيد اضافة المخصصات</h3>
+          </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -38,15 +41,36 @@
           <div class="col-md-12">
             <!-- jquery validation -->
             <div class="card card-primary">
-              <form action="#"  th:action="@{/Loans/all/Open?index=0}"  method="get">
+              <div class="card-header">
+                <h4>المعلومات المدخلة</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form th:action="@{/Allocation/ConfirmeAllocation}"  th:object="${allocation}" method="post">
                 <div class="card-body">
+                
                   <div class="form-group">
-                  	<h1> لاتستطيع اضافة  سندات اخرى لهذه السلغة  </h1> 
+                    <label for="exampleInputEmail1">التاريخ</label>
+                    <input type="date" name="workDate" class="form-control" th:field="*{AllocationDate}" readonly>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">الكمية</label>
+                    <input type="number" name="amount" class="form-control"  placeholder="Enter Ammount" th:field="*{AllocationAmmount}" readonly>
                   </div>
 
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">البنك</label><br>
+                    <select th:field="*{bank}">
+                      <option  th:value="${bank.BankID}" th:text="${bank.BankName}"></option>	  
+                    </select>
+                  </div>
+                  
+                </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">تراجع</button>
+                  <button type="submit" class="btn btn-primary">تأكيد</button>
                 </div>
               </form>
             </div>
@@ -65,14 +89,15 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-   <footer class="footer">
-          <div class="footer-wrap">
-              <div class="w-100 clearfix">
-                <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
-              </div>
-          </div>
- </footer>  
+<footer class="footer">
+     <div class="footer-wrap">
+         <div class="w-100 clearfix">
+           <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+         </div>
+     </div>
+</footer>
 
+ 
 </div>
 
 </body>

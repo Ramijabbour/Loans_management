@@ -32,10 +32,41 @@ public class OpenLoansService {
 	}
 	
 	
+	public List <OpenLoans>GetNotConfirmedLoans()
+	{
+		List<OpenLoans> allLoans=openLoanRepository.findAll();
+		List<OpenLoans> NotConfimedLoans = new ArrayList<OpenLoans>();
+		
+		for(OpenLoans l : allLoans)
+		{
+			if(l.getLoan().getStatus().equalsIgnoreCase("NotConfirmed"))
+				NotConfimedLoans.add(l);
+		}
+		return NotConfimedLoans;
+	}
+	
+	
+	public List <OpenLoans>GetConfirmedLoans()
+	{
+		List<OpenLoans> allLoans=openLoanRepository.findAll();
+		List<OpenLoans> ConfimedLoans = new ArrayList<OpenLoans>();
+		
+		for(OpenLoans l : allLoans)
+		{
+			if(l.getLoan().getStatus().equalsIgnoreCase("Confirmed"))
+				ConfimedLoans.add(l);
+		}
+		return ConfimedLoans;
+	}
+	
+	
+	
 	public void addOpenLoan(OpenLoans openLoan)
 	{
 		this.openLoanRepository.save(openLoan);
 	}
+	
+	
 	
 	public void DeleteOpenLoan(OpenLoans openloan)
 	{

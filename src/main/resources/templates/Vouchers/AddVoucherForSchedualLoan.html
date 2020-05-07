@@ -27,11 +27,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>تعديل السند</h3>
+            <h3>إضافة سند</h3>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
+
 
     <!-- Main content -->
     <section class="content">
@@ -42,51 +43,33 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 >ادخل معلومات السند</h3>
+                <h4>ادخل معلومات السند </h4>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="#"  th:action="@{/Vouchers/update/}+${{voucher.VoucherID}}"  method="post" th:object="${voucher}">
+              <form action="#"  th:action="@{/Vouchers/add/Schedual/Loan/sequence/}+${{id}}+@{/}+${{oldid}}+@{/}+${{seq}}"  method="post" th:object="${voucher}">
                 <div class="card-body">
-                  
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">id </label>
-                    <input type="number" name="id" class="form-control" th:field="*{VoucherID}">
-                  </div>
-                  
-                 
                   <div class="form-group">
                     <label for="exampleInputEmail1">تاريخ السند </label>
-                    <input  type="date" name="VoucherDate" class="form-control" th:field="*{VoucherDate}">
+                    <input type="date" name="VoucherDate" class="form-control" th:field="*{VoucherDate}">
                   </div>
 
 					
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">قيمة السند </label>
-                    <input type="number" name="VoucherAmmount" class="form-control" placeholder="Enter Voucher Ammount" th:field="*{VoucherAmmount}">
+                    <input type="number" name="VoucherAmmount" class="form-control" placeholder="ادخل قيمة السند" th:field="*{VoucherAmmount}" readonly>
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">االاجمالي</label>
-                    <input type="number" name="Total" class="form-control" placeholder="Enter Total"  th:field="*{Total}">
+                    <label for="exampleInputPassword1">الاجمالي </label>
+                    <input type="number" name="Total" class="form-control" placeholder="ادخل الاجمالي"  th:field="*{Total}" readonly>
                   </div>
 
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">القيمة الصافية </label>
-                    <input type="number" name="NetAmmount" class="form-control" placeholder="Enter Total Ammount" th:field="*{NetAmmount}">
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">الحالة </label>
-                    <input type="text" name="status" class="form-control" placeholder="Enter Total Ammount" th:field="*{Status}">
-                  </div>
-                  
-                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">السلفة </label>
-                    <input type="number" name="LoanId" class="form-control" placeholder="Enter Total Ammount" th:field="*{Loan.id}">
+                    <input type="number" name="NetAmmount" class="form-control" placeholder="Enter Total Ammount" th:field="*{NetAmmount}" readonly>
                   </div>
                   
                   <div class="form-group">
@@ -98,18 +81,11 @@
 
                   
                   <div class="form-group">
-                    <label for="exampleInputPassword1">معدل التمويل </label>
-                    <input type="number" name="FundingRatio" class="form-control" placeholder="Enter Funding Ratio" th:field="*{FundingRatio}">
+                    <label for="exampleInputPassword1">نسبة التمويل </label>
+                    <input type="number" name="FundingRatio" class="form-control" placeholder="ادخل نسبة التمويل" th:field="*{FundingRatio}" readonly>
                   </div>
                   
-                 <!--   <div class="form-group" hidden:true>
-                    <label for="exampleInputPassword1" hidden=true>Loan ID</label><br>
-                    <select th:field="*{Loan}" hidden=true>
-                      <option th:value="${myloan.LoanID}" th:text="${myloan.LoanID}" hidden=true></option>	  
-                    </select>
-                  </div> 
-				-->
- 
+       
                 <!-- /.card-body -->
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">تأكيد</button>
@@ -130,7 +106,6 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
 
 <footer class="footer">
      <div class="footer-wrap">
@@ -141,7 +116,6 @@
 </footer>
  
 </div>
-<!-- ./wrapper -->
 
 </body>
 </html>

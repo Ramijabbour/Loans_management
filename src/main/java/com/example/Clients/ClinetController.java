@@ -55,7 +55,7 @@ public class ClinetController {
 	public void addNewClient(@ModelAttribute Clients client,HttpServletResponse response) throws IOException {
 		System.out.println("posted to /Clients/addClient ");
 		clientservice.addClient(client);
-		response.sendRedirect("/Clients/all");
+		response.sendRedirect("/Clients/all?index=0");
 	}
 	// -----------------------------------------------------------------------   
 	  

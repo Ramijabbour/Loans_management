@@ -75,6 +75,8 @@ public class Loans {
     private String NumberOfVoucher;
     @Convert(converter = StringEncryptDecryptConverter.class)
     private String purpose;
+    
+    private String status; 
 
     @ManyToOne
     private Clients client = null;
@@ -310,5 +312,19 @@ public class Loans {
 	public void setLoanNumber(String loanNumber) {
 		LoanNumber = loanNumber;
 	}
+	
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
 
 	public boolean accept(Visitor visitor) { return visitor.visit(this); }}
