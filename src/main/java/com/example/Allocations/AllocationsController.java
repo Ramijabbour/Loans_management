@@ -1,7 +1,13 @@
 package com.example.Allocations;
 
+
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -34,9 +40,10 @@ public class AllocationsController {
 	
 	//add new Allocation -------------------------------------------------------
 		@RequestMapping(method = RequestMethod.GET , value="/Allocation/addAllocation")
-		public ModelAndView addAllocationRequest() {
+		public ModelAndView addAllocationRequest() throws ParseException {
 			ModelAndView mav = new ModelAndView("Banks/AddAllocations");
-			  List<Banks> allbank=bankservice.GetAllBanks();
+			  List<Banks> allbank=bankservice.GetBankForAllocation();
+			  System.out.println("-----=-=-=-==--=-=-=-==-"+allbank.size());
 			  mav.addObject("allocation",new Allocations());
 			  mav.addObject("allbank",allbank);
 			return mav; 
@@ -76,7 +83,8 @@ public class AllocationsController {
 		public void addNewAllocation(@ModelAttribute Allocations Allocation,HttpServletResponse response) throws IOException {
 			System.out.println("posted to /Allocation/addAllocation ");
 			Banks bank=bankservice.getBankByID(Allocation.getBank().getBankID());
-			bank.setFinancialAllocations(Allocation.getAllocationAmmount());
+			int newallocation = Integer.parseInt(Allocation.getAllocationAmmount())+Integer.parseInt(bank.getFinancialAllocations());
+			bank.setFinancialAllocations(Integer.toString(newallocation));
 			System.out.println("Done");
 			allocationService.addAllocation(Allocation);
 			response.sendRedirect("/Banks/all");		}
@@ -135,7 +143,6 @@ public class AllocationsController {
 			response.sendRedirect("/Allocation/all");
 		}
 		
-
-
+		
 }
 

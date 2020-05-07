@@ -204,7 +204,7 @@ public class LoansController {
 		
 	}
 	@RequestMapping(method = RequestMethod.POST , value="/Loans/ReSchedule/{id}")
-	public void RescheduleLoan(@ModelAttribute Loans loan,@PathVariable int id, HttpServletResponse response) throws IOException
+	public ModelAndView RescheduleLoan(@ModelAttribute Loans loan,@PathVariable int id) throws IOException
 	{
 		Loans oldLoan=loansService.getOneByID(id);
 		
@@ -225,13 +225,12 @@ public class LoansController {
 		
 		ReScheduleLoans scheduleLoan=new ReScheduleLoans(NewLoan);
 		reScheduleLoanService.addLoan(scheduleLoan);
+				
+		return this.voucherController.addVoucherSequenceForSchedualLoan(oldLoan.getId(), NewLoan.getId(),Integer.valueOf(oldLoan.getNumberOfVoucher())-1);
 		
-		List<Vouchers> loanVouchers=voucherService.getVoucherForThisLoan(id);
-		
-		
-		response.sendRedirect("/Loans/all/ReSchedule?index=0");
+		//response.sendRedirect("/Loans/all/ReSchedule?index=0");
 	}
-	//Allocation small -------------------------------------------------------------------
+	// -------------------------------------------------------------------
 	
 	
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/addLoan/Error")
@@ -306,16 +305,29 @@ public class LoansController {
 	{
 		Loans loan = loansService.getOneByID(id);
 		OpenLoans open=openLoanService.getOpenLoanFromLoan(id);
-		CloseLoans closeloan=new CloseLoans(loan);
-		closeloan.setStatus("اغلقت وسددت بالكامل");
-		if (voucherService.AllVoucherPaid(id))
-		{
-			closeLoanService.addLoan(closeloan);
-			openLoanService.DeleteOpenLoan(open);
-		}
-		response.sendRedirect("/Vouchers/all/"+loan.getId());
+			if(open==null)
+			{
+				ReScheduleLoans r= reScheduleLoanService.getReScheduleLoanFromLoan(id);
+				CloseLoans closeloan=new CloseLoans(loan);
+				closeloan.setStatus("سلفة مجدولة اغلقت وسددت بالكامل");
+				if (voucherService.AllVoucherPaid(id))
+				{
+					closeLoanService.addLoan(closeloan);
+					reScheduleLoanService.DeleteLoan(r);
+				}
+				response.sendRedirect("/Vouchers/all/"+loan.getId());
+			}
+			else {
+			CloseLoans closeloan=new CloseLoans(loan);
+			closeloan.setStatus("اغلقت وسددت بالكامل");
+			if (voucherService.AllVoucherPaid(id))
+			{
+				closeLoanService.addLoan(closeloan);
+				openLoanService.DeleteOpenLoan(open);
+			}
+			response.sendRedirect("/Vouchers/all/"+loan.getId());
 	}
-	
+	}
 
 	
 	

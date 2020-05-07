@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.example.SiteConfiguration;
+import com.example.OpenLoans.OpenLoans;
 
 @Service
 public class ReScheduleLoansService {
@@ -24,6 +25,11 @@ public class ReScheduleLoansService {
 		reScheduleLoansReopsitory.save(ReScheduleLoan);
 	}
 	
+	public void DeleteLoan(ReScheduleLoans ReScheduleLoan)
+	{
+		reScheduleLoansReopsitory.delete(ReScheduleLoan);
+	}
+	
 	public List<ReScheduleLoans> getAllReScheduleLoans(int PageNumber)
 	{
 		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
@@ -35,5 +41,17 @@ public class ReScheduleLoansService {
         }
 	}
 	
+	
+	public ReScheduleLoans getReScheduleLoanFromLoan(int id)
+	{
+		List<ReScheduleLoans> allReScheduleLoans=reScheduleLoansReopsitory.findAll();
+		
+		for(ReScheduleLoans r : allReScheduleLoans)
+		{
+			if(r.getLoan().getId()==id)
+				return r;
+		}
+		return null;
+	}
 	
 }
