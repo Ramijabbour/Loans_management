@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ar" dir="rtl">
+<head>
+
+    <title>Getting Started: Serving Web Content</title>
+    <style>
+    h2 {
+        font-family:"Arabic Typesetting";
+        font-size:40px;
+    }
+
+    p {
+        font-family:"Arabic Typesetting";
+        font-size:35px;
+    }
+
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>&emsp;&emsp;الجمهورية العربية السورية<br>&emsp;&emsp;مصرف سورية المركزي<br>&emsp;&emsp;قسم التسليف<br></br><br></br></h2>
+<h2>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;قيد فتح سلفة<br></br></h2>
+
+<p>&emsp;&emsp;رقم السلفة: <span th:text=${LoanID}></span>&emsp;&emsp;&emsp;&emsp;التاريخ: <span th:text=${Date}></span>&emsp;&emsp;&emsp;&emsp;المصرف: <span th:text=${Bank}></span></p>
+<p>&emsp;&emsp;&emsp;&emsp;لصالح : <span th:text=${client}></span></p>
+<p></br>&emsp;&emsp;الجهة المدينة : من حـ/القروض و التسليفات للمصارف</p>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;<span th:text=${Bank}></span></p>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;عدد السندات : <span th:text=${sndat}></span>&emsp;&emsp;&emsp;&emsp;<span th:text=${cost}></span></p>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; الى : حـ/العمليات المصرفية-الحسابات الجارية </p>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;عدد السندات : <span th:text=${sndat}></span>&emsp;&emsp;&emsp;&emsp;<span th:text=${cost}></span></p>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;___________________________________</p>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;المجموع : <span th:text=${cost}></span>&emsp;&emsp;&emsp;&emsp;<span th:text=${cost}></span></p>
+
+</body>
+</html>

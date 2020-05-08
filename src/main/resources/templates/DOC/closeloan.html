@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ar" dir="rtl">
+<head>
+
+    <title>Getting Started: Serving Web Content</title>
+    <style>
+    h2 {
+        font-family:"Arabic Typesetting";
+        font-size:40px;
+    }
+
+    p {
+        font-family:"Arabic Typesetting";
+        font-size:35px;
+    }
+    table ,tr,th,td{
+    	border: 2px solid black;
+    	border-collapse: collapse;
+    	width: 1000px ;
+    	padding: 10px;
+    	text-align: center;
+    	margin: 100px;
+    }
+    
+
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>&emsp;&emsp;الجمهورية العربية السورية<br>&emsp;&emsp;مصرف سورية المركزي<br>&emsp;&emsp;قسم التسليف<br></br><br></br></h2>
+<h2>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;اشعار اغلاق<br></br></h2>
+
+<p>&emsp;&emsp; المصرف : <span th:text=${Bank}></span>&emsp;&emsp;&emsp;&emsp; - <span th:text=${financeType}></span> - &emsp;&emsp;&emsp;&emsp;dd</p>
+<p>&emsp;&emsp; يرجى من قسم الحسابات الجارية بيان امكانية اغلاق السلفة التالية : </p>
+
+              <table>
+                <thead>
+                <tr>
+                  <th>المستفيد</th>
+                  <th>رقم عقد الرهن</th>
+                  <th>الاعتماد المفتوح سابقا</th>
+                  <th>التنزيلات من الاعتماد المفتوح</th>
+                  <th>الاعتماد المفتوح مجددا</th>
+                  <th>أجل السلفة</th>                  
+                </tr>
+                </thead>
+                <tbody>
+                
+                <tr>
+                  <td th:text = ${a} ></td>
+                  <td th:text = ${b} ></td>
+                  <td th:text = ${c} ></td>
+                  <td th:text = ${d} ></td>
+                  <td th:text = ${e} ></td>
+                  <td th:text = ${Date} ></td>
+                 
+                </tr>
+   
+                </tbody>
+        
+              </table>
+              
+  <p>&emsp;&emsp;&emsp;&emsp; فقط : _____________________________ ليرة سورية لا غير</p>
+  <p>&emsp;&emsp;&emsp;&emsp;&emsp; دمشق في : <span th:text = ${Date}></span> </p>
+  <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;رئيس قسم التسليف &emsp;&emsp;&emsp; مدير فرع مصرف سورية المركزي</p>
+  
+</body>
+</html>

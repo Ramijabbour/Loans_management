@@ -1,9 +1,12 @@
 package com.example.Loans;
 
+import java.util.List;
+
 import com.example.Loans.Loans;
+import com.example.Vouchers.Vouchers;
 
 public interface CreateInfoDocTemplate {
 
-    public void CreateInfoLoanDoc(Loans Loan);
+    public String CreateInfoLoanDoc(Loans Loan , List<Vouchers> allvouchers);
 
 }

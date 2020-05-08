@@ -4,6 +4,6 @@ import com.example.Loans.Loans;
 
 public interface CreateOpenDocTemplate {
 
-    public void CreateOpenLoanDoc(Loans Loan);
+    public String CreateOpenLoanDoc(Loans Loan);
 
 }
