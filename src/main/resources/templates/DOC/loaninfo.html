@@ -31,27 +31,35 @@
 
 <p>&emsp;&emsp; رقم الرهن : <span th:text=${Name}></span><br>&emsp;&emsp;المصرف : <span th:text=${Bank}></span></p>
 <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; عدد السندات &emsp;&emsp;&emsp;&emsp; المبلغ الاجمالي &emsp;&emsp;&emsp;&emsp;المبلغ الصافي <br>&emsp;&emsp;&emsp;&emsp;&emsp;________________________________________________</p>
-<p th:each = "v : ${vouchers}">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 1 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <span th:text = "${v.VoucherAmmount}"></span>&emsp;&emsp;&emsp;&emsp;<span th:text = ${v.VoucherAmmount}></span><br></p>
-<p>&emsp;&emsp;&emsp;&emsp;&emsp;________________________________________________</p>
+
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 1 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <span th:text = ${totalAmmount}></span>&emsp;&emsp;&emsp;&emsp;<span th:text = ${cost}></span><br></p>
+ 
+ <p>&emsp;&emsp;&emsp;&emsp;&emsp;________________________________________________<br>
+</p>
 <p>&emsp;&emsp;اجمالي السندات : <span th:text =${sndat}></span><br>
 &emsp;&emsp;اجمالي المبالغ : <span th:text =${totalAmmount}></span><br>
 &emsp;&emsp;اجمالي الصوافي : <span th:text =${totalRests}></span><br>
 &emsp;&emsp;المبالغ المرخصة : <span th:text =${mr}></span><br>
 &emsp;&emsp;المبالغ المعفاة : <span th:text =${ma}></span>
 </p>
+
  			<table>
                 <thead>
                 <tr>
-                  <th><p>&emsp;&emsp; الاعتماد المفتوح : <span th:text = ${cost}></span> </p></th>
+                  <th><p>&emsp;&emsp; الاعتماد المفتوح : <span th:text = ${totalAmmount}></span> </p></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody >
                 
-                <tr th:each = "v : ${vouchers}" th:each = " e : ${Rests}" >
-                  <td><p> &emsp;&emsp;صافي مبلغ الاستحقاق : <span th:text = ${v.VoucherAmmount}></span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; تاريخ الاستحقاق : <span th:text = ${v.VoucherDate}></span> <br>&emsp;&emsp;  الصافي المتبقي : <span th:text =${e}></span> </p></td> 
+                <tr th:each = "v : ${vouchers} "  >
+                  <td ><p> &emsp;&emsp;صافي مبلغ الاستحقاق : <span th:text =${v.VoucherAmmount}></span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; تاريخ الاستحقاق : <span th:text = ${v.VoucherDate}></span> <br>&emsp;&emsp;  الصافي المتبقي : <span th:text = "${Rests.get(0)}"></span></p></td> 
                 </tr>
                 
-             
+                
+                
+                
+                </tbody>
+        
               </table>
              
 </body>

@@ -41,6 +41,25 @@
                             <i>جدولة السلفة</i>
                         </button>
                 </form>
+                
+                <form action="#" th:action="@{|/LoanInfo/reports/export/${loan.id}|}" method="get">
+                        <button th:id="'table_entry_childs_button_' + ${loan.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                            <i>عرض التقارير معلومات سلفة</i>
+                        </button>
+                </form>
+                
+                <form action="#" th:action="@{|/OpenLoan/reports/export/${loan.id}|}" method="get" >
+                        <button th:id="'table_entry_childs_button_' + ${loan.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm"  type="submit">
+                            <i>عرض التقارير فتح سلفة</i>
+                        </button>
+                </form>
+                
+                <form action="#" th:action="@{|/OpenLoan/regular/reports/export/${loan.id}|}" method="get">
+                        <button th:id="'table_entry_childs_button_' + ${loan.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                            <i>عرض التقارير فتح سلفة نظامي</i>
+                        </button>
+                </form>  
+                
             </div>
             
             <!-- /.card-header -->

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -139,8 +140,8 @@ public class ReportsController {
 	
 
 	//openLoanHandler
-		@RequestMapping(method = RequestMethod.GET,value = "/OpenLoan/reports/export")
-		public ModelAndView getOpenExportIndex(@Param(value ="id") int id ) {
+		@RequestMapping(method = RequestMethod.GET,value = "/OpenLoan/reports/export/{id}")
+		public ModelAndView getOpenExportIndex(@PathVariable int id ) {
 			Loans Loan = this.loanService.getOneByID(id);
 			ModelAndView mav = new ModelAndView("DOC/exportOpenLoanHandler");
 			mav.addObject("loan",Loan);
@@ -243,8 +244,8 @@ public class ReportsController {
 	
 
 	//openLoanHandler // regular
-		@RequestMapping(method = RequestMethod.GET,value = "/OpenLoan/regular/reports/export")
-		public ModelAndView getOpenRegExportIndex(@Param(value ="id") int id ) {
+		@RequestMapping(method = RequestMethod.GET,value = "/OpenLoan/regular/reports/export/{id}")
+		public ModelAndView getOpenRegExportIndex(@PathVariable int id ) {
 			Loans Loan = this.loanService.getOneByID(id);
 			ModelAndView mav = new ModelAndView("DOC/exportOpenLoanRegHandler");
 			mav.addObject("loan",Loan);
@@ -348,16 +349,16 @@ public class ReportsController {
 
 
 //LoanInfoHandler
-	@RequestMapping(method = RequestMethod.GET, value = "/LoanInfo/reports/export")
-	public ModelAndView getInfoExportIndex(@Param(value = "id") int id) {
+	@RequestMapping(method = RequestMethod.GET, value = "/LoanInfo/reports/export/{id}")
+	public ModelAndView getInfoExportIndex(@PathVariable int id) {
 		Loans Loan = this.loanService.getOneByID(id);
 		ModelAndView mav = new ModelAndView("DOC/exportLoanInfoHandler");
 		mav.addObject("loan", Loan);
 		return mav;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/LoanInfo/reports/export/html")
-	public ModelAndView getInfoXmlReport(@Param(value = "id") int id) {
+	@RequestMapping(method = RequestMethod.GET, value = "/LoanInfo/reports/export/html/{id}")
+	public ModelAndView getInfoXmlReport(@PathVariable int id) {
 		Loans Loan = this.loanService.getOneByID(id);
 		return this.reportsService.exportLoanInfoXml(Loan);
 	}
@@ -397,15 +398,15 @@ public class ReportsController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/LoanInfo/reports/export/pdf")
+@RequestMapping(method = RequestMethod.GET, value = "/LoanInfo/reports/export/pdf")
 	@ResponseBody
 	public StreamingResponseBody getInfoPdfReport(@Param(value = "id") int id, HttpServletResponse response) {
-		Loans Loan = this.loanService.getOneByID(id);
+	Loans Loan = this.loanService.getOneByID(id);
 		ReportsLinkModel reportsLinkModel = this.reportLinkService.getRportLinkModel(Loan.getId(), 2);
 		String path;
 		try {
 			if (reportsLinkModel == null) {
-				path = this.reportsService.excportLoanInfoPDF(Loan);
+				path = this.reportsService.exportLoanInfoPDF(Loan);
 				System.out.println("file path : " + path);
 				reportsLinkModel = new ReportsLinkModel(Loan.getId(), path, 2);
 				this.reportLinkService.addReportLinkModel(reportsLinkModel, 2);
@@ -416,7 +417,7 @@ public class ReportsController {
 			}
 		} catch (FileNotFoundException fe) {
 			this.reportLinkService.deleteReportLink(reportsLinkModel);
-			path = this.reportsService.excportLoanInfoPDF(Loan);
+			path = this.reportsService.exportLoanInfoPDF(Loan);
 			System.out.println("file path : " + path);
 			reportsLinkModel = new ReportsLinkModel(Loan.getId(), path, 2);
 			this.reportLinkService.addReportLinkModel(reportsLinkModel, 2);
@@ -427,32 +428,34 @@ public class ReportsController {
 				return null;
 			}
 		}
-
 		catch (Exception e) {
+			
 			e.printStackTrace();
 			return null;
 		}
-	}
+		
+		}
 
 	
 	
 //////////////////////////////////////////////////////////////////
 //CloseVoucherHandler
-	@RequestMapping(method = RequestMethod.GET, value = "/CloseVoucher/reports/export")
-	public ModelAndView getCloseExportIndex(@Param(value = "id") int id) {
+	@RequestMapping(method = RequestMethod.GET, value = "/CloseVoucher/reports/export/{id}")
+	public ModelAndView getCloseExportIndex(@PathVariable int id) {
 		Vouchers Voucher = this.voucherservice.GetVoucherById(id);
 		ModelAndView mav = new ModelAndView("DOC/exportCloseVoucherHandler");
 		mav.addObject("voucher", Voucher);
+		
 		return mav;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/CloseVoucher/reports/exports/html")
+	@RequestMapping(method = RequestMethod.GET, value = "/CloseVoucher/reports/export/html")
 	public ModelAndView getCloseXmlReport(@Param(value = "id") int id) {
 		Vouchers Voucher = this.voucherservice.GetVoucherById(id);
 		return this.reportsService.exportCloseLoanXml(Voucher);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/CloseVoucher/reports/exports/docx")
+	@RequestMapping(method = RequestMethod.GET, value = "/CloseVoucher/reports/export/docx")
 	@ResponseBody
 	public StreamingResponseBody getCloseDocxReport(@Param(value = "id") int id, HttpServletResponse response) {
 		Vouchers Voucher = this.voucherservice.GetVoucherById(id);

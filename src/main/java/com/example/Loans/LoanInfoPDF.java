@@ -53,7 +53,6 @@ public class LoanInfoPDF implements CreateInfoDocTemplate{
 	            PdfPCell cell = new PdfPCell();
 		
 	            Paragraph p = new Paragraph("الجمهورية العربية السورية \nمصرف سورية المركزي\n قسم التسليف \n\n                             معلومات سلفة \n\n", normal);
-	            Paragraph p1 = new Paragraph("\n\n\n");
 	            Paragraph p2=new Paragraph("رقم  الرهن: " + Loan.getName() +"\n" + "المصرف : " + Loan.getBranche().getBank().getBankName()+" - "+Loan.getBranche().getBranchName() +" \n" +
 	            		
 	            	    "            " + "عدد السندات "+ "                     "+"المبلغ الاجمالي"+ "                     "+"المبلغ الصافي" +"\n"+
@@ -119,7 +118,6 @@ public class LoanInfoPDF implements CreateInfoDocTemplate{
 
 	            document.add(table);
 	            document.add(table2);
-	            //document.add(p);
 	            document.close();
 	           // writer.close();
 	        } catch (DocumentException e) {

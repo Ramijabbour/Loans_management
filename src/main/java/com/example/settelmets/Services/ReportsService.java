@@ -108,7 +108,7 @@ public class ReportsService {
 		
 	}
 	
-	public String excportLoanInfoPDF(Loans Loan) {
+	public String exportLoanInfoPDF(Loans Loan) {
 		List<Vouchers> allvouchers = voucherservice.getVoucherForThisLoan(Loan.getId());	
 		LoanInfoPDF pdfGenerator = new  LoanInfoPDF();
 		String downloadPath =  pdfGenerator.CreateInfoLoanDoc(Loan, allvouchers);

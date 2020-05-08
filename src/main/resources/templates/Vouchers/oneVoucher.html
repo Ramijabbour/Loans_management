@@ -35,10 +35,25 @@
                             <i>دفع</i>
                         </button>
                 </form>
+                
+              
             </div>
             
+      
+                
+            
             <!-- /.card-header -->
+            <div class="card-body" >
+            
+                      <form   th:action="@{/CloseVoucher/reports/export/}+ ${{voucher.VoucherID}}" method="get">
+                        <button th:id="'table_entry_childs_button_' + ${voucher.VoucherID}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                            <i>تقارير</i>
+                        </button>
+                </form>
+            
+            </div>
             <div class="card-body">
+                
               <table id="example2" class="table table-bordered table-hover">
             
                 <tbody>
@@ -78,6 +93,8 @@
                 </tbody>
         
               </table>
+              
+      
             </div>
             <!-- /.card-body -->
           </div>

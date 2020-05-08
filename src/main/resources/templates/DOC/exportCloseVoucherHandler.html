@@ -36,15 +36,15 @@
               </div>
               <hr>
               <div class="container-fluid">
-                  <a th:href="@{|/CloseVoucher/reports/export/html?id=${voucher.id}|}"><span th:text=htmlView></span></a>
+                  <a th:href="@{|/CloseVoucher/reports/export/html?id=${voucher.VoucherID}|}"><span th:text=htmlView></span></a>
                  </div>
                 <hr>
                  <div class="container-fluid">
-                  <a th:href="@{|/CloseVoucher/reports/export/pdf?id=${voucher.id}|}"><span th:text=downloadPDF></span></a>      
+                  <a th:href="@{|/CloseVoucher/reports/export/pdf?id=${voucher.VoucherID}|}"><span th:text=downloadPDF></span></a>      
     			  <hr>
     			  </div>
     			   <div class="container-fluid">
-                  <a th:href="@{|/CloseVoucher/reports/export/docx?id=${voucher.id}|}"><span th:text=downloadDocx></span></a>
+                  <a th:href="@{|/CloseVoucher/reports/export/docx?id=${voucher.VoucherID}|}"><span th:text=downloadDocx></span></a>
               	   <hr>
               	   </div>
               </div>

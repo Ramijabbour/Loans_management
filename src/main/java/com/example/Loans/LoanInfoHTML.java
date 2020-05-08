@@ -36,9 +36,9 @@ public class LoanInfoHTML implements ViewLoanInfoDocTemplate {
                         
             ammount = ammount - Integer.parseInt(v.getVoucherAmmount());
             Rests.add(""+ammount);
-            
         }
         
+       
         
         model.put("Name", Loan.getName());
         model.put("Bank",Loan.getBranche().getBank().getBankName() + " - " + Loan.getBranche().getBranchName());
@@ -47,13 +47,21 @@ public class LoanInfoHTML implements ViewLoanInfoDocTemplate {
         model.put("cost", Loan.getTotalAmmount());
         model.put("totalAmmount", Loan.getTotalAmmount());
         model.put("totalRests", Loan.getTotalAmmount());
-        model.put("mr", "");
-        model.put("ma", Loan.getTotalAmmount());
+        if(Loan.getLoanType().getTypeName().equalsIgnoreCase("مر خص"))
+        {
+        	model.put("mr",  Loan.getTotalAmmount());
+            model.put("ma","");
+            	
+        }
+        else
+        {
+        	model.put("mr", "");
+        	model.put("ma", Loan.getTotalAmmount());
+        }
         model.put("Rests",Rests);
         
         
         model.put("Date", Loan.getLoanDate());
-
 
 
         return new ModelAndView(viewName , model);

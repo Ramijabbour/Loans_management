@@ -36,11 +36,11 @@
               </div>
               <hr>
               <div class="container-fluid">
-                  <a th:href="@{|/LoanInfo/reports/exports/html?id=${loan.id}|}"><span th:text=htmlView></span></a>
+                  <a th:href="@{|/LoanInfo/reports/export/html/${loan.id}|}"><span th:text=htmlView></span></a>
                  </div>
                 <hr>
                  <div class="container-fluid">
-                  <a th:href="@{|/LoanInfo/reports/exports/pdf?id=${loan.id}|}"><span th:text=downloadPDF></span></a>      
+                  <a th:href="@{|/LoanInfo/reports/export/pdf?id=${loan.id}|}"><span th:text=downloadPDF></span></a>      
     			  <hr>
     			  </div>
     			   <div class="container-fluid">

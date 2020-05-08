@@ -85,6 +85,7 @@ public class VoucherController {
 		if(voucher.getStatus().equalsIgnoreCase("Open"))
 			checkStatus=true;
 		mav.addObject("status",checkStatus);
+		mav.addObject("notstatus",!checkStatus);
 		mav.addObject("voucher", voucher);
 		return mav; 
 	}
