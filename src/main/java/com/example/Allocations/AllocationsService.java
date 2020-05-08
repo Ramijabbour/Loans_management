@@ -121,7 +121,9 @@ public class AllocationsService {
 		return bankAllocations ; 
 	}
 
-	
+	public List<Allocations> getallAllocationsNoPage(){
+		return this.allocationsRepository.findAll() ; 
+	}
 	
 	
 }

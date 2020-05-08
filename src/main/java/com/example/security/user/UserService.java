@@ -7,9 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +25,7 @@ import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
 import com.example.security.roles.Roles;
 import com.example.security.userPermissions.UserPermissionsService;
+
 @Service
 public class UserService extends MasterService implements MasterBackUpService {
 
@@ -41,10 +39,7 @@ public class UserService extends MasterService implements MasterBackUpService {
 	UserPermissionsService userPermissionsService ;
 	
 	private PasswordEncoder passwordEncoder ;
-	
-	@PersistenceContext
-	private EntityManager entityManager;
-	
+
 	//Service permissions Injection 
 	public UserService(PasswordEncoder passwordEncoder ) {
 		System.out.println("user service init ------------------------>>>>>>>>");

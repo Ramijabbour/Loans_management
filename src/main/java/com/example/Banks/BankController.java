@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.MasterService;
 import com.example.Banks.Stats.BankStatsService;
+import com.example.Banks.Stats.ChartsHandler.AnalysisController;
+import com.example.Banks.Stats.ChartsHandler.TimeSpanModel;
 import com.example.security.user.User;
 
 
@@ -104,20 +107,68 @@ public class BankController {
 		response.sendRedirect("/Banks/all");
 	}
 	
+	
+	
+	// bank status section ---------------
+	
 	@Autowired
 	private BankStatsService bankStatsService ; 
 	
-	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/{id}")
-	public ModelAndView getBankNewStats(@PathVariable int id) {
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/{bankId}")
+	public ModelAndView getBanksStats(@PathVariable int bankId) {
+		Banks bank = this.bankservice.getBankById(bankId);
+		if(bank == null ) {
+			return sendGeneralError("Bank Not Found") ; 
+		}
 		ModelAndView mav = new ModelAndView("Banks/newstats");
-		Banks bank = this.bankservice.getBankById(id);
 		mav.addObject("bankstats",this.bankStatsService.getBankStats(bank)) ;
+		return mav ; 
+	}
+
+
+	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/charts/{bankId}")
+	public ModelAndView getBankStatsTimeSpan(@PathVariable int bankId ) {
+		TimeSpanModel timeSpanModel = new TimeSpanModel() ; 
+		ModelAndView mav = new ModelAndView("Banks/settimespan");
+		mav.addObject("bankId",bankId);
+		mav.addObject("tsm",timeSpanModel );
+		return mav ; 
+	}
+
+	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/set/{bankId}")
+	public ModelAndView getBankStatsTimeResponse(@PathVariable int bankId,@ModelAttribute TimeSpanModel timeSpanModel) {
+		return  getBankNewStats(bankId,timeSpanModel.getStdate(),timeSpanModel.getFndate()); 
+	}
+
+	
+	public ModelAndView getBankNewStats(int id, int stdate, int fndate ) {
+		Banks bank = this.bankservice.getBankById(id);
+		if(stdate <= 0 || fndate <=0 ) {
+			return sendGeneralError("date should be positive value") ;
+		}
+		if(stdate > fndate) {
+			return sendGeneralError("start date should be less than end date") ; 
+		}
+		if(bank == null ) {
+			return sendGeneralError("Bank Not Found") ; 
+		}
+		//find better way than static variables 
+		AnalysisController.setTimeSpanStart(stdate);
+		AnalysisController.setTimeSpanEnd(fndate); 
+		AnalysisController.setBank(bank);
+		//-----------------------------------------
+		ModelAndView mav = new ModelAndView("Banks/charts");
 		return mav ; 
 	}
 	
 	
-
-
+	public ModelAndView sendGeneralError(String errormsg){
+		ModelAndView mav = new ModelAndView("Errors/generalError");
+		mav.addObject("msg", errormsg);
+		return mav ; 
+	}
+	
 }
 
 

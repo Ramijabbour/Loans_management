@@ -39,7 +39,7 @@ public class User implements java.io.Serializable {
 	private LocalDateTime createdAt ; 
 	private boolean Active = false ; 
 
-	
+
 	public User() {
 		this.createdAt = MasterService.getCurrDateTime() ;
 		this.UserRoles = "none"; 
