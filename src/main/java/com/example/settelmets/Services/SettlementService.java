@@ -6,10 +6,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -230,9 +227,19 @@ public class SettlementService extends MasterService {
             return new ArrayList<Chaque>();
         }
 	}
+	public List<SettledChaque> getSettledChecksbyFirstBankName(int PageNumber){
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Slice<SettledChaque> pagedResult = this.settledChecksRepository.findByFirstBankName("ok",paging);
+		//List<EmployeeEntity> employeeList = slicedResult.getContent();
+		if (pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		} else {
+			return new ArrayList<SettledChaque>();
+		}
+	}
 	
 	public List<SettledChaque> getSettledChecks(int PageNumber){
-		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));		
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
 		Page<SettledChaque> pagedResult = this.settledChecksRepository.findAll(paging);
 		if (pagedResult.hasContent()) {
             return pagedResult.getContent();
