@@ -99,7 +99,7 @@ public class SettlementController {
 		}
 		return "unknown error ";
 	}
-	
+
 
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/all")
 	public ModelAndView getAllChecks(@Param(value ="index") int index) {
@@ -111,7 +111,20 @@ public class SettlementController {
 		}else {
 			SiteConfiguration.addSequesnceVaraibles(mav, -1);
 		}
-		return mav ; 
+		return mav ;
+	}
+	//----------------------Search by check id
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/checkid")
+	public ModelAndView getAllChecksbyCheckid(@Param(value ="index") int index,@Param(value ="checkId") int checkId) {
+		ModelAndView mav = new ModelAndView("settlement/allChecks");
+		List<Chaque> allchecks = this.settlementService.getAllChecksbyCheckId(checkId,index);
+		mav.addObject("checksList",allchecks);
+		if(allchecks.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav ;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled")

@@ -9,6 +9,7 @@ import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
+@Table(name = "Chaque",indexes = {@Index(name = "index_checkId",  columnList="checkId", unique = false)})
 public class Chaque {
 
     @Id
@@ -18,15 +19,15 @@ public class Chaque {
     
     @Column(nullable = false )
     @Convert(converter = IntEncryptDecryptConverter.class)
-    private  int CheckId;
+    private  int checkId;
     
     @Column(nullable = false )
     @Convert(converter = StringEncryptDecryptConverter.class)
-    private  String FirstBankName;
+    private  String firstBankName;
     
     @Column(nullable = false )
     @Convert(converter = StringEncryptDecryptConverter.class)
-    private  String SecondBankName ; 
+    private  String SecondBankName ;
     
     @Column(nullable = false )
     @Convert(converter = StringEncryptDecryptConverter.class)
@@ -68,8 +69,8 @@ public class Chaque {
 			String firstBranchCode, String secondBranchName, String secondBranchCode, long amount, String userName,
 			int userID, boolean active) {
 		super();
-		CheckId = checkId;
-		FirstBankName = firstBankName;
+		this.checkId = checkId;
+		this.firstBankName = firstBankName;
 		SecondBankName = secondBankName;
 		FirstBranchName = firstBranchName;
 		FirstBranchCode = firstBranchCode;
@@ -94,11 +95,11 @@ public class Chaque {
 	}
 
 	public int getCheckId() {
-		return CheckId;
+		return checkId;
 	}
 
 	public String getFirstBankName() {
-		return FirstBankName;
+		return firstBankName;
 	}
 
 	public String getSecondBankName() {
