@@ -13,5 +13,4 @@ public interface OnHoldCheckRepository extends JpaRepository<Chaque,Integer>,Pag
 
 	public List<Chaque> findByActiveTrue() ;
 	public List<Chaque> findByActiveFalse() ;
-	
 }
