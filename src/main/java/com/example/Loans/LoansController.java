@@ -86,7 +86,7 @@ public class LoansController {
 		ModelAndView mav = new ModelAndView("Loans/AllOpenLoans");
 		List<OpenLoans> allOpenloans=openLoanService.GetNotConfirmedLoans();
 		mav.addObject("allloans",allOpenloans);
-		boolean check=true;
+		boolean check=true ;
 		mav.addObject("check", check);
 		/*if(allOpenloans.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
@@ -104,6 +104,10 @@ public class LoansController {
 		ModelAndView mav = new ModelAndView("Loans/AllOpenLoans");
 		List<OpenLoans> allOpenloans=openLoanService.GetConfirmedLoans();
 		mav.addObject("allloans",allOpenloans);
+		 
+		boolean show = true ; 
+		mav.addObject("show",  show);
+
 		/*if(allOpenloans.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
 		}else {
