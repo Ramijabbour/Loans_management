@@ -15,5 +15,5 @@ import java.util.List;
 
 public interface SettledChecksRepository extends JpaRepository<SettledChaque,Integer>,PagingAndSortingRepository<SettledChaque,Integer> {
 
-    public Slice<SettledChaque> findByFirstBankName(String firstName, Pageable pageable);
+
 }

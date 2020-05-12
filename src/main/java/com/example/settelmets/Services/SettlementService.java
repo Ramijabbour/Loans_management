@@ -125,11 +125,11 @@ public class SettlementService extends MasterService {
 					super.get_current_User().getId(),false);
 			this.onHoldChecksRepository.save(finalCheck);
 			super.notificationsService.addNotification("check added to settlement Service", "/settlement/checks/all", "SUPER");
-			return 0 ; 
+			return 0 ;
 		}else{
-			return result ; 
+			return result ;
 		}
-	}	
+	}
 
 	/*
 	 * 		ERROR 				 | Error code  |
@@ -227,14 +227,23 @@ public class SettlementService extends MasterService {
             return new ArrayList<Chaque>();
         }
 	}
-	public List<SettledChaque> getSettledChecksbyFirstBankName(int PageNumber){
+	public List<Chaque> getAllChecks(int PageNumber){
 		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
-		Slice<SettledChaque> pagedResult = this.settledChecksRepository.findByFirstBankName("ok",paging);
-		//List<EmployeeEntity> employeeList = slicedResult.getContent();
+		Page<Chaque> pagedResult = this.onHoldChecksRepository.findAll(paging);
 		if (pagedResult.hasContent()) {
 			return pagedResult.getContent();
 		} else {
-			return new ArrayList<SettledChaque>();
+			return new ArrayList<Chaque>();
+		}
+	}
+
+	public List<Chaque> getAllChecksbyCheckId(int PageNumber,int checkId){
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Slice<Chaque> pagedResult = this.onHoldChecksRepository.findByCheckId(checkId,paging);
+		if (pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		} else {
+			return new ArrayList<Chaque>();
 		}
 	}
 	
@@ -247,18 +256,6 @@ public class SettlementService extends MasterService {
             return new ArrayList<SettledChaque>();
         }
 	}
-	
-	public List<Chaque> getAllChecks(int PageNumber){
-		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));		
-		Page<Chaque> pagedResult = this.onHoldChecksRepository.findAll(paging);
-		if (pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<Chaque>();
-        }
-	}
-	
-
 	public SettledChaque findCheckByID(int id ) {
 		List<SettledChaque> all = this.settledChecksRepository.findAll() ; 
 		for(SettledChaque settledCheck : all) {
