@@ -1,11 +1,12 @@
 package com.example.Banks.Stats.ChartsHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AnalysisCompositeModel {
 	private String title; // allocations for bank x between years a-b
-    private List<String> categories; // contains the bank name 
-    private List<AnalysisModel> series; // 
+    private List<String> categories = new ArrayList<String>(); // contains the bank name 
+    private List<AnalysisModel> series=  new ArrayList<AnalysisModel>(); // 
     
     
     public AnalysisCompositeModel() {}
@@ -35,7 +36,9 @@ public class AnalysisCompositeModel {
 		this.series = series;
 	}
 
-
+	public void addCat(String cat) {
+		this.categories.add(cat);
+	}
     
 
 }

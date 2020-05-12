@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.example.SiteConfiguration;
 import com.example.BankBranches.Branches;
+
 
 @Service
 public class LoanService {
@@ -70,5 +76,18 @@ public class LoanService {
 		return brancheLoans; 
 	}
 	
-
+	public Page<Loans> getAllLoansSequence(int pageNum,Page<Loans> paramModelPage) {
+		if(paramModelPage == null) {
+		Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+		Page<Loans> modelPage = this.loansRepository.findAll(paging);
+		return modelPage ;
+		}else if(paramModelPage.hasNext()) {
+			Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+			Page<Loans> modelPage = this.loansRepository.findAll(paging);
+			return modelPage ;
+		}else {
+			return null ; 
+		}
+	}
+	
 }
