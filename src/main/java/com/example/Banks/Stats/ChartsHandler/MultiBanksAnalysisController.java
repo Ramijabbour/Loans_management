@@ -19,10 +19,11 @@ import java.util.ArrayList ;
 @RestController
 public class MultiBanksAnalysisController {
 
+	
+	//Attributes section 
 	private static int yearSpanStart ; 
 	private static int yearSpanEnd ;
-	private static int monthSpanStart ; 
-	private static int monthSpanEnd ;
+
 	
 	private static List<Banks> banksList = new ArrayList<Banks>(); 
 	private static List<Integer> years = new ArrayList<Integer>();
@@ -36,6 +37,10 @@ public class MultiBanksAnalysisController {
 	private boolean loansOrderReady = false;
 	private boolean financeOrderReady = false ; 
 	
+	//End of Attributes section  
+	
+	
+	//Autowired Services 
 	@Autowired 
 	private AllocationsService allocationsService ; 
 
@@ -44,6 +49,9 @@ public class MultiBanksAnalysisController {
 		
 	@Autowired 
 	private BankService banksService ; 
+	
+	
+	//End Of Autowired Services  
 	
 	@RequestMapping("/ajax/getMultiBankPagingAllocationsAnalysisData")
 	public AnalysisCompositeModel getAllocationsNewAnalysisData() {
@@ -159,6 +167,7 @@ public class MultiBanksAnalysisController {
 		for(AnalysisModel am : amList) {
 			ACM.addCat(" ");
 		}
+		loansOrderReady = false;
 		return ACM ;
  
 	}
@@ -200,10 +209,10 @@ public class MultiBanksAnalysisController {
 		ACM.setTitle("Loans Finance Types ratio between "+yearSpanStart+"-"+yearSpanEnd);
 		ACM.setSeries(amList);
 		ACM.addCat(" ");
+		financeOrderReady = false ; 
 		return ACM ;
  
 	}
-	
 	
 	
 	private void processFinanceData() {
@@ -381,21 +390,6 @@ public class MultiBanksAnalysisController {
 		MultiBanksAnalysisController.yearSpanEnd = yearSpanEnd;
 	}
 
-	public static int getMonthSpanStart() {
-		return monthSpanStart;
-	}
-
-	public static void setMonthSpanStart(int monthSpanStart) {
-		MultiBanksAnalysisController.monthSpanStart = monthSpanStart;
-	}
-
-	public static int getMonthSpanEnd() {
-		return monthSpanEnd;
-	}
-
-	public static void setMonthSpanEnd(int monthSpanEnd) {
-		MultiBanksAnalysisController.monthSpanEnd = monthSpanEnd;
-	}
 
 	public static List<Banks> getBanksList() {
 		return banksList;

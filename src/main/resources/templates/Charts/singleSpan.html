@@ -46,17 +46,21 @@
             </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form  action="#"  th:action="@{/dashBoards/setTimeSpan/response}" th:object="${tsm}" method="get">
+              <form  action="#"  th:action="@{/dashBoards/singleTimeSpan/response}" th:object="${tsm}" method="get">
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">تاريخ البداية</label>
-                    <input type="number" min="1957" name="stdate" class="form-control" id="exampleInputEmail1" placeholder="Enter Start Date" th:field="*{stdate}">
+                    <label for="exampleInputEmail1">السنة</label>
+                    <input type="number" min="1957" name="stdate" class="form-control" id="exampleInputEmail1" placeholder="Enter Start Date" th:field="*{year}">
                   </div>
-                   <div class="form-group">
-                    <label for="exampleInputEmail1">تاريخ النهاية</label>
-                    <input type="number" min="1957" name="fndate" class="form-control" id="exampleInputEmail1" placeholder="Enter Finish Date" th:field="*{fndate}">
+           		   <div class="form-group">
+                    <label for="exampleInputPassword1">الربع</label><br>
+                    <select th:field="*{quarter}">
+                      <option value="1">الربع الأول</option>
+                      <option value="2">الربع الثاني</option>
+                      <option value="3">الربع الثالث</option>
+                      <option value="4">الربع الرابع</option>
+                    </select>
                   </div>
-   
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
