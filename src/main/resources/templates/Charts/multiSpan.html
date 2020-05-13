@@ -27,7 +27,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>إضافة بنك</h3>
+            <h3></h3>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -46,7 +46,7 @@
             </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form  action="#"  th:action="@{/Banks/view/stats/set/} + ${{bankId}}" th:object="${tsm}" method="get">
+              <form  action="#"  th:action="@{/dashBoards/setTimeSpan/response}" th:object="${tsm}" method="get">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">تاريخ البداية</label>

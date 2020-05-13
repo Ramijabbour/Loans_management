@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.SiteConfiguration;
 import com.example.BankBranches.Branches;
+import com.example.Loans.Loans;
 
 @Service
 public class CloseLoanService {
@@ -43,6 +44,22 @@ public class CloseLoanService {
 			}
 		}
 		return brancheLoans; 
+	}
+	
+	
+	public Page<CloseLoans> getAllLoansSequence(int pageNum,Page<CloseLoans> paramModelPage) {
+		if(paramModelPage == null) {
+		Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+		Page<CloseLoans> modelPage = this.closeLoanRepository.findAll(paging);
+		return modelPage ;
+		
+		}else if(paramModelPage.hasNext()) {
+			Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+			Page<CloseLoans> modelPage = this.closeLoanRepository.findAll(paging);
+			return modelPage ;
+		}else {
+			return null ; 
+		}
 	}
 	
 }

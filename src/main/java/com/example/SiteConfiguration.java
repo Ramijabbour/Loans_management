@@ -9,6 +9,19 @@ public class SiteConfiguration {
 	private static int PageSize = 20 ;
 	
 	
+	private static int AnalatycsPageSize = 10000 ; 
+	
+	private static int allocationsAnalyticsPageSize = 100 ; 
+	
+	
+	public static int getAllocationsAnalyticsPageSize() {
+		return allocationsAnalyticsPageSize;
+	}
+
+	public static void setAllocationsAnalyticsPageSize(int allocationsAnalyticsPageSize) {
+		SiteConfiguration.allocationsAnalyticsPageSize = allocationsAnalyticsPageSize;
+	}
+
 	public static int getPageSize() {
 		return PageSize;
 	}
@@ -16,8 +29,15 @@ public class SiteConfiguration {
 	public static void setPageSize(int pageSize) {
 		PageSize = pageSize;
 	}
+	
 
+	public static int getAnalatycsPageSize() {
+		return AnalatycsPageSize;
+	}
 
+	public static void setAnalatycsPageSize(int analatycsPageSize) {
+		AnalatycsPageSize = analatycsPageSize;
+	}
 
 	public static void addSequesnceVaraibles(ModelAndView mav,int index) {
 		index++ ;

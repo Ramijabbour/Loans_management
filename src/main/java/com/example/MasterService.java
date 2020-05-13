@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.Notifications.NotificationsService;
 import com.example.security.Activities.ActivityService;
@@ -72,6 +73,27 @@ public class MasterService {
 		   //System.out.println("current request time :"+dtf.format(now));
 		   return now ; 
 	}
+	
+	
+	public static String getYearFromStringDate(String date) {
+		LocalDate desiredDate = LocalDate.parse(date);
+		int year = desiredDate.getYear(); 
+		return String.valueOf(year) ; 
+	}
+	
+	public static String getMonthFromStringDate(String date) {
+		LocalDate desiredDate = LocalDate.parse(date);
+		int month = desiredDate.getMonthValue(); 
+		return String.valueOf(month) ; 
+	}
+	
+	
+	public static ModelAndView sendGeneralError(String errormsg){
+		ModelAndView mav = new ModelAndView("Errors/generalError");
+		mav.addObject("msg", errormsg);
+		return mav ; 
+	}
+	
 	
 	/*
 	public  Object encryptData(Object object) {

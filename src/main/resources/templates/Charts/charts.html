@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="ar" >
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>إCentral Bank of syria</title>
+
+    <link rel="stylesheet" th:href="@{/new/css/main.css}" href="/../../new/css/main.css" />
+    <link rel="stylesheet" th:href="@{/new/css/highcharts.css}" href="/../../new/css/highcharts.css" />
+    <link rel="stylesheet" th:href="@{/new/css/bootstrap.css}" href="/../../new/css/bootstrap.css" />
+
+    <script th:src="@{/new/js/jquery-3.2.1.min.js}" src="../../js/jquery-3.2.1.min.js"></script>
+    <script th:src="@{/new/js/highcharts.js}" src="/../../new/js/highcharts.js"></script>
+    <script th:src="@{/new/js/exporting.js}" src="/../../new/js/exporting.js"></script>
+
+
+ <script type="text/javascript">
+        $(function () {
+            loadWorldwideSalesResult();
+            loanLoansData();
+            OpenLoansData();
+            ClosedLoansData();
+        });
+
+        function loadWorldwideSalesResult(params) {
+            $.get("/ajax/getAllocationsAnalysisData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#barChartContainer').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'مليون ليرة',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        function loanLoansData(params) {
+            $.get("/ajax/getLoansAnalysisData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                //column - bar - area - areaspline - line
+                if (textStatus == 'success') {
+
+                    $('#loansContainer').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'مليون ليرة',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        function OpenLoansData(params) {
+            $.get("/ajax/getOpenLoansAnalysisData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                //column - bar - area - areaspline - line
+                if (textStatus == 'success') {
+
+                    $('#OpenloansContainer').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'مليون ليرة',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+
+        function ClosedLoansData(params) {
+            $.get("/ajax/getClosedLoansAnalysisData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                //column - bar - area - areaspline - line
+                if (textStatus == 'success') {
+
+                    $('#ClosedloansContainer').highcharts({
+                        chart: {
+                            type: 'area'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'مليون ليرة',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+    </script>
+    
+    
+</head>
+<body>
+<div id="wrapper">
+    <h2>المخصصات</h2>
+    <div id="barChartContainer"></div>
+	
+     <h2>السلف</h2>
+    <div id="loansContainer"></div>
+    
+    <h2>السلف المفتوحة</h2>
+    <div id="OpenloansContainer"></div>
+    
+    <h2>السلف المغلقة</h2>
+    <div id="ClosedloansContainer"></div>
+	
+</div>
+
+<script th:src="@{/js/bootstrap.min.js}" src="../../js/bootstrap.min.js"></script>
+
+</body>
+</html>

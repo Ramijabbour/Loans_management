@@ -1,11 +1,12 @@
 package com.example.Banks.Stats.ChartsHandler;
 
+import java.util.ArrayList;
 import java.util.List; 
 
 public class AnalysisModel {
 
 	private String name ; // year
-	private List<Integer> data ; // one entry for this year allocation  
+	private List<Integer> data = new ArrayList<Integer>() ; // one entry for this year allocation  
 	
 	public AnalysisModel() {}
 	
@@ -26,7 +27,9 @@ public class AnalysisModel {
 		this.data = data;
 	} 
 	
-	
+	public void addDataEntry(int data ) {
+		this.data.add(data);
+	}
 	
 	
 }
