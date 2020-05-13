@@ -32,8 +32,9 @@ public class MultiBanksAnalysisController {
 	private int[][] dataArray ;
 	private int[] loansDataArray ; 
 	private int[][] loansOrderData; 
-	
+	private int[] financeTypes ; 
 	private boolean loansOrderReady = false;
+	private boolean financeOrderReady = false ; 
 	
 	@Autowired 
 	private AllocationsService allocationsService ; 
@@ -90,9 +91,12 @@ public class MultiBanksAnalysisController {
 	@RequestMapping("/ajax/getMultiBankLoansAnalysisData")
 	public AnalysisCompositeModel getLoansAnalysisData() {
 		loansOrderReady = false;
+		financeOrderReady = false ; 
 		int pageNum = 0 ;
 		setLoansYearsList();
 		loansDataArray =  new int[loansyears.size()] ;  
+		financeTypes = new int[3];
+		financeTypes[0] = 0 ;financeTypes[1] = 0 ;financeTypes[2] = 0 ;
 		initLoansDataArray() ; 
 		List<Integer> banksIds = new ArrayList<Integer>() ; 
 		for(Banks bank : banksList ) {
@@ -108,6 +112,7 @@ public class MultiBanksAnalysisController {
 		}
 		sortOrderArray(banksIds);
 		loansOrderReady = true;
+		financeOrderReady = true; 
 		List<Integer> tempYearList = loansyears ; 
 		trimLoansDataArray(tempYearList);
 		List<AnalysisModel> amList = new ArrayList<AnalysisModel>();
@@ -157,6 +162,64 @@ public class MultiBanksAnalysisController {
 		return ACM ;
  
 	}
+	
+	
+	@RequestMapping("/ajax/getMultiBankFinanceOrderData")
+	public AnalysisCompositeModel getLoansFinanceData() {
+		while(!financeOrderReady) {	}
+		processFinanceData() ; 
+		List<AnalysisModel> amList = new ArrayList<AnalysisModel>();
+		int counter = 0 ; 
+		while(counter < 3 ) {
+			AnalysisModel Am = new AnalysisModel() ; 
+			String fType = "";
+			switch(counter) {
+			case 0 : {
+				fType = "مواسم استراتيجية";
+				Am.setName(fType);
+				Am.addDataEntry(financeTypes[0]);
+				break ; 
+			}
+			case 1 : {
+				fType = "طويل الامد";
+				Am.setName(fType);
+				Am.addDataEntry(financeTypes[1]);
+				break ; 
+			}
+			case 2 : {
+				fType = "قصير الامد";
+				Am.setName(fType);
+				Am.addDataEntry(financeTypes[2]);
+				break;
+			}
+			}
+			amList.add(Am);
+			counter++; 
+		}
+		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
+		ACM.setTitle("Loans Finance Types ratio between "+yearSpanStart+"-"+yearSpanEnd);
+		ACM.setSeries(amList);
+		ACM.addCat(" ");
+		return ACM ;
+ 
+	}
+	
+	
+	
+	private void processFinanceData() {
+		int total = financeTypes[0]+financeTypes[1]+financeTypes[2] ; 
+		if(total != 0 ) {
+		financeTypes[0] = Math.round(financeTypes[0]*100/total);
+		financeTypes[1] = Math.round(financeTypes[1]*100/total);
+		financeTypes[2] = Math.round(financeTypes[2]*100/total);
+		}else {
+			financeTypes[0] = 0;
+			financeTypes[1] = 0;
+			financeTypes[2] = 0;
+		}
+	}
+
+
 	//general methods 
 	
 	//fill the years list with the years between yearsSpanStart and YearsSpanEnd 
@@ -198,7 +261,7 @@ public class MultiBanksAnalysisController {
 	
 	//allocations process methods 
 	
-	//map the page data into the dataArray where each column is a year and each row is a bank 
+	//map the page data into the dataArray where each column is a year and each row is a bank
 	private int[][] processData(List<Integer> years, List<Integer> banksList,
 			Page<Allocations> allocationsPage) {
 		for(Allocations allocation : allocationsPage.getContent()) {
@@ -232,11 +295,13 @@ public class MultiBanksAnalysisController {
 			}
 		}
 	}
+	
 	//End Of Allocations process methods 
 	
 	
 	
-	//loans process methods 
+	//loans process methods
+	
 	private void initLoansDataArray() {
 		for(int i = 0 ; i < years.size() ; i++) {
 			this.loansDataArray[i] = 0 ; 
@@ -257,6 +322,13 @@ public class MultiBanksAnalysisController {
 			if(yearIndex != -1 ) {
 				loansDataArray[yearIndex] += Integer.valueOf(loan.TotalAmmount);
 				loansOrderData[bankIndex][1] += Integer.valueOf(loan.TotalAmmount);
+				if(loan.getFinanceType().getTypeName().equalsIgnoreCase("مواسم استراتيجية")) {
+					financeTypes[0]++ ; 
+				}else if (loan.getFinanceType().getTypeName().equalsIgnoreCase("طويل الامد")) {
+					financeTypes[1]++; 
+				}else {
+					financeTypes[2]++;
+				}
 			}
 		}
 	}
@@ -286,6 +358,7 @@ public class MultiBanksAnalysisController {
 			}
 		}
 	}
+
 	//End Of loans process methods 
 	
 	

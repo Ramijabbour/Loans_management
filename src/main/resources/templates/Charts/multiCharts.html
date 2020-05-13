@@ -18,6 +18,7 @@
         	multiBanksPagingAllocationsData();
         	multiBanksPagingLoansData();
         	multiBanksPagingLoansorderData();
+        	multiBanksPagingLoansFinanceData();
         });
         
         function multiBanksPagingAllocationsData(params) {
@@ -209,6 +210,69 @@
             });
         }
         
+        
+        function multiBanksPagingLoansFinanceData(params) {
+            $.get("/ajax/getMultiBankFinanceOrderData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#pagedFinanceContainer').highcharts({
+                        chart: {
+                            type: 'bar'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '%',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
     </script>
     
     <style>
@@ -229,7 +293,9 @@
 	<h2 style=>البنوك الأكثر طلبا للسلف</h2>
     <div id="pagedLoansorderContainer" style="height:70vh; width:100%" ></div>	
 
-
+	<h2 style=>نسب التمويل</h2>
+    <div id="pagedFinanceContainer" style="height:70vh; width:100%" ></div>	
+	
 
 </div>
 
