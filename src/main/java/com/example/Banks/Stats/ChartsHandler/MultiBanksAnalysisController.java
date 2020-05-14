@@ -34,9 +34,12 @@ public class MultiBanksAnalysisController {
 	private int[] loansDataArray ; 
 	private int[][] loansOrderData; 
 	private int[] financeTypes ; 
+	private int[] loansCount ; 
+	private int[] intrestRateDataArray ; 
 	private boolean loansOrderReady = false;
 	private boolean financeOrderReady = false ; 
-	
+	private boolean intrestDataReady = false ; 
+	private boolean loansCountReady = false; 
 	//End of Attributes section  
 	
 	
@@ -52,6 +55,9 @@ public class MultiBanksAnalysisController {
 	
 	
 	//End Of Autowired Services  
+	
+	
+	//routing section : 
 	
 	@RequestMapping("/ajax/getMultiBankPagingAllocationsAnalysisData")
 	public AnalysisCompositeModel getAllocationsNewAnalysisData() {
@@ -87,7 +93,7 @@ public class MultiBanksAnalysisController {
 			}
 		}
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
-		ACM.setTitle("Banks Allocations in the period between "+yearSpanStart+"-"+yearSpanEnd);
+		ACM.setTitle("قيم المخصصات الممنوحة في الفترة بين  "+yearSpanStart+"-"+yearSpanEnd);
 		for(Banks bank : banksList) {
 			ACM.addCat(bank.getBankName());
 		}
@@ -105,6 +111,10 @@ public class MultiBanksAnalysisController {
 		loansDataArray =  new int[loansyears.size()] ;  
 		financeTypes = new int[3];
 		financeTypes[0] = 0 ;financeTypes[1] = 0 ;financeTypes[2] = 0 ;
+		loansCount = new int[loansyears.size()];
+		intrestRateDataArray = new int[loansyears.size()];
+		initIntrestDataArray();
+		initLoansCountArray();
 		initLoansDataArray() ; 
 		List<Integer> banksIds = new ArrayList<Integer>() ; 
 		for(Banks bank : banksList ) {
@@ -119,8 +129,11 @@ public class MultiBanksAnalysisController {
 			loansPage = this.loansService.getAllLoansSequence(pageNum, loansPage);
 		}
 		sortOrderArray(banksIds);
+		//to sync other methods that relay on processing loans data 
 		loansOrderReady = true;
 		financeOrderReady = true; 
+		intrestDataReady = true ; 
+		loansCountReady = true ; 
 		List<Integer> tempYearList = loansyears ; 
 		trimLoansDataArray(tempYearList);
 		List<AnalysisModel> amList = new ArrayList<AnalysisModel>();
@@ -134,7 +147,7 @@ public class MultiBanksAnalysisController {
 			}
 		}
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
-		ACM.setTitle("Loans given in the period between "+yearSpanStart+"-"+yearSpanEnd);
+		ACM.setTitle("قيم السلف الممنوحة في الفترة بين "+yearSpanStart+"-"+yearSpanEnd);
 		for(int y : tempYearList) {
 			if(y != -1 )
 			ACM.addCat(" ");
@@ -162,7 +175,7 @@ public class MultiBanksAnalysisController {
 			amList.add(Am);
 		}
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
-		ACM.setTitle("banks order based on loans taken in the period between "+yearSpanStart+"-"+yearSpanEnd);
+		ACM.setTitle("البنوك الأكثر طلبا للسلف في الفترة بين "+yearSpanStart+"-"+yearSpanEnd);
 		ACM.setSeries(amList);
 		for(AnalysisModel am : amList) {
 			ACM.addCat(" ");
@@ -206,7 +219,7 @@ public class MultiBanksAnalysisController {
 			counter++; 
 		}
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
-		ACM.setTitle("Loans Finance Types ratio between "+yearSpanStart+"-"+yearSpanEnd);
+		ACM.setTitle("نسب التمويل للسلف في الفترة بين "+yearSpanStart+"-"+yearSpanEnd);
 		ACM.setSeries(amList);
 		ACM.addCat(" ");
 		financeOrderReady = false ; 
@@ -215,82 +228,56 @@ public class MultiBanksAnalysisController {
 	}
 	
 	
-	private void processFinanceData() {
-		int total = financeTypes[0]+financeTypes[1]+financeTypes[2] ; 
-		if(total != 0 ) {
-		financeTypes[0] = Math.round(financeTypes[0]*100/total);
-		financeTypes[1] = Math.round(financeTypes[1]*100/total);
-		financeTypes[2] = Math.round(financeTypes[2]*100/total);
-		}else {
-			financeTypes[0] = 0;
-			financeTypes[1] = 0;
-			financeTypes[2] = 0;
+	@RequestMapping("/ajax/getIntrestRateData")
+	public AnalysisCompositeModel getIntrestRateData() {
+		while(!intrestDataReady) {}
+		processIntrestRateData();
+		List<AnalysisModel> amList = new ArrayList<AnalysisModel>(); 
+		for(int i = 0 ; i < loansyears.size() ; i ++ ) {
+			AnalysisModel Am = new AnalysisModel() ; 
+			Am.setName(String.valueOf(loansyears.get(i)));
+			Am.addDataEntry(this.intrestRateDataArray[i]);
+			amList.add(Am);
 		}
+		
+		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
+		ACM.setTitle("متوسط معدل الفائدة على السلف في السنوات "+yearSpanStart + "-" + yearSpanEnd);
+		ACM.setSeries(amList);
+		ACM.addCat(" ");
+		intrestDataReady = false ; 
+		return ACM ; 
 	}
+	
+	@RequestMapping("/ajax/getLoanCountData")
+	public AnalysisCompositeModel getLoansCountData() {
+		while(!loansCountReady) {}
+		
+		List<AnalysisModel> amList = new ArrayList<AnalysisModel>(); 
+		for(int i = 0 ; i < loansyears.size(); i ++) {
+			AnalysisModel Am = new AnalysisModel() ; 
+			Am.setName(String.valueOf(loansyears.get(i)));
+			Am.addDataEntry(this.loansCount[i]);
+			amList.add(Am);
+		}
+		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
+		ACM.setTitle("عدد السلف الممنوحة في كل سنة بين "+yearSpanStart+"-"+yearSpanEnd);
+		ACM.setSeries(amList);
+		ACM.addCat(" ");
+		loansCountReady = false ; 
+		return ACM ;  
+	}
+	
+	//End Of routing section 
 
 
 	//general methods 
 	
-	//fill the years list with the years between yearsSpanStart and YearsSpanEnd 
-	public void setYearsList() {
-		int tmpYearSt = yearSpanStart; 
-		while(true) {
-			if(tmpYearSt > yearSpanEnd) {
-				break ; 
-			}else {
-				MultiBanksAnalysisController.years.add(tmpYearSt);
-				tmpYearSt++;
-				
-			}
-		}
-	}
-	
-	public void setLoansYearsList() {
-		loansyears = new ArrayList<Integer>() ; 
-		int tmpYearSt = yearSpanStart; 
-		while(true) {
-			if(tmpYearSt > yearSpanEnd) {
-				break ; 
-			}else {
-				MultiBanksAnalysisController.loansyears.add(tmpYearSt);
-				tmpYearSt++;
-			}
-		}
-	}
-
 	//empty all the lists for the next use so the previous data does not affect the analytics 
 	public static void flushLists() {
 		banksList = new ArrayList<Banks>();
 		years = new ArrayList<Integer>();
 	}
 
-	//end of general methods 
-	
-	
-	
-	//allocations process methods 
-	
-	//map the page data into the dataArray where each column is a year and each row is a bank
-	private int[][] processData(List<Integer> years, List<Integer> banksList,
-			Page<Allocations> allocationsPage) {
-		for(Allocations allocation : allocationsPage.getContent()) {
-			int yearIndex = years.indexOf(Integer.valueOf(MasterService.getYearFromStringDate(allocation.getAllocationDate()))) ; 
-			int bankIndex = banksList.indexOf(allocation.getBank().getBankID());
-			if( yearIndex != -1 && bankIndex != -1) {
-				dataArray[yearIndex][bankIndex] = Integer.valueOf(allocation.getAllocationAmmount());
-			}
-		}
-		return dataArray ; 
-	}
-	
-	private void initDataArray() {
-		for(int i = 0 ; i < years.size() ; i ++) {
-			for(int j = 0 ; j < banksList.size() ; j ++ ) {
-				dataArray[i][j] = -1 ; 
-			}
-		}
-	}
-	
 	private void trimDataArray(List<Integer> tempYears) {
 		for(int i = 0 ; i < years.size() ; i ++) {
 			boolean zeroRow = true ; 
@@ -305,42 +292,7 @@ public class MultiBanksAnalysisController {
 		}
 	}
 	
-	//End Of Allocations process methods 
-	
-	
-	
-	//loans process methods
-	
-	private void initLoansDataArray() {
-		for(int i = 0 ; i < years.size() ; i++) {
-			this.loansDataArray[i] = 0 ; 
-		}
-	}
-	
-	private void initOrderArray(List<Integer> banksIds) {
-		for(int i = 0 ; i< banksList.size() ; i++) {
-			loansOrderData[i][0] = banksIds.get(i);
-			loansOrderData[i][1] = 0;
-		}
-	}
-	
-	private void processLoansData(Page<Loans> loansPage, List<Integer> banksIds) {
-		for(Loans loan : loansPage.getContent()) {
-			int yearIndex = years.indexOf(Integer.valueOf(MasterService.getYearFromStringDate(loan.getLoanDate())));
-			int bankIndex = banksIds.indexOf(Integer.valueOf(loan.getBranche().getBank().getBankID()));
-			if(yearIndex != -1 ) {
-				loansDataArray[yearIndex] += Integer.valueOf(loan.TotalAmmount);
-				loansOrderData[bankIndex][1] += Integer.valueOf(loan.TotalAmmount);
-				if(loan.getFinanceType().getTypeName().equalsIgnoreCase("مواسم استراتيجية")) {
-					financeTypes[0]++ ; 
-				}else if (loan.getFinanceType().getTypeName().equalsIgnoreCase("طويل الامد")) {
-					financeTypes[1]++; 
-				}else {
-					financeTypes[2]++;
-				}
-			}
-		}
-	}
+	//end of general methods 
 	
 	private void trimLoansDataArray(List<Integer> tempYearList) {
 		for(int i = 0 ; i < loansyears.size() ; i ++) {
@@ -368,7 +320,132 @@ public class MultiBanksAnalysisController {
 		}
 	}
 
+	
+	//fill the years list with the years between yearsSpanStart and YearsSpanEnd 
+	public void setYearsList() {
+			int tmpYearSt = yearSpanStart; 
+			while(true) {
+				if(tmpYearSt > yearSpanEnd) {
+					break ; 
+				}else {
+					MultiBanksAnalysisController.years.add(tmpYearSt);
+					tmpYearSt++;
+					
+				}
+			}
+		}
+	
+	public void setLoansYearsList() {
+			loansyears = new ArrayList<Integer>() ; 
+			int tmpYearSt = yearSpanStart; 
+			while(true) {
+				if(tmpYearSt > yearSpanEnd) {
+					break ; 
+				}else {
+					MultiBanksAnalysisController.loansyears.add(tmpYearSt);
+					tmpYearSt++;
+				}
+			}
+		}
 	//End Of loans process methods 
+
+	
+	//arrays init section 
+	
+	private void initDataArray() {
+		for(int i = 0 ; i < years.size() ; i ++) {
+			for(int j = 0 ; j < banksList.size() ; j ++ ) {
+				dataArray[i][j] = -1 ; 
+			}
+		}
+	}
+	
+	private void initLoansCountArray() {
+		for(int i = 0 ; i < loansyears.size() ; i++) {
+			loansCount[i] = 0 ;
+		}
+		
+	}
+
+	private void initIntrestDataArray() {
+		for(int i = 0 ; i < loansyears.size() ; i++) {
+			intrestRateDataArray[i] = 0 ; 
+		}
+		
+	}
+
+	private void initLoansDataArray() {
+		for(int i = 0 ; i < years.size() ; i++) {
+			this.loansDataArray[i] = 0 ; 
+		}
+	}
+	
+	private void initOrderArray(List<Integer> banksIds) {
+		for(int i = 0 ; i< banksList.size() ; i++) {
+			loansOrderData[i][0] = banksIds.get(i);
+			loansOrderData[i][1] = 0;
+		}
+	}
+	
+	//End of arrays init section
+	
+	
+	//process section 
+	
+	private void processIntrestRateData() {
+		for(int i = 0 ; i < loansyears.size() ; i ++ ) {
+			this.intrestRateDataArray[i] = Math.round(this.intrestRateDataArray[i] / this.loansCount[i]);  
+		}
+	}
+	
+	
+	private void processFinanceData() {
+		int total = financeTypes[0]+financeTypes[1]+financeTypes[2] ; 
+		if(total != 0 ) {
+		financeTypes[0] = Math.round(financeTypes[0]*100/total);
+		financeTypes[1] = Math.round(financeTypes[1]*100/total);
+		financeTypes[2] = Math.round(financeTypes[2]*100/total);
+		}else {
+			financeTypes[0] = 0;
+			financeTypes[1] = 0;
+			financeTypes[2] = 0;
+		}
+	}
+	
+	//map the page data into the dataArray where each column is a year and each row is a bank
+	private int[][] processData(List<Integer> years, List<Integer> banksList,
+				Page<Allocations> allocationsPage) {
+			for(Allocations allocation : allocationsPage.getContent()) {
+				int yearIndex = years.indexOf(Integer.valueOf(MasterService.getYearFromStringDate(allocation.getAllocationDate()))) ; 
+				int bankIndex = banksList.indexOf(allocation.getBank().getBankID());
+				if( yearIndex != -1 && bankIndex != -1) {
+					dataArray[yearIndex][bankIndex] = Integer.valueOf(allocation.getAllocationAmmount());
+				}
+			}
+			return dataArray ; 
+		}
+	
+	private void processLoansData(Page<Loans> loansPage, List<Integer> banksIds) {
+		for(Loans loan : loansPage.getContent()) {
+			int yearIndex = years.indexOf(Integer.valueOf(MasterService.getYearFromStringDate(loan.getLoanDate())));
+			int bankIndex = banksIds.indexOf(Integer.valueOf(loan.getBranche().getBank().getBankID()));
+			if(yearIndex != -1 ) {
+				loansDataArray[yearIndex] += Integer.valueOf(loan.TotalAmmount);
+				loansOrderData[bankIndex][1] += Integer.valueOf(loan.TotalAmmount);
+				loansCount[yearIndex]++;
+				intrestRateDataArray[yearIndex]+= Integer.valueOf(loan.getInterestRate());
+				if(loan.getFinanceType().getTypeName().equalsIgnoreCase("مواسم استراتيجية")) {
+					financeTypes[0]++ ; 
+				}else if (loan.getFinanceType().getTypeName().equalsIgnoreCase("طويل الامد")) {
+					financeTypes[1]++; 
+				}else {
+					financeTypes[2]++;
+				}
+			}
+		}
+	}
+
+	//End of process section 
 	
 	
 	
@@ -389,7 +466,6 @@ public class MultiBanksAnalysisController {
 	public static void setYearSpanEnd(int yearSpanEnd) {
 		MultiBanksAnalysisController.yearSpanEnd = yearSpanEnd;
 	}
-
 
 	public static List<Banks> getBanksList() {
 		return banksList;

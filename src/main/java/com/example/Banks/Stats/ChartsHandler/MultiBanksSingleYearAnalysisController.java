@@ -171,10 +171,13 @@ public class MultiBanksSingleYearAnalysisController {
 		while(!loansOrderReady) {
 			
 		}
+		for(int i = 0 ; i < BanksList.size() ; i ++ ) {
+			System.out.println(loansOrderData[i][0] + " " + loansOrderData[i][1]);
+		}
 		List<AnalysisModel> amList = new ArrayList<AnalysisModel>();
 		for(int i = 0 ; i < BanksList.size() ; i ++ ) {
 			if(loansOrderData[i][1] == 0 ) {
-				break ; 
+				continue  ; 
 			}
 			AnalysisModel Am = new AnalysisModel() ; 
 			Am.setName(banksService.getBankById(loansOrderData[i][0]).getBankName());

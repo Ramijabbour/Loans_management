@@ -58,10 +58,10 @@ public class DbInit implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		/*injectUsersToDB();
-		inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
-		injectChecksToDB();
-		System.out.println("injection Done !! ");*/
+		//injectUsersToDB();
+		//inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
+		//injectChecksToDB();
+		//System.out.println("injection Done !! ");
 	}
 
 	public void inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans() {
@@ -121,17 +121,32 @@ public class DbInit implements CommandLineRunner{
 		int financeType = 0 ; 
 		int loanType = 0 ;
 		int branchesCounter = 0 ; 
-		int year = 1980 ;
-		for(int i = 1 ; i < 40 ; i ++) {
-			
-			int totalLoanValue = 50000+ ThreadLocalRandom.current().nextInt(10000, 9000000 + 1);;  
-		Loans loan = new Loans(" "," ", " ", " ",
-				" "," ", " ",String.valueOf(totalLoanValue),
+		for(int j = 0 ; j < 5 ; j++) {
+			int year = 1980 ;
+			for(int i = 1 ; i < 40 ; i ++) {
+			int totalLoanValue = 50000+ ThreadLocalRandom.current().nextInt(10000, 9000000 + 1);; 
+			int intrestRate = ThreadLocalRandom.current().nextInt(2,20);
+			System.out.println("IR : "+intrestRate);
+			Loans loan = new Loans(" "," ", " ", " ",
+				String.valueOf(intrestRate)," ", " ",String.valueOf(totalLoanValue),
 				String.valueOf(totalLoanValue), " ", " ", " ",
-			" ", " ",null, branchList.get(branchesCounter), null, loansTypes.get(loanType),
+				" ", " ",null, branchList.get(branchesCounter), null, loansTypes.get(loanType),
 			fTypes.get(financeType));
 		String yearAsString = String.valueOf(year);
-		String date = yearAsString +"-05-27";
+		int month = ThreadLocalRandom.current().nextInt(1,13);
+		String sMonth = String.valueOf(month);
+		if(month != 10) {
+			if( month != 11)
+				if( month != 12)
+			sMonth = "0"+sMonth;
+		}
+		int day = ThreadLocalRandom.current().nextInt(1,28);
+		String sDay = String.valueOf(day);
+		if(sDay.length() == 1 ) {
+			sDay = "0" + sDay; 
+		}
+		String date = yearAsString +"-"+sMonth+"-"+sDay;
+		System.out.println("loan date "+date);
 		if(i %2 == 0 ) {
 			loan.setStatus("Confirmed");
 		}else {
@@ -157,6 +172,7 @@ public class DbInit implements CommandLineRunner{
 		}
 		this.loansRepo.save(loan); 
 		
+		}
 		}
 		
 	}
