@@ -394,10 +394,13 @@ public class MultiBanksAnalysisController {
 	
 	private void processIntrestRateData() {
 		for(int i = 0 ; i < loansyears.size() ; i ++ ) {
+			if(this.loansCount[i] == 0 ) {
+				this.intrestRateDataArray[i] = 0 ; 
+				continue ; 
+			}
 			this.intrestRateDataArray[i] = Math.round(this.intrestRateDataArray[i] / this.loansCount[i]);  
 		}
 	}
-	
 	
 	private void processFinanceData() {
 		int total = financeTypes[0]+financeTypes[1]+financeTypes[2] ; 

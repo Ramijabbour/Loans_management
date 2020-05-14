@@ -18,6 +18,8 @@
         	multiBanksPagingLoansData();
         	multiBanksPagingLoansorderData();
         	multiBanksPagingLoansFinanceData();
+        	multiBanksPagingLoansIntrestData();
+            multiBanksPagingLoansCountData();
         });
         
         function multiBanksPagingAllocationsData(params) {
@@ -272,6 +274,132 @@
 
             });
         }
+        
+        function multiBanksPagingLoansCountData(params) {
+            $.get("/ajax/getSingleYearLoansCountData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#pagedLoansCountContainer').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '%',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        function multiBanksPagingLoansIntrestData(params) {
+            $.get("/ajax/getSingleYearIntrestData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#pagedLoansIntrestContainer').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '%',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
     </script>
     
     <style>
@@ -281,17 +409,26 @@
 <body>
 <div id="wrapper" >
 	<hr>
-
-	
+		
     <div id="pagedAllocationsContainer" style="height:70vh; width:100%" ></div>	
+	
+	<hr>
 
-	
-	
     <div id="pagedLoansContainer" style="height:70vh; width:100%" ></div>	
 
+	<hr>
+	
+ 	<div id="pagedLoansCountContainer" style="height:70vh; width:100%" ></div>	
+    
+    <hr>
+    
+    <div id="pagedLoansIntrestContainer" style="height:70vh; width:100%" ></div>
+	
+	<hr>
 	
     <div id="pagedLoansorderContainer" style="height:70vh; width:100%" ></div>	
-
+	
+	<hr>
 	
     <div id="pagedFinanceContainer" style="height:70vh; width:100%" ></div>	
 	

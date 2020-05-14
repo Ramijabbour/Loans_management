@@ -30,9 +30,13 @@ public class MultiBanksSingleYearAnalysisController {
 	private int[] LoansDataArray ; 
 	private int[] financeTypes ; 
 	private int[][] loansOrderData;
+	private int[] loansCount ; 
+	private int[] intrestRateDataArray ; 
 	
 	private boolean loansOrderReady = false;
-	private boolean financeOrderReady = false ; 
+	private boolean financeOrderReady = false ;
+	private boolean intrestDataReady = false ; 
+	private boolean loansCountReady = false; 
 	//End Of attributes section
 	
 	//Autowired Section 
@@ -75,7 +79,7 @@ public class MultiBanksSingleYearAnalysisController {
 			amList.add(Am);
 		}
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
-		ACM.setTitle("Banks Allocations in "+year);
+		ACM.setTitle("مخصصات البنوك في سنة "+year);
 		for(Banks bank : BanksList) {
 			ACM.addCat(bank.getBankName());
 		}
@@ -86,13 +90,19 @@ public class MultiBanksSingleYearAnalysisController {
 	@RequestMapping("/ajax/getSingleYearMultiBankLoansData")
 	public AnalysisCompositeModel getLoansAnalysisData() {
 		loansOrderReady = false;
-		financeOrderReady = false ; 
+		financeOrderReady = false ;
+		intrestDataReady = false ; 
+		loansCountReady = false ; 
 		financeTypes = new int[3];
 		financeTypes[0] = 0 ;financeTypes[1] = 0 ;financeTypes[2] = 0 ;
 		int pageNum = 0 ;
 		initMonthsList();
 		LoansDataArray = new int[MonthsList.size()];
+		loansCount = new int[MonthsList.size()];
+		intrestRateDataArray = new int[MonthsList.size()]; 
 		initLoansDataArray();
+		initLoansCountArray();
+		initIntrestDataArray();
 		List<Integer> banksIds = new ArrayList<Integer>() ; 
 		for(Banks bank : BanksList ) {
 			banksIds.add(bank.BankID);
@@ -106,8 +116,11 @@ public class MultiBanksSingleYearAnalysisController {
 			loansPage = this.loansService.getAllLoansSequence(pageNum, loansPage);
 		}
 		sortOrderArray(banksIds);
+		//to sync other methods 
 		financeOrderReady = true;
 		loansOrderReady = true;
+		intrestDataReady = true ; 
+		loansCountReady = true ; 
 		List<AnalysisModel> amList = new ArrayList<AnalysisModel>();
 		for(int i = 0 ; i < MonthsList.size() ; i ++ ) {
 				AnalysisModel Am = new AnalysisModel() ; 
@@ -116,7 +129,7 @@ public class MultiBanksSingleYearAnalysisController {
 				amList.add(Am);
 		}
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
-		ACM.setTitle("Loans given in the "+getQuarterOrder()+" of "+year);
+		ACM.setTitle("قيم السلف الممنوحة في  "+getQuarterOrder()+" من سنة "+year);
 		for(int y : MonthsList) {
 			ACM.addCat(" ");
 		}
@@ -157,7 +170,7 @@ public class MultiBanksSingleYearAnalysisController {
 			counter++; 
 		}
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
-		ACM.setTitle("Loans Finance Types ratio in "+getQuarterOrder()+" of "+year);
+		ACM.setTitle("سنب التمويل على السلف في  "+getQuarterOrder()+" من سنة "+year);
 		ACM.setSeries(amList);
 		ACM.addCat(" ");
 		financeOrderReady = false ; 
@@ -185,7 +198,7 @@ public class MultiBanksSingleYearAnalysisController {
 			amList.add(Am);
 		}
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
-		ACM.setTitle("banks order based on loans taken in "+getQuarterOrder()+" of "+year);
+		ACM.setTitle("البنوك الأكثر طلبا للسلف في  "+getQuarterOrder()+" من سنة "+year);
 		ACM.setSeries(amList);
 		for(AnalysisModel am : amList) {
 			ACM.addCat(" ");
@@ -195,26 +208,47 @@ public class MultiBanksSingleYearAnalysisController {
  
 	}
 	
+	@RequestMapping("/ajax/getSingleYearIntrestData")
+	public AnalysisCompositeModel getSingleYearIntrestData() {
+		while(!intrestDataReady) {}
+		this.processIntrestRateData();
+		List<AnalysisModel> amList = new ArrayList<AnalysisModel>() ; 
+		for(int i = 0 ; i < MonthsList.size() ; i ++) {
+			AnalysisModel am = new AnalysisModel() ; 
+			am.setName(String.valueOf(MonthsList.get(i)));
+			am.addDataEntry(intrestRateDataArray[i]);
+			amList.add(am);
+		}
+		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
+		ACM.setTitle("متوسط نسب الفائدة على السلف في "+getQuarterOrder() + " من سنة "+year);
+		ACM.setSeries(amList);
+		ACM.addCat(" ");
+		intrestDataReady = false ; 
+		return ACM; 
+	}
+	
+	@RequestMapping("/ajax/getSingleYearLoansCountData")
+	public AnalysisCompositeModel getSingleYearLoansCounttData() {
+		while(!loansCountReady) {}
+		List<AnalysisModel> amList = new ArrayList<AnalysisModel>(); 
+		for(int i = 0 ; i < MonthsList.size(); i ++) {
+			AnalysisModel Am = new AnalysisModel() ; 
+			Am.setName(String.valueOf(MonthsList.get(i)));
+			Am.addDataEntry(this.loansCount[i]);
+			amList.add(Am);
+		}
+		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
+		ACM.setTitle("عدد السلف الممنوحة في  "+getQuarterOrder()+" من سنة "+year);
+		ACM.setSeries(amList);
+		ACM.addCat(" ");
+		loansCountReady = false ; 
+		return ACM ;   
+	}
 	
 	//End Of routes section 
 	
 	//data process section 
-	
-	private void initLoansDataArray() {
-		for(int j = 0 ; j < MonthsList.size() ; j ++) {
-				LoansDataArray[j] = 0 ; 
-		}
-	}
-	
-	private void initMonthsList() {
-		MonthsList = new ArrayList<Integer>() ; 
-		int mCounter = MonthStart ;
-		while(mCounter < MonthEnd +1 ) {
-			MonthsList.add(mCounter);
-			mCounter++ ; 
-		}
-	}
-	
+
 	private void processLoansData(Page<Loans> loansPage, List<Integer> banksIds) {
 		for(Loans loan : loansPage.getContent() ) {
 			int loanMonth =Integer.valueOf(MasterService.getMonthFromStringDate(loan.getLoanDate())) ;
@@ -227,6 +261,8 @@ public class MultiBanksSingleYearAnalysisController {
 						if(loanMonth <= MonthEnd) {
 							loansOrderData[bankIndex][1] += Integer.valueOf(loan.TotalAmmount);
 							LoansDataArray[monthIndex] += Integer.valueOf(loan.getTotalAmmount());
+							loansCount[monthIndex]++ ; 
+							intrestRateDataArray[monthIndex] =+ Integer.valueOf(loan.getInterestRate());
 							if(loan.getFinanceType().getTypeName().equalsIgnoreCase("مواسم استراتيجية")) {
 								financeTypes[0]++ ; 
 							}else if (loan.getFinanceType().getTypeName().equalsIgnoreCase("طويل الامد")) {
@@ -242,13 +278,6 @@ public class MultiBanksSingleYearAnalysisController {
 		
 	}
 
-	private void intiAllocationsDataArray() {
-		for(int i = 0 ; i < BanksList.size() ; i ++ ) {
-			this.AllocationsDataArray[i] = 0 ; 
-		}
-		
-	}
-	
 	private void processAllocationsDataArray(Page<Allocations> allocationsPage,List<Integer> banksIdsList) {
 		for(Allocations allocation : allocationsPage.getContent()) {
 			int bankIndex = banksIdsList.indexOf(allocation.getBank().getBankID());
@@ -273,11 +302,40 @@ public class MultiBanksSingleYearAnalysisController {
 		}
 	}
 	
-	private void initOrderArray(List<Integer> banksIds) {
-		for(int i = 0 ; i< BanksList.size() ; i++) {
-			loansOrderData[i][0] = banksIds.get(i);
-			loansOrderData[i][1] = 0;
+	private void processIntrestRateData() {
+		for(int i = 0 ; i < MonthsList.size() ; i ++) {
+			if(this.loansCount[i] == 0 ) {
+				this.intrestRateDataArray[i] = 0 ; 
+				continue ; 
+			}
+			this.intrestRateDataArray[i] = Math.round(this.intrestRateDataArray[i] / this.loansCount[i]);
 		}
+	}
+
+	//end of data process section 
+	
+
+	
+	//service methods 
+	
+	public static void flushLists() {
+		 BanksList = new ArrayList<Banks>(); 
+		 MonthsList = new ArrayList<Integer>();	
+	}
+	
+	public String getQuarterOrder() {
+		switch(MonthStart) {
+		case 1 :{
+			return "الربع الأول";
+		}case 4 :{
+			return "الربع الثاني";
+		}case 7 :{
+			return "الربع الثالث";
+		}case 10 :{
+			return "الربع الرابع";
+		}
+		}
+		return ""; 
 	}
 	
 	private void sortOrderArray(List<Integer> banksIds) {
@@ -298,27 +356,55 @@ public class MultiBanksSingleYearAnalysisController {
 		}
 	}
 	
-	//service methods 
+	//end of service methods 
 	
-	public static void flushLists() {
-		 BanksList = new ArrayList<Banks>(); 
-		 MonthsList = new ArrayList<Integer>();	
+	//init data arrays 
+	
+	private void initLoansDataArray() {
+		for(int j = 0 ; j < MonthsList.size() ; j ++) {
+				LoansDataArray[j] = 0 ; 
+		}
 	}
 	
-	public String getQuarterOrder() {
-		switch(MonthStart) {
-		case 1 :{
-			return "Q1";
-		}case 4 :{
-			return "Q2";
-		}case 7 :{
-			return "Q3";
-		}case 10 :{
-			return "Q4";
+	private void initMonthsList() {
+		MonthsList = new ArrayList<Integer>() ; 
+		int mCounter = MonthStart ;
+		while(mCounter < MonthEnd +1 ) {
+			MonthsList.add(mCounter);
+			mCounter++ ; 
 		}
-		}
-		return ""; 
 	}
+	
+	private void intiAllocationsDataArray() {
+		for(int i = 0 ; i < BanksList.size() ; i ++ ) {
+			this.AllocationsDataArray[i] = 0 ; 
+		}
+		
+	}
+	
+	private void initOrderArray(List<Integer> banksIds) {
+		for(int i = 0 ; i< BanksList.size() ; i++) {
+			loansOrderData[i][0] = banksIds.get(i);
+			loansOrderData[i][1] = 0;
+		}
+	}
+	
+	private void initLoansCountArray() {
+		for(int i = 0 ; i < MonthsList.size() ; i++) {
+			loansCount[i] = 0 ;
+		}
+		
+	}
+
+	private void initIntrestDataArray() {
+		for(int i = 0 ; i < MonthsList.size() ; i++) {
+			intrestRateDataArray[i] = 0 ; 
+		}
+		
+	}
+	
+	//end of init data arrays 
+	
 	
 	//End Of data process section  
 	
