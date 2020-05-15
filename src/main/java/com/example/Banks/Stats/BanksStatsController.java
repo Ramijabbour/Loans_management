@@ -12,7 +12,9 @@ import com.example.MasterService;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
 import com.example.Banks.Stats.ChartsHandler.MultiBanksAnalysisController;
+import com.example.Banks.Stats.ChartsHandler.MultiBanksSingleYearAnalysisController;
 import com.example.Banks.Stats.ChartsHandler.SingleBankAnalysisController;
+import com.example.Banks.Stats.ChartsHandler.SingleSpanModel;
 import com.example.Banks.Stats.ChartsHandler.TimeSpanModel;
 
 @RestController
@@ -36,6 +38,8 @@ public class BanksStatsController {
 	}
 
 
+	
+	//single banks DashBoard
 	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/charts/{bankId}")
 	public ModelAndView getBankStatsTimeSpan(@PathVariable int bankId ) {
 		TimeSpanModel timeSpanModel = new TimeSpanModel() ; 
@@ -71,11 +75,15 @@ public class BanksStatsController {
 		return mav ; 
 	}
 	
-	
+	@RequestMapping(method = RequestMethod.GET , value = "/dashBoards/nav")
+	public ModelAndView getDashNavigation() {
+		ModelAndView mav = new ModelAndView("Charts/DashNavigation");
+		return mav ; 
+	}
 
 	
-	//MultiBanks DashBoards 
 	
+	//MultiBanks MultiYears DashBoards 
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/dashBoards/setTimeSpan")
 	public ModelAndView getDashBoardsTimeSpan() {
@@ -106,5 +114,57 @@ public class BanksStatsController {
 		return mav ; 
 	}	
 	
+	
+	// MultiBanks Single Year 
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/dashBoards/singleTimeSpan")
+	public ModelAndView getSingleTimeSpan() {
+		SingleSpanModel timeSpanModel = new SingleSpanModel() ; 
+		ModelAndView mav = new ModelAndView("Charts/singleSpan");
+		mav.addObject("tsm",timeSpanModel );
+		return mav ; 
+	}
+	
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/dashBoards/singleTimeSpan/response")
+	public ModelAndView DashBoardsSingleTimeSpanResponse(@ModelAttribute SingleSpanModel timeSpanModel) {
+		return  getSigleDashBoards(timeSpanModel.getYear(),timeSpanModel.getQuarter()); 
+	}
+	
+	
+	public ModelAndView getSigleDashBoards(int year , int quarter) {	
+		if(year <= 0 ) {
+			return MasterService.sendGeneralError("date should be positive value") ;
+		}
+		if(quarter < 1) {
+			return MasterService.sendGeneralError("Qurter Not valid") ; 
+		}
+		if(quarter > 4) {
+			return MasterService.sendGeneralError("Qurter Not valid") ; 
+		}
+		MultiBanksSingleYearAnalysisController.flushLists();
+		MultiBanksSingleYearAnalysisController.setYear(year);
+		int monthStart = 0 ;
+		int monthEnd = 0 ; 
+		if(quarter == 1 ) {
+			monthStart = 1 ; 
+			monthEnd = 3 ; 
+		}else if(quarter == 2 ) {
+			monthStart = 4 ; 
+			monthEnd = 6 ; 
+		}else if(quarter == 3 ) {
+			monthStart = 7 ; 
+			monthEnd = 9 ; 
+		}else if(quarter == 4 ) {
+			monthStart = 10 ; 
+			monthEnd = 12 ; 
+		}
+		MultiBanksSingleYearAnalysisController.setMonthStart(monthStart);
+		MultiBanksSingleYearAnalysisController.setMonthEnd(monthEnd);
+		MultiBanksSingleYearAnalysisController.setBanksList(this.bankservice.GetAllBanks());
+		ModelAndView mav = new ModelAndView("Charts/singleYearCharts");
+		return mav ; 
+	}	
+	//
 	
 }
