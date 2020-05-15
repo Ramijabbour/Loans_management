@@ -7,23 +7,17 @@ import javax.persistence.*;
 import ValidContent_Visitor.Visitor;
 
 import com.example.BankBranches.Branches;
-import com.example.Banks.Banks;
 import com.example.Clients.Clients;
 import com.example.FinanceType.FinanceType;
 import com.example.LoansType.LoansType;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 import com.example.security.user.User;
-import org.springframework.format.annotation.DateTimeFormat;
 
 //import sun.util.calendar.BaseCalendar;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 
 @Entity
-
+@Table(name = "Loans",indexes = {@Index(name = "index_loanNumber",  columnList="loanNumber", unique = false)})
 public class Loans {
 
     @Id
@@ -40,7 +34,7 @@ public class Loans {
     public String SecondSide;
     
     @Convert(converter = StringEncryptDecryptConverter.class)
-    public String LoanNumber;
+    public String loanNumber;
     
     public String WorkDate;
 
@@ -107,7 +101,7 @@ public class Loans {
 		Name = name;
 		FirstSide = firstSide;
 		SecondSide = secondSide;
-		LoanNumber = loanNumber;
+		this.loanNumber = loanNumber;
 		InterestRate = interestRate;
 		DelayInterestRate = delayInterestRate;
 		ClearanceNumber = clearanceNumber;
@@ -306,11 +300,11 @@ public class Loans {
 	
 
 	public String getLoanNumber() {
-		return LoanNumber;
+		return loanNumber;
 	}
 
 	public void setLoanNumber(String loanNumber) {
-		LoanNumber = loanNumber;
+		this.loanNumber = loanNumber;
 	}
 	
 	

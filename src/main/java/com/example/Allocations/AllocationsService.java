@@ -27,7 +27,7 @@ public class AllocationsService {
     private AllocationsRepository allocationsRepository;
 
     public List<Allocations> getAllAllocations(int PageNumber) {
-        Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+        Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize());
 		Page<Allocations> pagedResult = this.allocationsRepository.findAll(paging);
 		if (pagedResult.hasContent()) {
             return pagedResult.getContent();

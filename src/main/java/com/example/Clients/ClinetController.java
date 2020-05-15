@@ -104,6 +104,20 @@ public class ClinetController {
 			clientservice.deleteClient(id);
 			response.sendRedirect("/Clients/all");
 		}
+		//----search
+
+	@RequestMapping(method = RequestMethod.GET , value = "/Clients/Search")
+	public ModelAndView SearchByClientName(@Param(value ="index") int index,@Param(value ="clientName") String clientName) {
+		ModelAndView mav = new ModelAndView("Clients/searchClients");
+		List<Clients> allclients = this.clientservice.SearchbyclientName(index,clientName);
+		mav.addObject("allclients",allclients);
+		if(allclients.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav ;
+	}
 		
 	
 	

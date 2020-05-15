@@ -58,10 +58,10 @@ public class DbInit implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		/*injectUsersToDB();
+		injectUsersToDB();
 		inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
 		injectChecksToDB();
-		System.out.println("injection Done !! ");*/
+		System.out.println("injection Done !! ");
 	}
 
 	public void inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans() {

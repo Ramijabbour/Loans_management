@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.example.SiteConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
@@ -107,7 +108,19 @@ public class BankController {
 		bankservice.deleteBank(id);
 		response.sendRedirect("/Banks/all");
 	}
-
+	//-----seacrh
+	@RequestMapping(method = RequestMethod.GET , value = "/Banks/Search")
+	public ModelAndView getAllChecksbyCheckid(@Param(value ="index") int index,@Param(value ="bankName") String bankName) {
+		ModelAndView mav = new ModelAndView("Banks/searchbank");
+		List<Banks> allbank = this.bankservice.SearchbyBankName(index,bankName);
+		mav.addObject("allbank",allbank);
+		if(allbank.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav ;
+	}
 }
 
 

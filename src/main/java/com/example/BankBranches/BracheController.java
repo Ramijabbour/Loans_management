@@ -114,4 +114,18 @@ public class BracheController {
 		brancheService.DeleteBranche(id);
 		response.sendRedirect("/Banks/Branches/all");
 	}
+
+	//-----seacrh
+	@RequestMapping(method = RequestMethod.GET , value = "/Banks/Branches/Search")
+	public ModelAndView SearchbyBrancheCode(@Param(value ="index") int index,@Param(value ="brancheCode") String brancheCode) {
+		ModelAndView mav = new ModelAndView("Branches/SearchBranches");
+		List<Branches> allbranches = this.brancheService.SearchbybrancheCode(index,brancheCode);
+		mav.addObject("allbranches",allbranches);
+		if(allbranches.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav ;
+	}
 }
