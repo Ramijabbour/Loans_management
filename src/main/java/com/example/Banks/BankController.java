@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -109,8 +110,8 @@ public class BankController {
 		response.sendRedirect("/Banks/all");
 	}
 	//-----seacrh
-	@RequestMapping(method = RequestMethod.GET , value = "/Banks/Search")
-	public ModelAndView getAllChecksbyCheckid(@Param(value ="index") int index,@Param(value ="bankName") String bankName) {
+	@RequestMapping(method = RequestMethod.POST , value = "/Banks/Search")
+	public ModelAndView getAllChecksbyCheckid(@Param(value ="index") int index,@RequestParam("search") String bankName) {
 		ModelAndView mav = new ModelAndView("Banks/searchbank");
 		List<Banks> allbank = this.bankservice.SearchbyBankName(index,bankName);
 		mav.addObject("allbank",allbank);

@@ -14,7 +14,8 @@ package com.example.Loans;
 		import org.springframework.web.bind.annotation.PathVariable;
 		import org.springframework.web.bind.annotation.RequestMapping;
 		import org.springframework.web.bind.annotation.RequestMethod;
-		import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 		import org.springframework.web.servlet.ModelAndView;
 
 		import com.example.SiteConfiguration;
@@ -350,8 +351,8 @@ public class LoansController {
 
 	//----search
 
-	@RequestMapping(method = RequestMethod.GET , value = "/Loans/Search")
-	public ModelAndView SearchByLoanNumber(@Param(value ="index") int index,@Param(value ="loanNumber") String loanNumber) {
+	@RequestMapping(method = RequestMethod.POST , value = "/Loans/Search")
+	public ModelAndView SearchByLoanNumber(@Param(value ="index") int index,@RequestParam("search") String loanNumber) {
 		ModelAndView mav = new ModelAndView("Loans/SearchLoans");
 		List<Loans> allloans = this.loansService.SearchByLoanNumber(index,loanNumber);
 		mav.addObject("allloans",allloans);

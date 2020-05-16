@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -116,14 +117,14 @@ public class BracheController {
 	}
 
 	//-----seacrh
-	@RequestMapping(method = RequestMethod.GET , value = "/Banks/Branches/Search")
-	public ModelAndView SearchbyBrancheCode(@Param(value ="index") int index,@Param(value ="brancheCode") String brancheCode) {
+	@RequestMapping(method = RequestMethod.POST , value = "/Banks/Branches/Search")
+	public ModelAndView SearchbyBrancheCode(@Param(value ="index") int index,@RequestParam("search") String brancheCode) {
 		ModelAndView mav = new ModelAndView("Branches/SearchBranches");
 		List<Branches> allbranches = this.brancheService.SearchbybrancheCode(index,brancheCode);
 		mav.addObject("allbranches",allbranches);
 		if(allbranches.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
-		}else {
+		}else { 
 			SiteConfiguration.addSequesnceVaraibles(mav, -1);
 		}
 		return mav ;
