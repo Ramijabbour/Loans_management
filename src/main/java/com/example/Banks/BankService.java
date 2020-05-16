@@ -5,7 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.SiteConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.Allocations.AllocationsService;
@@ -102,7 +107,18 @@ public class BankService {
 		return availableBanks;		
 		
 	}
-	
+
+	//------search
+	public List<Banks> SearchbyBankName(int PageNumber,String bankName){
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Slice<Banks> pagedResult = this.bankRepository.findByBankName(bankName,paging);
+		if (pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		} else {
+			return new ArrayList<Banks>();
+		}
+	}
+
 	
 	
 }

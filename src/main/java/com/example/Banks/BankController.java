@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.example.SiteConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -107,7 +109,19 @@ public class BankController {
 		bankservice.deleteBank(id);
 		response.sendRedirect("/Banks/all");
 	}
-
+	//-----seacrh
+	@RequestMapping(method = RequestMethod.POST , value = "/Banks/Search")
+	public ModelAndView getAllChecksbyCheckid(@Param(value ="index") int index,@RequestParam("search") String bankName) {
+		ModelAndView mav = new ModelAndView("Banks/searchbank");
+		List<Banks> allbank = this.bankservice.SearchbyBankName(index,bankName);
+		mav.addObject("allbank",allbank);
+		if(allbank.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav ;
+	}
 }
 
 

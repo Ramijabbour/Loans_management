@@ -1,16 +1,12 @@
 package com.example.BankBranches;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import com.example.Banks.Banks;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
+@Table(name = "Branches",indexes = {@Index(name = "index_brancheCode",  columnList="brancheCode", unique = false)})
 public class Branches {
 
 	@Id
@@ -18,10 +14,10 @@ public class Branches {
 	public int id ;
 	
 	@Convert(converter = StringEncryptDecryptConverter.class)
-	public String BranchName="";
+	public String branchName ="";
 	
 	@Convert(converter = StringEncryptDecryptConverter.class)
-	public String BrancheCode="";
+	public String brancheCode ="";
 	
 
     @ManyToOne
@@ -35,8 +31,8 @@ public class Branches {
 
 	public Branches(String branchName, String bankCode) {
 		super();
-		BranchName = branchName;
-		BrancheCode = bankCode;
+		this.branchName = branchName;
+		brancheCode = bankCode;
 	}
 
 
@@ -54,23 +50,23 @@ public class Branches {
 
 
 	public String getBranchName() {
-		return BranchName;
+		return branchName;
 	}
 
 
 
 	public void setBranchName(String branchName) {
-		BranchName = branchName;
+		this.branchName = branchName;
 	}
 
 
 
 	public String getBrancheCode() {
-		return BrancheCode;
+		return brancheCode;
 	}
 
 	public void setBrancheCode(String brancheCode) {
-		BrancheCode = brancheCode;
+		this.brancheCode = brancheCode;
 	}
 
 	public Banks getBank() {

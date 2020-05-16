@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import com.example.SiteConfiguration;
@@ -87,6 +84,17 @@ public class LoanService {
 			return modelPage ;
 		}else {
 			return null ; 
+		}
+	}
+
+	//------search
+	public List<Loans> SearchByLoanNumber(int PageNumber,String loanNumber){
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Slice<Loans> pagedResult = this.loansRepository.findByLoanNumber(loanNumber,paging);
+		if (pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		} else {
+			return new ArrayList<Loans>();
 		}
 	}
 	

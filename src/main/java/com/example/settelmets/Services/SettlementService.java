@@ -246,7 +246,9 @@ public class SettlementService extends MasterService {
 			return new ArrayList<Chaque>();
 		}
 	}
-	
+
+
+
 	public List<SettledChaque> getSettledChecks(int PageNumber){
 		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
 		Page<SettledChaque> pagedResult = this.settledChecksRepository.findAll(paging);
@@ -265,7 +267,4 @@ public class SettlementService extends MasterService {
 		}
 		return null ; 
 	}
-	
-	
-
 }

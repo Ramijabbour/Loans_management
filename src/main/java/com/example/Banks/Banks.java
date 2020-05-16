@@ -3,15 +3,12 @@ package com.example.Banks;
 import ValidContent_Visitor.Valid_Visitable;
 import ValidContent_Visitor.Visitor;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
+@Table(name = "Banks",indexes = {@Index(name = "index_bankName",  columnList="bankName", unique = false)})
 public class Banks extends Valid_Visitable {
 
 	@Id
@@ -19,7 +16,7 @@ public class Banks extends Valid_Visitable {
 	public int BankID ;
 
 	@Convert(converter = StringEncryptDecryptConverter.class)
-    public String BankName ="" ;
+    public String bankName ="" ;
 	@Convert(converter = StringEncryptDecryptConverter.class)
     public String FinancialAllocations ;
 
@@ -29,7 +26,7 @@ public class Banks extends Valid_Visitable {
 
 	public Banks(String bankName ,String alloacation) {
 		super();
-		BankName = bankName;
+		this.bankName = bankName;
 		FinancialAllocations=alloacation;
 	}
 
@@ -43,10 +40,10 @@ public class Banks extends Valid_Visitable {
 
 	
 	public String getBankName() {
-		return this.BankName; 
+		return this.bankName;
 	}
 	public void setBankName(String bankName) {
-		this.BankName = bankName ; 
+		this.bankName = bankName ;
 	}
 	
 	

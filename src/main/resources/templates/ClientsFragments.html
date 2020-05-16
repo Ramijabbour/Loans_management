@@ -136,8 +136,12 @@
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link count-indicator "><i class="mdi mdi-message-reply-text"></i></a>
               </li>
-              <li class="nav-item nav-search d-none d-lg-block ml-3">
-               <form id="myform" method="post" action="/Loans/Search?index=0">
+              
+              
+              
+              
+             <li class="nav-item nav-search d-none d-lg-block ml-3">
+               <form id="myform" method="post" action="/Clients/Search?index=0">
                 <div class="input-group">
                
                     <div class="input-group-prepend">
@@ -147,11 +151,14 @@
                      </a>
                       </span>
                     </div>
-                    <input type="text" class="form-control" th:name="search" placeholder="search" aria-label="search" aria-describedby="search">
+                    <input type="text" class="form-control" th:name="search" placeholder="البحث حسب  اسم المتعامل" aria-label="search" aria-describedby="search">
                    
                 </div>
                  </form>
               </li>	
+              
+              
+              
             </ul>
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                 <a class="navbar-brand brand-logo" href="/../home/home.html"><img src="/../../new/images/photo58099326311927453266.jpg" alt="logo"/></a>
@@ -208,7 +215,7 @@
         <div class="container">
             <ul class="nav page-navigation">
               <li class="nav-item">
-                <a class="nav-link" href="/dashBoards/nav">
+                <a class="nav-link" href="../dashboard/dashboard.html">
                   <i class="mdi mdi-file-document-box menu-icon"></i>
                   <span class="menu-title">عرض الأحداث</span>
                 </a>

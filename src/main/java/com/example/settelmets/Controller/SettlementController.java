@@ -126,6 +126,7 @@ public class SettlementController {
 		}
 		return mav ;
 	}
+
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled")
 	public ModelAndView getSettledChecks(@Param(value ="index") int index) {

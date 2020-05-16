@@ -2,7 +2,7 @@
 <html  lang="ar" dir="rtl"
 		xmlns:th="http://www.thymeleaf.org" 
 		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:insert="fragments.html :: headerfiles">
+<head th:insert="LoanFragements.html :: headerfiles">
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Central Bank of syria</title>
@@ -18,7 +18,7 @@
   <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-<header th:insert="fragments.html :: nav"></header>
+<header th:insert="LoanFragements.html :: nav"></header>
 <div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -48,7 +48,7 @@
               <!-- form start -->
               <form action="#"  th:action="@{/Loans/addLoan}"  method="post" th:object="${loan}">
                 <div class="card-body">
-                
+
                   <div class="form-group">
                     <label for="exampleInputEmail1">رقم الرهن</label>
                     <input type="text" name="Name" class="form-control" th:field="*{Name}">
