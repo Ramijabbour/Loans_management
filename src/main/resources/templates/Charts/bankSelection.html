@@ -27,7 +27,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>إحصائيات</h3>
+            <h3>إضافة بنوك للإحصائيات</h3>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -43,17 +43,41 @@
             <div class="card card-primary">
               <!-- /.card-header -->
               <!-- form start -->
-              
-               <form action="#" th:action="@{/charts/bankSelectionNav/1}" method="get">
-                          <button th:id="'table_entry_childs_button_'" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                              <i>إحصائيات سنة واحدة</i>
-                          </button>
-              </form>
-              <form action="#" th:action="@{/charts/bankSelectionNav/2}" method="get">
-                          <button th:id="'table_entry_childs_button_'" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                              <i>إحصائيات عدة سنوات</i>
-                  			</button>
-              </form>
+       			<form action="#" th:action="@{/charts/allSingleBanks}" method="get">
+                              <button th:id="'table_entry_childs_button_'" class="btn btn-inverse-primary btn-sm" type="submit">
+                                  <i>إحصائيات كل البنوك</i>
+                              </button>
+                 </form>
+				<div class="table-responsive pt-4">
+              <table class="table table-dark">
+                <thead>
+                <tr>
+                  <th>اسم البنك</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each ="base : ${bsmObject.banksList}" >
+                  <td th:text="${base.bank.BankName}">BankName</td>
+                  <td>
+                       <form action="#" th:action="@{/charts/addbank/} + ${{base.bank.BankID}}" method="get">
+                              <button th:id="'table_entry_childs_button_' + ${base.bank.BankID}" class="btn btn-inverse-primary btn-sm" type="submit">
+                                  <i>إضافة إلى الإحصائيات</i>
+                              </button>
+                          </form>
+                      </td>
+                </tr>
+   				
+                </tbody>
+        
+              </table>
+              <form action="#" th:action="@{/dashBoards/singleTimeSpan}" method="get">
+                              <button th:id="'table_entry_childs_button_'" class="btn btn-inverse-primary btn-sm" type="submit">
+                                  <i>متابعة</i>
+                              </button>
+             </form>
+            </div>
+
+             
             </div>
             <!-- /.card -->
             </div>

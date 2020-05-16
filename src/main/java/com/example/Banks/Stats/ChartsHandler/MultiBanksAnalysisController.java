@@ -234,10 +234,12 @@ public class MultiBanksAnalysisController {
 		processIntrestRateData();
 		List<AnalysisModel> amList = new ArrayList<AnalysisModel>(); 
 		for(int i = 0 ; i < loansyears.size() ; i ++ ) {
+			if(loansyears.get(i) != -1) {
 			AnalysisModel Am = new AnalysisModel() ; 
 			Am.setName(String.valueOf(loansyears.get(i)));
 			Am.addDataEntry(this.intrestRateDataArray[i]);
 			amList.add(Am);
+			}
 		}
 		
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
@@ -254,10 +256,12 @@ public class MultiBanksAnalysisController {
 		
 		List<AnalysisModel> amList = new ArrayList<AnalysisModel>(); 
 		for(int i = 0 ; i < loansyears.size(); i ++) {
+			if(loansyears.get(i) != -1) {
 			AnalysisModel Am = new AnalysisModel() ; 
 			Am.setName(String.valueOf(loansyears.get(i)));
 			Am.addDataEntry(this.loansCount[i]);
 			amList.add(Am);
+			}
 		}
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel() ; 
 		ACM.setTitle("عدد السلف الممنوحة في كل سنة بين "+yearSpanStart+"-"+yearSpanEnd);
@@ -433,6 +437,7 @@ public class MultiBanksAnalysisController {
 			int yearIndex = years.indexOf(Integer.valueOf(MasterService.getYearFromStringDate(loan.getLoanDate())));
 			int bankIndex = banksIds.indexOf(Integer.valueOf(loan.getBranche().getBank().getBankID()));
 			if(yearIndex != -1 ) {
+				if(bankIndex != -1) {
 				loansDataArray[yearIndex] += Integer.valueOf(loan.TotalAmmount);
 				loansOrderData[bankIndex][1] += Integer.valueOf(loan.TotalAmmount);
 				loansCount[yearIndex]++;
@@ -444,6 +449,7 @@ public class MultiBanksAnalysisController {
 				}else {
 					financeTypes[2]++;
 				}
+			}
 			}
 		}
 	}
@@ -486,4 +492,20 @@ public class MultiBanksAnalysisController {
 		years = yearss;
 	}
 
+	public static void addBankToBanksList(Banks bank) {
+		for(Banks bankk : banksList) {
+			if(bankk.getBankID() == bank.getBankID()) {
+				return ; 
+			}
+		}
+		banksList.add(bank);
+	}
+	
+	public static boolean containsBank(Banks bank ) {
+		for(Banks bankk : banksList) {
+			if(bankk.getBankID() == bank.getBankID())
+				return true;
+		}
+		return false ; 
+	}
 }

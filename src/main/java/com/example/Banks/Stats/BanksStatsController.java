@@ -1,5 +1,8 @@
 package com.example.Banks.Stats;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.MasterService;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
+import com.example.Banks.Stats.ChartsHandler.BanksSelectionModel;
+import com.example.Banks.Stats.ChartsHandler.BaseSelectionModel;
 import com.example.Banks.Stats.ChartsHandler.MultiBanksAnalysisController;
 import com.example.Banks.Stats.ChartsHandler.MultiBanksSingleYearAnalysisController;
 import com.example.Banks.Stats.ChartsHandler.SingleBankAnalysisController;
@@ -81,9 +86,53 @@ public class BanksStatsController {
 		return mav ; 
 	}
 
-	
+	@RequestMapping(method = RequestMethod.GET , value = "/charts/bankSelectionNav/{redirect}")
+	public ModelAndView dashResponse(@PathVariable int redirect) {
+		if(redirect == 1 ) {
+			MultiBanksSingleYearAnalysisController.flushLists();
+			return getBankSelectionView();
+			//send to single year bank selection 
+		}else if(redirect ==2 ) {
+			MultiBanksAnalysisController.flushLists();
+			return getMultiYearBankSelectionView();
+		}else {
+			return MasterService.sendGeneralError("unKnown Operation ");
+		}
+	}
 	
 	//MultiBanks MultiYears DashBoards 
+	
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/charts/multiYearBankSelection")
+	public ModelAndView getMultiYearBankSelectionView() {
+		ModelAndView mav = new ModelAndView("Charts/multiBankSelection");
+		List<Banks> banksList = this.bankservice.GetAllBanks() ; 
+		List<Banks> banksListToView = new ArrayList<Banks>(); 
+		for(Banks bank : banksList) {
+			if(!MultiBanksAnalysisController.containsBank(bank)) {
+				banksListToView.add(bank);
+			}
+		}
+		BanksSelectionModel BSM = new BanksSelectionModel();
+		BSM.setBanksList(banksListToView); 
+		mav.addObject("bsmObject",BSM);
+		return mav ; 
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/charts/addMultibank/{bankId}")
+	public ModelAndView addBankToMultiList(@PathVariable int bankId) {
+		Banks bank = this.bankservice.getBankById(bankId);
+		if(bank != null )
+			MultiBanksAnalysisController.addBankToBanksList(bank);
+		return getMultiYearBankSelectionView();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/charts/allMultiBanks")
+	public ModelAndView allMultiBanks() {
+		MultiBanksAnalysisController.flushLists();
+		MultiBanksAnalysisController.setBanksList(this.bankservice.GetAllBanks());
+		return getDashBoardsTimeSpan();
+	}
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/dashBoards/setTimeSpan")
 	public ModelAndView getDashBoardsTimeSpan() {
@@ -106,16 +155,49 @@ public class BanksStatsController {
 		if(stDate > fnDate) {
 			return MasterService.sendGeneralError("start date should be less than end date") ; 
 		}
-		MultiBanksAnalysisController.flushLists();
 		MultiBanksAnalysisController.setYearSpanStart(stDate);
 		MultiBanksAnalysisController.setYearSpanEnd(fnDate);
-		MultiBanksAnalysisController.setBanksList(this.bankservice.GetAllBanks());
 		ModelAndView mav = new ModelAndView("Charts/multiCharts");
 		return mav ; 
 	}	
 	
 	
 	// MultiBanks Single Year 
+	
+
+	
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/charts/singlebankSelection")
+	public ModelAndView getBankSelectionView() {
+		ModelAndView mav = new ModelAndView("Charts/bankSelection");
+		List<Banks> banksList = this.bankservice.GetAllBanks() ; 
+		List<Banks> banksListToView = new ArrayList<Banks>(); 
+		for(Banks bank : banksList) {
+			if(!MultiBanksSingleYearAnalysisController.containsBank(bank)) {
+				banksListToView.add(bank);
+			}
+		}
+		BanksSelectionModel BSM = new BanksSelectionModel();
+		BSM.setBanksList(banksListToView); 
+		mav.addObject("bsmObject",BSM);
+		return mav ; 
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/charts/addbank/{bankId}")
+	public ModelAndView addBankToList(@PathVariable int bankId) {
+		Banks bank = this.bankservice.getBankById(bankId);
+		if(bank != null )
+			MultiBanksSingleYearAnalysisController.addBanksToBanksList(bank);
+		return getBankSelectionView();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/charts/allSingleBanks")
+	public ModelAndView allSingleBanks() {
+		MultiBanksSingleYearAnalysisController.flushLists();
+		MultiBanksSingleYearAnalysisController.setBanksList(this.bankservice.GetAllBanks());
+		return getSingleTimeSpan();
+	}
+	
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/dashBoards/singleTimeSpan")
 	public ModelAndView getSingleTimeSpan() {
@@ -142,7 +224,6 @@ public class BanksStatsController {
 		if(quarter > 4) {
 			return MasterService.sendGeneralError("Qurter Not valid") ; 
 		}
-		MultiBanksSingleYearAnalysisController.flushLists();
 		MultiBanksSingleYearAnalysisController.setYear(year);
 		int monthStart = 0 ;
 		int monthEnd = 0 ; 
@@ -161,10 +242,10 @@ public class BanksStatsController {
 		}
 		MultiBanksSingleYearAnalysisController.setMonthStart(monthStart);
 		MultiBanksSingleYearAnalysisController.setMonthEnd(monthEnd);
-		MultiBanksSingleYearAnalysisController.setBanksList(this.bankservice.GetAllBanks());
 		ModelAndView mav = new ModelAndView("Charts/singleYearCharts");
 		return mav ; 
 	}	
 	//
+
 	
 }

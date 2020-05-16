@@ -436,7 +436,23 @@ public class MultiBanksSingleYearAnalysisController {
 	public static void setBanksList(List<Banks> banksList) {
 		BanksList = banksList;
 	} 
+	public static void addBanksToBanksList(Banks bank) {
+		for(Banks bankk : BanksList) {
+			if(bankk.getBankID() == bank.getBankID()) {
+				return  ;
+				}
+			}
+		BanksList.add(bank);
+	}
 	
+	public static boolean containsBank(Banks bank ) {
+		for(Banks bankk : BanksList) {
+			if(bankk.getBankID() == bank.getBankID()) {
+				return true ; 
+			}
+		}
+		return false ; 
+	}
 	//End Of setters - getters section 
 	
 }
