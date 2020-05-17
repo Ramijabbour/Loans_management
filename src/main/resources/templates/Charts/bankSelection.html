@@ -48,6 +48,12 @@
                                   <i>إحصائيات كل البنوك</i>
                               </button>
                  </form>
+                 <br>
+                  <form action="#" th:action="@{/dashBoards/singleTimeSpan}" method="get">
+                              <button th:id="'table_entry_childs_button_'" class="btn btn-inverse-primary btn-sm" type="submit">
+                                  <i>متابعة</i>
+                              </button>
+            	 </form>
 				<div class="table-responsive pt-4">
               <table class="table table-dark">
                 <thead>
@@ -60,7 +66,7 @@
                   <td th:text="${base.bank.BankName}">BankName</td>
                   <td>
                        <form action="#" th:action="@{/charts/addbank/} + ${{base.bank.BankID}}" method="get">
-                              <button th:id="'table_entry_childs_button_' + ${base.bank.BankID}" class="btn btn-inverse-primary btn-sm" type="submit">
+                              <button th:id="'table_entry_childs_button_' + ${base.bank.BankID}" class="btn btn-outline-warning btn-fw" type="submit">
                                   <i>إضافة إلى الإحصائيات</i>
                               </button>
                           </form>
@@ -70,11 +76,7 @@
                 </tbody>
         
               </table>
-              <form action="#" th:action="@{/dashBoards/singleTimeSpan}" method="get">
-                              <button th:id="'table_entry_childs_button_'" class="btn btn-inverse-primary btn-sm" type="submit">
-                                  <i>متابعة</i>
-                              </button>
-             </form>
+
             </div>
 
              

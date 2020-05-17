@@ -43,18 +43,170 @@
             <div class="card card-primary">
               <!-- /.card-header -->
               <!-- form start -->
-              
-               <form action="#" th:action="@{/charts/bankSelectionNav/1}" method="get">
-                          <button th:id="'table_entry_childs_button_'" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+              <div class="row">
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-secondary font-weight-bold" th:text="*{dm.TotalBanksCount}"></h2>
+										<i class="mdi mdi-bank mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="newClient"></canvas>
+								<div class="line-chart-row-title">عدد البنوك</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-secondary font-weight-bold" th:text="*{dm.TotalBranchesCount}"></h2>
+										<i class="mdi mdi-bank mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="newClient"></canvas>
+								<div class="line-chart-row-title">عدد الأفرع</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-success font-weight-bold" th:text="*{dm.TotalClientsCount}"></h2>
+										<i class="mdi mdi-account-outline mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="newClient"></canvas>
+								<div class="line-chart-row-title">عدد المتعاملين</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-success font-weight-bold" th:text="*{dm.TotalSystemUsers}"></h2>
+										<i class="mdi mdi-account-outline mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="newClient"></canvas>
+								<div class="line-chart-row-title">عدد مستخدمين النظام</div>
+							</div>
+						</div>
+				</div>
+              <div class="row">
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-info font-weight-bold" th:text="*{dm.TotalLoansCount}"></h2>
+										<i class="mdi mdi-file-document-outline mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="invoices"></canvas>
+								<div class="line-chart-row-title">إجمالي عدد السلف</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-info font-weight-bold" th:text="*{dm.OpenLoansCount}"></h2>
+										<i class="mdi mdi-file-document-outline mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="invoices"></canvas>
+								<div class="line-chart-row-title">عدد السلف المفتوحة</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-info font-weight-bold" th:text="*{dm.ClosedLoansCount}"></h2>
+										<i class="mdi mdi-file-document-outline mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="invoices"></canvas>
+								<div class="line-chart-row-title">عدد السلف المغلقة</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-info font-weight-bold" th:text="*{dm.ResLoansCount}"></h2>
+										<i class="mdi mdi-file-document-outline mdi-18px text-dark"></i>
+									</div>
+								</div>
+								<canvas id="invoices"></canvas>
+								<div class="line-chart-row-title">عدد السلف المعاد جدولتها</div>
+							</div>
+						</div>
+				</div>
+				
+				<div class = "row">
+					<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-dark font-weight-bold" th:text="*{dm.LoansValue}"></h2>
+										<i class="mdi mdi-cash text-dark mdi-18px"></i>
+									</div>
+								</div>
+								<canvas id="transactions"></canvas>
+								<div class="line-chart-row-title">إجمالي قيم السلف</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-dark font-weight-bold" th:text="*{dm.OpenLoansValue}"></h2>
+										<i class="mdi mdi-cash text-dark mdi-18px"></i>
+									</div>
+								</div>
+								<canvas id="transactions"></canvas>
+								<div class="line-chart-row-title">إجمالي قيم السلف المفتوحة</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-dark font-weight-bold" th:text="*{dm.ClosedLoansValue}"></h2>
+										<i class="mdi mdi-cash text-dark mdi-18px"></i>
+									</div>
+								</div>
+								<canvas id="transactions"></canvas>
+								<div class="line-chart-row-title">إجمالي قيم السلف المغلقة</div>
+							</div>
+						</div>
+						<div class="col-lg-2 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body pb-0">
+									<div class="d-flex align-items-center justify-content-between">
+										<h2 class="text-dark font-weight-bold" th:text="*{dm.ResLoansValue}"></h2>
+										<i class="mdi mdi-cash text-dark mdi-18px"></i>
+									</div>
+								</div>
+								<canvas id="transactions"></canvas>
+								<div class="line-chart-row-title">إجمالي قيم السلف المعاد جدولتها</div>
+							</div>
+						</div>
+				</div>
+            </div>
+            <hr>
+             <form action="#" th:action="@{/charts/bankSelectionNav/1}" method="get">
+                          <button th:id="'table_entry_childs_button_'" class="btn btn-outline-inverse-info btn-icon-text" type="submit">
                               <i>إحصائيات سنة واحدة</i>
                           </button>
               </form>
+              <br>
               <form action="#" th:action="@{/charts/bankSelectionNav/2}" method="get">
-                          <button th:id="'table_entry_childs_button_'" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                          <button th:id="'table_entry_childs_button_'" class="btn btn-outline-inverse-info btn-icon-text" type="submit">
                               <i>إحصائيات عدة سنوات</i>
                   			</button>
               </form>
-            </div>
             <!-- /.card -->
             </div>
           <!--/.col (left) -->

@@ -119,6 +119,8 @@ public class BankService {
 		}
 	}
 
-	
+	public int getBanksCount() {
+		return this.bankRepository.getBanksCount();
+	}
 	
 }

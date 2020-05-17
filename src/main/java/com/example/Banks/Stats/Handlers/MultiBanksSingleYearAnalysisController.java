@@ -1,4 +1,4 @@
-package com.example.Banks.Stats.ChartsHandler;
+package com.example.Banks.Stats.Handlers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,8 @@ import com.example.Allocations.Allocations;
 import com.example.Allocations.AllocationsService;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
+import com.example.Banks.Stats.Models.AnalysisCompositeModel;
+import com.example.Banks.Stats.Models.AnalysisModel;
 import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
 

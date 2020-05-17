@@ -1,4 +1,4 @@
-package com.example.Banks.Stats.ChartsHandler;
+package com.example.Banks.Stats.Models;
 
 import java.util.ArrayList;
 import java.util.List; 

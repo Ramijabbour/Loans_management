@@ -14,13 +14,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.MasterService;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
-import com.example.Banks.Stats.ChartsHandler.BanksSelectionModel;
-import com.example.Banks.Stats.ChartsHandler.BaseSelectionModel;
-import com.example.Banks.Stats.ChartsHandler.MultiBanksAnalysisController;
-import com.example.Banks.Stats.ChartsHandler.MultiBanksSingleYearAnalysisController;
-import com.example.Banks.Stats.ChartsHandler.SingleBankAnalysisController;
-import com.example.Banks.Stats.ChartsHandler.SingleSpanModel;
-import com.example.Banks.Stats.ChartsHandler.TimeSpanModel;
+import com.example.Banks.Stats.Handlers.MultiBanksAnalysisController;
+import com.example.Banks.Stats.Handlers.MultiBanksSingleYearAnalysisController;
+import com.example.Banks.Stats.Handlers.SingleBankAnalysisController;
+import com.example.Banks.Stats.Models.BanksSelectionModel;
+import com.example.Banks.Stats.Models.BaseSelectionModel;
+import com.example.Banks.Stats.Models.SingleSpanModel;
+import com.example.Banks.Stats.Models.TimeSpanModel;
 
 @RestController
 public class BanksStatsController {
@@ -83,6 +83,7 @@ public class BanksStatsController {
 	@RequestMapping(method = RequestMethod.GET , value = "/dashBoards/nav")
 	public ModelAndView getDashNavigation() {
 		ModelAndView mav = new ModelAndView("Charts/DashNavigation");
+		mav.addObject("dm", this.bankStatsService.getDashDataObject());
 		return mav ; 
 	}
 

@@ -15,5 +15,8 @@ public interface LoansRepository extends JpaRepository<Loans,Integer>,PagingAndS
 
     //@Query("select loans from Loans loans where loans.loanNumber = :#{#loanNumber}")
     public Slice<Loans> findByLoanNumber(String loanNumber, Pageable pageable);
+   
+    @Query("select count(*) from Loans")
+    public int getLoansCount(); 
 
 }

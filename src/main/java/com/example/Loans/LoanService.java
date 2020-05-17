@@ -98,4 +98,22 @@ public class LoanService {
 		}
 	}
 	
+	
+	public int getLoansCount() {
+		return this.loansRepository.getLoansCount();
+	}
+	
+	public long getTotalLoansValue() {
+		int pageNum = 0 ; 
+		long totalVal = 0 ; 
+		Page<Loans> loansPage = getAllLoansSequence(pageNum, null);
+		while(loansPage != null ) {
+			for(Loans loan : loansPage.getContent()) {
+			totalVal += Long.valueOf(loan.getTotalAmmount());
+			}
+			pageNum++;
+			loansPage = getAllLoansSequence(pageNum, loansPage);
+		}
+		return totalVal ; 
+	}
 }

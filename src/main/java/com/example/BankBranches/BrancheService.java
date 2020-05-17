@@ -89,4 +89,8 @@ public class BrancheService {
 			return new ArrayList<Branches>();
 		}
 	}
+	
+	public int getBranchesCount() {
+		return this.brancheRepository.getBranchesCount() ; 
+	}
 }

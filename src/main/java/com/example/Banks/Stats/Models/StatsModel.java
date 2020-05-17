@@ -1,4 +1,4 @@
-package com.example.Banks.Stats;
+package com.example.Banks.Stats.Models;
 
 import java.util.List ;
 

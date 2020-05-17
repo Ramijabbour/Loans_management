@@ -24,9 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.MasterService;
 import com.example.Banks.Stats.BankStatsService;
-import com.example.Banks.Stats.ChartsHandler.MultiBanksAnalysisController;
-import com.example.Banks.Stats.ChartsHandler.SingleBankAnalysisController;
-import com.example.Banks.Stats.ChartsHandler.TimeSpanModel;
+import com.example.Banks.Stats.Handlers.MultiBanksAnalysisController;
+import com.example.Banks.Stats.Handlers.SingleBankAnalysisController;
+import com.example.Banks.Stats.Models.TimeSpanModel;
 import com.example.security.user.User;
 
 

@@ -16,4 +16,8 @@ public interface BanksRepository extends JpaRepository<Banks,Integer>, PagingAnd
     public Slice<Banks> findByBankName(String bankName, Pageable pageable);
 
 
+    @Query("select count(*) from Banks")
+    public int getBanksCount();
+    
+    
 }

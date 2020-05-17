@@ -12,4 +12,9 @@ import org.springframework.stereotype.Repository;
 public interface BrancheRepository  extends JpaRepository <Branches,Integer> ,PagingAndSortingRepository<Branches,Integer>{
     @Query("select branches from Branches branches where branches.brancheCode = :#{#brancheCode}")
     public Slice<Branches> findByBrancheCode(String brancheCode, Pageable pageable);
+
+    
+    @Query("select count(*) from Branches")
+    public int getBranchesCount();
+    
 }

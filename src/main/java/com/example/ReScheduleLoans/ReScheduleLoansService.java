@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.example.SiteConfiguration;
-import com.example.OpenLoans.OpenLoans;
+import com.example.CloseLoans.CloseLoans;
 
 @Service
 public class ReScheduleLoansService {
@@ -53,5 +53,43 @@ public class ReScheduleLoansService {
 		}
 		return null;
 	}
+	
+	public int getResLoansCount() {
+		return this.reScheduleLoansReopsitory.getResLoansCount() ; 
+	}
+
+	
+	public Page<ReScheduleLoans> getAllLoansSequence(int pageNum,Page<ReScheduleLoans> paramModelPage) {
+		if(paramModelPage == null) {
+		Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+		Page<ReScheduleLoans> modelPage = this.reScheduleLoansReopsitory.findAll(paging);
+		return modelPage ;
+		
+		}else if(paramModelPage.hasNext()) {
+			Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+			Page<ReScheduleLoans> modelPage = this.reScheduleLoansReopsitory.findAll(paging);
+			return modelPage ;
+		}else {
+			return null ; 
+		}
+	}
+	
+	
+	
+	
+	public long getTotalLoansValue() {
+		int pageNum = 0 ; 
+		long totalVal = 0 ; 
+		Page<ReScheduleLoans> loansPage = getAllLoansSequence(pageNum, null);
+		while(loansPage != null ) {
+			for(ReScheduleLoans loan : loansPage.getContent()) {
+			totalVal += Long.valueOf(loan.getLoan().getTotalAmmount());
+			}
+			pageNum++;
+			loansPage = getAllLoansSequence(pageNum, loansPage);
+		}
+		return totalVal ; 
+	}
+
 	
 }

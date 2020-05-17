@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.example.SiteConfiguration;
 import com.example.BankBranches.Branches;
 import com.example.Loans.Loans;
+import com.example.OpenLoans.OpenLoans;
 
 @Service
 public class CloseLoanService {
@@ -62,4 +63,24 @@ public class CloseLoanService {
 		}
 	}
 	
+
+	public int getClosedLoansCount() {
+		return this.closeLoanRepository.getClosedLoansCount() ; 
+	}
+	
+	
+	public long getTotalLoansValue() {
+		int pageNum = 0 ; 
+		long totalVal = 0 ; 
+		Page<CloseLoans> loansPage = getAllLoansSequence(pageNum, null);
+		while(loansPage != null ) {
+			for(CloseLoans loan : loansPage.getContent()) {
+			totalVal += Long.valueOf(loan.getLoan().getTotalAmmount());
+			}
+			pageNum++;
+			loansPage = getAllLoansSequence(pageNum, loansPage);
+		}
+		return totalVal ; 
+	}
 }
+

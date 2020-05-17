@@ -41,8 +41,6 @@ public class ClinetController {
 	}
 	
 	
-
-	
 	//add new Client -------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Clients/addClient")
 	public ModelAndView addClientRequest() {

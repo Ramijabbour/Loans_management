@@ -90,5 +90,9 @@ public class ClientService {
 			return new ArrayList<Clients>();
 		}
 	}
+	
+	public int getClientsCount() {
+		return this.clientRepository.getClientsCount() ; 
+	}
 
 }
