@@ -1,4 +1,4 @@
-package com.example.DataBase;
+package com.example.dataBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,6 @@ import com.example.Loans.Loans;
 import com.example.Loans.LoansRepository;
 import com.example.LoansType.LoansType;
 import com.example.LoansType.LoansTypeRepository;
-import com.example.OpenLoans.OpenLoans;
-import com.example.OpenLoans.OpenLoansRepository;
-import com.example.security.roles.Roles;
 import com.example.security.roles.RolesRepository;
 import com.example.security.user.User;
 import com.example.security.user.UserRepository;
@@ -43,13 +40,11 @@ public class DbInit implements CommandLineRunner{
 	private AllocationsRepository allocationsRepo ; 
 	private OnHoldCheckRepository onHoldRepo ; 
 	private LoansRepository loansRepo ; 
-	private BrancheRepository branchRepo ;
-	private OpenLoansRepository openLoansRepo ; 
+	private BrancheRepository branchRepo ; 
 	
 	public DbInit(OnHoldCheckRepository onHoldRepositpry ,UserRepository userRepository,PasswordEncoder passwordEncoder
 				,LoansTypeRepository LtypeRepo,FinanceTypeRepository financeRep,BanksRepository banksRepo
-				,AllocationsRepository allocationsRepo,LoansRepository loansRepo,BrancheRepository branchRepo
-				,RolesRepository rolesRepo ,  OpenLoansRepository openLoansRepo) {
+				,AllocationsRepository allocationsRepo,LoansRepository loansRepo,BrancheRepository branchRepo) {
 		this.onHoldRepo = onHoldRepositpry ; 
 		this.userRepository = userRepository ; 
 		this.passwordEncoder = passwordEncoder ;
@@ -59,8 +54,6 @@ public class DbInit implements CommandLineRunner{
 		this.allocationsRepo = allocationsRepo ; 
 		this.loansRepo = loansRepo ; 
 		this.branchRepo = branchRepo ; 
-		this.rolesRepo = rolesRepo ; 
-		this.openLoansRepo = openLoansRepo ; 
 	}
 
 	@Override
@@ -69,47 +62,7 @@ public class DbInit implements CommandLineRunner{
 		//inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
 		//injectChecksToDB();
 		//System.out.println("injection Done !! ");
-		//ALLANALYTICS
-	
-		boolean adminFound = false , superFound = false ,statsFound = false , allStatsFound = false  ; 
-		List<Roles> rolesList = this.rolesRepo.findAll() ;
-		for(Roles role : rolesList ) {
-			if(role.getRoleName().equalsIgnoreCase("ADMIN")){
-				adminFound = true ; 
-			}
-			if(role.getRoleName().equalsIgnoreCase("SUPER")) {
-				superFound = true ; 
-			}
-			if(role.getRoleName().equalsIgnoreCase("ANALYTICS")) {
-				statsFound = true ; 
-			}
-			if(role.getRoleName().equalsIgnoreCase("ALLANALYTICS")) {
-				allStatsFound = true ; 
-			}		
-		}
-		Roles role = new Roles() ;
-		Roles role1 = new Roles() ;
-		Roles role2 = new Roles() ;
-		Roles role3 = new Roles() ;
-		if(!adminFound) {
-			role.setRoleName("ADMIN");
-			this.rolesRepo.save(role);
-		}
-		if(!superFound) {
-			role1.setRoleName("SUPER");
-			this.rolesRepo.save(role1); 
-		}
-		if(!statsFound) {
-			role2.setRoleName("ANALYTICS");
-			this.rolesRepo.save(role2); 
-		}
-		if(!allStatsFound) {
-			role3.setRoleName("ALLANALYTICS");
-			this.rolesRepo.save(role3); 
-		}
-		
 	}
-	
 
 	public void inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans() {
 		//inser finance types // 
@@ -173,6 +126,7 @@ public class DbInit implements CommandLineRunner{
 			for(int i = 1 ; i < 40 ; i ++) {
 			int totalLoanValue = 50000+ ThreadLocalRandom.current().nextInt(10000, 9000000 + 1);; 
 			int intrestRate = ThreadLocalRandom.current().nextInt(2,20);
+			System.out.println("IR : "+intrestRate);
 			Loans loan = new Loans(" "," ", " ", " ",
 				String.valueOf(intrestRate)," ", " ",String.valueOf(totalLoanValue),
 				String.valueOf(totalLoanValue), " ", " ", " ",
@@ -217,17 +171,13 @@ public class DbInit implements CommandLineRunner{
 			branchesCounter = 0 ; 
 		}
 		this.loansRepo.save(loan); 
-		OpenLoans openLoan = new OpenLoans();
-		openLoan.setLoan(loan);
-		this.openLoansRepo.save(openLoan);
+		
 		}
 		}
 		
 	}
 
 	public void injectUsersToDB() {
-		User superr = new User("SuperAccount@Gmail.com",passwordEncoder.encode("ADMIN123qwe"),"superadmin","male","","SUPER",true);
-		this.userRepository.save(superr);
 		for(int i = 0 ; i < 100 ; i ++) {
 			User admin = new User("user@email.com"+String.valueOf(i),passwordEncoder.encode("user123"),"user"+String.valueOf(i),"male","","USER",true);
 			this.userRepository.save(admin);
