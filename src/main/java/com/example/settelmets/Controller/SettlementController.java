@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.SiteConfig.SiteConfiguration;
+import com.example.SiteConfiguration;
 import com.example.settelmets.Models.Chaque;
 import com.example.settelmets.Models.CheckDisposableModel;
 import com.example.settelmets.Models.SettledChaque;

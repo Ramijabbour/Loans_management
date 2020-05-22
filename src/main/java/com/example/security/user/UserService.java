@@ -2,6 +2,7 @@ package com.example.security.user;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +14,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.MasterBackUpService;
-import com.example.SiteConfig.MasterService;
-import com.example.SiteConfig.SiteConfiguration;
+import com.example.MasterService;
+import com.example.SiteConfiguration;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
+import com.example.security.permissions.PermissionsService;
 import com.example.security.roles.Roles;
 import com.example.security.userPermissions.UserPermissionsService;
 
@@ -37,12 +38,29 @@ public class UserService extends MasterService implements MasterBackUpService {
 	@Autowired
 	UserPermissionsService userPermissionsService ;
 	
-	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); ;
+	private PasswordEncoder passwordEncoder ;
 
-	public UserService() {
-
+	//Service permissions Injection 
+	public UserService(PasswordEncoder passwordEncoder ) {
+		System.out.println("user service init ------------------------>>>>>>>>");
+		this.passwordEncoder = passwordEncoder ; 
+		/*we add all the services to permissions service */
+		Method[] methods =  this.getClass().getDeclaredMethods();
+		List<String> methodsNames = new ArrayList<String>(); 
+		for(Method method : methods) {
+			System.out.println("method name from service : "+method.getName());
+			methodsNames.add(method.getName());
+		}
+		methodsNames.add(this.getClass().getSimpleName());
+		System.out.println("ls service : "+this.getClass().getSimpleName());
+		PermissionsService.addPermissionsToPermissionsList(methodsNames);
+		/*permissions added and need to be committed to permissions table in the data base at route /permissions/commit*/
 	}
 	//
+	
+	public List<User> getAllActuator(){
+		return this.userRepo.findAll() ; 
+	}
 	
 	//all Users// 
 	public List<User> getAllUsers(int PageNumber) {
@@ -96,6 +114,7 @@ public class UserService extends MasterService implements MasterBackUpService {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			user.setActive(false);
 			this.userRepository.save(user);
+			super.notificationsService.addNotification("New User need Activation", "/adminstration/users/nonactive", "ADMIN,SUPER");
 			return "ok";
 		}
 		
@@ -103,34 +122,25 @@ public class UserService extends MasterService implements MasterBackUpService {
 	
 	private String validateUserInfo(User user) {
 		if(user.getUsername().length() < 6 || user.getUsername().length() > 20) {
-			return "اسم المستخد يجب ان يكون بين 7  و 20 محرف " ; 
+			return "userName length should be between 6 and 20 " ; 
 		}
 		if(user.getPassword().length() < 8 || user.getPassword().length() > 20 ) {
-			return "كلمة السر يجب ان تكون بين 8 و 20 محرف" ; 
+			return "password length should be between 8 and 20" ; 
 		}
 		if(!user.getGender().equalsIgnoreCase("M")) {
 			if(!user.getGender().equalsIgnoreCase("F"))
-			return "المستخدم يجب ان يكون ذكر أو اثنى فقط";
+			return "unknown gender";
 		}
 		for(char c : user.getUsername().toCharArray()) {
 			if(!Character.isAlphabetic(c) ) {
 				if(!Character.isDigit(c))
-				return "اسم المستخدم يحوي محارف غير مسموح بها";
+				return "userName Contains Illegal characters";
 			}
 		}
 		if(!validatePassword(user.getPassword())) {
-			return "كلمة السر تحتوي على محارف غير مسموح بها";
+			return "password contains illegal characters";
 		}
 		return "ok";
-	}
-	
-	private User getUserBYId(int id ) {
-		for(User user : this.userRepo.findAll()) {
-			if(user.getId() == id ) {
-				return user ; 
-			}
-		}
-		return null ; 
 	}
 	
 	//update current user // 
@@ -139,14 +149,10 @@ public class UserService extends MasterService implements MasterBackUpService {
 		String result = "";
 		try {
 			if(this.userRepository.findById(user.getId()) != null) {
-				User dataUser = getUserBYId(user.getId()); 
 				result = validateUserInfo(user); 
 				if(result.equalsIgnoreCase("ok")){
-					user.setPassword(passwordEncoder.encode(user.getPassword()));
-					if(dataUser.isActive())
-						user.setActive(true);
-					this.userRepository.save(user); 
-					return "ok";
+				this.userRepository.save(user); 
+				return "ok";
 				}
 			}
 		}catch(Exception e ) {

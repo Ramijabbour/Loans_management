@@ -12,7 +12,6 @@ import com.example.security.permissions.Permissions;
 import com.example.security.user.User;
 import com.example.security.user.UserService;
 
-
 @Service
 public class UserPermissionsService {
 

@@ -1,5 +1,6 @@
 package com.example.security.permissions;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,20 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.Banks.Banks;
-import com.example.SiteConfig.SiteConfiguration;
+import com.example.SiteConfiguration;
 import com.example.aspect.DataDuplicationException;
 import com.example.aspect.ItemNotFoundException;
 import com.example.security.roles.Roles;
 import com.example.security.rolesPermissions.RolesPermissionsService;
 import com.example.security.user.User;
 import com.example.security.userPermissions.UserPermissionsService;
-
-
 
 @Service
 public class PermissionsService {
@@ -39,6 +36,13 @@ public class PermissionsService {
 	private static List<String> PermissionsList = new ArrayList<String>() ; 
 	
 	PermissionsService(){
+		Method[] methods =  this.getClass().getDeclaredMethods();
+		List<String> methodsNames = new ArrayList<String>(); 
+		for(Method method : methods) {
+			System.out.println("method name from service : "+method.getName());
+			methodsNames.add(method.getName());
+		}
+		PermissionsService.addPermissionsToPermissionsList(methodsNames);
 	}
 	
 	public int getPermissionsCount() {
@@ -119,17 +123,5 @@ public class PermissionsService {
 	public List<User> getUsersWithPermission(Permissions permission){
 		return this.userPermissionsService.getUsersWithPermission(permission);
 	}
-	
-	
-	public List<Permissions> SearchbyPermissionkName(int PageNumber,String permissionName){
-		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
-		Slice<Permissions> pagedResult = this.permissionsRepository.findByPermissionName(permissionName,paging);
-		if (pagedResult.hasContent()) {
-			return pagedResult.getContent();
-		} else {
-			return new ArrayList<Permissions>();
-		}
-	}
-	
 	
 }

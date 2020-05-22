@@ -1,6 +1,6 @@
 package com.example.Banks.Stats.Models;
 
-import com.example.SiteConfig.MasterService;
+import com.example.MasterService;
 
 public class TimeSpanModel {
 

@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.example.SiteConfig.MasterService;
+import com.example.MasterService;
 import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 

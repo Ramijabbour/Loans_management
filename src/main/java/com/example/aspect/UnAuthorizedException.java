@@ -8,8 +8,8 @@ public class UnAuthorizedException extends RuntimeException{
 	
 	public UnAuthorizedException() {
 		super(); 
-		this.ErrorMsg = "لا تملك صلاحية الوصول إلى هذه العملية";
-		this.ExceptionCode = -403 ; 
+		this.ErrorMsg = "UnAuthorized user : cannot Access requested Service ";
+		this.ExceptionCode = -401 ; 
 	}
 	
 	

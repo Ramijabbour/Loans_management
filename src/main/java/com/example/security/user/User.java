@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.example.SiteConfig.MasterService;
+import com.example.MasterService;
 import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 

@@ -15,7 +15,7 @@ public class HomeController {
     
     @RequestMapping(method = RequestMethod.GET , value = "/")
     public ModelAndView Root() {
-    	ModelAndView mav = new ModelAndView("Login/index");
+    	ModelAndView mav = new ModelAndView("fragments");
     	return mav; 
     }
     

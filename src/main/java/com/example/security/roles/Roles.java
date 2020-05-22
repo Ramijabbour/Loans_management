@@ -1,6 +1,5 @@
 package com.example.security.roles;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -77,19 +76,11 @@ public class Roles {
 	
 	public void revokePermissionFromRole(String permission) {
 		List<String> rolePermissions = this.convertPermissionsToList();
-		int indexOFPermission = rolePermissions.indexOf(permission) ; 
-		List<String> newPermissionsList = new ArrayList<String>();  
-		if(indexOFPermission != -1 ) {
+		if(rolePermissions.contains(permission)) {
+			rolePermissions.remove(permission);
+		}
 		this.AssignedPermissions="" ; 
-		for( int i = 0 ; i < rolePermissions.size() ; i++) {
-			if(i == indexOFPermission) {
-				continue ; 
-			}else {
-				newPermissionsList.add(rolePermissions.get(i));
-			}
-		}
 		this.assignPermissionsList(rolePermissions);
-		}
 	}
 	
 	public List<String> convertPermissionsToList(){

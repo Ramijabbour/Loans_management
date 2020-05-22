@@ -10,7 +10,6 @@ import com.example.security.permissions.Permissions;
 import com.example.security.roles.Roles;
 import com.example.security.roles.RolesService;
 
-
 @Service
 public class RolesPermissionsService {
 
@@ -81,7 +80,7 @@ public class RolesPermissionsService {
 	}
 	
 	public void revokePermissionFromRole (Roles role , Permissions permission) {
-		List<RolePermission> rolePermissionsList = this.rolePermissionRepository.findAll() ;
+		List<RolePermission> rolePermissionsList = this.rolePermissionRepository.findAll() ; 
 		for(RolePermission rolePermission : rolePermissionsList ) {
 			if(rolePermission.getRole().getId() == role.getId() && rolePermission.getPermission().getId() == permission.getId()) {
 				this.rolesService.revokePermissionFromRoles(permission, role);

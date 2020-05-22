@@ -1,7 +1,6 @@
 package com.example.security.user;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.SiteConfig.MasterService;
-import com.example.SiteConfig.SiteConfiguration;
+import com.example.SiteConfiguration;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
@@ -44,18 +43,11 @@ public class UserController {
 	@Autowired
 	RolesService rolesService ; 
 	
-	
-	public UserController() { 
-		Method[] methods =  this.getClass().getDeclaredMethods();
-		List<String> methodsNames = new ArrayList<String>(); 
-		for(Method method : methods) {
-			if(!methodsNames.contains(method.getName()))
-				{
-					methodsNames.add(method.getName());
-				}
-		}
-		methodsNames.add(this.getClass().getSimpleName());
-		MasterService.addPermissionsToPermissionService(methodsNames);
+	///index page /// 
+	@RequestMapping(method = RequestMethod.GET , value = "/adminstration/index")
+	public ModelAndView index() {
+		ModelAndView mav = new ModelAndView("User/index");
+		return mav ; 
 	}
 	
 	///all users ///
@@ -74,7 +66,7 @@ public class UserController {
 	
 	///add new user ///
 	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/adduser")
-	public ModelAndView addUser() {
+	public ModelAndView addUserRequest() {
 		ModelAndView mav = new ModelAndView("User/AddUser");
 		mav.addObject("user",new User());
 		return mav; 
@@ -82,19 +74,21 @@ public class UserController {
 	
 	//add user .//
 	@RequestMapping(method = RequestMethod.POST , value="/adminstration/users/adduser")
-	public ModelAndView addUser(@ModelAttribute User user)  {
+	public ModelAndView addNewUser(@ModelAttribute User user)  {
 		String response = this.userService.addUser(user); 
 		if(response.equalsIgnoreCase("ok")) {
-			return MasterService.sendSuccessMsg("تمت عملية إضافة مستخدم بنجاح"); 
+			return this.getAllUsers(0); 
 		}else {
-			return MasterService.sendGeneralError(response); 
+			ModelAndView mav = new ModelAndView("Errors/userError");
+			mav.addObject("msg",response);
+			return mav ; 
 		}
 	}
 	
 	
 	///update user ///	
 	@RequestMapping(method = RequestMethod.GET , value="/adminstration/users/update/{id}")
-	public ModelAndView updateUser(@PathVariable int id ) throws IOException {
+	public ModelAndView updateUserRequest(@PathVariable int id ) throws IOException {
 		ModelAndView mav = new ModelAndView("User/update");
 		User user = this.userService.getUserByID(id);
 		mav.addObject("user",user);
@@ -106,9 +100,11 @@ public class UserController {
 	public ModelAndView updateUser(@ModelAttribute User user) {
 		String response = this.userService.updateUser(user);
 		if(response.equalsIgnoreCase("ok")) {
-			return MasterService.sendSuccessMsg("تم تعديل المستخدم بنجاح"); 
+			return this.getAllUsers(0) ; 
 		}else {
-			return MasterService.sendGeneralError(response);
+		ModelAndView mav = new ModelAndView("Errors/userError");
+		mav.addObject("msg",response);
+		return mav ; 
 		}
 	}
 	
@@ -118,7 +114,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.POST , value="/adminstration/users/delete/{userid}")
 	public ModelAndView deleteUser(@PathVariable int userid){
 		this.userService.deleteUser(this.userService.getUserByID(userid));
-		return MasterService.sendSuccessMsg("تم حذف المستخدم بنجاح");
+		return this.getAllUsers(0);
 	}
 	
 	
@@ -140,7 +136,7 @@ public class UserController {
 	 * get the permissions that the user does not have 
 	 */
 	@RequestMapping(method=RequestMethod.GET , value = "/admistration/users/user/permissions/grant/{userid}")
-	public ModelAndView grantPermissionsToUser(@PathVariable int userid) {
+	public ModelAndView grantPermissionsToUserRequest(@PathVariable int userid) {
 		User user = this.userService.getUserByID(userid);
 		ModelAndView mav = new ModelAndView("Permissions/grantpermissions");
 		List<Permissions>userPermissionsList = this.userPermissionsService.getPermissionsOfUser(user);
@@ -151,7 +147,9 @@ public class UserController {
 				uniquePermissionsList.add(permission);
 		}
 		mav.addObject("user",user);
+		System.out.println("permissions list size : "+uniquePermissionsList.size());
 		mav.addObject("permissionslist",uniquePermissionsList);
+		
 		return mav ; 
 	}
 	
@@ -166,7 +164,7 @@ public class UserController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/admistration/users/user/roles/grant/{userid}")
-	public ModelAndView grantRoleToUser(@PathVariable int userid) {
+	public ModelAndView grantRoleToUserRequest(@PathVariable int userid) {
 		User user = this.userService.getUserByID(userid);
 		ModelAndView mav = new ModelAndView("Roles/grantroles");
 		List<Roles> allRoles = this.rolesService.getAllRoles(0) ; 
@@ -183,7 +181,7 @@ public class UserController {
 	} 
 	
 	@RequestMapping(method = RequestMethod.POST , value = "/adminstration/users/user/roles/grant/{userid}/{roleid}")
-	public void grantRoleToUser(@PathVariable int roleid ,@PathVariable int userid,HttpServletResponse response  ) throws IOException {
+	public void grantRolesToUser(@PathVariable int roleid ,@PathVariable int userid,HttpServletResponse response  ) throws IOException {
 		Roles role = this.rolesService.getRoleByID(roleid);
 		User user = this.userService.getUserByID(userid);
 		this.userRoleService.grantRoleToUser(role, user);
@@ -237,6 +235,24 @@ public class UserController {
 	public void activateUser(@PathVariable int userid , HttpServletResponse response) throws IOException {
 		this.userService.activateUser(userid);
 		response.sendRedirect("/adminstration/users/nonactive");
+	}
+	
+	
+	public ModelAndView returnUserView(User user ) {
+		ModelAndView mav = new ModelAndView("adminstration/users/user");
+		mav.addObject("user",this.userService.getUserByID(user.getId()));
+		mav.addObject("userroleslist",this.userRoleService.getRolesOfUsers(user));
+		mav.addObject("userpermissionslist",this.userPermissionsService.getPermissionsOfUser(user));	
+		return mav ; 
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/testper")
+	public void testper(){
+		final StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		this.userService.getAllActuator();
+		stopWatch.stop();
+		System.out.println("runtime : "+stopWatch.getTotalTimeMillis() + "ms");
 	}
 	
 }

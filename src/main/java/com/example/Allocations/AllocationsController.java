@@ -2,10 +2,12 @@ package com.example.Allocations;
 
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -19,15 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.SiteConfiguration;
 import com.example.BankBranches.BrancheService;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
-import com.example.SiteConfig.MasterService;
-import com.example.SiteConfig.SiteConfiguration;
 
 @Controller
 public class AllocationsController {
-	
+
 	@Autowired
 	AllocationsService allocationService ;
 	
@@ -36,24 +37,10 @@ public class AllocationsController {
 	
 	@Autowired
 	BrancheService brancheservice ;
-
-	
-	public AllocationsController() {
-		Method[] methods =  this.getClass().getDeclaredMethods();
-		List<String> methodsNames = new ArrayList<String>(); 
-		for(Method method : methods) {
-			if(!methodsNames.contains(method.getName()))
-				{
-					methodsNames.add(method.getName());
-				}
-		}
-		methodsNames.add(this.getClass().getSimpleName());
-		MasterService.addPermissionsToPermissionService(methodsNames);
-	}
 	
 	//add new Allocation -------------------------------------------------------
 		@RequestMapping(method = RequestMethod.GET , value="/Allocation/addAllocation")
-		public ModelAndView addAllocation() throws ParseException {
+		public ModelAndView addAllocationRequest() throws ParseException {
 			ModelAndView mav = new ModelAndView("Banks/AddAllocations");
 			  List<Banks> allbank=bankservice.GetBankForAllocation();
 			  System.out.println("-----=-=-=-==--=-=-=-==-"+allbank.size());
@@ -76,7 +63,7 @@ public class AllocationsController {
 		
 		
 		@RequestMapping(method = RequestMethod.POST , value="/Allocation/addAllocation")
-		public ModelAndView addAllocation(@ModelAttribute Allocations Allocation,HttpServletResponse response) throws IOException {
+		public ModelAndView ConfirmeaddNewAllocation(@ModelAttribute Allocations Allocation,HttpServletResponse response) throws IOException {
 			System.out.println("posted to /Allocation/addAllocation ");
 			//Banks bank=bankservice.getBankByID(Allocation.getBank().getBankID());
 			//bank.setFinancialAllocations(Allocation.getAllocationAmmount());
@@ -93,15 +80,14 @@ public class AllocationsController {
 		
 
 		@RequestMapping(method = RequestMethod.POST , value="/Allocation/ConfirmeAllocation")
-		public ModelAndView addAllocation(@ModelAttribute Allocations Allocation) throws IOException {
+		public void addNewAllocation(@ModelAttribute Allocations Allocation,HttpServletResponse response) throws IOException {
 			System.out.println("posted to /Allocation/addAllocation ");
 			Banks bank=bankservice.getBankByID(Allocation.getBank().getBankID());
 			int newallocation = Integer.parseInt(Allocation.getAllocationAmmount())+Integer.parseInt(bank.getFinancialAllocations());
 			bank.setFinancialAllocations(Integer.toString(newallocation));
 			System.out.println("Done");
 			allocationService.addAllocation(Allocation);
-			return MasterService.sendSuccessMsg("تمت إضافة المخصصات بنجاح"); 		
-			}
+			response.sendRedirect("/Banks/all");		}
 		
 		
 	
@@ -110,7 +96,7 @@ public class AllocationsController {
 
 		//Get All Allocation -----------------------------------------------------
 		@RequestMapping(method = RequestMethod.GET , value="/Allocation/all")
-		public ModelAndView viewAllAllocations(@Param(value ="index") int index) {
+		public ModelAndView AllAllocation(@Param(value ="index") int index) {
 			ModelAndView mav = new ModelAndView("Banks/AllAllocations");
 			  List<Allocations> allAllocations=allocationService.getAllAllocations(index);
 			  mav.addObject("AllAllocations",allAllocations);
@@ -138,7 +124,7 @@ public class AllocationsController {
 		// ------------------------------------------------------------------
 		// update Allocation--------------------------------------------------------
 		@RequestMapping(method = RequestMethod.GET , value="/Allocation/edit/{id}")
-		public ModelAndView UpdateAlloaction(@PathVariable int id) {
+		public ModelAndView ShowUpdateAllocation(@PathVariable int id) {
 			ModelAndView mav = new ModelAndView("Banks/UpdateAllocations");
 			Allocations Allocation = allocationService.getAllocationById(id);
 			List<Banks> allbanks =bankservice.GetAllBanks();

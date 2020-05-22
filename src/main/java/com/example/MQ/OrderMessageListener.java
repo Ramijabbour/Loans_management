@@ -1,5 +1,6 @@
 package com.example.MQ;
 
+import com.example.MasterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -7,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.example.SiteConfig.MasterService;
+import com.example.Notifications.NotificationsService;
 import com.example.settelmets.Repositories.OnHoldCheckRepository;
 
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class OrderMessageListener {
     @Autowired
     private OnHoldCheckRepository onHoldCheckRepository;
     
+    @Autowired
+    private NotificationsService notificationsService ; 
     
     
 /*
