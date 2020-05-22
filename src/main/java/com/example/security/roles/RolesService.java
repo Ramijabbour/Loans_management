@@ -1,6 +1,5 @@
 package com.example.security.roles;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +12,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.SiteConfiguration;
+import com.example.SiteConfig.SiteConfiguration;
 import com.example.aspect.ItemNotFoundException;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
-import com.example.security.permissions.PermissionsService;
 import com.example.security.rolesPermissions.RolesPermissionsService;
-import com.example.security.user.User;
+
 
 @Service
 public class RolesService {
@@ -31,19 +29,6 @@ public class RolesService {
 	
 	@Autowired
 	private RolesPermissionsService rolesPermissionsService ; 
-	
-	//register services to Security Permissions (permissions committed at route /permissions/commit ) 
-	RolesService(){
-		System.out.println("Roles Service Started -----------------------> ");
-		Method[] methods =  this.getClass().getDeclaredMethods();
-		List<String> methodsNames = new ArrayList<String>(); 
-		for(Method method : methods) {
-			System.out.println("method name from service : "+method.getName());
-			methodsNames.add(method.getName());
-		}
-		PermissionsService.addPermissionsToPermissionsList(methodsNames);
-		System.out.println("Roles Services Added to Security Permissions ");
-	}
 	
 	
 	public List<Roles> getAllRoles(int PageNumber){

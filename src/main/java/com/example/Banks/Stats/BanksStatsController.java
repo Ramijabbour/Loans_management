@@ -11,16 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.MasterService;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
 import com.example.Banks.Stats.Handlers.MultiBanksAnalysisController;
 import com.example.Banks.Stats.Handlers.MultiBanksSingleYearAnalysisController;
 import com.example.Banks.Stats.Handlers.SingleBankAnalysisController;
 import com.example.Banks.Stats.Models.BanksSelectionModel;
-import com.example.Banks.Stats.Models.BaseSelectionModel;
 import com.example.Banks.Stats.Models.SingleSpanModel;
 import com.example.Banks.Stats.Models.TimeSpanModel;
+import com.example.SiteConfig.MasterService;
 
 @RestController
 public class BanksStatsController {
@@ -80,7 +79,7 @@ public class BanksStatsController {
 		return mav ; 
 	}
 	
-	@RequestMapping(method = RequestMethod.GET , value = "/dashBoards/nav")
+	@RequestMapping(method = RequestMethod.GET , value = "/charts/nav")
 	public ModelAndView getDashNavigation() {
 		ModelAndView mav = new ModelAndView("Charts/DashNavigation");
 		mav.addObject("dm", this.bankStatsService.getDashDataObject());
@@ -150,12 +149,14 @@ public class BanksStatsController {
 	
 
 	public ModelAndView getDashBoards(int stDate , int fnDate) {	
+		System.out.println("get dash boards with attrib "+stDate+"-"+fnDate);
 		if(stDate <= 0 || fnDate <=0 ) {
 			return MasterService.sendGeneralError("date should be positive value") ;
 		}
 		if(stDate > fnDate) {
 			return MasterService.sendGeneralError("start date should be less than end date") ; 
 		}
+		
 		MultiBanksAnalysisController.setYearSpanStart(stDate);
 		MultiBanksAnalysisController.setYearSpanEnd(fnDate);
 		ModelAndView mav = new ModelAndView("Charts/multiCharts");

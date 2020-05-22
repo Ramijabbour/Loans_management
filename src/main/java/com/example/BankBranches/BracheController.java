@@ -1,6 +1,8 @@
 package com.example.BankBranches;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,20 +18,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.SiteConfiguration;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
+import com.example.SiteConfig.MasterService;
+import com.example.SiteConfig.SiteConfiguration;
 
 @RestController
 public class BracheController {
-
+	
 	@Autowired 
 	BrancheService brancheService;
 	@Autowired
 	BankService bankservice;
+
+	public BracheController() {
+		Method[] methods =  this.getClass().getDeclaredMethods();
+		List<String> methodsNames = new ArrayList<String>(); 
+		for(Method method : methods) {
+			if(!methodsNames.contains(method.getName()))
+				{
+					methodsNames.add(method.getName());
+				}
+		}
+		methodsNames.add(this.getClass().getSimpleName());
+		MasterService.addPermissionsToPermissionService(methodsNames);
+	}
 	
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/addBranche/{id}")
-	public ModelAndView addBrancheRequest(@PathVariable int id ) {
+	public ModelAndView addBranche(@PathVariable int id ) {
 		ModelAndView mav = new ModelAndView("Branches/AddBranche");
 		mav.addObject("branche",new Branches());
 		Banks bank =bankservice.getBankById(id);
@@ -39,7 +55,7 @@ public class BracheController {
 	 
 	
 	@RequestMapping(method = RequestMethod.POST , value="/Banks/addBranche/{id}")
-	public void addNewBranche(@ModelAttribute Branches branche,HttpServletResponse response) throws IOException {
+	public void addBranche(@ModelAttribute Branches branche,HttpServletResponse response) throws IOException {
 		
 		System.out.println("posted to /Branches/Bankid/addBranche ");
 		brancheService.addBranche(branche);
@@ -50,7 +66,7 @@ public class BracheController {
 	
 	//get All Branches ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/Branches/all")
-	public ModelAndView getAllBranches(@Param(value ="index") int index) {
+	public ModelAndView viewAllBranches(@Param(value ="index") int index) {
 		ModelAndView mav = new ModelAndView("Branches/AllBranche");
 	    List<Branches> allbranche=brancheService.getAllBranche(index);
 		mav.addObject("allbranches",allbranche);
@@ -65,7 +81,7 @@ public class BracheController {
 	
 	//get Bank Branches ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/BankBranches/{id}")
-	public ModelAndView ShowAllBranches(@PathVariable int id) {
+	public ModelAndView viewBankBranches(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView("Branches/AllBranche");
 		Banks bank = bankservice.getBankById(id);
 	    List<Branches> allbranche=brancheService.getBankBranches(bank);
@@ -75,7 +91,7 @@ public class BracheController {
 	
 	//get  Branche ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/Branches/view/{id}")
-	public ModelAndView ShowABranche(@PathVariable int id) {
+	public ModelAndView viewSingleBranch(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView("Branches/viewBranche");
 	    Branches branche=brancheService.getBranche(id);
 		mav.addObject("branche",branche);
@@ -87,7 +103,7 @@ public class BracheController {
 	
 	// update branche--------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/Branches/edit/{id}")
-	public ModelAndView ShowUpdateBranche(@PathVariable int id) {
+	public ModelAndView UpdateBranche(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView("Branches/updateBranche");
 		Branches branche=brancheService.getBranche(id);
 		Banks bank=branche.getBank();
@@ -122,6 +138,7 @@ public class BracheController {
 		ModelAndView mav = new ModelAndView("Branches/SearchBranches");
 		List<Branches> allbranches = this.brancheService.SearchbybrancheCode(index,brancheCode);
 		mav.addObject("allbranches",allbranches);
+		mav.addObject("searchvar",brancheCode);
 		if(allbranches.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
 		}else { 
@@ -129,4 +146,20 @@ public class BracheController {
 		}
 		return mav ;
 	}
+	
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/Banks/Branches/Search/nxtRes/{index}/{searchvar}")
+	public ModelAndView searchBankNext(@PathVariable int index,@PathVariable String searchvar ) {
+		ModelAndView mav = new ModelAndView("Branches/SearchBranches");
+		List<Branches> allbranches = this.brancheService.SearchbybrancheCode(index,searchvar);
+		mav.addObject("allbranches",allbranches);
+		mav.addObject("searchvar",searchvar);
+		if(allbranches.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav ;
+	}
+	
 }

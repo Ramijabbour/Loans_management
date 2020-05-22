@@ -35,6 +35,11 @@
                    <label for="exampleInputPassword1">تفاصيل الخطأ</label>
                    <input type="text" name="msg" class="form-control" th:value="${msg}" readonly> 
                 </div>
+                <form action="#" th:action="@{/index}" method="get">
+                              <button th:id="'table_entry_childs_button_'" class="btn btn-inverse-primary btn-sm" type="submit">
+                                  <i>العودة للرئيسية</i>
+                              </button>
+                  </form>
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-package com.example;
+package com.example.SiteConfig;
 
 import org.springframework.web.servlet.ModelAndView;
 
@@ -9,9 +9,12 @@ public class SiteConfiguration {
 	private static int PageSize = 20 ;
 	
 	
-	private static int AnalatycsPageSize = 10000 ; 
+	private static int AnalatycsPageSize = 1000 ; 
 	
 	private static int allocationsAnalyticsPageSize = 100 ; 
+	
+	private static int DayStartHour = 8 ; 
+	private static int DayEndHour = 16 ; 
 	
 	
 	public static int getAllocationsAnalyticsPageSize() {
@@ -48,5 +51,22 @@ public class SiteConfiguration {
     	}
     	mav.addObject("prev",prev);
 	}
+
+	public static int getDayStartHour() {
+		return DayStartHour;
+	}
+
+	public static void setDayStartHour(int dayStartHour) {
+		DayStartHour = dayStartHour;
+	}
+
+	public static int getDayEndHour() {
+		return DayEndHour;
+	}
+
+	public static void setDayEndHour(int dayEndHour) {
+		DayEndHour = dayEndHour;
+	}
+	
 	
 }

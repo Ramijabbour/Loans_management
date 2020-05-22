@@ -7,11 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.MasterService;
-import com.example.SiteConfiguration;
-
 import com.example.Banks.Banks;
 import com.example.CloseLoans.CloseLoans;
+import com.example.SiteConfig.MasterService;
+import com.example.SiteConfig.SiteConfiguration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

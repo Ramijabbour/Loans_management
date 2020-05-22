@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.MasterService;
 import com.example.Allocations.Allocations;
 import com.example.Allocations.AllocationsService;
 import com.example.Banks.BankService;
@@ -17,6 +16,7 @@ import com.example.Banks.Stats.Models.AnalysisCompositeModel;
 import com.example.Banks.Stats.Models.AnalysisModel;
 import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
+import com.example.SiteConfig.MasterService;
 
 @RestController
 public class MultiBanksSingleYearAnalysisController {	

@@ -8,8 +8,9 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import com.example.Clients.ClientsRepository;
-import com.example.SiteConfiguration;
+import com.example.SiteConfig.SiteConfiguration;
 import com.example.Clients.Clients;
+
 
 @Service
 public class ClientService {

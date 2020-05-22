@@ -22,7 +22,6 @@ import com.example.Loans.LoansController;
 
 @RestController
 public class VoucherController {
-
 	@Autowired
 	private VoucherService voucherService; 
 	@Autowired
@@ -34,7 +33,7 @@ public class VoucherController {
 	
 	// Add New Voucher For This Loan ----------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value = "/Loan/AddVoucher/{id}")
-	public ModelAndView ShowAddVoucher(@PathVariable int id ) 
+	public ModelAndView addNewVoucher(@PathVariable int id ) 
 	{
 		if(!checkAddVoucher(id))
 		{

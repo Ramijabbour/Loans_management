@@ -1,33 +1,26 @@
 package com.example.Banks;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import com.example.SiteConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.MasterService;
-import com.example.Banks.Stats.BankStatsService;
-import com.example.Banks.Stats.Handlers.MultiBanksAnalysisController;
-import com.example.Banks.Stats.Handlers.SingleBankAnalysisController;
-import com.example.Banks.Stats.Models.TimeSpanModel;
-import com.example.security.user.User;
+import com.example.SiteConfig.MasterService;
+import com.example.SiteConfig.SiteConfiguration;
 
 
 
@@ -37,9 +30,22 @@ public class BankController {
 	@Autowired
 	private BankService bankservice;
 	
+	
+	public BankController() {
+		Method[] methods =  this.getClass().getDeclaredMethods();
+		List<String> methodsNames = new ArrayList<String>(); 
+		for(Method method : methods) {
+			if(!methodsNames.contains(method.getName()))
+				{
+					methodsNames.add(method.getName());
+				}
+		}
+		methodsNames.add(this.getClass().getSimpleName());
+		MasterService.addPermissionsToPermissionService(methodsNames);
+	}
 		
 	@RequestMapping("/Banks/{id}")
-	public Banks GetBank(@PathVariable int id)
+	public Banks viewBank(@PathVariable int id)
 	{
 		Optional<Banks> bank=bankservice.GetBank(id);
 		if(bank.isPresent())
@@ -53,7 +59,7 @@ public class BankController {
 	
 	//add new Bank -------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/addBank")
-	public ModelAndView addBankRequest() {
+	public ModelAndView addNewBank() {
 		ModelAndView mav = new ModelAndView("Banks/AddBank");
 		mav.addObject("bank",new Banks());
 		return mav; 
@@ -75,7 +81,7 @@ public class BankController {
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/all")
 	public ModelAndView ShowAllBank() {
 		ModelAndView mav = new ModelAndView("Banks/AllBanks");
-		  List<Banks> allbank=bankservice.GetAllBanks();
+		List<Banks> allbank=bankservice.GetAllBanks();
 		mav.addObject("allbank",allbank);
 		return mav; 
 	}
@@ -83,7 +89,7 @@ public class BankController {
 	    
 	// update bank--------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/edit/{id}")
-	public ModelAndView ShowUpdateBank(@PathVariable int id) {
+	public ModelAndView UpdateBank(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView("Banks/updateBank");
 		Banks bank=bankservice.getBankById(id);
 		mav.addObject("bank",bank);
@@ -115,6 +121,7 @@ public class BankController {
 		ModelAndView mav = new ModelAndView("Banks/searchbank");
 		List<Banks> allbank = this.bankservice.SearchbyBankName(index,bankName);
 		mav.addObject("allbank",allbank);
+		mav.addObject("searchvar",bankName);
 		if(allbank.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
 		}else {
@@ -122,6 +129,21 @@ public class BankController {
 		}
 		return mav ;
 	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/Banks/Search/nxtRes/{index}/{searchvar}")
+	public ModelAndView searchBankNext(@PathVariable int index,@PathVariable String searchvar ) {
+		ModelAndView mav = new ModelAndView("Banks/searchbank");
+		List<Banks> allbank = this.bankservice.SearchbyBankName(index,searchvar);
+		mav.addObject("allbank",allbank);
+		mav.addObject("searchvar",searchvar);
+		if(allbank.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav ;
+	}
+	
 }
 
 

@@ -9,8 +9,8 @@ public class UnAuthenticatedException extends RuntimeException {
 	
 	public UnAuthenticatedException() {
 		super(); 
-		this.ErrorMsg = "UnRegistered user access attempt ";
-		this.ExceptionCode = -401 ; 
+		this.ErrorMsg = "يرجى تسجيل الدخول للمتابعة";
+		this.ExceptionCode = -403 ; 
 	}
 	
 	

@@ -43,8 +43,8 @@ public class BankStatsService {
 	@Autowired 
 	private ClientService clintsService ; 
 	
-	@Autowired 
-	private UserService usersService ; 
+//	@Autowired 
+	//private UserService usersService ; 
 	
 	@Autowired
 	private ReScheduleLoansService ResService ; 
@@ -92,7 +92,8 @@ public class BankStatsService {
 		DM.setClosedLoansCount(this.closedLoansService.getClosedLoansCount());
 		DM.setOpenLoansCount(this.openLoansService.getOpenLoansCount());
 		DM.setTotalBranchesCount(this.brachesService.getBranchesCount());
-		DM.setTotalSystemUsers(this.usersService.getUsersCount());
+		//DM.setTotalSystemUsers(this.usersService.getUsersCount());
+		DM.setTotalSystemUsers(5);
 		DM.setResLoansCount(this.ResService.getResLoansCount());
 		DM.setTotalLoansCount(this.LoansService.getLoansCount());
 		DM.setLoansValue(this.LoansService.getTotalLoansValue());
