@@ -1,10 +1,12 @@
 package com.example.security.roles;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.SiteConfiguration;
+import com.example.SiteConfig.MasterService;
+import com.example.SiteConfig.SiteConfiguration;
 import com.example.security.UserRoles.UserRoleService;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
@@ -35,8 +38,18 @@ public class RolesController {
 	private PermissionsService permissionsService ; 
 	
 	
+	public RolesController() {
+	Method[] methods =  this.getClass().getDeclaredMethods();
+	List<String> methodsNames = new ArrayList<String>(); 
+	for(Method method : methods) {
+		if(!methodsNames.contains(method.getName()))
+			methodsNames.add(method.getName());
+	}
+	PermissionsService.addPermissionsToPermissionsList(methodsNames);
+	}
+	
 	@RequestMapping(method = RequestMethod.GET , value = "/security/roles/all")
-	public ModelAndView getAllRoles(@Param(value ="index") int index) {
+	public ModelAndView viewAllRoles(@Param(value ="index") int index) {
 		ModelAndView mav = new ModelAndView("Roles/allRoles");
 		List<Roles> rolesList =  this.rolesService.getAllRoles(index); 
 		mav.addObject("roleslist",rolesList);
@@ -51,7 +64,7 @@ public class RolesController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/security/roles/viewrole/{roleId}")
-	public ModelAndView viewRoleIndex(@PathVariable int roleId) {
+	public ModelAndView viewSingleRole(@PathVariable int roleId) {
 		ModelAndView mav = new ModelAndView("Roles/manageRole");
 		Roles role = this.rolesService.getRoleByID(roleId); 
 		mav.addObject("role",role);
@@ -62,26 +75,51 @@ public class RolesController {
 
 	
 	@RequestMapping(method = RequestMethod.GET ,value = "/security/roles/addrole")
-	public ModelAndView addRoleRequest() {
+	public ModelAndView addRole() {
 		ModelAndView mav = new ModelAndView("Roles/addRole");
 		mav.addObject("roleobject",new Roles());
 		return mav ; 
 	}
 	
 	@RequestMapping(method = RequestMethod.POST , value = "/security/role/addrole")
-	public void addRoleResponse(@ModelAttribute Roles role ,HttpServletResponse response) throws IOException {
+	@Transactional
+	public ModelAndView addRole(@ModelAttribute Roles role) throws IOException {
+		if(role.getRoleName().contains("admin")) {
+			return MasterService.sendGeneralError("لا يمكن إضافة دور بهذا الاسم");
+		}
+		if(role.getRoleName().contains("super")) {
+			return MasterService.sendGeneralError("لا يمكن إضافة دور بهذا الاسم");
+		}
+		if(role.getRoleName().contains("ANALYTICS")) {
+			return MasterService.sendGeneralError("لا يمكن إضافة دور بهذا الاسم");
+		}
+		if(role.getRoleName().contains("ALLANALYTICS")) {
+			return MasterService.sendGeneralError("لا يمكن إضافة دور بهذا الاسم");
+		}
 		this.rolesService.addRole(role); 
-		response.sendRedirect("/security/roles/all");
+		return MasterService.sendSuccessMsg("تمت عملية إضافة الدور بنجاح");
 	} 
 	
 	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/delete/{roleid}")
-	public void deleteRole(@PathVariable int roleid, HttpServletResponse response ) throws IOException {
+	public ModelAndView deleteRole(@PathVariable int roleid, HttpServletResponse response ) throws IOException {
 		Roles role = this.rolesService.getRoleByID(roleid);
 		if(role == null ) {
-			response.sendRedirect("/security/roles/all");
+			return MasterService.sendGeneralError("لا يمكن العثور على هذا الدور");
 		}else {
+			if(role.getRoleName().equalsIgnoreCase("SUPER")) {
+				return MasterService.sendGeneralError("لا يمكن حذف هذا الدور");
+			}
+			if(role.getRoleName().equalsIgnoreCase("ADMIN")) {
+				return MasterService.sendGeneralError("لا يمكن حذف هذا الدور");
+			}
+			if(role.getRoleName().equalsIgnoreCase("ANALYTICS")) {
+				return MasterService.sendGeneralError("لا يمكن حذف هذا الدور");
+			}
+			if(role.getRoleName().equalsIgnoreCase("ALLANALYTICS")) {
+				return MasterService.sendGeneralError("لا يمكن حذف هذا الدور");
+			}
 		this.rolesService.deleteRole(role);
-		response.sendRedirect("/security/roles/all");
+		return MasterService.sendSuccessMsg("تم حذف الدور بنجاح");
 		}
 	}
 

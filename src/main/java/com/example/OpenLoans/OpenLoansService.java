@@ -11,8 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.SiteConfiguration;
 import com.example.BankBranches.Branches;
+import com.example.SiteConfig.SiteConfiguration;
+
 
 
 @Service

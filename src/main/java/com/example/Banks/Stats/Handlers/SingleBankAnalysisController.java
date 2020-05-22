@@ -5,7 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD
 import com.example.MasterService;
+=======
+>>>>>>> d4df773b7b6dd2cd6942fadf54cdbef5074a8a5a
 import com.example.Allocations.Allocations;
 import com.example.Allocations.AllocationsService;
 import com.example.Banks.Banks;
@@ -17,6 +20,10 @@ import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
 import com.example.OpenLoans.OpenLoans;
 import com.example.OpenLoans.OpenLoansService;
+<<<<<<< HEAD
+=======
+import com.example.SiteConfig.MasterService;
+>>>>>>> d4df773b7b6dd2cd6942fadf54cdbef5074a8a5a
 
 import java.util.List ;
 import java.time.LocalDate;

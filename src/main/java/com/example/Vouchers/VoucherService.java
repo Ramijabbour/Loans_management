@@ -7,9 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.MasterService;
 import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
+import com.example.SiteConfig.MasterService;
+
 
 @Service
 public class VoucherService {

@@ -184,6 +184,7 @@
                       </a>
                   </div>
                 </li>
+<<<<<<< HEAD
                 <li class="nav-item dropdown d-lg-flex d-none">
                   <button type="button" class="btn btn-inverse-primary btn-sm">الإعدادات</button>
                 </li>
@@ -199,11 +200,45 @@
                         الاعدادات
                       </a>
                       <a class="dropdown-item" href="../samples/login.html">
+=======
+                 <li class="nav-item nav-profile dropdown" sec:authorize="isAuthenticated()">
+                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                    <span class="nav-profile-name">الملف الشخصي</span>
+                 <!--    
+                    <span class="online-status"></span>
+                    <img src="/../../new/images/faces/face28.png" alt="profile"/>
+                  -->
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                      <a class="dropdown-item" href="/profile">
+                        <i class="mdi mdi-settings text-primary"></i>
+                        عرض الملف الشخصي
+                      </a>
+                      <a class="dropdown-item" href="/logout">
+>>>>>>> d4df773b7b6dd2cd6942fadf54cdbef5074a8a5a
                         <i class="mdi mdi-logout text-primary"></i>
                         تسجيل الخروج
                       </a>
                   </div>
                 </li>
+<<<<<<< HEAD
+=======
+                 <li class="nav-item nav-profile dropdown" sec:authorize="isAnonymous()">
+                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                    <span class="nav-profile-name">الحساب</span>
+                 <!--    
+                    <span class="online-status"></span>
+                    <img src="/../../new/images/faces/face28.png" alt="profile"/>
+                  -->
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                      <a class="dropdown-item" href="/login">
+                        <i class="mdi mdi-settings text-primary"></i>
+                       تسجيل الدخول
+                      </a>
+                  </div>
+                </li>
+>>>>>>> d4df773b7b6dd2cd6942fadf54cdbef5074a8a5a
             </ul>
             <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
               <span class="mdi mdi-menu"></span>
@@ -214,8 +249,13 @@
       <nav class="bottom-navbar">
         <div class="container">
             <ul class="nav page-navigation">
+<<<<<<< HEAD
               <li class="nav-item">
                 <a class="nav-link" href="/dashBoards/nav">
+=======
+              <li class="nav-item"  sec:authorize="hasAnyAuthority('ALLANALYTICS','SUPER')">
+                <a class="nav-link" href="/charts/nav">
+>>>>>>> d4df773b7b6dd2cd6942fadf54cdbef5074a8a5a
                   <i class="mdi mdi-file-document-box menu-icon"></i>
                   <span class="menu-title">عرض الأحداث</span>
                 </a>
@@ -245,6 +285,10 @@
                           <li class="nav-item"><a class="nav-link" href="/security/roles/addrole">إضافة دور</a></li>
                           <li class="nav-item"><a class="nav-link" href="/security/permissions/all?index=0">إدارة الصلاحيات</a></li>
                           <li class="nav-item"><a class="nav-link" href="/security/permissions/commit">تأكيد الصلاحيات المعلقة</a></li>
+<<<<<<< HEAD
+=======
+                          <li class="nav-item"><a class="nav-link" href="/config/currConfig">إعدادات الموقع</a></li>
+>>>>>>> d4df773b7b6dd2cd6942fadf54cdbef5074a8a5a
                       </ul>
                   </div>
               </li>

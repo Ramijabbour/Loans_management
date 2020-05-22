@@ -5,7 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD
 import com.example.MasterService;
+=======
+>>>>>>> d4df773b7b6dd2cd6942fadf54cdbef5074a8a5a
 import com.example.Allocations.Allocations;
 import com.example.Allocations.AllocationsService;
 import com.example.Banks.BankService;
@@ -14,6 +17,11 @@ import com.example.Banks.Stats.Models.AnalysisCompositeModel;
 import com.example.Banks.Stats.Models.AnalysisModel;
 import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
+<<<<<<< HEAD
+=======
+import com.example.SiteConfig.MasterService;
+
+>>>>>>> d4df773b7b6dd2cd6942fadf54cdbef5074a8a5a
 import java.util.List ; 
 import java.util.ArrayList ; 
 
@@ -282,6 +290,10 @@ public class MultiBanksAnalysisController {
 	public static void flushLists() {
 		banksList = new ArrayList<Banks>();
 		years = new ArrayList<Integer>();
+<<<<<<< HEAD
+=======
+		loansyears = new ArrayList<Integer>() ; 
+>>>>>>> d4df773b7b6dd2cd6942fadf54cdbef5074a8a5a
 	}
 
 	private void trimDataArray(List<Integer> tempYears) {
@@ -329,6 +341,10 @@ public class MultiBanksAnalysisController {
 	
 	//fill the years list with the years between yearsSpanStart and YearsSpanEnd 
 	public void setYearsList() {
+<<<<<<< HEAD
+=======
+			years = new ArrayList<Integer>(); 
+>>>>>>> d4df773b7b6dd2cd6942fadf54cdbef5074a8a5a
 			int tmpYearSt = yearSpanStart; 
 			while(true) {
 				if(tmpYearSt > yearSpanEnd) {
@@ -381,6 +397,10 @@ public class MultiBanksAnalysisController {
 	}
 
 	private void initLoansDataArray() {
+<<<<<<< HEAD
+=======
+		System.out.println("initLoansDataArray "+years.size());
+>>>>>>> d4df773b7b6dd2cd6942fadf54cdbef5074a8a5a
 		for(int i = 0 ; i < years.size() ; i++) {
 			this.loansDataArray[i] = 0 ; 
 		}
