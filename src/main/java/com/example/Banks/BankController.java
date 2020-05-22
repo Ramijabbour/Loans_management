@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.example.SiteConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
@@ -17,13 +18,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.MasterService;
 import com.example.Banks.Stats.BankStatsService;
-import com.example.Banks.Stats.ChartsHandler.AnalysisController;
-import com.example.Banks.Stats.ChartsHandler.TimeSpanModel;
+import com.example.Banks.Stats.Handlers.MultiBanksAnalysisController;
+import com.example.Banks.Stats.Handlers.SingleBankAnalysisController;
+import com.example.Banks.Stats.Models.TimeSpanModel;
 import com.example.security.user.User;
 
 
@@ -106,69 +109,19 @@ public class BankController {
 		bankservice.deleteBank(id);
 		response.sendRedirect("/Banks/all");
 	}
-	
-	
-	
-	// bank status section ---------------
-	
-	@Autowired
-	private BankStatsService bankStatsService ; 
-	
-	
-	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/{bankId}")
-	public ModelAndView getBanksStats(@PathVariable int bankId) {
-		Banks bank = this.bankservice.getBankById(bankId);
-		if(bank == null ) {
-			return sendGeneralError("Bank Not Found") ; 
+	//-----seacrh
+	@RequestMapping(method = RequestMethod.POST , value = "/Banks/Search")
+	public ModelAndView getAllChecksbyCheckid(@Param(value ="index") int index,@RequestParam("search") String bankName) {
+		ModelAndView mav = new ModelAndView("Banks/searchbank");
+		List<Banks> allbank = this.bankservice.SearchbyBankName(index,bankName);
+		mav.addObject("allbank",allbank);
+		if(allbank.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
 		}
-		ModelAndView mav = new ModelAndView("Banks/newstats");
-		mav.addObject("bankstats",this.bankStatsService.getBankStats(bank)) ;
-		return mav ; 
+		return mav ;
 	}
-
-
-	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/charts/{bankId}")
-	public ModelAndView getBankStatsTimeSpan(@PathVariable int bankId ) {
-		TimeSpanModel timeSpanModel = new TimeSpanModel() ; 
-		ModelAndView mav = new ModelAndView("Banks/settimespan");
-		mav.addObject("bankId",bankId);
-		mav.addObject("tsm",timeSpanModel );
-		return mav ; 
-	}
-
-	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/set/{bankId}")
-	public ModelAndView getBankStatsTimeResponse(@PathVariable int bankId,@ModelAttribute TimeSpanModel timeSpanModel) {
-		return  getBankNewStats(bankId,timeSpanModel.getStdate(),timeSpanModel.getFndate()); 
-	}
-
-	
-	public ModelAndView getBankNewStats(int id, int stdate, int fndate ) {
-		Banks bank = this.bankservice.getBankById(id);
-		if(stdate <= 0 || fndate <=0 ) {
-			return sendGeneralError("date should be positive value") ;
-		}
-		if(stdate > fndate) {
-			return sendGeneralError("start date should be less than end date") ; 
-		}
-		if(bank == null ) {
-			return sendGeneralError("Bank Not Found") ; 
-		}
-		//find better way than static variables 
-		AnalysisController.setTimeSpanStart(stdate);
-		AnalysisController.setTimeSpanEnd(fndate); 
-		AnalysisController.setBank(bank);
-		//-----------------------------------------
-		ModelAndView mav = new ModelAndView("Banks/charts");
-		return mav ; 
-	}
-	
-	
-	public ModelAndView sendGeneralError(String errormsg){
-		ModelAndView mav = new ModelAndView("Errors/generalError");
-		mav.addObject("msg", errormsg);
-		return mav ; 
-	}
-	
 }
 
 

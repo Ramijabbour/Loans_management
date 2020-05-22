@@ -11,15 +11,13 @@ import com.example.MasterService;
 import com.example.SiteConfiguration;
 
 import com.example.Banks.Banks;
+import com.example.CloseLoans.CloseLoans;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -29,7 +27,7 @@ public class AllocationsService {
     private AllocationsRepository allocationsRepository;
 
     public List<Allocations> getAllAllocations(int PageNumber) {
-        Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+        Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize());
 		Page<Allocations> pagedResult = this.allocationsRepository.findAll(paging);
 		if (pagedResult.hasContent()) {
             return pagedResult.getContent();
@@ -123,6 +121,32 @@ public class AllocationsService {
 
 	public List<Allocations> getallAllocationsNoPage(){
 		return this.allocationsRepository.findAll() ; 
+	}
+	
+	
+	public Allocations getBankAllocationWithDate(Banks bank,int year){
+ 		for(Allocations allocation : this.allocationsRepository.findAll()) {
+			if(allocation.getBank().getBankID() == bank.getBankID() ) {
+				if(Integer.valueOf(MasterService.getYearFromStringDate(allocation.getAllocationDate())) == year)
+				return allocation ; 
+			}
+		}
+ 		return null ; 
+	}
+	
+	public Page<Allocations> getAllocationsChuck(int pageNum,Page<Allocations> prevPage){
+		if(prevPage == null) {
+			Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAllocationsAnalyticsPageSize(), Sort.by("id"));
+			Page<Allocations> modelPage = this.allocationsRepository.findAll(paging);
+			return modelPage ;
+			
+			}else if(prevPage.hasNext()) {
+				Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAllocationsAnalyticsPageSize(), Sort.by("id"));
+				Page<Allocations> modelPage = this.allocationsRepository.findAll(paging);
+				return modelPage ;
+			}else {
+				return null ; 
+			}
 	}
 	
 	

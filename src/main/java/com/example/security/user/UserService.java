@@ -314,4 +314,8 @@ public class UserService extends MasterService implements MasterBackUpService {
 		
 	}
 	
+	
+	public int getUsersCount() {
+		return this.userRepo.getUsersCount() ; 
+	}
 }

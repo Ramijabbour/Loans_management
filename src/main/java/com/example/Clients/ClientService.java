@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import com.example.Clients.ClientsRepository;
@@ -81,6 +78,21 @@ public class ClientService {
 		}catch(Exception e ) {
 			System.out.println("NullPointerException Handled at client Service / Update client -- call for null client ");
 		}
+	}
+
+	//------search
+	public List<Clients> SearchbyclientName(int PageNumber,String clientName){
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Slice<Clients> pagedResult = this.clientRepository.findByClientName(clientName,paging);
+		if (pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		} else {
+			return new ArrayList<Clients>();
+		}
+	}
+	
+	public int getClientsCount() {
+		return this.clientRepository.getClientsCount() ; 
 	}
 
 }

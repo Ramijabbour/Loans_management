@@ -9,13 +9,19 @@ import org.springframework.stereotype.Service;
 import com.example.Allocations.AllocationsService;
 import com.example.BankBranches.BrancheService;
 import com.example.BankBranches.Branches;
+import com.example.Banks.BankService;
 import com.example.Banks.Banks;
+import com.example.Banks.Stats.Models.DashModel;
+import com.example.Banks.Stats.Models.StatsModel;
+import com.example.Clients.ClientService;
 import com.example.CloseLoans.CloseLoanService;
 import com.example.CloseLoans.CloseLoans;
 import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
 import com.example.OpenLoans.OpenLoans;
 import com.example.OpenLoans.OpenLoansService;
+import com.example.ReScheduleLoans.ReScheduleLoansService;
+import com.example.security.user.UserService;
 
 @Service 
 public class BankStatsService {
@@ -30,6 +36,21 @@ public class BankStatsService {
 	
 	@Autowired 
 	private BrancheService brachesService ; 
+	
+	@Autowired 
+	private BankService banksService; 
+	
+	@Autowired 
+	private ClientService clintsService ; 
+	
+	@Autowired 
+	private UserService usersService ; 
+	
+	@Autowired
+	private ReScheduleLoansService ResService ; 
+	
+	@Autowired
+	private LoanService LoansService ; 
 	
 	
 	public BankStatsService() {
@@ -63,6 +84,23 @@ public class BankStatsService {
 		return statusModel; 
 	}
 	
+	
+	public DashModel getDashDataObject() {
+		DashModel DM = new DashModel() ; 
+		DM.setTotalBanksCount(this.banksService.getBanksCount());
+		DM.setTotalClientsCount(this.clintsService.getClientsCount());
+		DM.setClosedLoansCount(this.closedLoansService.getClosedLoansCount());
+		DM.setOpenLoansCount(this.openLoansService.getOpenLoansCount());
+		DM.setTotalBranchesCount(this.brachesService.getBranchesCount());
+		DM.setTotalSystemUsers(this.usersService.getUsersCount());
+		DM.setResLoansCount(this.ResService.getResLoansCount());
+		DM.setTotalLoansCount(this.LoansService.getLoansCount());
+		DM.setLoansValue(this.LoansService.getTotalLoansValue());
+		DM.setClosedLoansValue(this.closedLoansService.getTotalLoansValue());
+		DM.setOpenLoansValue(this.openLoansService.getTotalLoansValue());
+		DM.setResLoansValue(this.ResService.getTotalLoansValue());
+		return DM; 
+	}
 	
 	
 }

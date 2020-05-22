@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.SiteConfiguration;
 import com.example.BankBranches.Branches;
+import com.example.Loans.Loans;
+import com.example.OpenLoans.OpenLoans;
 
 @Service
 public class CloseLoanService {
@@ -45,4 +47,40 @@ public class CloseLoanService {
 		return brancheLoans; 
 	}
 	
+	
+	public Page<CloseLoans> getAllLoansSequence(int pageNum,Page<CloseLoans> paramModelPage) {
+		if(paramModelPage == null) {
+		Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+		Page<CloseLoans> modelPage = this.closeLoanRepository.findAll(paging);
+		return modelPage ;
+		
+		}else if(paramModelPage.hasNext()) {
+			Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+			Page<CloseLoans> modelPage = this.closeLoanRepository.findAll(paging);
+			return modelPage ;
+		}else {
+			return null ; 
+		}
+	}
+	
+
+	public int getClosedLoansCount() {
+		return this.closeLoanRepository.getClosedLoansCount() ; 
+	}
+	
+	
+	public long getTotalLoansValue() {
+		int pageNum = 0 ; 
+		long totalVal = 0 ; 
+		Page<CloseLoans> loansPage = getAllLoansSequence(pageNum, null);
+		while(loansPage != null ) {
+			for(CloseLoans loan : loansPage.getContent()) {
+			totalVal += Long.valueOf(loan.getLoan().getTotalAmmount());
+			}
+			pageNum++;
+			loansPage = getAllLoansSequence(pageNum, loansPage);
+		}
+		return totalVal ; 
+	}
 }
+

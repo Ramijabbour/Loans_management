@@ -6,22 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.DocumentTemplate.CloseLoanHTML;
+import com.DocumentTemplate.CloseLoansReportDocs;
+import com.DocumentTemplate.CloseLoansReportPDF;
 import com.DocumentTemplate.DOCXDOC;
+import com.DocumentTemplate.LoanInfoDoc;
+import com.DocumentTemplate.LoanInfoHTML;
+import com.DocumentTemplate.LoanInfoPDF;
+import com.DocumentTemplate.OpenLoanHTML;
+import com.DocumentTemplate.OpenLoansReportDocs;
+import com.DocumentTemplate.OpenLoansReportPDF;
 import com.DocumentTemplate.PDFDOC;
+import com.DocumentTemplate.RegularOpenLoanHTML;
+import com.DocumentTemplate.RegularOpenLoansReportDocs;
+import com.DocumentTemplate.RegularOpenLoansReportPDF;
 import com.DocumentTemplate.XMLDOC;
-import com.example.CloseLoans.CloseLoanHTML;
-import com.example.CloseLoans.CloseLoansReportDocs;
-import com.example.CloseLoans.CloseLoansReportPDF;
-import com.example.Loans.LoanInfoDoc;
-import com.example.Loans.LoanInfoHTML;
-import com.example.Loans.LoanInfoPDF;
+
+
 import com.example.Loans.Loans;
-import com.example.OpenLoans.OpenLoanHTML;
-import com.example.OpenLoans.OpenLoansReportDocs;
-import com.example.OpenLoans.OpenLoansReportPDF;
-import com.example.OpenLoans.RegularOpenLoanHTML;
-import com.example.OpenLoans.RegularOpenLoansReportDocs;
-import com.example.OpenLoans.RegularOpenLoansReportPDF;
+
 import com.example.Vouchers.VoucherService;
 import com.example.Vouchers.Vouchers;
 import com.example.settelmets.Models.SettledChaque;

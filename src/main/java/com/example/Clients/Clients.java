@@ -2,19 +2,14 @@ package com.example.Clients;
 
 import ValidContent_Visitor.Visitor;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Null;
+import javax.persistence.*;
 
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 
 
 @Entity
+@Table(name = "Clients",indexes = {@Index(name = "index_clientName",  columnList="clientName", unique = false)})
 public class Clients {
 
 
@@ -23,7 +18,7 @@ public class Clients {
 	public int id ;
 	@Convert(converter = StringEncryptDecryptConverter.class)
 
-	public String ClientName ;
+	public String clientName;
 	@Convert(converter = StringEncryptDecryptConverter.class)
 
 	public String ClientType;
@@ -54,7 +49,7 @@ public class Clients {
 	public Clients(String clientName, String clientType, String identity_number, String email, String phone,
 			String address, String gender) {
 		
-		ClientName = clientName;
+		this.clientName = clientName;
 		ClientType = clientType;
 		this.identity_number = identity_number;
 		this.email = email;
@@ -83,11 +78,11 @@ public class Clients {
 	}
 
 	public String getClientName() {
-		return ClientName;
+		return clientName;
 	}
 
 	public void setClientName(String clientName) {
-		ClientName = clientName;
+		this.clientName = clientName;
 	}
 
 

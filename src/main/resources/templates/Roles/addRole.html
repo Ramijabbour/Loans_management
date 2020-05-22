@@ -38,7 +38,7 @@
 
                   <div class="form-group">
                    <label for="exampleInputPassword1">اسم الدور</label>
-                   <input type="text" name="RoleName" class="form-control" placeholder="Role Name" th:field="*{RoleName}" required>
+                   <input type="text" name="RoleName" class="form-control" placeholder="Role Name" th:field="*{RoleName}" pattern="[A-Za-z]+" required>
                   </div>
                 </div>
                 <!-- /.card-body -->

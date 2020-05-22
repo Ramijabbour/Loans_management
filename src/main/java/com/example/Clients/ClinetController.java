@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,8 +40,6 @@ public class ClinetController {
 			throw new RuntimeException("Clien"+ id + "is not Exist " );
 	}
 	
-	
-
 	
 	//add new Client -------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Clients/addClient")
@@ -104,6 +103,20 @@ public class ClinetController {
 			clientservice.deleteClient(id);
 			response.sendRedirect("/Clients/all");
 		}
+		//----search
+
+	@RequestMapping(method = RequestMethod.POST , value = "/Clients/Search")
+	public ModelAndView SearchByClientName(@Param(value ="index") int index,@RequestParam("search") String clientName) {
+		ModelAndView mav = new ModelAndView("Clients/searchClients");
+		List<Clients> allclients = this.clientservice.SearchbyclientName(index,clientName);
+		mav.addObject("allclients",allclients);
+		if(allclients.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav ;
+	}
 		
 	
 	

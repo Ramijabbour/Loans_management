@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.example.SiteConfiguration;
 import com.example.BankBranches.Branches;
 
+
 @Service
 public class OpenLoansService {
 
@@ -96,4 +97,40 @@ public class OpenLoansService {
 		return brancheLoans; 
 	}
 	
+	
+	public Page<OpenLoans> getAllLoansSequence(int pageNum,Page<OpenLoans> paramModelPage) {
+		if(paramModelPage == null) {
+		Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+		Page<OpenLoans> modelPage = this.openLoanRepository.findAll(paging);
+		return modelPage ;
+		
+		}else if(paramModelPage.hasNext()) {
+			Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+			Page<OpenLoans> modelPage = this.openLoanRepository.findAll(paging);
+			return modelPage ;
+		}else {
+			return null ; 
+		}
+	}
+	
+	
+	public int getOpenLoansCount() {
+		return this.openLoanRepository.getOpenLoansCount() ; 
+	}
+	
+	
+	
+	public long getTotalLoansValue() {
+		int pageNum = 0 ; 
+		long totalVal = 0 ; 
+		Page<OpenLoans> loansPage = getAllLoansSequence(pageNum, null);
+		while(loansPage != null ) {
+			for(OpenLoans loan : loansPage.getContent()) {
+			totalVal += Long.valueOf(loan.getLoan().getTotalAmmount());
+			}
+			pageNum++;
+			loansPage = getAllLoansSequence(pageNum, loansPage);
+		}
+		return totalVal ; 
+	}
 }

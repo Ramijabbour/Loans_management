@@ -21,7 +21,7 @@ public class Valid_Visitable implements Visitor {
     public boolean visit(Banks Bank) {
        // if (Bank.BankCode.charAt(0) != '#' && StringUtils.isNumeric(Bank.BankCode) == false || Bank.BankCode.contains("-") || Bank.BankCode.length() > 7)
          //   return false;
-        if (Bank.BankName.length() > 20 || !Bank.BankName.matches("[@_!#$%^&*()<>?/\\|}{~:]"))
+        if (Bank.bankName.length() > 20 || !Bank.bankName.matches("[@_!#$%^&*()<>?/\\|}{~:]"))
             return false;
         if (StringUtils.isNumeric(Bank.FinancialAllocations) == false || Float.valueOf(Bank.FinancialAllocations) < 0.0)
             return false;
@@ -57,7 +57,7 @@ public class Valid_Visitable implements Visitor {
     }
 
     public boolean visit(Clients clients) {
-        if (StringUtils.isAlphaSpace(clients.ClientName) == false)
+        if (StringUtils.isAlphaSpace(clients.clientName) == false)
             return false;
         clients.identity_number = clients.identity_number.replaceAll(" ", "");
         if (StringUtils.isNumeric(clients.identity_number)) {

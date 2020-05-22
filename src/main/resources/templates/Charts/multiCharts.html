@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="ar" >
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>إCentral Bank of syria</title>
+
+    <link rel="stylesheet" th:href="@{/new/css/main.css}" href="/../../new/css/main.css" />
+    <link rel="stylesheet" th:href="@{/new/css/highcharts.css}" href="/../../new/css/highcharts.css" />
+    <link rel="stylesheet" th:href="@{/new/css/bootstrap.css}" href="/../../new/css/bootstrap.css" />
+
+    <script th:src="@{/new/js/jquery-3.2.1.min.js}" src="../../js/jquery-3.2.1.min.js"></script>
+    <script th:src="@{/new/js/highcharts.js}" src="/../../new/js/highcharts.js"></script>
+    <script th:src="@{/new/js/exporting.js}" src="/../../new/js/exporting.js"></script>
+
+
+ <script type="text/javascript">
+        $(function () {
+        	multiBanksPagingAllocationsData();
+        	multiBanksPagingLoansData();
+        	multiBanksPagingLoansorderData();
+        	multiBanksPagingLoansFinanceData();
+        	multiBanksPagingLoansIntrestData();
+            multiBanksPagingLoansCountData();
+        });
+        
+        function multiBanksPagingAllocationsData(params) {
+            $.get("/ajax/getMultiBankPagingAllocationsAnalysisData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#pagedAllocationsContainer').highcharts({
+                        chart: {
+                            type: 'line'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+ 
+        function multiBanksPagingLoansData(params) {
+            $.get("/ajax/getMultiBankLoansAnalysisData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#pagedLoansContainer').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        function multiBanksPagingLoansorderData(params) {
+            $.get("/ajax/getMultiBankLoansOrderData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#pagedLoansorderContainer').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        
+        function multiBanksPagingLoansFinanceData(params) {
+            $.get("/ajax/getMultiBankFinanceOrderData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#pagedFinanceContainer').highcharts({
+                        chart: {
+                            type: 'bar'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '%',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+       
+        function multiBanksPagingLoansCountData(params) {
+            $.get("/ajax/getLoanCountData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#pagedLoansCountContainer').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '%',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        function multiBanksPagingLoansIntrestData(params) {
+            $.get("/ajax/getIntrestRateData", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#pagedLoansIntrestContainer').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '%',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        
+    </script>
+    
+    <style>
+	
+</style>
+</head>
+<body>
+<div id="wrapper" >
+	<hr>
+	
+    <div id="pagedAllocationsContainer" style="height:70vh; width:100%" ></div>	
+	
+	<hr>
+	
+    <div id="pagedLoansContainer" style="height:70vh; width:100%" ></div>	
+
+	<hr>
+	
+    <div id="pagedLoansCountContainer" style="height:70vh; width:100%" ></div>	
+    
+    <hr>
+    
+    <div id="pagedLoansIntrestContainer" style="height:70vh; width:100%" ></div>
+
+	<hr>
+	
+    <div id="pagedLoansorderContainer" style="height:70vh; width:100%" ></div>	
+	
+	<hr>
+	
+    <div id="pagedFinanceContainer" style="height:70vh; width:100%" ></div>	
+	
+	<hr>
+
+</div>
+
+<script th:src="@{/js/bootstrap.min.js}" src="../../js/bootstrap.min.js"></script>
+
+</body>
+</html>

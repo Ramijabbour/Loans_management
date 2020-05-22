@@ -35,6 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         .anyRequest()
         .requiresSecure(); 
 		
+		
+		
 		http 
 		.csrf().disable()
 		.authorizeRequests()

@@ -27,7 +27,7 @@ public class Chaque {
     
     @Column(nullable = false )
     @Convert(converter = StringEncryptDecryptConverter.class)
-    private  String SecondBankName ;
+    private  String secondBankName;
     
     @Column(nullable = false )
     @Convert(converter = StringEncryptDecryptConverter.class)
@@ -71,7 +71,7 @@ public class Chaque {
 		super();
 		this.checkId = checkId;
 		this.firstBankName = firstBankName;
-		SecondBankName = secondBankName;
+		this.secondBankName = secondBankName;
 		FirstBranchName = firstBranchName;
 		FirstBranchCode = firstBranchCode;
 		SecondBranchName = secondBranchName;
@@ -103,7 +103,7 @@ public class Chaque {
 	}
 
 	public String getSecondBankName() {
-		return SecondBankName;
+		return secondBankName;
 	}
 
 	public String getFirstBranchName() {

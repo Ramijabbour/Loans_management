@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import com.example.SiteConfiguration;
 import com.example.BankBranches.Branches;
+
 
 @Service
 public class LoanService {
@@ -70,5 +73,47 @@ public class LoanService {
 		return brancheLoans; 
 	}
 	
+	public Page<Loans> getAllLoansSequence(int pageNum,Page<Loans> paramModelPage) {
+		if(paramModelPage == null) {
+		Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+		Page<Loans> modelPage = this.loansRepository.findAll(paging);
+		return modelPage ;
+		}else if(paramModelPage.hasNext()) {
+			Pageable paging = PageRequest.of(pageNum, SiteConfiguration.getAnalatycsPageSize(), Sort.by("id"));
+			Page<Loans> modelPage = this.loansRepository.findAll(paging);
+			return modelPage ;
+		}else {
+			return null ; 
+		}
+	}
 
+	//------search
+	public List<Loans> SearchByLoanNumber(int PageNumber,String loanNumber){
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Slice<Loans> pagedResult = this.loansRepository.findByLoanNumber(loanNumber,paging);
+		if (pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		} else {
+			return new ArrayList<Loans>();
+		}
+	}
+	
+	
+	public int getLoansCount() {
+		return this.loansRepository.getLoansCount();
+	}
+	
+	public long getTotalLoansValue() {
+		int pageNum = 0 ; 
+		long totalVal = 0 ; 
+		Page<Loans> loansPage = getAllLoansSequence(pageNum, null);
+		while(loansPage != null ) {
+			for(Loans loan : loansPage.getContent()) {
+			totalVal += Long.valueOf(loan.getTotalAmmount());
+			}
+			pageNum++;
+			loansPage = getAllLoansSequence(pageNum, loansPage);
+		}
+		return totalVal ; 
+	}
 }
