@@ -26,7 +26,7 @@ public class  OpenLoansReportDocs implements CreateOpenDocTemplate {
 	  public String CreateOpenLoanDoc(Loans Loan) {
 
 
-	        String Path= System.getProperty("user.dir")+"\\";
+	        String Path= System.getProperty("user.dir")+"//";
 	        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 	        Date date = new Date();
 	        String Filename="open_Loan_"+Loan.getId()+dateFormat.format(date)  ;

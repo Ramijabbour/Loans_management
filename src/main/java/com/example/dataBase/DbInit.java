@@ -60,9 +60,39 @@ public class DbInit implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		//injectUsersToDB();
 		//inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
+		//inject_Finance_LoansTypes();
 		//injectChecksToDB();
 		//System.out.println("injection Done !! ");
 	}
+	
+	public void inject_Finance_LoansTypes() {
+FinanceType f=new FinanceType("مواسم استراتيجية","100");
+		
+		this.financeRepo.save(f);
+		
+		FinanceType f1=new FinanceType("طويل الامد","75");
+		
+		this.financeRepo.save(f1);
+		
+		FinanceType f2=new FinanceType("قصير الامد","80");
+		 
+		this.financeRepo.save(f2);
+		
+		List<FinanceType> fTypes = new ArrayList<FinanceType>() ; 
+		fTypes.add(f);fTypes.add(f1);fTypes.add(f2);
+		
+		
+		//insert loans types 
+		LoansType l = new LoansType("مرخص");
+		this.TypeRepo.save(l);
+		LoansType l1 = new LoansType("معفى");
+		this.TypeRepo.save(l1);
+		List<LoansType> loansTypes = new ArrayList<LoansType>();
+		loansTypes.add(l);loansTypes.add(l1);
+		
+	
+	}
+
 
 	public void inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans() {
 		//inser finance types // 

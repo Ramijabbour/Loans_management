@@ -38,7 +38,7 @@ public class CloseLoanHTML implements ViewCloseLoanDocTemplate {
 			}
 		}
 
-        model.put("financeType", Loan.getFinanceType());
+        model.put("financeType", Loan.getFinanceType().getTypeName());
         model.put("Bank",Loan.getBranche().getBank().getBankName());
         model.put("reason", Loan.getPurpose());
         model.put("a", Loan.getClient().getClientName());

@@ -21,7 +21,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STOnOff;
 
 import com.example.Loans.Loans;
-import com.example.Vouchers.Vouchers;
+import com.example.Vouchers.Vouchers;import com.itextpdf.text.Paragraph;
 
 public class LoanInfoDoc implements CreateInfoDocTemplate {
 	public LoanInfoDoc() {
@@ -153,13 +153,27 @@ public class LoanInfoDoc implements CreateInfoDocTemplate {
         paragraphbody3.addTab();
         paragraphbody3.setText(Loan.getTotalAmmount());
         paragraphbody3.addBreak();
-        paragraphbody3.setText(  "المبالغ المرخصة : ");
+        if(Loan.getLoanType().getTypeName().equals("مرخص"))
+        {paragraphbody3.setText(  "المبالغ المرخصة : ");
         paragraphbody3.addTab();
-        paragraphbody3.setText("");
+        paragraphbody3.setText(Loan.getTotalAmmount());
         paragraphbody3.addBreak();
         paragraphbody3.setText(  "المبالغ المعفاة : ");
         paragraphbody3.addTab();
-        paragraphbody3.setText(Loan.getTotalAmmount());
+        paragraphbody3.setText("");
+        }
+        else
+        {
+        	paragraphbody3.setText(  "المبالغ المرخصة : ");
+            paragraphbody3.addTab();
+            paragraphbody3.setText("");
+            paragraphbody3.addBreak();
+            paragraphbody3.setText(  "المبالغ المعفاة : ");
+            paragraphbody3.addTab();
+            paragraphbody3.setText(Loan.getTotalAmmount());
+        	
+        }
+        
         paragraphbody3.addBreak();
         paragraphbody3.setText("__________________________________________________");
 

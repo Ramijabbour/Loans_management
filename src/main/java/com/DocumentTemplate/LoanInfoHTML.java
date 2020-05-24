@@ -47,14 +47,17 @@ public class LoanInfoHTML implements ViewLoanInfoDocTemplate {
         model.put("cost", Loan.getTotalAmmount());
         model.put("totalAmmount", Loan.getTotalAmmount());
         model.put("totalRests", Loan.getTotalAmmount());
-        if(Loan.getLoanType().getTypeName().equalsIgnoreCase("مر خص"))
+        System.out.println(Loan.getLoanType().getTypeName());
+        if(Loan.getLoanType().getTypeName().equals("مرخص"))
         {
+        	System.out.println("-------------------------------- hiii --------------- ");
         	model.put("mr",  Loan.getTotalAmmount());
             model.put("ma","");
             	
         }
         else
         {
+        	System.out.println("--------------------------------- byeee ------------ ");
         	model.put("mr", "");
         	model.put("ma", Loan.getTotalAmmount());
         }
