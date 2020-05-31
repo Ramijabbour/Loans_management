@@ -1,6 +1,8 @@
 package com.example.Clients;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,17 +19,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.SiteConfiguration;
 import com.example.Clients.Clients;
+import com.example.SiteConfig.MasterService;
+import com.example.SiteConfig.SiteConfiguration;
 
 
 @RestController
 public class ClinetController {
-
+	
 	@Autowired
 	private ClientService clientservice;
 	
-
+	
+	public ClinetController() {
+		Method[] methods =  this.getClass().getDeclaredMethods();
+		List<String> methodsNames = new ArrayList<String>(); 
+		for(Method method : methods) {
+			if(!methodsNames.contains(method.getName()))
+				{
+					methodsNames.add(method.getName());
+				}
+		}
+		methodsNames.add(this.getClass().getSimpleName());
+		MasterService.addPermissionsToPermissionService(methodsNames);
+	}
+	
 	@RequestMapping("/Clients/{id}")
 	public Clients GetClient(@PathVariable int id)
 	{
@@ -43,7 +59,7 @@ public class ClinetController {
 	
 	//add new Client -------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Clients/addClient")
-	public ModelAndView addClientRequest() {
+	public ModelAndView addNewClient() {
 		ModelAndView mav = new ModelAndView("Clients/AddClients");
 		mav.addObject("client",new Clients());
 		return mav; 
@@ -61,7 +77,7 @@ public class ClinetController {
 	
 	//get All Clients ------------------------------------------------------
 		@RequestMapping(method = RequestMethod.GET , value="/Clients/all")
-		public ModelAndView ShowAllClient(@Param(value ="index") int index) {
+		public ModelAndView viewAllClients(@Param(value ="index") int index) {
 			ModelAndView mav = new ModelAndView("Clients/AllClients");
 			List<Clients> allclients=clientservice.GetAllClients(index);
 			mav.addObject("allclients",allclients);
@@ -77,7 +93,7 @@ public class ClinetController {
 	
 		// update client--------------------------------------------------------
 		@RequestMapping(method = RequestMethod.GET , value="/Clients/edit/{id}")
-		public ModelAndView ShowUpdateClient(@PathVariable int id) {
+		public ModelAndView UpdateClient(@PathVariable int id) {
 			ModelAndView mav = new ModelAndView("Clients/updateClient");
 			Clients client=clientservice.GetClientById(id);
 			mav.addObject("client",client);
@@ -110,6 +126,7 @@ public class ClinetController {
 		ModelAndView mav = new ModelAndView("Clients/searchClients");
 		List<Clients> allclients = this.clientservice.SearchbyclientName(index,clientName);
 		mav.addObject("allclients",allclients);
+		mav.addObject("searchvar",clientName);
 		if(allclients.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
 		}else {
@@ -118,7 +135,19 @@ public class ClinetController {
 		return mav ;
 	}
 		
-	
+	@RequestMapping(method = RequestMethod.GET , value = "/Clients/Search/nxtRes/{index}/{searchvar}")
+	public ModelAndView searchClientkNext(@PathVariable int index,@PathVariable String searchvar ) {
+		ModelAndView mav = new ModelAndView("Clients/searchClients");
+		List<Clients> allclients = this.clientservice.SearchbyclientName(index,searchvar);
+		mav.addObject("allbank",allclients);
+		mav.addObject("searchvar",searchvar);
+		if(allclients.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav ;
+	}
 	
 	
 }

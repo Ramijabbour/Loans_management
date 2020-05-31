@@ -48,5 +48,19 @@ public class ExceptionsHandler {
 		return mav ; 
 	}
 	
+	@ExceptionHandler(value = OutOfDayBoundsException.class)
+	public ModelAndView handleOutOfDayTimeException() {
+		ModelAndView mav = new ModelAndView("exceptions/exception");
+		mav.addObject("cerror",new OutOfDayBoundsException());
+		return mav ; 
+	}
+	
+	@ExceptionHandler(value = ServiceException.class)
+	public ModelAndView handleServiceException() {
+		ModelAndView mav = new ModelAndView("exceptions/exception");
+		mav.addObject("cerror",new ServiceException());
+		return mav ; 
+	}
+	
 	
 }

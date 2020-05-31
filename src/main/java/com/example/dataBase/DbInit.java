@@ -1,4 +1,4 @@
-package com.example.dataBase;
+package com.example.DataBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,9 @@ import com.example.Loans.Loans;
 import com.example.Loans.LoansRepository;
 import com.example.LoansType.LoansType;
 import com.example.LoansType.LoansTypeRepository;
+import com.example.OpenLoans.OpenLoans;
+import com.example.OpenLoans.OpenLoansRepository;
+import com.example.security.roles.Roles;
 import com.example.security.roles.RolesRepository;
 import com.example.security.user.User;
 import com.example.security.user.UserRepository;
@@ -40,11 +43,13 @@ public class DbInit implements CommandLineRunner{
 	private AllocationsRepository allocationsRepo ; 
 	private OnHoldCheckRepository onHoldRepo ; 
 	private LoansRepository loansRepo ; 
-	private BrancheRepository branchRepo ; 
+	private BrancheRepository branchRepo ;
+	private OpenLoansRepository openLoansRepo ; 
 	
 	public DbInit(OnHoldCheckRepository onHoldRepositpry ,UserRepository userRepository,PasswordEncoder passwordEncoder
 				,LoansTypeRepository LtypeRepo,FinanceTypeRepository financeRep,BanksRepository banksRepo
-				,AllocationsRepository allocationsRepo,LoansRepository loansRepo,BrancheRepository branchRepo) {
+				,AllocationsRepository allocationsRepo,LoansRepository loansRepo,BrancheRepository branchRepo
+				,RolesRepository rolesRepo ,  OpenLoansRepository openLoansRepo) {
 		this.onHoldRepo = onHoldRepositpry ; 
 		this.userRepository = userRepository ; 
 		this.passwordEncoder = passwordEncoder ;
@@ -54,45 +59,59 @@ public class DbInit implements CommandLineRunner{
 		this.allocationsRepo = allocationsRepo ; 
 		this.loansRepo = loansRepo ; 
 		this.branchRepo = branchRepo ; 
+		this.rolesRepo = rolesRepo ; 
+		this.openLoansRepo = openLoansRepo ; 
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		//User superr = new User("SuperAccount@Gmail.com",passwordEncoder.encode("ADMIN123qwe"),"superadmin","male","","SUPER",true);
+		//this.userRepository.save(superr);
 		//injectUsersToDB();
 		//inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
-		//inject_Finance_LoansTypes();
 		//injectChecksToDB();
 		//System.out.println("injection Done !! ");
+		//ALLANALYTICS
+	
+		boolean adminFound = false , superFound = false ,statsFound = false , allStatsFound = false  ; 
+		List<Roles> rolesList = this.rolesRepo.findAll() ;
+		for(Roles role : rolesList ) {
+			if(role.getRoleName().equalsIgnoreCase("ADMIN")){
+				adminFound = true ; 
+			}
+			if(role.getRoleName().equalsIgnoreCase("SUPER")) {
+				superFound = true ; 
+			}
+			if(role.getRoleName().equalsIgnoreCase("ANALYTICS")) {
+				statsFound = true ; 
+			}
+			if(role.getRoleName().equalsIgnoreCase("ALLANALYTICS")) {
+				allStatsFound = true ; 
+			}		
+		}
+		Roles role = new Roles() ;
+		Roles role1 = new Roles() ;
+		Roles role2 = new Roles() ;
+		Roles role3 = new Roles() ;
+		if(!adminFound) {
+			role.setRoleName("ADMIN");
+			this.rolesRepo.save(role);
+		}
+		if(!superFound) {
+			role1.setRoleName("SUPER");
+			this.rolesRepo.save(role1); 
+		}
+		if(!statsFound) {
+			role2.setRoleName("ANALYTICS");
+			this.rolesRepo.save(role2); 
+		}
+		if(!allStatsFound) {
+			role3.setRoleName("ALLANALYTICS");
+			this.rolesRepo.save(role3); 
+		}
+		
 	}
 	
-	public void inject_Finance_LoansTypes() {
-FinanceType f=new FinanceType("مواسم استراتيجية","100");
-		
-		this.financeRepo.save(f);
-		
-		FinanceType f1=new FinanceType("طويل الامد","75");
-		
-		this.financeRepo.save(f1);
-		
-		FinanceType f2=new FinanceType("قصير الامد","80");
-		 
-		this.financeRepo.save(f2);
-		
-		List<FinanceType> fTypes = new ArrayList<FinanceType>() ; 
-		fTypes.add(f);fTypes.add(f1);fTypes.add(f2);
-		
-		
-		//insert loans types 
-		LoansType l = new LoansType("مرخص");
-		this.TypeRepo.save(l);
-		LoansType l1 = new LoansType("معفى");
-		this.TypeRepo.save(l1);
-		List<LoansType> loansTypes = new ArrayList<LoansType>();
-		loansTypes.add(l);loansTypes.add(l1);
-		
-	
-	}
-
 
 	public void inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans() {
 		//inser finance types // 
@@ -156,7 +175,6 @@ FinanceType f=new FinanceType("مواسم استراتيجية","100");
 			for(int i = 1 ; i < 40 ; i ++) {
 			int totalLoanValue = 50000+ ThreadLocalRandom.current().nextInt(10000, 9000000 + 1);; 
 			int intrestRate = ThreadLocalRandom.current().nextInt(2,20);
-			System.out.println("IR : "+intrestRate);
 			Loans loan = new Loans(" "," ", " ", " ",
 				String.valueOf(intrestRate)," ", " ",String.valueOf(totalLoanValue),
 				String.valueOf(totalLoanValue), " ", " ", " ",
@@ -201,13 +219,17 @@ FinanceType f=new FinanceType("مواسم استراتيجية","100");
 			branchesCounter = 0 ; 
 		}
 		this.loansRepo.save(loan); 
-		
+		OpenLoans openLoan = new OpenLoans();
+		openLoan.setLoan(loan);
+		this.openLoansRepo.save(openLoan);
 		}
 		}
 		
 	}
 
 	public void injectUsersToDB() {
+		User superr = new User("SuperAccount@Gmail.com",passwordEncoder.encode("ADMIN123qwe"),"superadmin","male","","SUPER",true);
+		this.userRepository.save(superr);
 		for(int i = 0 ; i < 100 ; i ++) {
 			User admin = new User("user@email.com"+String.valueOf(i),passwordEncoder.encode("user123"),"user"+String.valueOf(i),"male","","USER",true);
 			this.userRepository.save(admin);

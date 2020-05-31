@@ -140,7 +140,7 @@ public class ReportsController {
 	
 
 	//openLoanHandler
-		/*@RequestMapping(method = RequestMethod.GET,value = "/OpenLoan/reports/export/{id}")
+		@RequestMapping(method = RequestMethod.GET,value = "/OpenLoan/reports/export/{id}")
 		public ModelAndView getOpenExportIndex(@PathVariable int id ) {
 			Loans Loan = this.loanService.getOneByID(id);
 			ModelAndView mav = new ModelAndView("DOC/exportOpenLoanHandler");
@@ -526,7 +526,7 @@ public class ReportsController {
 			return null;
 		}
 	}
-*/
+
 
 
 //////////////////////////////////////////////////////////////////

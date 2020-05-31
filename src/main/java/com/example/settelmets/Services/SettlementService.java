@@ -10,12 +10,12 @@ import org.springframework.data.domain.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.example.MasterService;
-import com.example.SiteConfiguration;
 import com.example.BankBranches.BrancheService;
 import com.example.BankBranches.Branches;
 import com.example.Banks.BankService;
 import com.example.Banks.Banks;
+import com.example.SiteConfig.MasterService;
+import com.example.SiteConfig.SiteConfiguration;
 import com.example.settelmets.Models.Chaque;
 import com.example.settelmets.Models.CheckDisposableModel;
 import com.example.settelmets.Models.SettledChaque;
@@ -101,17 +101,13 @@ public class SettlementService extends MasterService {
 		SettelmentHandler.setNumberOfParticipants(this.ParticipantsCount);
 		if(ParticipantsIds.size() != 0 ) {
 			List<SettledChaque> resultList = SettelmentHandler.invokeSettlementSequence(toSettleChecks,ParticipantsIds,BanksNames,BranchesNames);
-			if(resultList == null ) {
-				super.notificationsService.addNotification("Settlement Operation Failed duo to data check failuer reviewing the checks is needed! ", "/settlement/checks/reports", "SUPER");
-			}else {
-			
+			if(resultList != null ) {
 			this.settledChecksRepository.saveAll(resultList);
 			for(Chaque check : onHoldChecks) {
 				check.setActive(true);
 			}
 			this.onHoldChecksRepository.saveAll(onHoldChecks); 
 		}
-		super.notificationsService.addNotification("Gross Settlement Operation passed data check Stage continue to review results reports", "/settlement/checks/reports", "SUPER");
 		// add result validation 
 		}
 	}
@@ -124,7 +120,6 @@ public class SettlementService extends MasterService {
 					check.getFirstBranchCode(),check.getSecondBranchName(),check.getSecondBranchCode(),check.getAmount(),super.get_current_User().getUsername(),
 					super.get_current_User().getId(),false);
 			this.onHoldChecksRepository.save(finalCheck);
-			super.notificationsService.addNotification("check added to settlement Service", "/settlement/checks/all", "SUPER");
 			return 0 ;
 		}else{
 			return result ;

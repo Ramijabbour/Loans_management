@@ -1,7 +1,9 @@
 package com.example.Loans;
 
-		import java.io.IOException;
-		import java.util.Date;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Date;
 		import java.util.List;
 
 		import javax.servlet.http.HttpServletResponse;
@@ -14,12 +16,11 @@ package com.example.Loans;
 		import org.springframework.web.bind.annotation.PathVariable;
 		import org.springframework.web.bind.annotation.RequestMapping;
 		import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+		import org.springframework.web.bind.annotation.RequestParam;
+		import org.springframework.web.bind.annotation.RestController;
 		import org.springframework.web.servlet.ModelAndView;
 
-		import com.example.SiteConfiguration;
-		import com.example.BankBranches.BrancheService;
+import com.example.BankBranches.BrancheService;
 		import com.example.BankBranches.Branches;
 		import com.example.Banks.Banks;
 		import com.example.Clients.ClientService;
@@ -34,13 +35,13 @@ import org.springframework.web.bind.annotation.RestController;
 		import com.example.OpenLoans.OpenLoansService;
 		import com.example.ReScheduleLoans.ReScheduleLoans;
 		import com.example.ReScheduleLoans.ReScheduleLoansService;
-		import com.example.Vouchers.VoucherController;
+import com.example.SiteConfig.MasterService;
+import com.example.SiteConfig.SiteConfiguration;
+import com.example.Vouchers.VoucherController;
 		import com.example.Vouchers.VoucherService;
-		import com.example.Vouchers.Vouchers;
 
 @RestController
 public class LoansController {
-
 	@Autowired
 	LoanService loansService;
 	@Autowired
@@ -64,7 +65,7 @@ public class LoansController {
 
 	@Autowired
 	VoucherController voucherController ;
-
+	
 	//get All Open Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open")
 	public ModelAndView ShowAllOpenLoans(@Param(value ="index") int index) {
@@ -339,7 +340,7 @@ public class LoansController {
 
 
 
-	@RequestMapping(method = RequestMethod.GET , value="/Loan/Confirme/{id}")
+	@RequestMapping(method = RequestMethod.GET , value="/Loans/Confirme/{id}")
 	public void ConfirmLoan(@PathVariable int id, HttpServletResponse response) throws IOException
 	{
 		Loans Loan=loansService.getOneByID(id);
@@ -356,6 +357,7 @@ public class LoansController {
 		ModelAndView mav = new ModelAndView("Loans/SearchLoans");
 		List<Loans> allloans = this.loansService.SearchByLoanNumber(index,loanNumber);
 		mav.addObject("allloans",allloans);
+		mav.addObject("searchvar",loanNumber);
 		if(allloans.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
 		}else {
@@ -364,5 +366,17 @@ public class LoansController {
 		return mav ;
 	}
 
-
+	@RequestMapping(method = RequestMethod.GET , value = "/Loans/Search/nxtRes/{index}/{searchvar}")
+	public ModelAndView searchBankNext(@PathVariable int index,@PathVariable String searchvar ) {
+		ModelAndView mav = new ModelAndView("Loans/SearchLoans");
+		List<Loans> allloans = this.loansService.SearchByLoanNumber(index,searchvar);
+		mav.addObject("allbank",allloans);
+		mav.addObject("searchvar",searchvar);
+		if(allloans.size() > 0 ) {
+			SiteConfiguration.addSequesnceVaraibles(mav, index);
+		}else {
+			SiteConfiguration.addSequesnceVaraibles(mav, -1);
+		}
+		return mav ;
+	}
 }

@@ -35,12 +35,12 @@
                 <form class="pt-3" action="#" th:action="@{/login}" method="post">
                    <div class="form-group">
                    <label for="exampleInputPassword1">اسم المستخدم</label>
-                   <input class="form-control form-control-lg" type="text" id="username" name="username" placeholder="اسم المستخدم"    pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{6,20}$" required>
+                   <input class="form-control form-control-lg" type="text" id="username" name="username" placeholder="اسم المستخدم" required>
                   </div>
                  <div class="form-group">
                    <label for="exampleInputPassword1">كلمة المرور</label>
                    <input class="form-control form-control-lg" type="password" id="password" name="password"
-                                   placeholder="كلمة المرور" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,} required>
+                                   placeholder="كلمة المرور" required>
                   </div>
          			<div class="card-footer">
                   <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">تسجيل الدخول</button>

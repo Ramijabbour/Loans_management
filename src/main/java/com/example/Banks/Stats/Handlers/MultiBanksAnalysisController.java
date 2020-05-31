@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.MasterService;
 import com.example.Allocations.Allocations;
 import com.example.Allocations.AllocationsService;
 import com.example.Banks.BankService;
@@ -14,6 +13,8 @@ import com.example.Banks.Stats.Models.AnalysisCompositeModel;
 import com.example.Banks.Stats.Models.AnalysisModel;
 import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
+import com.example.SiteConfig.MasterService;
+
 import java.util.List ; 
 import java.util.ArrayList ; 
 
@@ -282,6 +283,7 @@ public class MultiBanksAnalysisController {
 	public static void flushLists() {
 		banksList = new ArrayList<Banks>();
 		years = new ArrayList<Integer>();
+		loansyears = new ArrayList<Integer>() ; 
 	}
 
 	private void trimDataArray(List<Integer> tempYears) {
@@ -329,6 +331,7 @@ public class MultiBanksAnalysisController {
 	
 	//fill the years list with the years between yearsSpanStart and YearsSpanEnd 
 	public void setYearsList() {
+			years = new ArrayList<Integer>(); 
 			int tmpYearSt = yearSpanStart; 
 			while(true) {
 				if(tmpYearSt > yearSpanEnd) {
@@ -381,6 +384,7 @@ public class MultiBanksAnalysisController {
 	}
 
 	private void initLoansDataArray() {
+		System.out.println("initLoansDataArray "+years.size());
 		for(int i = 0 ; i < years.size() ; i++) {
 			this.loansDataArray[i] = 0 ; 
 		}

@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import com.example.SiteConfiguration;
 import com.example.Banks.Banks;
+import com.example.SiteConfig.SiteConfiguration;
+
 
 @Service
 public class BrancheService {
