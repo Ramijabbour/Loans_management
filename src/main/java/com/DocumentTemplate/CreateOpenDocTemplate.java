@@ -1,4 +1,4 @@
-package com.example.OpenLoans;
+package com.DocumentTemplate;
 
 import com.example.Loans.Loans;
 

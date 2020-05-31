@@ -1,4 +1,4 @@
-package com.example.CloseLoans;
+package com.DocumentTemplate;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -42,8 +42,8 @@ public class CloseLoansReportPDF implements CreateCloseDocTemplate{
         normal2.setColor(BaseColor.BLACK.brighter());
         normal3.setColor(BaseColor.GRAY.darker());
         Document document = new Document();
-        String Path=System.getProperty("user.dir")+"//";
-        String Filename="close_Loan_"+Loan.getId()+dateFormat.format(date)  ;
+        String Path=System.getProperty("user.dir")+"\\";
+        String Filename="close_Loan_"+Loan.getId()  ;
         String returnPath = Path+Filename+".pdf" ; 
 
         

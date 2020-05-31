@@ -1,4 +1,4 @@
-package com.example.Loans;
+package com.DocumentTemplate;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,7 +30,10 @@ public class LoanInfoHTML implements ViewLoanInfoDocTemplate {
         Map<String, Object> model = new HashMap<String, Object>();
 
         List<String> Rests = new ArrayList<String>();
+       
 
+       
+        
         int ammount = Integer.parseInt(Loan.getTotalAmmount());
         for(Vouchers v : allvouchers) {
                         
@@ -38,6 +41,8 @@ public class LoanInfoHTML implements ViewLoanInfoDocTemplate {
             Rests.add(""+ammount);
         }
         
+        
+       
        
         
         model.put("Name", Loan.getName());
@@ -58,6 +63,7 @@ public class LoanInfoHTML implements ViewLoanInfoDocTemplate {
         	model.put("mr", "");
         	model.put("ma", Loan.getTotalAmmount());
         }
+        model.put("counter",Rests.size());
         model.put("Rests",Rests);
         
         

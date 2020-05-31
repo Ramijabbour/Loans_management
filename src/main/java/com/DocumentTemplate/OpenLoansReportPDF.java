@@ -1,4 +1,4 @@
-package com.example.OpenLoans;
+package com.DocumentTemplate;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -19,9 +19,9 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class RegularOpenLoansReportPDF implements CreateOpenDocTemplate{
+public class OpenLoansReportPDF implements CreateOpenDocTemplate{
 
-	public RegularOpenLoansReportPDF() {
+	public OpenLoansReportPDF() {
 		
 	}
 	
@@ -39,8 +39,8 @@ public class RegularOpenLoansReportPDF implements CreateOpenDocTemplate{
         normal2.setColor(BaseColor.BLACK.brighter());
         normal3.setColor(BaseColor.GRAY.darker());
         Document document = new Document();
-        String Path=System.getProperty("user.dir")+"//";
-        String Filename="open_Loan_"+Loan.getId()+dateFormat.format(date)  ;
+        String Path=System.getProperty("user.dir")+"\\";
+        String Filename="open_Loan_"+Loan.getId() ;
         String returnPath = Path+Filename+".pdf" ; 
 
         
@@ -50,15 +50,14 @@ public class RegularOpenLoansReportPDF implements CreateOpenDocTemplate{
             PdfPTable table = new PdfPTable(1);
             table.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
             PdfPCell cell = new PdfPCell();
-            Paragraph p = new Paragraph("الجمهورية العربية السورية \nمصرف سورية المركزي\n قسم التسليف \n\n                         قيد نظامي فتح سلفة \n\n", normal);
+            Paragraph p = new Paragraph("الجمهورية العربية السورية \nمصرف سورية المركزي\n قسم التسليف \n\n                         قيد فتح سلفة \n\n", normal);
             Paragraph p1 = new Paragraph("\n\n\n");
             Paragraph p2=new Paragraph("السلفة رقم: " + Loan.getLoanNumber() +"   " + "التاريخ : " + Loan.getLoanDate()+"   " +" المصرف  : "+Loan.getBranche().getBank().getBankName()+" - " + Loan.getBranche().getBranchName()+"\n"+
             		" لصالح  : "+Loan.getClient().getClientName()+"\n\n"+
-            		" الجهة المدينة  :لضمانات لقاء القروض والسلف"+"\n"+
-            		"السندات التجارية"+"\n\n"+
+            		" الجهة المدينة  : من حـ/القروض و التسليفات للمصارف"+"\n"+
+            		Loan.getBranche().getBank().getBankName()+" - " + Loan.getBranche().getBranchName()+"\n\n"+
             	    "                      " + "عدد السندات : \'"+Loan.getNumberOfVoucher()+"\'"+ "              "+ "\'"+Loan.getTotalAmmount()+"\'"+"\n"+
-                    " الجهة الدائنة : مودعو السندات الموضوعة"+"\n"+
-                    " ضمانة للقروض والسلف"+"\n"+
+                    "                           "+"الى : حـ/العمليات المصرفية-الحسابات الجارية"+"\n"+
             	    "                      " + "عدد السندات : \'"+Loan.getNumberOfVoucher()+"\'"+ "              "+ "\'"+Loan.getTotalAmmount()+"\'"+"\n"+
                     "                      "+"____________________________"+"\n"+
                     "                      " + " المجموع : " + Loan.getTotalAmmount() + "                      " + "\'"+Loan.getTotalAmmount()+"\'\n",normal2);

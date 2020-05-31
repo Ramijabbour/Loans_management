@@ -1,4 +1,4 @@
-package com.example.OpenLoans;
+package com.DocumentTemplate;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,9 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.Loans.Loans;
 
-public class OpenLoanHTML implements ViewOpenLoanDocTemplate {
+public class RegularOpenLoanHTML implements ViewOpenLoanDocTemplate {
 
-	public OpenLoanHTML() {
+	public RegularOpenLoanHTML() {
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -20,7 +20,7 @@ public class OpenLoanHTML implements ViewOpenLoanDocTemplate {
 	public ModelAndView ViewOpenLoanDOC(Loans Loan) {
 
 
-        String viewName = "DOC/openloan";
+        String viewName = "DOC/regularopenloan";
 
         Map<String, Object> model = new HashMap<String, Object>();
 

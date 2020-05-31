@@ -1,4 +1,4 @@
-package com.example.Loans;
+package com.DocumentTemplate;
 
 import org.springframework.web.servlet.ModelAndView;
 

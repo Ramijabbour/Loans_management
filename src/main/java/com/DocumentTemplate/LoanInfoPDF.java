@@ -1,4 +1,4 @@
-package com.example.Loans;
+package com.DocumentTemplate;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.example.Loans.Loans;
 import com.example.Vouchers.Vouchers;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -40,8 +41,8 @@ public class LoanInfoPDF implements CreateInfoDocTemplate{
 	        normal2.setColor(BaseColor.BLACK.brighter());
 	        normal3.setColor(BaseColor.GRAY.darker());
 	        Document document = new Document();
-	        String Path=System.getProperty("user.dir")+"//";
-	        String Filename="Loan_info_"+Loan.getId()+dateFormat.format(date)  ;
+	        String Path=System.getProperty("user.dir")+"\\";
+	        String Filename="Loan_info_"+Loan.getId()  ;
 	        String returnPath = Path+Filename+".pdf" ; 
 
 	        

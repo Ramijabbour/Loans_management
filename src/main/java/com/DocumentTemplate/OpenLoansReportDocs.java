@@ -1,4 +1,4 @@
-package com.example.OpenLoans;
+package com.DocumentTemplate;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,9 +17,9 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STOnOff;
 
 import com.example.Loans.Loans;
 
-public class  RegularOpenLoansReportDocs implements CreateOpenDocTemplate {
+public class  OpenLoansReportDocs implements CreateOpenDocTemplate {
 	
-	public RegularOpenLoansReportDocs() {
+	public OpenLoansReportDocs() {
 	}
 	
 	  @Override
@@ -29,7 +29,7 @@ public class  RegularOpenLoansReportDocs implements CreateOpenDocTemplate {
 	        String Path= System.getProperty("user.dir")+"\\";
 	        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 	        Date date = new Date();
-	        String Filename="Regopen_Loan_"+Loan.getId()+dateFormat.format(date)  ;
+	        String Filename="open_Loan_"+Loan.getId()+dateFormat.format(date)  ;
 	        String returnPath = Path+Filename+".docx";
 	        //Blank Document
 	        XWPFDocument document = new XWPFDocument();
@@ -80,7 +80,7 @@ public class  RegularOpenLoansReportDocs implements CreateOpenDocTemplate {
 	         paragraphtitle1.addBreak();
 	         paragraphtitle1.addBreak();
 	         
-	         paragraphtitle1.setText("قيد  نظامي فتح سلفة");
+	         paragraphtitle1.setText("قيد  فتح سلفة");
 	         paragraphtitle1.setFontSize(20);
 	         paragraphtitle1.setColor("000000");
 	         paragraphtitle1.addBreak();
@@ -116,12 +116,12 @@ public class  RegularOpenLoansReportDocs implements CreateOpenDocTemplate {
 	         paragraphbody.addBreak();
 	         paragraphbody.addTab();
 	         paragraphbody.addTab();
-	         paragraphbody.setText("الجهة المدينة : الضمانات لقاء القروض والسلف");
+	         paragraphbody.setText("الجهة المدينة : من حـ/القروض و التسليفات للمصارف");
 	         paragraphbody.addBreak();
 	         paragraphbody.addTab();
 	         paragraphbody.addTab();
 	         paragraphbody.addTab();
-	         paragraphbody.setText("السندات التجارية");
+	         paragraphbody.setText( Loan.getBranche().getBank().getBankName() + " - " + Loan.getBranche().getBranchName());
 	         paragraphbody.addBreak();
 	         paragraphbody.addBreak();
 	   
@@ -161,12 +161,8 @@ public class  RegularOpenLoansReportDocs implements CreateOpenDocTemplate {
 
 	 		XWPFRun r3 = p3.createRun();
 
-	 		r3.setText(" الجهة الدائنة  :    مودعو السندات الموضوعة" );
+	 		r3.setText(" الى : حـ/العمليات المصرفية-الحسابات الجارية" );
 	 		r3.addBreak();
-	 		r3.addTab();
-	 		r3.addTab();
-	 		r3.addTab();
-	 		r3.setText("ضمانة للقروض والسلف");
 	        r3.setColor("101010");
 	        r3.setFontSize(16);
 	        

@@ -51,8 +51,8 @@
                 </thead>
                 <tbody >
                 
-                <tr th:each = "v : ${vouchers} "  >
-                  <td ><p> &emsp;&emsp;صافي مبلغ الاستحقاق : <span th:text =${v.VoucherAmmount}></span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; تاريخ الاستحقاق : <span th:text = ${v.VoucherDate}></span> <br>&emsp;&emsp;  الصافي المتبقي : <span th:text = "${Rests.get(0)}"></span></p></td> 
+                <tr th:each = "v : ${vouchers} & i : ${#numbers.sequence( 1, ${vouchers.size})}"  >
+                  <td ><p> &emsp;&emsp;صافي مبلغ الاستحقاق : <span th:text =${v.VoucherAmmount}></span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; تاريخ الاستحقاق : <span th:text = ${v.VoucherDate}></span> <br>&emsp;&emsp;  الصافي المتبقي : <span th:text = "${Rests.get(${i})}"></span></p></td> 
                 </tr>
                 
                 

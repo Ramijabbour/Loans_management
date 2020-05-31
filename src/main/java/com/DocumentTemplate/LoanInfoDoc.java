@@ -1,4 +1,4 @@
-package com.example.Loans;
+package com.DocumentTemplate;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +20,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STOnOff;
 
+import com.example.Loans.Loans;
 import com.example.Vouchers.Vouchers;
 
 public class LoanInfoDoc implements CreateInfoDocTemplate {
