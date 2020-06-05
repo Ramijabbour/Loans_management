@@ -57,7 +57,7 @@
                         <td><span th:text="${user.createdAt}"> createdAt </span></td>
                         <td><span th:text="${user.Active}"> Active </span></td>
                         
-                        <td>
+                        <td  sec:authorize="hasAnyAuthority('viewUser','ADMIN','SUPER')">
                           <form action="#" th:action="@{/admistration/users/user/viewuser/} + ${{user.id}}" method="get">
                               <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-inverse-primary btn-sm" type="submit">
                                   <i>عرض</i>
@@ -65,14 +65,14 @@
                           </form>
                       </td>
                         
-                        <td>
+                        <td sec:authorize="hasAnyAuthority('updateUser','ADMIN','SUPER')">
                           <form action="#" th:action="@{/adminstration/users/update/} + ${{user.id}}" method="get">
                               <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-inverse-primary btn-sm" type="submit">
                                   <i>تعديل</i>
                               </button>
                           </form>
                       </td>
-                      <td>
+                      <td sec:authorize="hasAnyAuthority('deleteUser','ADMIN','SUPER')">
                           <form action="#" th:action="@{/adminstration/users/delete/} + ${{user.id}}" method="post">
                               <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-inverse-primary btn-sm" type="submit">
                                   <i>حذف</i>

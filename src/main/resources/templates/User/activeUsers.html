@@ -58,14 +58,14 @@
                         <td><span th:text="${user.UserRoles}"> Roles </span></td>
                         <td><span th:text="${user.createdAt}"> CreatedAt </span></td>
                         <td><span th:text="${user.Active}"> Active </span></td>
-                      <td>
+                      <td sec:authorize="hasAnyAuthority('deActivateUser','ADMIN','SUPER')">
                           <form action="#" th:action="@{/adminstration/users/user/deactivate/} + ${{user.id}}" method="post">
                               <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                                   <i>تعطيل المستخدم</i>
                               </button>
                           </form>
                       </td>
-                       <td>
+                       <td sec:authorize="hasAnyAuthority('deleteUser','ADMIN','SUPER')">
                           <form action="#" th:action="@{/adminstration/users/delete/} + ${{user.id}}" method="post">
                               <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                                   <i>حذف</i>

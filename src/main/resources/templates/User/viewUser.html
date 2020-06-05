@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html  lang="ar" dir="rtl"
- xmlns:th="http://www.thymeleaf.org">
+ xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments.html :: headerfiles">
  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -77,7 +78,7 @@
                     <tr th:each="userrole : ${userRoles}">
                        <td><span th:text="${userrole.id}"> id </span></td>
                         <td><span th:text="${userrole.RoleName}"> RoleName </span></td>
-                    	<td>
+                    	<td sec:authorize="hasAnyAuthority('revokeRoleFromUser','ADMIN','SUPER')">
                           <form action="#" th:action="@{/admistration/users/user/roles/revoke/}+ ${{user.id}} + @{/} + ${{userrole.id}}" method="post">
                               <button th:id="'table_entry_childs_button_'+ ${{user.id}} + ${userrole.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                                   <i>سحب الدور</i>
@@ -88,11 +89,13 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="container" sec:authorize="hasAnyAuthority('grantRoleToUser','ADMIN','SUPER')">
              <form action="#" th:action="@{/admistration/users/user/roles/grant/} + ${{user.id}}" method="get">
                     <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                     	<i>إضافة دور</i>
                      </button>
               </form>
+              </div>
               <p></p>
               
               
@@ -112,7 +115,7 @@
                     <tr th:each="userpermission : ${userPermissions}">
                        <td><span th:text="${userpermission.id}"> id </span></td>
                         <td><span th:text="${userpermission.PermissionName}"> PermissionName </span></td>
-                    	<td>
+                    	<td sec:authorize="hasAnyAuthority('revokePermissionFromUser','ADMIN','SUPER')">
                           <form action="#" th:action="@{/admistration/users/user/permissions/revoke/}+ ${{user.id}} + @{/} + ${{userpermission.id}}" method="post">
                               <button th:id="'table_entry_childs_button_'+ ${{user.id}} + ${userpermission.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                                   <i>سحب الصلاحية</i>
@@ -122,17 +125,14 @@
                     </tr>
                 </tbody>
             </table>
+             <div class="container" sec:authorize="hasAnyAuthority('grantPermissionsToUser','ADMIN','SUPER')">
              <form action="#" th:action="@{/admistration/users/user/permissions/grant/} + ${{user.id}}" method="get">
                     <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                     	<i>إضافة صلاحية</i>
                      </button>
               </form>
+              </div>
               <p></p>
-              <form action="#" th:action="@{/adminstration/logs/userlogs/} + ${{user.id}}" method="get">
-                    <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                    	<i>عرض سجل المستخدم</i>
-                     </button>
-              </form>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
