@@ -73,7 +73,7 @@ public class DbInit implements CommandLineRunner{
 		//System.out.println("injection Done !! ");
 		//ALLANALYTICS
 	
-		boolean adminFound = false , superFound = false ,statsFound = false , allStatsFound = false  ; 
+		boolean adminFound = false , superFound = false ,statsFound = false , allStatsFound = false ,loansFound = false  ; 
 		List<Roles> rolesList = this.rolesRepo.findAll() ;
 		for(Roles role : rolesList ) {
 			if(role.getRoleName().equalsIgnoreCase("ADMIN")){
@@ -87,12 +87,16 @@ public class DbInit implements CommandLineRunner{
 			}
 			if(role.getRoleName().equalsIgnoreCase("ALLANALYTICS")) {
 				allStatsFound = true ; 
-			}		
+			}
+			if(role.getRoleName().equalsIgnoreCase("LOANS")) {
+				loansFound = true ; 
+			}
 		}
 		Roles role = new Roles() ;
 		Roles role1 = new Roles() ;
 		Roles role2 = new Roles() ;
 		Roles role3 = new Roles() ;
+		Roles role4 = new Roles();
 		if(!adminFound) {
 			role.setRoleName("ADMIN");
 			this.rolesRepo.save(role);
@@ -109,7 +113,10 @@ public class DbInit implements CommandLineRunner{
 			role3.setRoleName("ALLANALYTICS");
 			this.rolesRepo.save(role3); 
 		}
-		
+		if(!loansFound) {
+			role4.setRoleName("LOANS");
+			this.rolesRepo.save(role4);
+		}
 	}
 	
 

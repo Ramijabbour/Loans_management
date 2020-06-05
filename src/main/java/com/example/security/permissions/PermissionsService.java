@@ -132,4 +132,8 @@ public class PermissionsService {
 	}
 	
 	
+	public List<Permissions> getAllPermissionsNoPage(){
+		return this.permissionsRepository.findAll() ; 
+	}
+	
 }

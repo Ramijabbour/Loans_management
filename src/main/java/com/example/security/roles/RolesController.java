@@ -96,6 +96,9 @@ public class RolesController {
 		if(role.getRoleName().contains("ALLANALYTICS")) {
 			return MasterService.sendGeneralError("لا يمكن إضافة دور بهذا الاسم");
 		}
+		if(role.getRoleName().contains("LOANS")) {
+			return MasterService.sendGeneralError("لا يمكن إضافة دور بهذا الاسم");
+		}
 		this.rolesService.addRole(role); 
 		return MasterService.sendSuccessMsg("تمت عملية إضافة الدور بنجاح");
 	} 
@@ -116,6 +119,9 @@ public class RolesController {
 				return MasterService.sendGeneralError("لا يمكن حذف هذا الدور");
 			}
 			if(role.getRoleName().equalsIgnoreCase("ALLANALYTICS")) {
+				return MasterService.sendGeneralError("لا يمكن حذف هذا الدور");
+			}
+			if(role.getRoleName().equalsIgnoreCase("LOANS")) {
 				return MasterService.sendGeneralError("لا يمكن حذف هذا الدور");
 			}
 		this.rolesService.deleteRole(role);

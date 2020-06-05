@@ -144,7 +144,7 @@ public class UserController {
 		User user = this.userService.getUserByID(userid);
 		ModelAndView mav = new ModelAndView("Permissions/grantpermissions");
 		List<Permissions>userPermissionsList = this.userPermissionsService.getPermissionsOfUser(user);
-		List<Permissions> allPermissionsList =  this.permissionsService.getAllPermissions(0) ; 
+		List<Permissions> allPermissionsList =  this.permissionsService.getAllPermissionsNoPage() ; 
 		List<Permissions> uniquePermissionsList = new ArrayList<Permissions>() ; 
 		for(Permissions permission : allPermissionsList ) {
 			if(!userPermissionsList.contains(permission))

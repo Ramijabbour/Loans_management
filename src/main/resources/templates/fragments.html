@@ -228,36 +228,36 @@
                   <span class="menu-title">عرض الأحداث</span>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" sec:authorize="hasAnyAuthority('getAllUsers','addUser','getNonActiveUsers','getActiveUsers','SUPER')">
                 <a   href="#" class="nav-link">
                   <i class="mdi mdi-human-male-female menu-icon"></i>
                   <span class="menu-title">المستخدمين</span>
                 </a>
 				 <div class="submenu">
                       <ul>
-                          <li class="nav-item"><a class="nav-link" href="/adminstration/users/all?index=0">كل المستخدمين</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/adminstration/users/adduser">أضف مستخدماً</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/adminstration/users/active">الحسابات النشطة</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/adminstration/users/nonactive">الحسابات غيرالنشطة</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('getAllUsers','SUPER')"><a class="nav-link" href="/adminstration/users/all?index=0">كل المستخدمين</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('addUser','SUPER')"><a class="nav-link" href="/adminstration/users/adduser">أضف مستخدماً</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('getActiveUsers','SUPER')"><a class="nav-link" href="/adminstration/users/active">الحسابات النشطة</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('getNonActiveUsers','SUPER')"><a class="nav-link" href="/adminstration/users/nonactive">الحسابات غيرالنشطة</a></li>
                       </ul>
                   </div>
               </li>
-               <li class="nav-item">
+               <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER')">
                 <a   href="#" class="nav-link">
                   <i class="mdi mdi-human-male-female menu-icon"></i>
                   <span class="menu-title">إدارة الموقع</span>
                 </a>
 				 <div class="submenu">
                       <ul>
-                          <li class="nav-item"><a class="nav-link" href="/security/roles/all?index=0">إدارة الأدوار</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/security/roles/addrole">إضافة دور</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/security/permissions/all?index=0">إدارة الصلاحيات</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/security/permissions/commit">تأكيد الصلاحيات المعلقة</a></li>
-                      	  <li class="nav-item"><a class="nav-link" href="/config/currConfig">إعدادات الموقع</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER')"><a class="nav-link" href="/security/roles/all?index=0">إدارة الأدوار</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER')"><a class="nav-link" href="/security/roles/addrole">إضافة دور</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER')"><a class="nav-link" href="/security/permissions/all?index=0">إدارة الصلاحيات</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER')"><a class="nav-link" href="/security/permissions/commit">تأكيد الصلاحيات المعلقة</a></li>
+                      	  <li class="nav-item" sec:authorize="hasAnyAuthority('SUPER')"><a class="nav-link" href="/config/currConfig">إعدادات الموقع</a></li>
                       </ul>
                   </div>
               </li>
-			   <li class="nav-item">
+			   <li class="nav-item" sec:authorize="hasAnyAuthority('LOANS','ADMIN','SUPER')">
                 <a class="nav-link" href="#">
                   <i class="mdi mdi-file-document-box menu-icon"></i>
                   <span class="menu-title">السلف</span>
@@ -273,31 +273,31 @@
                       </ul>
                </div>       
               </li>
-			   <li class="nav-item">
+			   <li class="nav-item" sec:authorize="hasAnyAuthority('addNewBank','ShowAllBank','viewAllBranches','addAllocation','viewAllAllocations','ADMIN','SUPER')">
                 <a class="nav-link" href="#">
                   <i class="mdi mdi-file-document-box menu-icon"></i>
                   <span class="menu-title">البنوك</span>
                 </a>
                 <div class="submenu">
                       <ul>
-                          <li class="nav-item"><a class="nav-link" href="/Banks/all">عرض البنوك</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/Banks/Branches/all?index=0">عرض الفروع</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/Banks/addBank">اضافة بنك</a></li>
-                           <li class="nav-item"><a class="nav-link" href="/Allocation/all?index=0">عرض سجل المخصصات</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/Allocation/addAllocation">اضافة مخصصات </a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('ShowAllBank','ADMIN','SUPER')"><a class="nav-link" href="/Banks/all">عرض البنوك</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('viewAllBranches','ADMIN','SUPER')"><a class="nav-link" href="/Banks/Branches/all?index=0">عرض الفروع</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('addNewBank','ADMIN','SUPER')"><a class="nav-link" href="/Banks/addBank">اضافة بنك</a></li>
+                           <li class="nav-item" sec:authorize="hasAnyAuthority('viewAllAllocations','ADMIN','SUPER')"><a class="nav-link" href="/Allocation/all?index=0">عرض سجل المخصصات</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('addAllocation','ADMIN','SUPER')"><a class="nav-link" href="/Allocation/addAllocation">اضافة مخصصات </a></li>
                       </ul>
                </div>       
               </li>
             
-			   <li class="nav-item">
+			   <li class="nav-item" sec:authorize="hasAnyAuthority('addNewClient','viewAllClients','ADMIN','SUPER')">
                 <a class="nav-link" href="#">
                   <i class="mdi mdi-file-document-box menu-icon"></i>
                   <span class="menu-title">المتعاملين</span>
                 </a>
                 <div class="submenu">
                       <ul>
-                          <li class="nav-item"><a class="nav-link" href="/Clients/all?index=0">عرض المتعاملين</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/Clients/addClient">اضافة متعامل</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('viewAllClients','ADMIN','SUPER')"><a class="nav-link" href="/Clients/all?index=0">عرض المتعاملين</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('addNewClient','ADMIN','SUPER')"><a class="nav-link" href="/Clients/addClient">اضافة متعامل</a></li>
 
                       </ul>
                 </div>
