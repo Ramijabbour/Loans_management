@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html  lang="ar" dir="rtl"
- xmlns:th="http://www.thymeleaf.org">
+ xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments.html :: headerfiles">
  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -84,7 +85,7 @@
                     <tr th:each="permission : ${permissionslist}">
                         <td><span th:text="${permission.id}"> PermissionID </span></td>
                         <td><span th:text="${permission.PermissionName}"> PermissionName </span></td>
-                    	<td>
+                    	<td sec:authorize="hasAnyAuthority('revokePermissionFromRole','ADMIN','SUPER')">
                           <form action="#" th:action="@{/security/roles/role/permissions/revoke/}+ ${{role.id}} + @{/} + ${{permission.id}}" method="post">
                               <button th:id="'table_entry_childs_button_'+ ${{role.id}} + ${permission.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                                   <i>سحب الصلاحية</i>
@@ -95,11 +96,13 @@
                     </tr>
                 </tbody>
             </table>
+            	<div sec:authorize="hasAnyAuthority('grantpermissionToRole','ADMIN','SUPER')">
                  <form action="#" th:action="@{/security/roles/role/permissions/grant/} + ${{role.id}}" method="get">
                     <button th:id="'table_entry_childs_button_' + ${role.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                     	<i>إضافة صلاحيات</i>
                      </button>
-              </form>  
+              </form>
+                </div>
                  <p></p> 
                  <hr>
              </div>

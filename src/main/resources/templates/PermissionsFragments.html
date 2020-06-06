@@ -246,16 +246,16 @@
                       </ul>
                   </div>
               </li>
-               <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER')">
+               <li class="nav-item" sec:authorize="hasAnyAuthority('addRole','viewAllRoles','ADMIN','SUPER','getAllPermissions')">
                 <a   href="#" class="nav-link">
                   <i class="mdi mdi-human-male-female menu-icon"></i>
                   <span class="menu-title">إدارة الموقع</span>
                 </a>
 				 <div class="submenu">
                       <ul>
-                          <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER')"><a class="nav-link" href="/security/roles/all?index=0">إدارة الأدوار</a></li>
-                          <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER')"><a class="nav-link" href="/security/roles/addrole">إضافة دور</a></li>
-                          <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER')"><a class="nav-link" href="/security/permissions/all?index=0">إدارة الصلاحيات</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('viewAllRoles','ADMIN','SUPER')"><a class="nav-link" href="/security/roles/all?index=0">إدارة الأدوار</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('addRole','ADMIN','SUPER')"><a class="nav-link" href="/security/roles/addrole">إضافة دور</a></li>
+                          <li class="nav-item" sec:authorize="hasAnyAuthority('getAllPermissions','ADMIN','SUPER')"><a class="nav-link" href="/security/permissions/all?index=0">إدارة الصلاحيات</a></li>
                           <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER')"><a class="nav-link" href="/security/permissions/commit">تأكيد الصلاحيات المعلقة</a></li>
                       	  <li class="nav-item" sec:authorize="hasAnyAuthority('SUPER')"><a class="nav-link" href="/config/currConfig">إعدادات الموقع</a></li>
                       </ul>
