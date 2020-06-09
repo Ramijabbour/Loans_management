@@ -1,6 +1,7 @@
 package com.example.Vouchers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +32,7 @@ public class VoucherController {
 	@Autowired
 	private LoansController loansController ; 
 	
+	
 	// Add New Voucher For This Loan ----------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value = "/Loan/AddVoucher/{id}")
 	public ModelAndView addNewVoucher(@PathVariable int id ) 
@@ -51,7 +53,6 @@ public class VoucherController {
 		}
 	}
 	
-	
 	@RequestMapping(method = RequestMethod.POST , value="/Loan/AddVoucher/{id}")
 	public void addNewVoucher(@ModelAttribute Vouchers voucher,HttpServletResponse response,@PathVariable int id ) throws IOException {
 		System.out.println("posted to /Loan/AddVoucher/id ");
@@ -62,8 +63,7 @@ public class VoucherController {
 		response.sendRedirect("/Loans/all/Open?index=0");
 	}
 	
-	// ----------------------------------------------------------------------------
-	
+	// ----------------------------------------------------------------------------	
 	// Get All Voucher For This Loan ----------------------------------------------
 	@RequestMapping(method=RequestMethod.GET , value="/Vouchers/all/{id}")
 	public ModelAndView allVouchers(@PathVariable int id)

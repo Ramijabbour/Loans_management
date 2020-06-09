@@ -36,26 +36,21 @@ public class LoansManagementApplication implements CommandLineRunner {
 
     public void run(String... args) throws Exception {
 
-//
-
-
-        Scanner newScan = new Scanner(System.in);
-
-
+    	//
         //اختبار ال visitor
-//        Valid_Visitable valid_visitable = new Valid_Visitable();
-//        tt t = new tt();
-//        t.setTotal("1ahmad  attaR");
-//        t.accept(valid_visitable);
+    	//Valid_Visitable valid_visitable = new Valid_Visitable();
+    	//tt t = new tt();
+    	//t.setTotal("1ahmad  attaR");
+    	//t.accept(valid_visitable);
 
 
         // كيفية ادخال تاريخ
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+       /* SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
         String dateInString = "31-08-1982";
         Date date = sdf.parse(dateInString);
         System.out.println(date);
-
-
+        */
+    	System.out.println("Loans Management is online continue to essential data injection");
     }
 }
 

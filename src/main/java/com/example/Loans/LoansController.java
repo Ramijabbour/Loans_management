@@ -1,12 +1,9 @@
 package com.example.Loans;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Date;
-		import java.util.List;
-
-		import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 		import javax.transaction.Transactional;
 		import javax.validation.Valid;
 
@@ -35,7 +32,6 @@ import com.example.BankBranches.BrancheService;
 		import com.example.OpenLoans.OpenLoansService;
 		import com.example.ReScheduleLoans.ReScheduleLoans;
 		import com.example.ReScheduleLoans.ReScheduleLoansService;
-import com.example.SiteConfig.MasterService;
 import com.example.SiteConfig.SiteConfiguration;
 import com.example.Vouchers.VoucherController;
 		import com.example.Vouchers.VoucherService;
