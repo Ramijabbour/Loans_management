@@ -312,7 +312,8 @@ public class DbInit implements CommandLineRunner{
 			this.userRepository.save(admin);
 			}*/
 	}
-
+	
+	/*
 	public void injectChecksToDB() {
 		Chaque check1 = 
 				new Chaque(1,"bank1","bank2","br1","#br1","br2","#br2",100000000,"admin",4,false);
@@ -363,6 +364,7 @@ public class DbInit implements CommandLineRunner{
 				this.onHoldRepo.save(check10);
 	}
 
+	*/
 	
 	public void injectVouchersToLoan(Loans loan , Clients client) {
 		int numOfVouchers = Integer.valueOf(loan.getNumberOfVoucher());

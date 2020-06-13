@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html  lang="ar" dir="rtl"
  xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments.html :: headerfiles">
+<head>
  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Central Bank of syria</title>
@@ -33,39 +33,39 @@
               <h4>معلومات الشيك</h4>
               </div>
               <hr>
-                <form  action="#" th:action="@{/settlement/checks/add}" th:object="${check}" method="post">
+                <form  action="#" th:action="@{/settlements/checks/add}" th:object="${check}" method="post">
                 <div class="card-body">
                   <div class="form-group">
                    <label for="exampleInputPassword1">رقم الشيك التسلسلي</label>
-                   <input type="text" name="CheckId" class="form-control" placeholder="Enter User Name" th:field="*{CheckId}">
+                   <input type="text" name="checkId" class="form-control" placeholder="Enter User Name" th:field="*{checkId}">
                   </div>
                   <hr>
 					<div class="form-group">
                    <label for="exampleInputPassword1">اسم المصرف الأول</label>
-                   <input type="text" name="FirstBank" class="form-control" placeholder="Enter User Email" th:field="*{FirstBankName}">
+                   <input type="text" name="firstBankName" class="form-control" placeholder="Enter User Email" th:field="*{firstBankName}">
                   </div>
                   <div class="form-group">
                    <label for="exampleInputPassword1">اسم االفرع الأول</label>
-                   <input type="text" name="FirstBank" class="form-control" placeholder="Enter User Email" th:field="*{FirstBranchName}">
+                   <input type="text" name="FirstBranchName" class="form-control" placeholder="Enter User Email" th:field="*{FirstBranchName}">
                   </div>
 					<hr>
 				 	<div class="form-group">
                    <label for="exampleInputPassword1">رمز الفرع الأول</label>
-                   <input type="text" name="FirstBankSW" class="form-control" placeholder="Enter User Email" th:field="*{FirstBranchCode}">
+                   <input type="text" name="FirstBranchCode" class="form-control" placeholder="Enter User Email" th:field="*{FirstBranchCode}">
                   </div>
                   <hr>
                   <div class="form-group">
                    <label for="exampleInputPassword1">اسم المصرف الثاني</label>
-                   <input type="text" name="SecondBank" class="form-control" placeholder="Enter User Email" th:field="*{SecondBankName}">
+                   <input type="text" name="secondBankName" class="form-control" placeholder="Enter User Email" th:field="*{secondBankName}">
                   </div>
                   <div class="form-group">
                    <label for="exampleInputPassword1">اسم الفرع الثاني</label>
-                   <input type="text" name="SecondBank" class="form-control" placeholder="Enter User Email" th:field="*{SecondBranchName}">
+                   <input type="text" name="SecondBranchName" class="form-control" placeholder="Enter User Email" th:field="*{SecondBranchName}">
                   </div>
                   <hr>
                   <div class="form-group">
                    <label for="exampleInputPassword1">رمز الفرع الثاني</label>
-                   <input type="text" name="SecondBankSW" class="form-control" placeholder="Enter User Email" th:field="*{SecondBranchCode}">
+                   <input type="text" name="SecondBranchCode" class="form-control" placeholder="Enter User Email" th:field="*{SecondBranchCode}">
                   </div>
                   <hr>
                   <div class="form-group">

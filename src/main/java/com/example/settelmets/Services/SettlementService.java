@@ -116,10 +116,10 @@ public class SettlementService extends MasterService {
 	public int addCheck(CheckDisposableModel check ) {
 		int result = testCheckInfoValidation(check) ;
 		if(result == 0 ) {
-			Chaque finalCheck = new Chaque(check.getCheckId(),check.getFirstBankName(), check.getSecondBankName(),check.getFirstBranchName(),
-					check.getFirstBranchCode(),check.getSecondBranchName(),check.getSecondBranchCode(),check.getAmount(),super.get_current_User().getUsername(),
-					super.get_current_User().getId(),false);
-			this.onHoldChecksRepository.save(finalCheck);
+			//Chaque finalCheck = new Chaque(check.getCheckId(),check.getFirstBankName(), check.getSecondBankName(),check.getFirstBranchName(),
+				//	check.getFirstBranchCode(),check.getSecondBranchName(),check.getSecondBranchCode(),check.getAmount(),super.get_current_User().getUsername(),
+					//super.get_current_User().getId(),false);
+		//	this.onHoldChecksRepository.save(finalCheck);
 			return 0 ;
 		}else{
 			return result ;
