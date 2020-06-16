@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
-import com.example.SiteConfig.MasterService;
 import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
@@ -53,7 +52,7 @@ public class Chaque implements Serializable{
     private  long Amount;
 	
     @Column(nullable = false )
-    private  LocalDateTime localDateTime = MasterService.getCurrDateTime() ;
+    private  String localDateTime;
     
     @Column(nullable = false )
     @Convert(converter = StringEncryptDecryptConverter.class)
@@ -70,7 +69,7 @@ public class Chaque implements Serializable{
 	
 	public Chaque(int checkId, String firstBankName, String secondBankName, String firstBranchName,
 			String firstBranchCode, String secondBranchName, String secondBranchCode, long amount,
-			LocalDateTime localDateTime, String userName, int userID, boolean active) {
+			String localDateTime, String userName, int userID, boolean active) {
 		super();
 		this.checkId = checkId;
 		this.firstBankName = firstBankName;
@@ -151,11 +150,11 @@ public class Chaque implements Serializable{
 		Amount = amount;
 	}
 
-	public LocalDateTime getLocalDateTime() {
+	public String getLocalDateTime() {
 		return localDateTime;
 	}
 
-	public void setLocalDateTime(LocalDateTime localDateTime) {
+	public void setLocalDateTime(String localDateTime) {
 		this.localDateTime = localDateTime;
 	}
 
@@ -182,6 +181,8 @@ public class Chaque implements Serializable{
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	
+	
 
 	@Override 
 	public String toString() {
