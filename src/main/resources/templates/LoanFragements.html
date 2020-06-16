@@ -303,7 +303,7 @@
                       </ul>
                 </div>
               </li>
-			  <li class="nav-item">
+			 <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER')">
                 <a class="nav-link" href="#">
                   <i class="mdi mdi-file-document-box menu-icon"></i>
                   <span class="menu-title">التسوية اللحظية</span>
@@ -314,6 +314,8 @@
                           <li class="nav-item"><a class="nav-link" href="/settlement/checks/all?index=0">عرض كل الشيكات</a></li>
                           <li class="nav-item"><a class="nav-link" href="/settlement/checks/settled?index=0">عرض الشيكات المسددة</a></li>
                           <li class="nav-item"><a class="nav-link" href="/settlement/checks/onhold?index=0">عرض الشيكات الغير مسددة</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/settlements/users/allrtUsers">عرض حسابات التسوية اللحظية</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/settlements/users/addrtUser">إضافة حساب إلى التسوية اللحظية</a></li>
                       </ul>
                   </div>
               </li>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html  lang="ar" dir="rtl"
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles">
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Central Bank of syria</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/../../new/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/../../new/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/../../new/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<header th:insert="fragments.html :: nav"></header>
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h3>إضافة حساب بنك إلى نظام التسوية</h3>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- jquery validation -->
+            <div class="card card-primary">
+              <div class="card-header">
+              <h4>أدخل معلومات الحساب</h4>
+              </div>
+                <form  action="#" th:action="@{/settlements/users/addrtUser}" th:object="${user}" method="post">
+                <div class="card-body">
+
+                  <div class="form-group">
+                   <label for="exampleInputPassword1">اسم البنك</label>
+                   <input type="text" name="bankName" class="form-control" placeholder="اسم البنك" th:field="*{bankName}" required >
+                  </div>
+                  <div class="form-group">
+                   <label for="exampleInputPassword1">اسم الفرع</label>
+                   <input type="text" name="branchName" class="form-control" placeholder="اسم الفرع" th:field="*{branchName}" required >
+                  </div>
+                  <div class="form-group">
+                   <label for="exampleInputPassword1">رمز الفرع</label>
+                   <input type="text" name="branchCode" class="form-control" placeholder="رمز الفرع" th:field="*{branchCode}" required >
+                  </div>   				
+                  <div class="form-group">
+                   <label for="exampleInputPassword1">اسم المستخدم</label>
+                   <input type="text" name="username" class="form-control" placeholder="اسم المستخدم" th:field="*{username}" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{6,20}$" required >
+                  </div>
+                  
+					<div class="form-group">
+                   <label for="exampleInputPassword1">البريد الالكتروني</label>
+                   <input type="email" name="email" class="form-control" placeholder="البريد الاكتروني" th:field="*{email}" required>
+                  </div>
+					
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">كلمة السر</label>
+                    <input type="password" name="branchName" class="form-control"  placeholder="Enter password" th:field="*{password}" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+  					title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+                  </div>
+
+                           
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">تأكيد</button>
+                </div>
+              </form>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+            </div>
+            <!-- /.card -->
+            </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+          <div class="col-md-6">
+
+          </div>
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+
+</body>
+</html>

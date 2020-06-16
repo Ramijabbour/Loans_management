@@ -1,7 +1,6 @@
 package com.example.settelmets.Models;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.*;
 

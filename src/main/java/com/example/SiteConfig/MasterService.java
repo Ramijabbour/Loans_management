@@ -74,6 +74,10 @@ public class MasterService {
 		   return now ; 
 	}
 	
+	public static String getDateAsString() {
+		LocalDate now = LocalDate.now();  
+		return now.toString();  
+	}
 	
 	public static String getYearFromStringDate(String date) {
 		LocalDate desiredDate = LocalDate.parse(date);
