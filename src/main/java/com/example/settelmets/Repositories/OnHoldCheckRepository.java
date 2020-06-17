@@ -13,7 +13,8 @@ import com.example.settelmets.Models.Chaque;
 @Repository
 public interface OnHoldCheckRepository extends JpaRepository<Chaque,Integer>,PagingAndSortingRepository<Chaque,Integer> {
 
-	public List<Chaque> findByActiveTrue() ;
+	public Slice<Chaque> findByActiveTrue(Pageable pageable) ;
+	public Slice<Chaque> findByActiveFalse(Pageable pageable) ;
 	public List<Chaque> findByActiveFalse() ;
 	public Slice<Chaque> findByCheckId(int checkId, Pageable pageable);
 }

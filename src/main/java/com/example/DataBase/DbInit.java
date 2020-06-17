@@ -313,58 +313,57 @@ public class DbInit implements CommandLineRunner{
 			}*/
 	}
 	
-	/*
 	public void injectChecksToDB() {
 		Chaque check1 = 
-				new Chaque(1,"bank1","bank2","br1","#br1","br2","#br2",100000000,"admin",4,false);
+				new Chaque(1,"bank1","bank2","br1","#br1","br2","#br2",100000000,"","admin",4,false);
 				this.onHoldRepo.save(check1);
 				
 				Chaque check6 = 
-				new Chaque(6,"bank1","bank4","br3","#br3","br4","#br4",10000000000L,"admin",4,false);
+				new Chaque(6,"bank1","bank4","br3","#br3","br4","#br4",10000000000L,"","admin",4,false);
 				this.onHoldRepo.save(check6);
 				
 				Chaque check3 = 
-				new Chaque(3,"bank2","bank1","br2","#br2","br1","#br1",30000000000L,"admin",4,false);
+				new Chaque(3,"bank2","bank1","br2","#br2","br1","#br1",30000000000L,"","admin",4,false);
 				this.onHoldRepo.save(check3);
 				
 				Chaque check4 = 
-				new Chaque(4,"bank2","bank3","br2","#br2","br3","#br3",500000000000L,"admin",4,false);
+				new Chaque(4,"bank2","bank3","br2","#br2","br3","#br3",500000000000L,"","admin",4,false);
 				this.onHoldRepo.save(check4);
 				
 				Chaque check11 =
-				new Chaque(11,"bank5","bank3","br5","#br5","br3","#br3",90000000000L,"admin",4,false);
+				new Chaque(11,"bank5","bank3","br5","#br5","br3","#br3",90000000000L,"","admin",4,false);
 				this.onHoldRepo.save(check11);
 				
 				Chaque check2 = 
-				new Chaque(2,"bank1","bank3","br1","#br1","br3","#br3",200000000000L,"admin",4,false);
+				new Chaque(2,"bank1","bank3","br1","#br1","br3","#br3",200000000000L,"","admin",4,false);
 				this.onHoldRepo.save(check2);
 				
 				Chaque check5 = 
-				new Chaque(5,"bank3","bank1","br3","#br3","br1","#br1",30000000000L,"admin",4,false);
+				new Chaque(5,"bank3","bank1","br3","#br3","br1","#br1",30000000000L,"","admin",4,false);
 				this.onHoldRepo.save(check5);
 
 				Chaque check7 = 
-				new Chaque(7,"bank3","bank5","br3","#br3","br5","#br5",20000000000L,"admin",4,false);
+				new Chaque(7,"bank3","bank5","br3","#br3","br5","#br5",20000000000L,"","admin",4,false);
 				this.onHoldRepo.save(check7);
 				
 				Chaque check8 = 
-				new Chaque(8,"bank4","bank1","br4","#br4","br1","#br1",40000000000L,"admin",4,false);
+				new Chaque(8,"bank4","bank1","br4","#br4","br1","#br1",40000000000L,"","admin",4,false);
 				this.onHoldRepo.save(check8);
 				
 				Chaque check12 =
-				new Chaque(12,"bank5","bank4","br5","#br5","br4","#br4",60000000000L,"admin",4,false);
+				new Chaque(12,"bank5","bank4","br5","#br5","br4","#br4",60000000000L,"","admin",4,false);
 				this.onHoldRepo.save(check12);
 				
 				Chaque check9 =
-				new Chaque(9,"bank4","bank3","br4","#br4","br3","#br3",20000000000L,"admin",4,false);
+				new Chaque(9,"bank4","bank3","br4","#br4","br3","#br3",20000000000L,"","admin",4,false);
 				this.onHoldRepo.save(check9);
 				
 				Chaque check10 = 
-				new Chaque(10,"bank5","bank1","br5","#br5","br1","#br1",30000000000L,"admin",4,false);
+				new Chaque(10,"bank5","bank1","br5","#br5","br1","#br1",30000000000L,"","admin",4,false);
 				this.onHoldRepo.save(check10);
 	}
 
-	*/
+
 	
 	public void injectVouchersToLoan(Loans loan , Clients client) {
 		int numOfVouchers = Integer.valueOf(loan.getNumberOfVoucher());

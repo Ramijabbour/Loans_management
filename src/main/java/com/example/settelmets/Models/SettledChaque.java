@@ -1,7 +1,6 @@
 package com.example.settelmets.Models;
 
-import java.time.LocalDateTime;
-
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -10,14 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.example.SiteConfig.MasterService;
-import com.example.aspect.EncryptDecrypt.DoubleEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
-public class SettledChaque {
+public class SettledChaque implements Serializable{
 
-	 	@Id
+		private static final long serialVersionUID = 1L;
+
+		@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 	@Convert(converter = IntEncryptDecryptConverter.class)
 	 	private int id;
@@ -52,11 +52,11 @@ public class SettledChaque {
 	 	private long Amount;
 
 	 	@Column(nullable = false )
-	 	private LocalDateTime localDateTime ; 
+	 	private String localDateTime ; 
 	 	
 	 
 	    public SettledChaque() {
-	    	 this.localDateTime = MasterService.getCurrDateTime() ; 
+
 	    }
 	    
 		public SettledChaque(String firstBankName, String firstBranchName, String firstBranchCode,
@@ -69,7 +69,7 @@ public class SettledChaque {
 			SecondBranchName = secondBranchName;
 			SecondBranchCode = secondBranchCode;
 			Amount = amount;
-			this.localDateTime = MasterService.getCurrDateTime() ;
+			this.localDateTime = MasterService.getDateAsString() ;
 		}
 
 
@@ -107,7 +107,7 @@ public class SettledChaque {
 			return Amount;
 		}
 
-		public LocalDateTime getLocalDateTime() {
+		public String getLocalDateTime() {
 			return localDateTime;
 		}
 
