@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SettlementReportRepository extends JpaRepository<SettlementReportModel,Integer>{
 
+	public SettlementReportModel findById(int id );
+	
 }

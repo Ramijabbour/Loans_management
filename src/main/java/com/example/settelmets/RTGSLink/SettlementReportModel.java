@@ -31,5 +31,11 @@ public class SettlementReportModel implements Serializable{
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
+
+	public int getId() {
+		return id;
+	}
+	
+	
 	
 }

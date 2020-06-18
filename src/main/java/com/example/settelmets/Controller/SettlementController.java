@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +54,39 @@ public class SettlementController {
 		return mav ;
 	}
 
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/operations/reports")
+	public ModelAndView getSettlementReportModels() {
+		ModelAndView mav = new ModelAndView("settlement/allreports");
+		mav.addObject("reportsList", this.settlementService.getAllReports());
+		return mav; 
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled/link/{id}")
+	public ModelAndView getSettlementChecksFromReport(@PathVariable int id ) {
+		ModelAndView mav = new ModelAndView("settlement/settledChecksList");
+		mav.addObject("checksList", this.settlementService.getChecksByReport(id));
+		return mav; 
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/settlement/operations/reports/link/{id}")
+	public ModelAndView getSettlementReportsFromModel(@PathVariable int id ) {
+		ModelAndView mav = new ModelAndView("settlement/SettledReportsList");
+		mav.addObject("reportsList", this.settlementService.getSettledChecksByReport(id));
+		return mav; 
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/reports")
 	public ModelAndView getSettledChecks(@Param(value ="index") int index) {

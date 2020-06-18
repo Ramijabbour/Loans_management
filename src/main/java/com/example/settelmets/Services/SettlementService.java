@@ -192,4 +192,19 @@ public class SettlementService extends MasterService {
 		}
 		return null ; 
 	}
+	
+	public List<SettlementReportModel> getAllReports(){
+		return this.settlementReportRepo.findAll();
+	}
+
+	public List<Chaque> getChecksByReport(int id){
+		List<Chaque> checksList = this.onHoldChecksRepository.findBysettlementReportModel(this.settlementReportRepo.findById(id));
+		return checksList ; 
+	}
+	
+	public List<SettledChaque> getSettledChecksByReport(int id){
+		List<SettledChaque> checksList = this.settledChecksRepository.findBysettlementReportModel(this.settlementReportRepo.findById(id));
+		return checksList ; 
+	}
+	
 }

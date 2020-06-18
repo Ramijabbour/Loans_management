@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.settelmets.Models.Chaque;
+import com.example.settelmets.RTGSLink.SettlementReportModel;
 
 @Repository
 public interface OnHoldCheckRepository extends JpaRepository<Chaque,Integer>,PagingAndSortingRepository<Chaque,Integer> {
@@ -17,4 +18,5 @@ public interface OnHoldCheckRepository extends JpaRepository<Chaque,Integer>,Pag
 	public Slice<Chaque> findByActiveFalse(Pageable pageable) ;
 	public List<Chaque> findByActiveFalse() ;
 	public Slice<Chaque> findByCheckId(int checkId, Pageable pageable);
+	public List<Chaque> findBysettlementReportModel(SettlementReportModel srm);
 }
