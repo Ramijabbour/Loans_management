@@ -7,10 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.example.SiteConfig.MasterService;
 import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
+import com.example.settelmets.RTGSLink.SettlementReportModel;
 
 @Entity
 public class SettledChaque implements Serializable{
@@ -54,6 +56,8 @@ public class SettledChaque implements Serializable{
 	 	@Column(nullable = false )
 	 	private String localDateTime ; 
 	 	
+	 	@ManyToOne
+	 	private SettlementReportModel settlementReportModel = null ; 
 	 
 	    public SettledChaque() {
 
@@ -109,6 +113,46 @@ public class SettledChaque implements Serializable{
 
 		public String getLocalDateTime() {
 			return localDateTime;
+		}
+
+		public SettlementReportModel getSettlementReportModel() {
+			return settlementReportModel;
+		}
+
+		public void setSettlementReportModel(SettlementReportModel settlementReportModel) {
+			this.settlementReportModel = settlementReportModel;
+		}
+
+		public void setFirstBankName(String firstBankName) {
+			FirstBankName = firstBankName;
+		}
+
+		public void setFirstBranchName(String firstBranchName) {
+			FirstBranchName = firstBranchName;
+		}
+
+		public void setFirstBranchCode(String firstBranchCode) {
+			FirstBranchCode = firstBranchCode;
+		}
+
+		public void setSecondBankName(String secondBankName) {
+			SecondBankName = secondBankName;
+		}
+
+		public void setSecondBranchName(String secondBranchName) {
+			SecondBranchName = secondBranchName;
+		}
+
+		public void setSecondBranchCode(String secondBranchCode) {
+			SecondBranchCode = secondBranchCode;
+		}
+
+		public void setAmount(long amount) {
+			Amount = amount;
+		}
+
+		public void setLocalDateTime(String localDateTime) {
+			this.localDateTime = localDateTime;
 		}
 
 	   

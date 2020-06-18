@@ -36,6 +36,7 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
+                    	<th> المعرف </th>
                         <th> الرقم التسلسلي </th>
                         <th> المصرف الأول </th>
                         <th> الفرع الأول </th>
@@ -55,6 +56,7 @@
                         <td colspan="2"> لا يوجد شيكات حاليا</td>
                     </tr>
                     <tr th:each="check : ${checksList}">
+                   		<td><span th:text="${check.id}"> id </span></td>
                         <td><span th:text="${check.checkId}"> checkId </span></td>
                         <td><span th:text="${check.FirstBankName}"> FirstBankName </span></td>
                         <td><span th:text="${check.FirstBranchName}">FirstBranchName</span></td>

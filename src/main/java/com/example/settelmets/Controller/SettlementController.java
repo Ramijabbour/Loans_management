@@ -82,7 +82,7 @@ public class SettlementController {
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/settled")
 	public ModelAndView getTrueChecks(@Param(value ="index") int index) {
-		ModelAndView mav = new ModelAndView("settlement/onHold");
+		ModelAndView mav = new ModelAndView("settlement/allsettledChecks");
 		List<Chaque> allchecks = this.settlementService.getTrueChecks(index);
 		mav.addObject("checksList",allchecks);
 		if(allchecks.size() > 0 ) {

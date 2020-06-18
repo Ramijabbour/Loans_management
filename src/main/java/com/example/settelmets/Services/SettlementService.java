@@ -14,6 +14,8 @@ import com.example.SiteConfig.MasterService;
 import com.example.SiteConfig.SiteConfiguration;
 import com.example.settelmets.Models.Chaque;
 import com.example.settelmets.Models.SettledChaque;
+import com.example.settelmets.RTGSLink.SettlementReportModel;
+import com.example.settelmets.RTGSLink.SettlementReportRepository;
 import com.example.settelmets.Repositories.OnHoldCheckRepository;
 import com.example.settelmets.Repositories.SettledChecksRepository;
 
@@ -24,7 +26,8 @@ public class SettlementService extends MasterService {
 	private OnHoldCheckRepository onHoldChecksRepository ;  	
 	@Autowired
 	private SettledChecksRepository settledChecksRepository;
-	
+	@Autowired 
+	private SettlementReportRepository settlementReportRepo ; 
 	
 	private long[][] toSettleChecks ; 
 	private int ParticipantsCount ; 
@@ -92,6 +95,10 @@ public class SettlementService extends MasterService {
 	@Transactional
 	public void settleChecks() {
 		
+		SettlementReportModel settlementReportModel = new SettlementReportModel();
+		settlementReportModel.setTimestamp(MasterService.getDateTimeAsString());
+		settlementReportRepo.save(settlementReportModel);
+		
 		System.out.println("settlement invoked at : "+MasterService.getCurrDateTime());
 		
 		List<Chaque> onHoldChecks = initSettlementOperation(); 
@@ -101,10 +108,24 @@ public class SettlementService extends MasterService {
 			List<SettledChaque> resultList = SettelmentHandler.invokeSettlementSequence(toSettleChecks,ParticipantsIds
 					,BanksNames,BranchesNames);
 			if(resultList != null ) {
+				for(SettledChaque settledCheck : resultList) {
+					settledCheck.setSettlementReportModel(settlementReportModel);
+				}
 				this.settledChecksRepository.saveAll(resultList);
 				for(Chaque check : onHoldChecks) {
 					check.setActive(true);
+					check.setSettlementReportModel(settlementReportModel);	
 				}
+				/*
+				  try{
+				  	for(Chaque check : onHoldChecks) {
+				  		msgSender.send(check);
+				  		check.setSent(true);
+				  	} 
+				  }catch (Exception e ){
+				  	check.setSent(false);
+				  }
+				 */
 				this.onHoldChecksRepository.saveAll(onHoldChecks); 
 			}
 		}

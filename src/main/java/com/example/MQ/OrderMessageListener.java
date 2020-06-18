@@ -22,6 +22,7 @@ public class OrderMessageListener {
     @RabbitListener(queues = RabbitConfig.QUEUE_ORDERS)
     public void processOrder(Chaque check) {
     	System.out.println("check recieved with info : "+check);
+    	check.setSent(false);
         onHoldCheckRepository.save(check);
         logger.info("Order Received: "+check);
     }

@@ -6,6 +6,8 @@ import javax.persistence.*;
 
 import com.example.aspect.EncryptDecrypt.IntEncryptDecryptConverter;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
+import com.example.settelmets.RTGSLink.SettlementReportModel;
+
 
 @Entity
 @Table(name = "Chaque",indexes = {@Index(name = "index_checkId",  columnList="checkId", unique = false)})
@@ -61,9 +63,16 @@ public class Chaque implements Serializable{
     @Convert(converter = IntEncryptDecryptConverter.class)
     private  int UserID ; 
     
+    private boolean sent = false ; 
+    
 	private boolean active = false ;
 	
-
+	private int sequenceNum ; 
+	
+	
+	@ManyToOne
+	private SettlementReportModel settlementReportModel = null ;
+	
 	public Chaque() {}
 	
 	public Chaque(int checkId, String firstBankName, String secondBankName, String firstBranchName,
@@ -181,8 +190,34 @@ public class Chaque implements Serializable{
 		this.active = active;
 	}
 	
-	
+	public boolean isSent() {
+		return sent;
+	}
 
+	public void setSent(boolean sent) {
+		this.sent = sent;
+	}
+
+	public int getId() {
+		return id;
+	}
+	
+	public int getSequenceNum() {
+		return sequenceNum;
+	}
+
+	public void setSequenceNum(int sequenceNum) {
+		this.sequenceNum = sequenceNum;
+	}
+	
+	public SettlementReportModel getSettlementReportModel() {
+		return settlementReportModel;
+	}
+
+	public void setSettlementReportModel(SettlementReportModel settlementReportModel) {
+		this.settlementReportModel = settlementReportModel;
+	}
+	
 	@Override 
 	public String toString() {
 		return "check id : "+this.checkId + "first bank name  : "+this.firstBankName+

@@ -21,7 +21,7 @@
 <div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-
+    <!-- Content Header (Page header) -->
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -31,12 +31,12 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-              <h4>الشيكات المسددة</h4>
+              <h4>تمت تسويتها</h4>
               </div>
               <table id="example2" class="table table-bordered table-hover">
-                <thead>
+                                <thead>
                     <tr>
-                    	<th> المعرف </th>
+                        <th> الرقم التسلسلي </th>
                         <th> المصرف الأول </th>
                         <th> الفرع الأول </th>
                         <th> رمز الفرع الأول </th>
@@ -45,31 +45,33 @@
                         <th> رمز الفرع الثاني </th>
                         <th> القيمة </th>
                         <th> التاريخ </th>
-                        
+                        <th> الحالة </th>
+                        <th> اسم المستخدم </th>
+                        <th> معرف المستخدم </th>
                     </tr>
                 </thead>
                 <tbody>
                 <tr th:if="${checksList.empty}">
-                        <td colspan="2"> لا يوجد شيكات متاحة</td>
+                        <td colspan="2"> لا يوجد شيكات حاليا</td>
                     </tr>
                     <tr th:each="check : ${checksList}">
-                    	<td><span th:text="${check.id}"> EntryId </span></td>
+                        <td><span th:text="${check.checkId}"> checkId </span></td>
                         <td><span th:text="${check.FirstBankName}"> FirstBankName </span></td>
-                        <td><span th:text="${check.FirstBranchName}"> FirstBranchName </span></td>
+                        <td><span th:text="${check.FirstBranchName}">FirstBranchName</span></td>
                         <td><span th:text="${check.FirstBranchCode}"> FirstBranchCode </span></td>
                         <td><span th:text="${check.SecondBankName}"> SecondBankName </span></td>
-                        <td><span th:text="${check.SecondBranchName}">SecondBranchName </span></td>
-                        <td><span th:text="${check.SecondBranchCode}">SecondBranchCode </span></td>
+                       	<td><span th:text="${check.SecondBranchName}"> SecondBranchName </span></td>
+                        <td><span th:text="${check.SecondBranchCode}"> SecondBranchCode </span></td>
                         <td><span th:text="${check.Amount}"> Amount </span></td>
                         <td><span th:text="${check.localDateTime}"> Date </span></td>
-                
-                    	<td> <a th:href="@{|/settlement/checks/settled/reports/export?id=${check.id}|}"><span th:text=reports></span></a></td>
-                      </td>
+                        <td><span th:text="${check.active}"> state </span></td>
+                        <td><span th:text="${check.UserName}"> UserName </span></td>
+                        <td><span th:text="${check.UserID}"> UserID </span></td>
                     </tr>
                 </tbody>
             </table>
-            		<a th:href="@{|/settlement/checks/settled?index=${nxt}|}" class="btn btn-inverse-primary btn-fw">&laquo; التالي </a>
-					<a th:href="@{|/settlement/checks/settled?index=${prev}|}" class="btn btn-inverse-danger btn-fw">السابق&raquo;</a>
+            		<a th:href="@{|/settlement/checks/onhold?index=${nxt}|}" class="btn btn-inverse-primary btn-fw">&laquo; التالي </a>
+					<a th:href="@{|/settlement/checks/onhold?index=${prev}|}" class="btn btn-inverse-danger btn-fw">السابق&raquo;</a>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -96,5 +98,6 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
 </body>
 </html>
