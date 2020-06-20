@@ -19,7 +19,7 @@ public class OrderMessageListener {
     
 
     static final Logger logger = LoggerFactory.getLogger(OrderMessageListener.class);
-    @RabbitListener(queues = RabbitConfig.QUEUE_ORDERS)
+    @RabbitListener(queues = "CheckQueue")
     public void processOrder(Chaque check) {
     	System.out.println("check recieved with info : "+check);
     	check.setSent(false);

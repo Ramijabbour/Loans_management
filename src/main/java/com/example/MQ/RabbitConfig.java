@@ -18,7 +18,22 @@ public class RabbitConfig implements RabbitListenerConfigurer {
     public static final String QUEUE_ORDERS = "orders-queue";
     public static final String QUEUE_DEAD_ORDERS = "dead-orders-queue";
     public static final String EXCHANGE_ORDERS = "orders-exchange";
-
+    @Bean
+    public Queue ChequeQueue() {
+        return new Queue("CheckQueue");
+    }
+    @Bean
+    public Queue CheckQueue2() {
+        return new Queue("CheckQ2");
+    }
+    @Bean
+    public Queue UserListQueue() {
+        return new Queue("RTGSUserQ");
+    }
+    @Bean
+    public Queue SettledChaqueQueue() {
+        return new Queue("SettledChaqueQ");
+    }
     @Bean
     Queue ordersQueue() {
 
