@@ -46,6 +46,8 @@ public class RTGSUser implements java.io.Serializable {
 	
 	private boolean tokenEntered = false ; 
 	
+	private boolean sent ; 
+	
 	private String createdAt ; 
 	private boolean Active = false ; 
 
@@ -281,6 +283,14 @@ public class RTGSUser implements java.io.Serializable {
 
 	public boolean validateToken(String token ) {
 		return token.equalsIgnoreCase(this.lastCode) ; 
+	}
+
+	public boolean isSent() {
+		return sent;
+	}
+
+	public void setSent(boolean sent) {
+		this.sent = sent;
 	}
 	
 }

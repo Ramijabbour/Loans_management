@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.MQ.OrderMessageSender;
+
 
 @Service
 public class RTGSUserService {
@@ -13,6 +15,9 @@ public class RTGSUserService {
 	@Autowired
 	private RTGSUserRepository rtgsUserRepository;
 
+	@Autowired 
+	private OrderMessageSender msgSender ; 
+	
 	public String addRTUser(RTGSUser user) {
 		// TODO Auto-generated method stub
 		if(checkUserinforDuplication(user)) {
@@ -23,6 +28,12 @@ public class RTGSUserService {
 			return result ; 
 		}
 		user.setActive(true);
+		try {
+			this.msgSender.sendOrderCheck(user);
+			user.setSent(true);
+		}catch(Exception e ) {
+			user.setSent(false);
+		}
 		this.rtgsUserRepository.save(user); 
 		
 		//call for msg sender 

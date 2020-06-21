@@ -10,6 +10,7 @@ import org.springframework.data.domain.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.example.MQ.OrderMessageSender;
 import com.example.SiteConfig.MasterService;
 import com.example.SiteConfig.SiteConfiguration;
 import com.example.settelmets.Models.Chaque;
@@ -28,6 +29,10 @@ public class SettlementService extends MasterService {
 	private SettledChecksRepository settledChecksRepository;
 	@Autowired 
 	private SettlementReportRepository settlementReportRepo ; 
+	
+	@Autowired
+	private OrderMessageSender ordermsgSender ; 
+	
 	
 	private long[][] toSettleChecks ; 
 	private int ParticipantsCount ; 
@@ -111,21 +116,17 @@ public class SettlementService extends MasterService {
 				for(SettledChaque settledCheck : resultList) {
 					settledCheck.setSettlementReportModel(settlementReportModel);
 				}
+				
+				//link the checks To the operation report 
+				linkChecksToReport(onHoldChecks,settlementReportModel);	
+				
+				//send the results to RTGS SYS 
+				sendSettledChecks(resultList);
 				this.settledChecksRepository.saveAll(resultList);
-				for(Chaque check : onHoldChecks) {
-					check.setActive(true);
-					check.setSettlementReportModel(settlementReportModel);	
-				}
-				/*
-				  try{
-				  	for(Chaque check : onHoldChecks) {
-				  		msgSender.send(check);
-				  		check.setSent(true);
-				  	} 
-				  }catch (Exception e ){
-				  	check.setSent(false);
-				  }
-				 */
+					
+				//send the checks To RTGS SYS 
+				sendChecks(onHoldChecks);
+				
 				this.onHoldChecksRepository.saveAll(onHoldChecks); 
 			}
 		}
@@ -205,6 +206,35 @@ public class SettlementService extends MasterService {
 	public List<SettledChaque> getSettledChecksByReport(int id){
 		List<SettledChaque> checksList = this.settledChecksRepository.findBysettlementReportModel(this.settlementReportRepo.findById(id));
 		return checksList ; 
+	}
+	
+	private void sendChecks(List<Chaque> checksList) {
+		 try{
+			  	for(Chaque check : checksList) {
+			  		this.ordermsgSender.sendOrderCheck(check);
+			  		check.setSent(true);
+			  	} 
+			  }catch (Exception e ){
+				  System.out.println("Checks Sending operation faild re-trying after 10 min");
+			  }
+	}
+	
+	private void sendSettledChecks(List<SettledChaque> checksList) {
+		try {
+			for(SettledChaque settledCheck : checksList ) {
+				this.ordermsgSender.sendOrderCheck(settledCheck);
+				settledCheck.setSent(true);
+			}
+		}catch(Exception e ) {
+			System.out.println("settled Checks Sending operation faild re-trying after 10 min");
+		}		
+	}
+	
+	private void linkChecksToReport(List<Chaque> checksList, SettlementReportModel settlementReportModel) {
+		for(Chaque check : checksList) {
+			check.setActive(true);
+			check.setSettlementReportModel(settlementReportModel);	
+		}	
 	}
 	
 }
