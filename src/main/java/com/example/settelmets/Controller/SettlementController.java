@@ -77,17 +77,6 @@ public class SettlementController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@RequestMapping(method = RequestMethod.GET , value = "/settlement/checks/reports")
 	public ModelAndView getSettledChecks(@Param(value ="index") int index) {
 		ModelAndView mav = new ModelAndView("settlement/settled");
