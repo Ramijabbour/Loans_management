@@ -1,6 +1,7 @@
 package com.example.aspect;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,6 +62,14 @@ public class ExceptionsHandler {
 	public ModelAndView handleServiceException() {
 		ModelAndView mav = new ModelAndView("exceptions/exception");
 		mav.addObject("cerror",new ServiceException());
+		return mav ; 
+	}
+	
+	@ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+	public ModelAndView notAllowedExceptionHandler(){
+		System.out.println("NotAllowed Exceptions handlerinvoked ");
+		ModelAndView mav = new ModelAndView("exceptions/exception");
+		mav.addObject("cerror",new NAllowedEX());
 		return mav ; 
 	}
 	
