@@ -61,10 +61,10 @@ public class Chaque implements Serializable{
     
     @Column(nullable = false )
     @Convert(converter = IntEncryptDecryptConverter.class)
-    private  int UserID ; 
-    
-    private boolean sent = false ; 
-    
+    private  int UserID ;
+
+    private boolean sent = false ;
+
 	private boolean active = false ;
 	
 	private int sequenceNum ; 
