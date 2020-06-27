@@ -153,13 +153,26 @@ public class LoanInfoDoc implements CreateInfoDocTemplate {
         paragraphbody3.addTab();
         paragraphbody3.setText(Loan.getTotalAmmount());
         paragraphbody3.addBreak();
+        if(Loan.getLoanType().getTypeName().equals("مرخص"))
+        {
         paragraphbody3.setText(  "المبالغ المرخصة : ");
         paragraphbody3.addTab();
-        paragraphbody3.setText("");
+        paragraphbody3.setText(Loan.getTotalAmmount());
         paragraphbody3.addBreak();
         paragraphbody3.setText(  "المبالغ المعفاة : ");
         paragraphbody3.addTab();
-        paragraphbody3.setText(Loan.getTotalAmmount());
+        paragraphbody3.setText("");
+        }
+        else
+        {
+        	paragraphbody3.setText(  "المبالغ المرخصة : ");
+            paragraphbody3.addTab();
+            paragraphbody3.setText("");
+            paragraphbody3.addBreak();
+            paragraphbody3.setText(  "المبالغ المعفاة : ");
+            paragraphbody3.addTab();
+            paragraphbody3.setText(Loan.getTotalAmmount());
+        }
         paragraphbody3.addBreak();
         paragraphbody3.setText("__________________________________________________");
 

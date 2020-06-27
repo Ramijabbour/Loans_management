@@ -62,12 +62,24 @@ public class LoanInfoPDF implements CreateInfoDocTemplate{
 	            Paragraph p3=new Paragraph( "",normal2);
 	            for( Vouchers v : allvouchers)
 	            p3.add("                  " + 1 +"                             "+v.getVoucherAmmount()+"                       "+v.getVoucherAmmount() + "\n");
-	            Paragraph p4=new Paragraph(  "       " +"__________________________________________"+"\n"+
+	            Paragraph p4;
+	            if(Loan.getLoanType().getTypeName().equals("مرخص"))
+	            { p4=new Paragraph(  "       " +"__________________________________________"+"\n"+
 	                    "  اجمالي السندات : " + allvouchers.size() +"\n"+
 	                    "  اجمالي المبالغ : " + Loan.getTotalAmmount() +"\n"+
 	                    "  اجمالي الصوافي : " + Loan.getTotalAmmount() +"\n"+
-	                    "  المبالغ  المرخصة : " + "" +"\n"+
-	                    "  المبالغ المعطاة : " + Loan.getTotalAmmount() +"\n\n",normal2);
+	                    "  المبالغ  المرخصة : " + Loan.getTotalAmmount()  +"\n"+
+	                    "  المبالغ المعطاة : " + "" +"\n\n",normal2);
+	            }
+	            else
+	            {
+	            	 p4=new Paragraph(  "       " +"__________________________________________"+"\n"+
+	 	                    "  اجمالي السندات : " + allvouchers.size() +"\n"+
+	 	                    "  اجمالي المبالغ : " + Loan.getTotalAmmount() +"\n"+
+	 	                    "  اجمالي الصوافي : " + Loan.getTotalAmmount() +"\n"+
+	 	                    "  المبالغ  المرخصة : " + "" +"\n"+
+	 	                    "  المبالغ المعطاة : " + Loan.getTotalAmmount() +"\n\n",normal2);
+	            }
 	            
 	            PdfPTable table2 = new PdfPTable(1);
 	            table2.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
