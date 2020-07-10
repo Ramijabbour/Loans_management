@@ -78,13 +78,13 @@ public class DbInit implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-//		injectUsers_Roles_ToDB();
-//		inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
+		//injectUsers_Roles_ToDB();
+		//inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
 //		injectChecksToDB();
-//		System.out.println("injection Done !! ");
+		//System.out.println("injection Done !! ");
 	}
 	
-
+/*
 	public void inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans() {
 		//insert clients // 
 		List<Clients> allClients = new ArrayList<Clients>(); 
@@ -228,7 +228,7 @@ public class DbInit implements CommandLineRunner{
 		}
 		
 	}
-
+*/
 	public void injectUsers_Roles_ToDB() {
 		boolean adminFound = false , superFound = false ,statsFound = false , allStatsFound = false ,loansFound = false  ; 
 		List<Roles> rolesList = this.rolesRepo.findAll() ;

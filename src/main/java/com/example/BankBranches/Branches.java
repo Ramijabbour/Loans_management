@@ -22,6 +22,8 @@ public class Branches {
 
     @ManyToOne
     private Banks bank = null;
+    
+    
 
 	
 	public Branches() {

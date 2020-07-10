@@ -89,12 +89,37 @@
                     <input type="text" name="Identity" class="form-control"  placeholder="ادخل العنوان" th:field="*{address}">
                   </div>
                   
+                 <div class="form-group">
+                    <label for="exampleInputEmail1"> عدد الاولاد</label>
+                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل عدد الاولاد" th:field="*{NumberOFChilderen}" >
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"> العمر </label>
+                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل العمر" th:field="*{Age}" >
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"> الدخل </label>
+                    <input type="text" name="Identity" class="form-control"  placeholder="الدخل" th:field="*{income}" >
+                  </div>
+                  
                   <div class="form-group">
                     <label for="exampleInputPassword1">الجنس</label><br>
                     <select th:field="*{gender}">
-                    <option th:value="''" th:text="Select"></option>
-                      <option th:value="'M'" th:text="Male"></option>
-  					  <option th:value="'F'" th:text="Female"></option>
+                    <option th:value="''" th:text="اختيار"></option>
+                      <option th:value="'M'" th:text="ذكر"></option>
+  					  <option th:value="'F'" th:text="انثى"></option>
+                    </select>  
+                  </div>  
+                  
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">الحالة الاجتماعية</label><br>
+                    <select th:field="*{Married}">
+                    <option th:value="''" th:text="اختيار"></option>
+                      <option th:value="'Y'" th:text="متزوج"></option>
+  					  <option th:value="'N'" th:text="اعزب"></option>
                     </select>  
                   </div>  
                   

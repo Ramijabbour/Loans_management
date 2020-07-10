@@ -39,16 +39,26 @@ public class Clients {
 	
 	public String gender ;
 	
+	@Convert(converter = StringEncryptDecryptConverter.class)
+	public String Married ;
+	
+	@Convert(converter = StringEncryptDecryptConverter.class)
+	public String NumberOFChilderen ;
+	
+	@Convert(converter = StringEncryptDecryptConverter.class)
+	public String Age ;
+	
+	@Convert(converter = StringEncryptDecryptConverter.class)
+	public String income ;
+	
+	
 	public Clients() {}
 
 
 
-
-
-
 	public Clients(String clientName, String clientType, String identity_number, String email, String phone,
-			String address, String gender) {
-		
+			String address, String gender, String married, String numberOFChilderen, String age, String income) {
+		super();
 		this.clientName = clientName;
 		ClientType = clientType;
 		this.identity_number = identity_number;
@@ -56,7 +66,12 @@ public class Clients {
 		this.phone = phone;
 		this.address = address;
 		this.gender = gender;
+		this.Married = married;
+		this.NumberOFChilderen = numberOFChilderen;
+		this.Age = age;
+		this.income = income;
 	}
+
 
 
 	public String getClientType() {
@@ -127,4 +142,38 @@ public class Clients {
 		this.gender = gender;
 	}
 	
+	
+	
+	public String getMarried() {
+		return Married;
+	}
+
+	public void setMarried(String married) {
+		Married = married;
+	}
+
+	public String getNumberOFChilderen() {
+		return NumberOFChilderen;
+	}
+
+	public void setNumberOFChilderen(String numberOFChilderen) {
+		NumberOFChilderen = numberOFChilderen;
+	}
+
+	public String getAge() {
+		return Age;
+	}
+
+	public void setAge(String age) {
+		Age = age;
+	}
+
+	public String getIncome() {
+		return income;
+	}
+
+	public void setIncome(String income) {
+		this.income = income;
+	}
+
 	public boolean accept(Visitor visitor) { return visitor.visit(this); }}
