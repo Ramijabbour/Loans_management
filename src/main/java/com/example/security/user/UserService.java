@@ -55,6 +55,11 @@ public class UserService extends MasterService implements MasterBackUpService {
         }
 	}
 	
+	public List<User> getAllUsers() {
+		return userRepo.findAll();
+	}
+	
+	
 	//find user by id // 
 	@Transactional
 	public User getUserByID(int id ) {

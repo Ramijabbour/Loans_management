@@ -17,6 +17,7 @@ import com.example.Banks.Banks;
 import com.example.Banks.BanksRepository;
 import com.example.Clients.Clients;
 import com.example.Clients.ClientsRepository;
+import com.example.Clients.ClinetController;
 import com.example.FinanceType.FinanceType;
 import com.example.FinanceType.FinanceTypeRepository;
 import com.example.Loans.Loans;
@@ -27,6 +28,8 @@ import com.example.OpenLoans.OpenLoans;
 import com.example.OpenLoans.OpenLoansRepository;
 import com.example.Vouchers.Vouchers;
 import com.example.Vouchers.VouchersRepository;
+import com.example.WareHouseModel.dbinit;
+import com.example.WareHouseRepository.ClientDimRepository;
 import com.example.security.UserRoles.UserRole;
 import com.example.security.UserRoles.UserRoleRepository;
 import com.example.security.roles.Roles;
@@ -78,31 +81,46 @@ public class DbInit implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
+	
 		//injectUsers_Roles_ToDB();
 		//inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
 //		injectChecksToDB();
 		//System.out.println("injection Done !! ");
 	}
 	
-/*
+
 	public void inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans() {
 		//insert clients // 
 		List<Clients> allClients = new ArrayList<Clients>(); 
 		boolean switchG = false ; 
 		for(int i = 0 ; i < 60 ; i ++) {
 			Clients client = new Clients("المتعامل"+i,"","003135658"+i,"client"+i+"mail@gmail.com","093737101"+i,
-					"دمشق"," ");
+					"دمشق"," ","","","","");
 			if(i%2 == 0 ) {
 				client.setClientType("شخص");
 				if(switchG) {
 					client.setGender("ذكر");
+					client.setMarried("y");
+					client.setNumberOFChilderen("2");
+					int age= i+20 ; 
+					client.setAge(""+age);
+					client.setIncome(""+i*300);
 					switchG = false ; 
 				}else {
 					client.setGender("أنثى");
+					client.setMarried("n");
+					int age2 = i+20;
+					client.setAge(""+age2);
+					if(i==0)
+						client.setIncome("200");
+					else 
+						client.setIncome(""+i*2000);
+					client.setNumberOFChilderen("0");
 					switchG = true ; 
 				}
 			}else {
 				client.setClientType("مؤسسة");	
+				
 			}
 			this.clientsRepo.save(client);
 			allClients.add(client);
@@ -228,7 +246,7 @@ public class DbInit implements CommandLineRunner{
 		}
 		
 	}
-*/
+
 	public void injectUsers_Roles_ToDB() {
 		boolean adminFound = false , superFound = false ,statsFound = false , allStatsFound = false ,loansFound = false  ; 
 		List<Roles> rolesList = this.rolesRepo.findAll() ;
@@ -411,5 +429,11 @@ public class DbInit implements CommandLineRunner{
 		int year = desiredDate.getYear(); 
 		return String.valueOf(year) ; 
 	}
+	
+	
+	
+	
+	
+	
 	
 }

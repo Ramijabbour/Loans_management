@@ -1,4 +1,4 @@
-package com.example.WareHouse;
+package com.example.WareHouseModel;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,21 +16,17 @@ public class Time_Dim {
 	
 	public String Date ;
 	
-	public String DD ;
+	public int DD ;
 	
-	public String MM ; 
+	public int MM ; 
 	
-	public String YY ;
+	public int YY ;
 	
-	
-	
-
 	public Time_Dim(){
 		
 	}
-		
-	
-	public Time_Dim(String date, String dD, String mM, String yY) {
+
+	public Time_Dim(String date, int dD, int mM, int yY) {
 		super();
 		Date = date;
 		DD = dD;
@@ -38,59 +34,47 @@ public class Time_Dim {
 		YY = yY;
 	}
 
-
 	public int getTimeID() {
 		return TimeID;
 	}
 
-	public String getDD() {
-		return DD;
+	public void setTimeID(int timeID) {
+		TimeID = timeID;
 	}
 
-
-
-	public void setDD(String dD) {
-		DD = dD;
-	}
-
-
-
-	public String getMM() {
-		return MM;
-	}
-
-
-
-	public void setMM(String mM) {
-		MM = mM;
-	}
-
-
-
-	public String getYY() {
-		return YY;
-	}
-
-
-
-	public void setYY(String yY) {
-		YY = yY;
-	}
-
-
-	
-	
-	
 	public String getDate() {
 		return Date;
 	}
 
-
-
-
 	public void setDate(String date) {
 		Date = date;
 	}
+
+	public int getDD() {
+		return DD;
+	}
+
+	public void setDD(int dD) {
+		DD = dD;
+	}
+
+	public int getMM() {
+		return MM;
+	}
+
+	public void setMM(int mM) {
+		MM = mM;
+	}
+
+	public int getYY() {
+		return YY;
+	}
+
+	public void setYY(int yY) {
+		YY = yY;
+	}
+		
+	
 
 
 	

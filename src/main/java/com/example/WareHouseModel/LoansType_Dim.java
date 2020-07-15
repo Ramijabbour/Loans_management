@@ -1,29 +1,32 @@
-package com.example.WareHouse;
+package com.example.WareHouseModel;
 
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 
 @Entity
 public class LoansType_Dim {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int LoanTypeID ;
-	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String TypeName="";
+	
 	
 	public LoansType_Dim() {}
 	
-	public LoansType_Dim(String loanTypeName ) {
-		this.TypeName = loanTypeName ; 
-	}
+
 	
+	public LoansType_Dim(int loanTypeID, String typeName) {
+		super();
+		LoanTypeID = loanTypeID;
+		TypeName = typeName;
+	}
+
+
+
 	public int getLoanTypeID() {
 		return LoanTypeID;
 	}

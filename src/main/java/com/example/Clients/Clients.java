@@ -19,7 +19,6 @@ public class Clients {
 	@Convert(converter = StringEncryptDecryptConverter.class)
 
 	public String clientName;
-	@Convert(converter = StringEncryptDecryptConverter.class)
 
 	public String ClientType;
 	@Column(nullable = true)

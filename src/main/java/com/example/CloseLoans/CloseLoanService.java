@@ -83,5 +83,19 @@ public class CloseLoanService {
 		}
 		return totalVal ; 
 	}
+	
+	
+	
+	public CloseLoans getCloseLoanFromLoan(int id)
+	{
+		List<CloseLoans> allCloseLoans=closeLoanRepository.findAll();
+		
+		for(CloseLoans c : allCloseLoans)
+		{
+			if(c.getLoan().getId()==id)
+				return c;
+		}
+		return null;
+	}
 }
 

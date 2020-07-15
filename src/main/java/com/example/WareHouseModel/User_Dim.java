@@ -1,4 +1,4 @@
-package com.example.WareHouse;
+package com.example.WareHouseModel;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,25 +16,17 @@ public class User_Dim implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Convert(converter = IntEncryptDecryptConverter.class)
 	private int id ;
 
 	@Column(nullable = false )
-	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String email=" ";
 
 	@Column(nullable = false )
 	private String password = " ";
-	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String username ;
-	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String Gender="" ;
-	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String UserPermissions = "none" ;
-	@Convert(converter = StringEncryptDecryptConverter.class)
 	private String UserRoles ="none";
-
 
 	private LocalDateTime createdAt ; 
 	private boolean Active = false ; 
@@ -46,9 +38,10 @@ public class User_Dim implements java.io.Serializable {
 		this.UserPermissions = "none";
 	}
 	
-	public User_Dim(String email, String password, String username, String gender, String userPermissions,
+	public User_Dim(int id , String email, String password, String username, String gender, String userPermissions,
 			String userRoles, boolean isActive) {
 		super();
+		this.id=id;
 		this.email = email;
 		this.password = password;
 		this.username = username;

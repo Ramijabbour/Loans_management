@@ -8,6 +8,14 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import com.example.BankBranches.Branches;
+import com.example.CloseLoans.CloseLoanService;
+import com.example.CloseLoans.CloseLoans;
+import com.example.CloseLoans.CloseLoansRepository;
+import com.example.OpenLoans.OpenLoans;
+import com.example.OpenLoans.OpenLoansRepository;
+import com.example.OpenLoans.OpenLoansService;
+import com.example.ReScheduleLoans.ReScheduleLoans;
+import com.example.ReScheduleLoans.ReScheduleLoansService;
 import com.example.SiteConfig.SiteConfiguration;
 
 
@@ -18,12 +26,25 @@ public class LoanService {
 	@Autowired
 	private LoansRepository loansRepository;
 	
+	@Autowired 
+	private OpenLoansService openLoanService;
+	@Autowired 
+	private CloseLoanService closeLoanService;
+	@Autowired 
+	private ReScheduleLoansService reSchedualLoanService;
+	
+	
 	
 	public List<Loans> getAllLoans(int PageNumber)
 	{
 		return loansRepository.findAll();
 	}
 	
+	
+	public List<Loans> FindAllLoans()
+	{
+		return loansRepository.findAll();
+	}
 	
 	public Loans getOneByID(int id )
 	{
@@ -116,5 +137,22 @@ public class LoanService {
 			loansPage = getAllLoansSequence(pageNum, loansPage);
 		}
 		return totalVal ; 
+	}
+	
+	public String GetLoanStatus (int id)
+	{
+		OpenLoans o = openLoanService.getOpenLoanFromLoan(id);
+		if(o != null)
+			return "مفتوحة"; 
+		
+		ReScheduleLoans r =reSchedualLoanService.getReScheduleLoanFromLoan(id);
+		if(r!=null)
+			return "مجدولة";
+		
+		CloseLoans c = closeLoanService.getCloseLoanFromLoan(id);
+		if(c!=null)
+			return "مغلقة";
+		
+		return "";
 	}
 }
