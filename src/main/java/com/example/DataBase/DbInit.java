@@ -17,7 +17,6 @@ import com.example.Banks.Banks;
 import com.example.Banks.BanksRepository;
 import com.example.Clients.Clients;
 import com.example.Clients.ClientsRepository;
-import com.example.Clients.ClinetController;
 import com.example.FinanceType.FinanceType;
 import com.example.FinanceType.FinanceTypeRepository;
 import com.example.Loans.Loans;
@@ -28,8 +27,6 @@ import com.example.OpenLoans.OpenLoans;
 import com.example.OpenLoans.OpenLoansRepository;
 import com.example.Vouchers.Vouchers;
 import com.example.Vouchers.VouchersRepository;
-import com.example.WareHouseModel.dbinit;
-import com.example.WareHouseRepository.ClientDimRepository;
 import com.example.security.UserRoles.UserRole;
 import com.example.security.UserRoles.UserRoleRepository;
 import com.example.security.roles.Roles;
@@ -430,10 +427,5 @@ public class DbInit implements CommandLineRunner{
 		return String.valueOf(year) ; 
 	}
 	
-	
-	
-	
-	
-	
-	
+
 }

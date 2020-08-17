@@ -12,6 +12,7 @@ public class FinanceType_Dim {
 
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int FinanceTypeID ;
 	public String TypeName="";
 	public String FundintRate ;

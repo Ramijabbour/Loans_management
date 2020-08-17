@@ -1,11 +1,5 @@
 package com.example.WareHouseModel;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,27 +8,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.BankBranches.BrancheService;
-import com.example.BankBranches.Branches;
 import com.example.Clients.ClientService;
-import com.example.Clients.Clients;
-import com.example.FinanceType.FinanceType;
+
 import com.example.FinanceType.FinanceTypeService;
 import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
-import com.example.LoansType.LoansType;
 import com.example.LoansType.LoansTypeService;
 import com.example.WareHouseRepository.BranchBankDimRepository;
 import com.example.WareHouseRepository.ClientDimRepository;
+import com.example.WareHouseRepository.ClientLoanRepository;
 import com.example.WareHouseRepository.FactRepository;
 import com.example.WareHouseRepository.FinanceTypeDimRepository;
 import com.example.WareHouseRepository.LoansTypeDimRepository;
 import com.example.WareHouseRepository.TimeRepository;
 import com.example.WareHouseRepository.UserDimRepository;
+import com.example.WareHouseService.FactTableService;
 import com.example.security.user.User;
 import com.example.security.user.UserService;
 
 @RestController
-public class dbinit {
+public class insert {
 
 	@Autowired 
 	ClientService clientsService ; 
@@ -62,11 +55,16 @@ public class dbinit {
 	BranchBankDimRepository brancheBankRepo;
 	@Autowired 
 	TimeRepository timeRepo;
+	@Autowired
+	ClientLoanRepository clientLoanRepo; 
 	
 	@Autowired
 	FactRepository factRepo;
+	
+	@Autowired 
+	FactTableService factService  ; 
+	
 	@RequestMapping(method = RequestMethod.GET , value = "/insert")
-
 	public void insertIntoDimensions()
 	{/*
 		List<Clients> allClients = clientsService.GetClientsByType("شخص");
@@ -135,7 +133,8 @@ public class dbinit {
 		{
 			timeRepo.save(t);
 		}
-		*/
+		
+		
 		List<Loans>allLoans= loanService.FindAllLoans();
 		for(Loans loan :allLoans)
 		{
@@ -146,13 +145,36 @@ public class dbinit {
 				if(t.getDate().equalsIgnoreCase(loan.getLoanDate()))
 					time=t;
 			
-			
-			Client_Dim client =ClientDimRepo.findByid(loan.getClient().getId());
-			System.out.println(client.getClientName());
+			if(loan.getClient().getClientType().equalsIgnoreCase("شخص"))	{
+				Branch_Bank_Dim branch_Bank = brancheBankRepo.findByid(loan.getBranche().getId());
 				
-			//Fact_Table fact = new Fact_Table(loan.getTotalAmmount(),loan.getNetAmmount(),status,client,branchBank,loan.getUser(),loan.getLoanType(),loan.getFinanceType(),time);
+				LoansType_Dim loantype = loanTypeDimRepo.findByid(loan.getLoanType().getLoanTypeID());
+				FinanceType_Dim financeType = financeTypeDimRepo.findByid(loan.getFinanceType().getFinanceTypeID());
+				//User_Dim user  = userDimRepo.findByid(loan.getUser().getId());
+				Client_Dim client =ClientDimRepo.findByid(loan.getClient().getId());
+				Fact_Table fact = new Fact_Table(loan.getTotalAmmount(),loan.getNetAmmount(),status,client,branch_Bank,null,loantype,financeType,time);
+				factRepo.save(fact);
+			}	
 		}
+		System.out.println("Done !!");
+		*/
+		/*
+		List<Fact_Table> allloans= factService.filterFact();
+		
+		for(Fact_Table f : allloans)
+		{
+			String result = null;
+			if(f.getStatus().equalsIgnoreCase("مغلقة"))
+				result="yes";
+			else 
+				result="no";
+			ClientLoan c = new ClientLoan(f.TotalAmmount,f.NetAmmount,f.getStatus(),f.getClient().getAddress(),f.getClient().getGender(),f.getClient().getMarried(),f.getClient().getNumberOFChilderen(),f.getClient().getAge(),f.getLoanType().getTypeName(),f.getFinanceType().getTypeName(),f.getClient().getIncome(),result);
+			clientLoanRepo.save(c);
+		}*/
+		
+		
+		
 		
 	}
-	
+
 }

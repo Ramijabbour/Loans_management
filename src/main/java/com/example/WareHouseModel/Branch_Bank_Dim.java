@@ -16,6 +16,7 @@ public class Branch_Bank_Dim {
 	
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int id ;
 	
 	public String branchName ="";
