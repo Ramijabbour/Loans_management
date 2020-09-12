@@ -95,5 +95,23 @@ public class ClientService {
 	public int getClientsCount() {
 		return this.clientRepository.getClientsCount() ; 
 	}
+	
+	public List<Clients> GetClientsByType(String type)
+	{
+		List<Clients> allclient=clientRepository.findAll();
+		ArrayList<Clients> result = new ArrayList<Clients>();
+		if(allclient.isEmpty())
+		{
+			System.out.println("empty ClinetsList ");
+			return null ;
+		}
+		for (Clients client : allclient)
+		{
+			if(client.getClientType().equalsIgnoreCase(type))
+				result.add(client);
+		}
+		return result;
+		
+	}
 
 }

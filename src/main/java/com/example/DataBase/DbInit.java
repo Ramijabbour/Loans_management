@@ -78,10 +78,11 @@ public class DbInit implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
+	
 		//injectUsers_Roles_ToDB();
-//		inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
+		//inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
 //		injectChecksToDB();
-//		System.out.println("injection Done !! ");
+		//System.out.println("injection Done !! ");
 	}
 	
 
@@ -91,18 +92,32 @@ public class DbInit implements CommandLineRunner{
 		boolean switchG = false ; 
 		for(int i = 0 ; i < 60 ; i ++) {
 			Clients client = new Clients("المتعامل"+i,"","003135658"+i,"client"+i+"mail@gmail.com","093737101"+i,
-					"دمشق"," ");
+					"دمشق"," ","","","","");
 			if(i%2 == 0 ) {
 				client.setClientType("شخص");
 				if(switchG) {
 					client.setGender("ذكر");
+					client.setMarried("y");
+					client.setNumberOFChilderen("2");
+					int age= i+20 ; 
+					client.setAge(""+age);
+					client.setIncome(""+i*300);
 					switchG = false ; 
 				}else {
 					client.setGender("أنثى");
+					client.setMarried("n");
+					int age2 = i+20;
+					client.setAge(""+age2);
+					if(i==0)
+						client.setIncome("200");
+					else 
+						client.setIncome(""+i*2000);
+					client.setNumberOFChilderen("0");
 					switchG = true ; 
 				}
 			}else {
 				client.setClientType("مؤسسة");	
+				
 			}
 			this.clientsRepo.save(client);
 			allClients.add(client);
@@ -412,4 +427,5 @@ public class DbInit implements CommandLineRunner{
 		return String.valueOf(year) ; 
 	}
 	
+
 }

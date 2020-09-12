@@ -105,7 +105,7 @@ public class ClinetController {
 		public void UpdateClient(@Valid Clients client,HttpServletResponse response) throws IOException {
 			System.out.println("posted to /Clients/update/id ");
 			clientservice.updateClient(client);
-			response.sendRedirect("/Clients/all");
+			response.sendRedirect("/Clients/all?index=0");
 		}
 		
 
