@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.Loans.LoanService;
+import com.example.ServicesPool;
 import com.example.Loans.Loans;
 import com.example.SiteConfig.MasterService;
 
@@ -18,8 +18,8 @@ public class VoucherService {
 	@Autowired 
 	VouchersRepository voucherRepository ;
 	
-	@Autowired 
-	private LoanService loansService ; 
+	@Autowired
+	private ServicesPool servicePool ; 
 	
 	public void addVoucher(Vouchers v)
 	{
@@ -95,8 +95,7 @@ public class VoucherService {
 	
 	public boolean AllVoucherPaid(int id)
 	{
-		List <Vouchers> allVoucher = voucherRepository.findAll();
-		ArrayList <Vouchers> LoanVoucher = new ArrayList<Vouchers>(); 
+		List <Vouchers> allVoucher = voucherRepository.findAll(); 
 		for(Vouchers voucher : allVoucher )
 		{
 			if(voucher.getLoan() !=null) {
@@ -131,7 +130,7 @@ public class VoucherService {
 		for(Vouchers voucher : loanVouchers) {
 			this.deleteVoucher(voucher.getVoucherID());
 		}
-		loansService.DeleteLoan(loanId);
+		servicePool.getLoansService().DeleteLoan(loanId);
 	}
 	
 	//remove the loan vouchers only 

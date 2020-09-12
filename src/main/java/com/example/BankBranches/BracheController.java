@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.Banks.BankService;
+import com.example.ServicesPool;
 import com.example.Banks.Banks;
 import com.example.SiteConfig.MasterService;
 import com.example.SiteConfig.SiteConfiguration;
@@ -27,10 +27,8 @@ import com.example.SiteConfig.SiteConfiguration;
 public class BracheController {
 	
 	@Autowired 
-	BrancheService brancheService;
-	@Autowired
-	BankService bankservice;
-
+	ServicesPool servicePool ; 
+	
 	public BracheController() {
 		Method[] methods =  this.getClass().getDeclaredMethods();
 		List<String> methodsNames = new ArrayList<String>(); 
@@ -48,7 +46,7 @@ public class BracheController {
 	public ModelAndView addBranche(@PathVariable int id ) {
 		ModelAndView mav = new ModelAndView("Branches/AddBranche");
 		mav.addObject("branche",new Branches());
-		Banks bank =bankservice.getBankById(id);
+		Banks bank =servicePool.getBankService().getBankById(id);
 		mav.addObject("bank", bank);
 		return mav; 
 	}
@@ -58,7 +56,7 @@ public class BracheController {
 	public void addBranche(@ModelAttribute Branches branche,HttpServletResponse response) throws IOException {
 		
 		System.out.println("posted to /Branches/Bankid/addBranche ");
-		brancheService.addBranche(branche);
+		servicePool.getBranchesService().addBranche(branche);
 		response.sendRedirect("/Banks/all");
 	}
 	
@@ -68,7 +66,7 @@ public class BracheController {
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/Branches/all")
 	public ModelAndView viewAllBranches(@Param(value ="index") int index) {
 		ModelAndView mav = new ModelAndView("Branches/AllBranche");
-	    List<Branches> allbranche=brancheService.getAllBranche(index);
+	    List<Branches> allbranche=servicePool.getBranchesService().getAllBranche(index);
 		mav.addObject("allbranches",allbranche);
 		if(allbranche.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
@@ -83,8 +81,8 @@ public class BracheController {
 	@RequestMapping(method = RequestMethod.GET , value="/BankBranches/{id}")
 	public ModelAndView viewBankBranches(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView("Branches/AllBranche");
-		Banks bank = bankservice.getBankById(id);
-	    List<Branches> allbranche=brancheService.getBankBranches(bank);
+		Banks bank = servicePool.getBankService().getBankById(id);
+	    List<Branches> allbranche=servicePool.getBranchesService().getBankBranches(bank);
 		mav.addObject("allbranches",allbranche);
 		return mav; 
 	}
@@ -93,7 +91,7 @@ public class BracheController {
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/Branches/view/{id}")
 	public ModelAndView viewSingleBranch(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView("Branches/viewBranche");
-	    Branches branche=brancheService.getBranche(id);
+	    Branches branche=servicePool.getBranchesService().getBranche(id);
 		mav.addObject("branche",branche);
 		return mav; 
 	}
@@ -105,7 +103,7 @@ public class BracheController {
 	@RequestMapping(method = RequestMethod.GET , value="/Banks/Branches/edit/{id}")
 	public ModelAndView UpdateBranche(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView("Branches/updateBranche");
-		Branches branche=brancheService.getBranche(id);
+		Branches branche=servicePool.getBranchesService().getBranche(id);
 		Banks bank=branche.getBank();
 		mav.addObject("branche",branche);
 		mav.addObject("bank", bank);
@@ -116,7 +114,7 @@ public class BracheController {
 	@RequestMapping(method = RequestMethod.POST , value="/Banks/Branches/update/{id}")
 	public void UpdateBranche(@Valid Branches branche,HttpServletResponse response) throws IOException {
 		System.out.println("posted to /Banks/Branches/update/id ");
-		brancheService.UpdateBracnhe(branche);
+		servicePool.getBranchesService().UpdateBracnhe(branche);
 		response.sendRedirect("/Banks/Branches/all");
 	}
 	
@@ -128,7 +126,7 @@ public class BracheController {
 	@RequestMapping(method = RequestMethod.GET, value="/Banks/Branches/delete/{id}")
 	public void deleteBranche(@PathVariable int id,HttpServletResponse response) throws IOException
 	{
-		brancheService.DeleteBranche(id);
+		servicePool.getBranchesService().DeleteBranche(id);
 		response.sendRedirect("/Banks/Branches/all");
 	}
 
@@ -136,7 +134,7 @@ public class BracheController {
 	@RequestMapping(method = RequestMethod.POST , value = "/Banks/Branches/Search")
 	public ModelAndView SearchbyBrancheCode(@Param(value ="index") int index,@RequestParam("search") String brancheCode) {
 		ModelAndView mav = new ModelAndView("Branches/SearchBranches");
-		List<Branches> allbranches = this.brancheService.SearchbybrancheCode(index,brancheCode);
+		List<Branches> allbranches = servicePool.getBranchesService().SearchbybrancheCode(index,brancheCode);
 		mav.addObject("allbranches",allbranches);
 		mav.addObject("searchvar",brancheCode);
 		if(allbranches.size() > 0 ) {
@@ -151,7 +149,7 @@ public class BracheController {
 	@RequestMapping(method = RequestMethod.GET , value = "/Banks/Branches/Search/nxtRes/{index}/{searchvar}")
 	public ModelAndView searchBankNext(@PathVariable int index,@PathVariable String searchvar ) {
 		ModelAndView mav = new ModelAndView("Branches/SearchBranches");
-		List<Branches> allbranches = this.brancheService.SearchbybrancheCode(index,searchvar);
+		List<Branches> allbranches = servicePool.getBranchesService().SearchbybrancheCode(index,searchvar);
 		mav.addObject("allbranches",allbranches);
 		mav.addObject("searchvar",searchvar);
 		if(allbranches.size() > 0 ) {

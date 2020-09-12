@@ -11,8 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.BankBranches.Branches;
-import com.example.Loans.Loans;
-import com.example.OpenLoans.OpenLoans;
 import com.example.SiteConfig.SiteConfiguration;
 
 

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.ServicesPool;
 import com.example.Clients.Clients;
 import com.example.SiteConfig.MasterService;
 import com.example.SiteConfig.SiteConfiguration;
@@ -28,7 +29,7 @@ import com.example.SiteConfig.SiteConfiguration;
 public class ClinetController {
 	
 	@Autowired
-	private ClientService clientservice;
+	private ServicesPool servicePool ; 
 	
 	
 	public ClinetController() {
@@ -47,7 +48,7 @@ public class ClinetController {
 	@RequestMapping("/Clients/{id}")
 	public Clients GetClient(@PathVariable int id)
 	{
-		Optional<Clients> client=clientservice.GetClient(id);
+		Optional<Clients> client=servicePool.getClientService().GetClient(id);
 		if(client.isPresent())
 		{
 			return client.get();
@@ -69,7 +70,7 @@ public class ClinetController {
 	@RequestMapping(method = RequestMethod.POST , value="/Clients/addClient")
 	public void addNewClient(@ModelAttribute Clients client,HttpServletResponse response) throws IOException {
 		System.out.println("posted to /Clients/addClient ");
-		clientservice.addClient(client);
+		servicePool.getClientService().addClient(client);
 		response.sendRedirect("/Clients/all?index=0");
 	}
 	// -----------------------------------------------------------------------   
@@ -79,7 +80,7 @@ public class ClinetController {
 		@RequestMapping(method = RequestMethod.GET , value="/Clients/all")
 		public ModelAndView viewAllClients(@Param(value ="index") int index) {
 			ModelAndView mav = new ModelAndView("Clients/AllClients");
-			List<Clients> allclients=clientservice.GetAllClients(index);
+			List<Clients> allclients=servicePool.getClientService().GetAllClients(index);
 			mav.addObject("allclients",allclients);
 			if(allclients.size() > 0 ) {
 				SiteConfiguration.addSequesnceVaraibles(mav, index);
@@ -95,7 +96,7 @@ public class ClinetController {
 		@RequestMapping(method = RequestMethod.GET , value="/Clients/edit/{id}")
 		public ModelAndView UpdateClient(@PathVariable int id) {
 			ModelAndView mav = new ModelAndView("Clients/updateClient");
-			Clients client=clientservice.GetClientById(id);
+			Clients client=servicePool.getClientService().GetClientById(id);
 			mav.addObject("client",client);
 			return mav; 
 		} 
@@ -104,7 +105,7 @@ public class ClinetController {
 		@RequestMapping(method = RequestMethod.POST , value="/Clients/update/{id}")
 		public void UpdateClient(@Valid Clients client,HttpServletResponse response) throws IOException {
 			System.out.println("posted to /Clients/update/id ");
-			clientservice.updateClient(client);
+			servicePool.getClientService().updateClient(client);
 			response.sendRedirect("/Clients/all?index=0");
 		}
 		
@@ -116,7 +117,7 @@ public class ClinetController {
 		@RequestMapping(method = RequestMethod.GET, value="/Clients/delete/{id}")
 		public void deleteClient(@PathVariable int id,HttpServletResponse response) throws IOException
 		{
-			clientservice.deleteClient(id);
+			servicePool.getClientService().deleteClient(id);
 			response.sendRedirect("/Clients/all");
 		}
 		//----search
@@ -124,7 +125,7 @@ public class ClinetController {
 	@RequestMapping(method = RequestMethod.POST , value = "/Clients/Search")
 	public ModelAndView SearchByClientName(@Param(value ="index") int index,@RequestParam("search") String clientName) {
 		ModelAndView mav = new ModelAndView("Clients/searchClients");
-		List<Clients> allclients = this.clientservice.SearchbyclientName(index,clientName);
+		List<Clients> allclients = servicePool.getClientService().SearchbyclientName(index,clientName);
 		mav.addObject("allclients",allclients);
 		mav.addObject("searchvar",clientName);
 		if(allclients.size() > 0 ) {
@@ -138,7 +139,7 @@ public class ClinetController {
 	@RequestMapping(method = RequestMethod.GET , value = "/Clients/Search/nxtRes/{index}/{searchvar}")
 	public ModelAndView searchClientkNext(@PathVariable int index,@PathVariable String searchvar ) {
 		ModelAndView mav = new ModelAndView("Clients/searchClients");
-		List<Clients> allclients = this.clientservice.SearchbyclientName(index,searchvar);
+		List<Clients> allclients = servicePool.getClientService().SearchbyclientName(index,searchvar);
 		mav.addObject("allbank",allclients);
 		mav.addObject("searchvar",searchvar);
 		if(allclients.size() > 0 ) {

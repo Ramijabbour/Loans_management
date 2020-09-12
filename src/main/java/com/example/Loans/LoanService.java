@@ -7,15 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import com.example.ServicesPool;
 import com.example.BankBranches.Branches;
-import com.example.CloseLoans.CloseLoanService;
 import com.example.CloseLoans.CloseLoans;
-import com.example.CloseLoans.CloseLoansRepository;
 import com.example.OpenLoans.OpenLoans;
-import com.example.OpenLoans.OpenLoansRepository;
-import com.example.OpenLoans.OpenLoansService;
 import com.example.ReScheduleLoans.ReScheduleLoans;
-import com.example.ReScheduleLoans.ReScheduleLoansService;
 import com.example.SiteConfig.SiteConfiguration;
 
 
@@ -26,12 +22,8 @@ public class LoanService {
 	@Autowired
 	private LoansRepository loansRepository;
 	
-	@Autowired 
-	private OpenLoansService openLoanService;
-	@Autowired 
-	private CloseLoanService closeLoanService;
-	@Autowired 
-	private ReScheduleLoansService reSchedualLoanService;
+	@Autowired
+	private ServicesPool servicePool ; 
 	
 	
 	
@@ -141,15 +133,15 @@ public class LoanService {
 	
 	public String GetLoanStatus (int id)
 	{
-		OpenLoans o = openLoanService.getOpenLoanFromLoan(id);
+		OpenLoans o = servicePool.getOpenLoansService().getOpenLoanFromLoan(id);
 		if(o != null)
 			return "مفتوحة"; 
 		
-		ReScheduleLoans r =reSchedualLoanService.getReScheduleLoanFromLoan(id);
+		ReScheduleLoans r =servicePool.getResLoansService().getReScheduleLoanFromLoan(id);
 		if(r!=null)
 			return "مجدولة";
 		
-		CloseLoans c = closeLoanService.getCloseLoanFromLoan(id);
+		CloseLoans c = servicePool.getClosedLoansService().getCloseLoanFromLoan(id);
 		if(c!=null)
 			return "مغلقة";
 		

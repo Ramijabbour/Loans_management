@@ -1,7 +1,6 @@
 package com.example.Vouchers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,20 +14,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.Clients.ClientService;
+import com.example.ServicesPool;
 import com.example.Clients.Clients;
-import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
 import com.example.Loans.LoansController;
 
 @RestController
 public class VoucherController {
+	
 	@Autowired
-	private VoucherService voucherService; 
-	@Autowired
-	private LoanService loanService ;
-	@Autowired
-	private ClientService clientService ; 
+	private ServicesPool servicePool ; 
+ 
 	@Autowired
 	private LoansController loansController ; 
 	
@@ -44,8 +40,8 @@ public class VoucherController {
 		}
 		else {
 		ModelAndView mav = new ModelAndView("Vouchers/AddVoucher");
-		Loans myloan = loanService.getOneByID(id);
-		List<Clients> allclient = clientService.GetAllClientsNoPage();
+		Loans myloan = servicePool.getLoansService().getOneByID(id);
+		List<Clients> allclient = servicePool.getClientService().GetAllClientsNoPage();
 		mav.addObject("voucher", new Vouchers());
 		mav.addObject("allclient", allclient);
 		mav.addObject("myloan", myloan);
@@ -56,10 +52,10 @@ public class VoucherController {
 	@RequestMapping(method = RequestMethod.POST , value="/Loan/AddVoucher/{id}")
 	public void addNewVoucher(@ModelAttribute Vouchers voucher,HttpServletResponse response,@PathVariable int id ) throws IOException {
 		System.out.println("posted to /Loan/AddVoucher/id ");
-		Loans loan=loanService.getOneByID(id);
+		Loans loan=servicePool.getLoansService().getOneByID(id);
 		voucher.setStatus("Open");
 		voucher.setLoan(loan);
-		voucherService.addVoucher(voucher);
+		servicePool.getVoucherService().addVoucher(voucher);
 		response.sendRedirect("/Loans/all/Open?index=0");
 	}
 	
@@ -69,7 +65,7 @@ public class VoucherController {
 	public ModelAndView allVouchers(@PathVariable int id)
 	{
 		ModelAndView mav = new ModelAndView("Vouchers/AllVouchers");
-		List<Vouchers> allvouchers= voucherService.getVoucherForThisLoan(id);
+		List<Vouchers> allvouchers= servicePool.getVoucherService().getVoucherForThisLoan(id);
 		mav.addObject("vouchers", allvouchers);
 		return mav; 
 	}
@@ -79,7 +75,7 @@ public class VoucherController {
 	public ModelAndView getVoucher(@PathVariable int id)
 	{
 		ModelAndView mav = new ModelAndView("Vouchers/OneVoucher");
-		Vouchers voucher= voucherService.GetVoucherById(id);
+		Vouchers voucher= servicePool.getVoucherService().GetVoucherById(id);
 		boolean checkStatus =false ;
 		if(voucher.getStatus().equalsIgnoreCase("Open"))
 			checkStatus=true;
@@ -93,8 +89,8 @@ public class VoucherController {
 	@RequestMapping(method=RequestMethod.GET , value="/Vouchers/delete/{id}")
 	public void DeleteVoucher(@PathVariable int id ,HttpServletResponse response) throws IOException
 	{
-		int loanid = voucherService.GetVoucherById(id).getLoan().getId();
-		voucherService.deleteVoucher(id);
+		int loanid = servicePool.getVoucherService().GetVoucherById(id).getLoan().getId();
+		servicePool.getVoucherService().deleteVoucher(id);
 		response.sendRedirect("/Vouchers/all/"+loanid);
 		
 	}
@@ -105,8 +101,8 @@ public class VoucherController {
 	public ModelAndView showUpdateVocuher(@PathVariable int id)
 	{
 		ModelAndView mav = new ModelAndView("Vouchers/UpdateVoucher");
-		Vouchers voucher = voucherService.GetVoucherById(id);
-		List<Clients> allclient = clientService.GetAllClientsNoPage();
+		Vouchers voucher = servicePool.getVoucherService().GetVoucherById(id);
+		List<Clients> allclient = servicePool.getClientService().GetAllClientsNoPage();
 		mav.addObject("voucher", voucher);
 		mav.addObject("allclient", allclient);
 		return mav;
@@ -115,8 +111,8 @@ public class VoucherController {
 	@RequestMapping(method=RequestMethod.POST ,value="/Vouchers/update/{id}")
 	public void updateVoucher(@PathVariable int id,@Valid Vouchers voucher , HttpServletResponse response) throws IOException
 	{
-		int loanid=voucherService.GetVoucherById(id).getLoan().getId();
-		voucherService.updateVoucher(voucher);
+		int loanid=servicePool.getVoucherService().GetVoucherById(id).getLoan().getId();
+		servicePool.getVoucherService().updateVoucher(voucher);
 		
 		response.sendRedirect("/Vouchers/all/"+loanid);
 	}
@@ -127,10 +123,10 @@ public class VoucherController {
 	@RequestMapping (method = RequestMethod.GET , value="/Vouchers/Paid/{id}")
 	public void PaidVoucher(@PathVariable int id , HttpServletResponse response) throws IOException
 	{
-		Vouchers voucher = voucherService.GetVoucherById(id);
+		Vouchers voucher = servicePool.getVoucherService().GetVoucherById(id);
 		voucher.setStatus("paid");
 		
-		voucherService.updateVoucher(voucher);
+		servicePool.getVoucherService().updateVoucher(voucher);
 		int  loanid = voucher.getLoan().getId();
 		
 		response.sendRedirect("/Loans/CheckCloseLoan/"+loanid);
@@ -139,8 +135,8 @@ public class VoucherController {
 	
 	public boolean checkAddVoucher(int id)
 	{
-		int numberOfVoucher = Integer.parseInt(loanService.getOneByID(id).getNumberOfVoucher()) ;
-		List<Vouchers> NumberofloanVocher = voucherService.getVoucherForThisLoan(id);
+		int numberOfVoucher = Integer.parseInt(servicePool.getLoansService().getOneByID(id).getNumberOfVoucher()) ;
+		List<Vouchers> NumberofloanVocher = servicePool.getVoucherService().getVoucherForThisLoan(id);
 		if(numberOfVoucher>NumberofloanVocher.size())
 			return true;
 		else 
@@ -152,10 +148,10 @@ public class VoucherController {
 	//--------------------------------------------
 	public ModelAndView addVoucherSequenceForSchedualLoan(int Oldloan ,int NewLoan, int sequence) {		
 		ModelAndView mav = new ModelAndView("Vouchers/AddVoucherForSchedualLoan");
-		Loans newloan = loanService.getOneByID(NewLoan);
-		List<Clients> allclient = clientService.GetAllClientsNoPage();
+		Loans newloan = servicePool.getLoansService().getOneByID(NewLoan);
+		List<Clients> allclient = servicePool.getClientService().GetAllClientsNoPage();
 		
-		List<Vouchers> VoucherForThisLoan = voucherService.getVoucherForThisLoan(Oldloan);
+		List<Vouchers> VoucherForThisLoan = servicePool.getVoucherService().getVoucherForThisLoan(Oldloan);
 		System.out.println("number of voucher "+ VoucherForThisLoan.size());
 		
 		System.out.println("sqquence "+sequence);
@@ -179,13 +175,13 @@ public class VoucherController {
 		 * we redirect to resolver view and it should return 
 		 * a choice to send to conflict resolver method */ 
 		
-		Loans loan=loanService.getOneByID(loanid);
+		Loans loan=servicePool.getLoansService().getOneByID(loanid);
 		voucher.setLoan(loan);
 		
 		/*step #01 if the total vouchers value is less than the loan value we proceed 
 		 * check if the voucher info are valid 
 		*/
-		String dataValidationResult =this.voucherService.validateVoucherInfo(voucher) ;  
+		String dataValidationResult =this.servicePool.getVoucherService().validateVoucherInfo(voucher) ;  
 		if(!dataValidationResult.equalsIgnoreCase("ok")){
 			//return error view with reason 
 			//then return to the same voucher adding sequece  
@@ -199,12 +195,12 @@ public class VoucherController {
 		//step #1 add the voucher 
 		voucher.setStatus("Open");
 		
-		voucherService.addVoucher(voucher);
+		servicePool.getVoucherService().addVoucher(voucher);
 		//step #2 check the remaining voucher to add 
 		//stop condition -- all vouchers added 
 		if(sequenceNumber <= 0 ) {
 			ModelAndView mav = new ModelAndView("Vouchers/AllVouchers");
-			List<Vouchers> allvouchers= voucherService.getVoucherForThisLoan(loanid);
+			List<Vouchers> allvouchers= servicePool.getVoucherService().getVoucherForThisLoan(loanid);
 			mav.addObject("vouchers", allvouchers);
 			return mav; 
 		}
@@ -227,8 +223,8 @@ public class VoucherController {
 	
 	public ModelAndView addVoucherSequence(int loanId , int sequence) {		
 		ModelAndView mav = new ModelAndView("Vouchers/AddVoucher");
-		Loans myloan = loanService.getOneByID(loanId);
-		List<Clients> allclient = clientService.GetAllClientsNoPage();
+		Loans myloan = servicePool.getLoansService().getOneByID(loanId);
+		List<Clients> allclient = servicePool.getClientService().GetAllClientsNoPage();
 		mav.addObject("voucher", new Vouchers());
 		mav.addObject("allclient", allclient);
 		mav.addObject("myloan", myloan);
@@ -246,8 +242,8 @@ public class VoucherController {
 		 * we redirect to resolver view and it should return 
 		 * a choice to send to conflict resolver method */ 
 		
-		Loans loan=loanService.getOneByID(loanid);
-		if(!this.voucherService.checkLoanVouchersTotalValue(loan, this.voucherService.getVouchersValueForLoan(loanid) + Integer.valueOf(voucher.getNetAmmount()))) {
+		Loans loan=servicePool.getLoansService().getOneByID(loanid);
+		if(!servicePool.getVoucherService().checkLoanVouchersTotalValue(loan, servicePool.getVoucherService().getVouchersValueForLoan(loanid) + Integer.valueOf(voucher.getNetAmmount()))) {
 			return this.interruptVoucherAddingSequence(sequenceNumber, loanid, loan);
 		}
 		voucher.setLoan(loan);
@@ -255,7 +251,7 @@ public class VoucherController {
 		/*step #01 if the total vouchers value is less than the loan value we proceed 
 		 * check if the voucher info are valid 
 		*/
-		String dataValidationResult =this.voucherService.validateVoucherInfo(voucher) ;  
+		String dataValidationResult =servicePool.getVoucherService().validateVoucherInfo(voucher) ;  
 		if(!dataValidationResult.equalsIgnoreCase("ok")){
 			//return error view with reason 
 			//then return to the same voucher adding sequece  
@@ -269,12 +265,12 @@ public class VoucherController {
 		//step #1 add the voucher 
 		voucher.setStatus("Open");
 		
-		voucherService.addVoucher(voucher);
+		servicePool.getVoucherService().addVoucher(voucher);
 		//step #2 check the remaining voucher to add 
 		//stop condition -- all vouchers added 
 		if(sequenceNumber <= 0 ) {
 			ModelAndView mav = new ModelAndView("Vouchers/AllVouchers");
-			List<Vouchers> allvouchers= voucherService.getVoucherForThisLoan(loanid);
+			List<Vouchers> allvouchers= servicePool.getVoucherService().getVoucherForThisLoan(loanid);
 			mav.addObject("vouchers", allvouchers);
 			return mav; 
 		}
@@ -296,14 +292,14 @@ public class VoucherController {
 			}	
 			//case 1 : remove everything 
 			case 1 : {
-				this.voucherService.removeLoanPermenant(loanId); 
+				servicePool.getVoucherService().removeLoanPermenant(loanId); 
 				//redirect to all loans 
 				return this.loansController.ShowAllOpenLoans(0);
 			}
 			//case 2 : remove vouchers only and re-enter them 
 			case 2 : {
-				this.voucherService.removeVouchersOnly(loanId);
-				return addVoucherSequence(loanId,Integer.valueOf(loanService.getOneByID(loanId).getNumberOfVoucher())); 
+				servicePool.getVoucherService().removeVouchersOnly(loanId);
+				return addVoucherSequence(loanId,Integer.valueOf(servicePool.getLoansService().getOneByID(loanId).getNumberOfVoucher())); 
 			}
 			
 			//this case is commented because the new voucher may have bigger value than the loan itself so we cannot accept it 
@@ -337,12 +333,12 @@ public class VoucherController {
 		}
 		//re-enter all vouchers 
 		case 1 : {
-			this.voucherService.removeVouchersOnly(loanid);
-			return addVoucherSequence(loanid,Integer.valueOf(loanService.getOneByID(loanid).getNumberOfVoucher()));
+			servicePool.getVoucherService().removeVouchersOnly(loanid);
+			return addVoucherSequence(loanid,Integer.valueOf(servicePool.getLoansService().getOneByID(loanid).getNumberOfVoucher()));
 		}
 		//revoke the loan and vouchers
 		case 2 : {
-			this.voucherService.removeLoanPermenant(loanid); 
+			servicePool.getVoucherService().removeLoanPermenant(loanid); 
 			//redirect to all loans 
 			return this.loansController.ShowAllOpenLoans(0);
 		}	

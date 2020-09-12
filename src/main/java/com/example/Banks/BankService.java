@@ -6,15 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.Allocations.AllocationsService;
-import com.example.OpenLoans.OpenLoans;
+import com.example.ServicesPool;
 import com.example.SiteConfig.SiteConfiguration;
 
 @Service
@@ -24,7 +22,7 @@ public class BankService {
 	private BanksRepository bankRepository;
 	
 	@Autowired
-	private AllocationsService allocationService;
+	private ServicesPool servicePool;
 	
 	public List<Banks> GetAllBanks() {
 		List<Banks> banks=bankRepository.findAll();
@@ -101,7 +99,7 @@ public class BankService {
 		List<Banks> availableBanks = new ArrayList<Banks>();
 		
 		for(Banks bank : allBanks) {
-			if(allocationService.CheckDateMoreThanYear(bank))
+			if(servicePool.getAllocationsService().CheckDateMoreThanYear(bank))
 			{	System.out.println("step 1 ");
 				availableBanks.add(bank);
 			}	}
