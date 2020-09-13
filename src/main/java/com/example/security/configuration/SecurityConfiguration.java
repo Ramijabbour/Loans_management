@@ -50,6 +50,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		.antMatchers("/dashBoards/**").hasAnyAuthority("ALLANALYTICS","SUPER")
 		.antMatchers("/config/**").hasAnyAuthority("SUPER")
 		.and()
+		.exceptionHandling().accessDeniedPage("/forbidden")
+		.and()
 		.formLogin().defaultSuccessUrl("/index")
 		.loginPage("/login").permitAll()
 		.and()

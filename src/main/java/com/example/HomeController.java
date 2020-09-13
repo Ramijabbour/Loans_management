@@ -25,4 +25,10 @@ public class HomeController {
     	return mav; 
     }
     
+    @RequestMapping(method = RequestMethod.GET , value = "/forbidden")
+    public ModelAndView accessDenied() {
+    	ModelAndView mav = new ModelAndView("forbidden");
+    	return mav; 
+    }
+    
 }
