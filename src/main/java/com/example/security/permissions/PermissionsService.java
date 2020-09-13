@@ -11,14 +11,12 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.Banks.Banks;
 import com.example.SiteConfig.SiteConfiguration;
 import com.example.aspect.DataDuplicationException;
 import com.example.aspect.ItemNotFoundException;
+import com.example.security.Dispatcher.ServiceDispatcher;
 import com.example.security.roles.Roles;
-import com.example.security.rolesPermissions.RolesPermissionsService;
 import com.example.security.user.User;
-import com.example.security.userPermissions.UserPermissionsService;
 
 
 
@@ -28,12 +26,8 @@ public class PermissionsService {
 	@Autowired
 	PermissionsRepository permissionsRepository ; 
 	
-	
-	@Autowired 
-	private UserPermissionsService userPermissionsService ; 
-	
-	@Autowired 
-	private RolesPermissionsService rolesPermissionsService ; 
+	@Autowired
+	private ServiceDispatcher dispatcher ; 
 	
 	
 	private static List<String> PermissionsList = new ArrayList<String>() ; 
@@ -73,8 +67,8 @@ public class PermissionsService {
 	
 	//we should add reference to UserPermissions Service && Role Permissions Service -- Cascade delete 
 	public void deletePermission(Permissions permission) {
-		this.userPermissionsService.deletePermission(permission);
-		this.rolesPermissionsService.deletePermission(permission);
+		dispatcher.getUserPermissionsService().deletePermission(permission);
+		dispatcher.getRolesPermissionsService().deletePermission(permission);
 		this.permissionsRepository.delete(permission);
 	}
 	
@@ -113,11 +107,11 @@ public class PermissionsService {
 	}
 	
 	public List<Roles> getRolesWithPermission(Permissions permission){
-		return this.rolesPermissionsService.getRolesWithPermission(permission);
+		return dispatcher.getRolesPermissionsService().getRolesWithPermission(permission);
 	}
 	
 	public List<User> getUsersWithPermission(Permissions permission){
-		return this.userPermissionsService.getUsersWithPermission(permission);
+		return dispatcher.getUserPermissionsService().getUsersWithPermission(permission);
 	}
 	
 	

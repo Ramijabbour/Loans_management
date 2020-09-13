@@ -16,16 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.Banks.Banks;
 import com.example.SiteConfig.MasterService;
 import com.example.SiteConfig.SiteConfiguration;
 
 @RestController
 public class PermissionsController {
 	
-	@Autowired
-	PermissionsService permissionsService ;
-	
+	@Autowired 
+	private PermissionsService permissionsService ;
 	
 	public PermissionsController() {
 		Method[] methods =  this.getClass().getDeclaredMethods();
@@ -39,7 +37,7 @@ public class PermissionsController {
 	
 	@RequestMapping(method = RequestMethod.GET ,value = "/security/permissions/commit")
 	public ModelAndView commitPermissions() {
-		this.permissionsService.commitPermissionsInjection();
+		permissionsService.commitPermissionsInjection();
 		return MasterService.sendSuccessMsg("تمت عملية إدخال الصلاحيات بنجاح");
 	}
 	
@@ -47,7 +45,7 @@ public class PermissionsController {
 	@RequestMapping(method = RequestMethod.GET ,value = "/security/permissions/all")
 	public ModelAndView getAllPermissions(@Param(value ="index") int index) {
 		ModelAndView mav = new ModelAndView("Permissions/allPermissions");
-		List<Permissions> permissionsList =  this.permissionsService.getAllPermissions(index) ; 
+		List<Permissions> permissionsList =  permissionsService.getAllPermissions(index) ; 
 		mav.addObject("permissionsList",permissionsList);
 		if(permissionsList.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
@@ -61,14 +59,14 @@ public class PermissionsController {
 	@RequestMapping(method = RequestMethod.GET ,value = "/security/permissions/manage/{permissionId}")
 	public ModelAndView managePermission(@PathVariable int permissionId,HttpServletResponse response ) throws IOException {
 		ModelAndView mav = new ModelAndView("Permissions/managePermission");
-		Permissions permission = this.permissionsService.getPermissionById(permissionId);
+		Permissions permission = permissionsService.getPermissionById(permissionId);
 		if(permission == null ) {
 			//replace with error msg later 
 			response.sendRedirect("/security/permissions/all");
 		}
 		mav.addObject("permission",permission);
-		mav.addObject("rolesList",this.permissionsService.getRolesWithPermission(permission));
-		mav.addObject("userslist",this.permissionsService.getUsersWithPermission(permission));
+		mav.addObject("rolesList",permissionsService.getRolesWithPermission(permission));
+		mav.addObject("userslist",permissionsService.getUsersWithPermission(permission));
 		return mav ; 
 	}
 	
@@ -77,7 +75,7 @@ public class PermissionsController {
 	@RequestMapping(method = RequestMethod.POST , value = "/Permissions/Search")
 	public ModelAndView getAllChecksbyCheckid(@Param(value ="index") int index,@RequestParam("search") String permissionName) {
 		ModelAndView mav = new ModelAndView("Permissions/searchPermissions");
-		List<Permissions> allPermissions = this.permissionsService.SearchbyPermissionkName(index,permissionName);
+		List<Permissions> allPermissions = permissionsService.SearchbyPermissionkName(index,permissionName);
 		mav.addObject("allpermissions",allPermissions);
 		mav.addObject("searchvar",permissionName);
 		if(allPermissions.size() > 0 ) {
@@ -91,7 +89,7 @@ public class PermissionsController {
 	@RequestMapping(method = RequestMethod.GET , value = "/Permissions/Search/nxtRes/{index}/{searchvar}")
 	public ModelAndView searchBankNext(@PathVariable int index,@PathVariable String searchvar ) {
 		ModelAndView mav = new ModelAndView("Permissions/searchPermissions");
-		List<Permissions> allPermissions = this.permissionsService.SearchbyPermissionkName(index,searchvar);
+		List<Permissions> allPermissions = permissionsService.SearchbyPermissionkName(index,searchvar);
 		mav.addObject("allpermissions",allPermissions);
 		mav.addObject("searchvar",searchvar);
 		if(allPermissions.size() > 0 ) {

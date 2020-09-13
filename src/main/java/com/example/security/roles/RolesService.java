@@ -14,9 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.SiteConfig.SiteConfiguration;
 import com.example.aspect.ItemNotFoundException;
-import com.example.security.UserRoles.UserRoleService;
+import com.example.security.Dispatcher.ServiceDispatcher;
 import com.example.security.permissions.Permissions;
-import com.example.security.rolesPermissions.RolesPermissionsService;
 
 
 @Service
@@ -25,11 +24,7 @@ public class RolesService {
 	RolesRepository rolesRepository ; 
 	
 	@Autowired 
-	private UserRoleService userRoleService ;
-	
-	@Autowired
-	private RolesPermissionsService rolesPermissionsService ; 
-	
+	private ServiceDispatcher dispatcher ; 
 	
 	public List<Roles> getAllRoles(int PageNumber){
 		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
@@ -82,8 +77,8 @@ public class RolesService {
 		if (this.rolesRepository.findById(role.getId()) == null ) {
 			throw new ItemNotFoundException();
 		}else {
-			this.userRoleService.deleteRole(role);
-			this.rolesPermissionsService.deleteRole(role);
+			dispatcher.getUserRolesService().deleteRole(role);
+			dispatcher.getRolesPermissionsService().deleteRole(role);
 			this.rolesRepository.delete(role);
 		}
 	}
@@ -103,7 +98,7 @@ public class RolesService {
 			return  ;
 		}
 		role.addSinglePermissionToRole(permission.getPermissionName());
-		this.rolesPermissionsService.addPermissionsToRole(role,permission) ; 
+		dispatcher.getRolesPermissionsService().addPermissionsToRole(role,permission) ; 
 	}
 	
 }

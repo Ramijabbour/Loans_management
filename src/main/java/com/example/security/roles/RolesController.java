@@ -19,10 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.SiteConfig.MasterService;
 import com.example.SiteConfig.SiteConfiguration;
-import com.example.security.UserRoles.UserRoleService;
+import com.example.security.Dispatcher.ServiceDispatcher;
 import com.example.security.permissions.Permissions;
 import com.example.security.permissions.PermissionsService;
-import com.example.security.rolesPermissions.RolesPermissionsService;
 
 
 
@@ -30,12 +29,9 @@ import com.example.security.rolesPermissions.RolesPermissionsService;
 public class RolesController {
 	@Autowired 
 	private RolesService rolesService ; 
+	
 	@Autowired
-	private RolesPermissionsService rolesPermissionsService ; 
-	@Autowired 
-	private UserRoleService userRolesService ; 
-	@Autowired
-	private PermissionsService permissionsService ; 
+	private ServiceDispatcher dispatcher ; 
 	
 	
 	public RolesController() {
@@ -68,8 +64,8 @@ public class RolesController {
 		ModelAndView mav = new ModelAndView("Roles/manageRole");
 		Roles role = this.rolesService.getRoleByID(roleId); 
 		mav.addObject("role",role);
-		mav.addObject("permissionslist",this.rolesPermissionsService.getPermissionsOfRole(role));
-		mav.addObject("userslist",this.userRolesService.getUsersWithRole(role));
+		mav.addObject("permissionslist",dispatcher.getRolesPermissionsService().getPermissionsOfRole(role));
+		mav.addObject("userslist",dispatcher.getUserRolesService().getUsersWithRole(role));
 		return mav ; 
 	}
 
@@ -133,8 +129,8 @@ public class RolesController {
 	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/role/permissions/revoke/{roleid}/{permissionid}")
 	public void revokePermissionFromRole(@PathVariable int roleid , @PathVariable int permissionid , HttpServletResponse response  ) throws IOException{
 		Roles role = this.rolesService.getRoleByID(roleid);
-		Permissions permission = this.permissionsService.getPermissionById(permissionid); 
-		this.rolesPermissionsService.revokePermissionFromRole(role, permission);
+		Permissions permission = dispatcher.getPermissionsService().getPermissionById(permissionid); 
+		dispatcher.getRolesPermissionsService().revokePermissionFromRole(role, permission);
 		String redirectPath = "/security/roles/viewrole/"+role.getId();
 		response.sendRedirect(redirectPath);
 	}
@@ -154,8 +150,8 @@ public class RolesController {
 	public ModelAndView grantpermissionToRole(@PathVariable int roleid) {
 		Roles role = this.rolesService.getRoleByID(roleid);
 		ModelAndView mav = new ModelAndView("Permissions/grantpermissiontorole");
-		List<Permissions> allPermissions = this.permissionsService.getAllPermissions(0);
-		List<Permissions> currentPermissions =  this.rolesPermissionsService.getPermissionsOfRole(role);
+		List<Permissions> allPermissions = dispatcher.getPermissionsService().getAllPermissions(0);
+		List<Permissions> currentPermissions =  dispatcher.getRolesPermissionsService().getPermissionsOfRole(role);
 		List<Permissions> uniquePermissions = new ArrayList<Permissions>();
 		for(Permissions permission : allPermissions ) {
 			if(!currentPermissions.contains(permission)) {
@@ -170,7 +166,7 @@ public class RolesController {
 	@RequestMapping(method = RequestMethod.POST , value = "/security/roles/role/permissions/grant/{roleid}/{permissionid}")
 	public void grantPermission(@PathVariable int roleid , @PathVariable int permissionid , HttpServletResponse response) throws IOException {
 		Roles role = this.rolesService.getRoleByID(roleid);
-		Permissions permission = this.permissionsService.getPermissionById(permissionid);
+		Permissions permission = dispatcher.getPermissionsService().getPermissionById(permissionid);
 		this.rolesService.grantPermissionsToRole(permission, role);
 		String redirectPath = "/security/roles/role/permissions/grant/"+roleid;
 		response.sendRedirect(redirectPath);

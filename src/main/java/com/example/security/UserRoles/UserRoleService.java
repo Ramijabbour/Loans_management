@@ -8,9 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.security.Dispatcher.ServiceDispatcher;
 import com.example.security.roles.Roles;
 import com.example.security.user.User;
-import com.example.security.user.UserService;
 
 
 @Service
@@ -20,7 +20,7 @@ public class UserRoleService {
 	UserRoleRepository userRoleRepository ; 
 	
 	@Autowired
-	private UserService userService ; 
+	private ServiceDispatcher dispatcher ; 
 	
 	
 	public List<User> getUsersWithRole(Roles role ) {
@@ -50,7 +50,7 @@ public class UserRoleService {
 	@Transactional
 	public void grantRoleToUser(Roles role , User user ) {
 			if(!this.userRoleExist(user, role)) {
-				this.userService.addRolesToUser(user, role);
+				dispatcher.getUserService().addRolesToUser(user, role);
 				this.userRoleRepository.save(new UserRole(user,role));
 			}			
 	}
@@ -61,7 +61,7 @@ public class UserRoleService {
 		for(UserRole userRoleModel : userRoleList) {
 			if(userRoleModel.getUser().getUsername().equalsIgnoreCase(user.getUsername())) {
 				if(userRoleModel.getRole().getRoleName().equalsIgnoreCase(role.getRoleName())) {
-					this.userService.revokeRoleFromUser(userRoleModel.getUser(),role);
+					dispatcher.getUserService().revokeRoleFromUser(userRoleModel.getUser(),role);
 					this.userRoleRepository.delete(userRoleModel);
 				}
 			}
@@ -72,7 +72,7 @@ public class UserRoleService {
 		List<UserRole> userRoleList = this.userRoleRepository.findAll() ; 
 		for(UserRole userRoleModel : userRoleList) {
 			if(userRoleModel.getRole().getRoleName().equalsIgnoreCase(role.getRoleName())) {
-				userService.revokeRoleFromUser(userRoleModel.getUser(), userRoleModel.getRole());
+				dispatcher.getUserService().revokeRoleFromUser(userRoleModel.getUser(), userRoleModel.getRole());
 				this.userRoleRepository.delete(userRoleModel);
 			}else {
 				continue ; 

@@ -18,12 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.SiteConfig.MasterService;
 import com.example.SiteConfig.SiteConfiguration;
-import com.example.security.UserRoles.UserRoleService;
+import com.example.security.Dispatcher.ServiceDispatcher;
 import com.example.security.permissions.Permissions;
-import com.example.security.permissions.PermissionsService;
 import com.example.security.roles.Roles;
-import com.example.security.roles.RolesService;
-import com.example.security.userPermissions.UserPermissionsService;
 
 
 @RestController
@@ -33,18 +30,9 @@ public class UserController {
 	UserService userService ; 
 	
 	@Autowired 
-	UserRoleService userRoleService ;
+	ServiceDispatcher dispatcher ;
 	
-	@Autowired
-	UserPermissionsService userPermissionsService ; 
-	
-	@Autowired
-	PermissionsService permissionsService ; 
-	
-	@Autowired
-	RolesService rolesService ; 
-	
-	
+
 	public UserController() { 
 		Method[] methods =  this.getClass().getDeclaredMethods();
 		List<String> methodsNames = new ArrayList<String>(); 
@@ -127,8 +115,8 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET , value = "/admistration/users/user/viewuser/{userid}")
 	public ModelAndView viewUser(@PathVariable int userid ) {
 		ModelAndView mav = new ModelAndView("User/viewUser");
-		mav.addObject("userRoles",this.userRoleService.getRolesOfUsers(this.userService.getUserByID(userid)));
-		mav.addObject("userPermissions",this.userPermissionsService.getPermissionsOfUser(this.userService.getUserByID(userid)));
+		mav.addObject("userRoles",dispatcher.getUserRolesService().getRolesOfUsers(this.userService.getUserByID(userid)));
+		mav.addObject("userPermissions",dispatcher.getUserPermissionsService().getPermissionsOfUser(this.userService.getUserByID(userid)));
 		mav.addObject("user",this.userService.getUserByID(userid));
 		return mav ;  
 	}
@@ -143,8 +131,8 @@ public class UserController {
 	public ModelAndView grantPermissionsToUser(@PathVariable int userid) {
 		User user = this.userService.getUserByID(userid);
 		ModelAndView mav = new ModelAndView("Permissions/grantpermissions");
-		List<Permissions>userPermissionsList = this.userPermissionsService.getPermissionsOfUser(user);
-		List<Permissions> allPermissionsList =  this.permissionsService.getAllPermissionsNoPage() ; 
+		List<Permissions>userPermissionsList = dispatcher.getUserPermissionsService().getPermissionsOfUser(user);
+		List<Permissions> allPermissionsList =  dispatcher.getPermissionsService().getAllPermissionsNoPage() ; 
 		List<Permissions> uniquePermissionsList = new ArrayList<Permissions>() ; 
 		for(Permissions permission : allPermissionsList ) {
 			if(!userPermissionsList.contains(permission))
@@ -158,8 +146,8 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.POST , value = "/admistration/users/user/permissions/grant/{userid}/{permissionsid}")
 	public void grantPermissionsToUser(@PathVariable int userid,@PathVariable int permissionsid, HttpServletResponse response ) throws IOException {
 		User user = this.userService.getUserByID(userid);
-		Permissions permission = this.permissionsService.getPermissionById(permissionsid);
-		this.userPermissionsService.grantPermissionsToUser(permission, user);
+		Permissions permission = dispatcher.getPermissionsService().getPermissionById(permissionsid);
+		dispatcher.getUserPermissionsService().grantPermissionsToUser(permission, user);
 		String redirectPath = "/admistration/users/user/permissions/grant/"+user.getId();
 		response.sendRedirect(redirectPath);
 	}
@@ -169,8 +157,8 @@ public class UserController {
 	public ModelAndView grantRoleToUser(@PathVariable int userid) {
 		User user = this.userService.getUserByID(userid);
 		ModelAndView mav = new ModelAndView("Roles/grantroles");
-		List<Roles> allRoles = this.rolesService.getAllRoles(0) ; 
-		List<Roles> currentUserRoles = this.userRoleService.getRolesOfUsers(user); 
+		List<Roles> allRoles = dispatcher.getRolesService().getAllRoles(0) ; 
+		List<Roles> currentUserRoles = dispatcher.getUserRolesService().getRolesOfUsers(user); 
 		List<Roles> uniqueRoles = new ArrayList<Roles>() ; 
 		for(Roles role : allRoles ) {
 			if(!currentUserRoles.contains(role)) {
@@ -184,9 +172,9 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.POST , value = "/adminstration/users/user/roles/grant/{userid}/{roleid}")
 	public void grantRoleToUser(@PathVariable int roleid ,@PathVariable int userid,HttpServletResponse response  ) throws IOException {
-		Roles role = this.rolesService.getRoleByID(roleid);
+		Roles role = dispatcher.getRolesService().getRoleByID(roleid);
 		User user = this.userService.getUserByID(userid);
-		this.userRoleService.grantRoleToUser(role, user);
+		dispatcher.getUserRolesService().grantRoleToUser(role, user);
 		String redirectPath = "/admistration/users/user/roles/grant/"+user.getId();
 		response.sendRedirect(redirectPath);
 	}
@@ -196,8 +184,8 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.POST , value = "/admistration/users/user/roles/revoke/{userid}/{roleid}" )
 	public void revokeRoleFromUser(@PathVariable int userid , @PathVariable int roleid , HttpServletResponse response)throws IOException {
 		User user = this.userService.getUserByID(userid);
-		Roles role = this.rolesService.getRoleByID(roleid);
-		this.userRoleService.revokeRoleFromUser(user, role);
+		Roles role = dispatcher.getRolesService().getRoleByID(roleid);
+		dispatcher.getUserRolesService().revokeRoleFromUser(user, role);
 		String redirectPath = "/admistration/users/user/viewuser/"+user.getId(); 
 		response.sendRedirect(redirectPath);
 	}
@@ -206,8 +194,8 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.POST , value = "/admistration/users/user/permissions/revoke/{userid}/{permissionid}" )
 	public void revokePermissionFromUser(@PathVariable int userid , @PathVariable int permissionid , HttpServletResponse response)throws IOException {
 		User user = this.userService.getUserByID(userid);
-		Permissions permission = this.permissionsService.getPermissionById(permissionid);
-		this.userPermissionsService.revokePermissionFromUser(user, permission);
+		Permissions permission = dispatcher.getPermissionsService().getPermissionById(permissionid);
+		dispatcher.getUserPermissionsService().revokePermissionFromUser(user, permission);
 		String redirectPath = "/admistration/users/user/viewuser/"+user.getId(); 
 		response.sendRedirect(redirectPath);
 	}

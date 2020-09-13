@@ -8,9 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.security.Dispatcher.ServiceDispatcher;
 import com.example.security.permissions.Permissions;
 import com.example.security.user.User;
-import com.example.security.user.UserService;
 
 
 @Service
@@ -21,7 +21,7 @@ public class UserPermissionsService {
 	private UserPermissionsRepository userPermissionsRepository ; 
 
 	@Autowired
-	private UserService userService ; 
+	private ServiceDispatcher dispatcher ; 
 	
 	public List<User> getUsersWithPermission(Permissions permission){
 		List<UserPermission> userPermissions = this.userPermissionsRepository.findAll(); 
@@ -51,7 +51,7 @@ public class UserPermissionsService {
 	
 	public void grantPermissionsToUser(Permissions permission , User user ) {
 			if(!this.userPermissionsExsit(permission, user)) {
-				this.userService.addPermissionsToUser(user, permission);
+				dispatcher.getUserService().addPermissionsToUser(user, permission);
 				UserPermission userPermission = new UserPermission(user,permission);
 				this.userPermissionsRepository.save(userPermission);
 			}	
@@ -62,7 +62,7 @@ public class UserPermissionsService {
 		//delete from users 
 		for(UserPermission userPermission : userPermissionsList) {
 			if(userPermission.getPermissions().getPermissionName().equalsIgnoreCase(permission.getPermissionName())) {
-				this.userService.revokePermissionFromUser(userPermission.getUser(), userPermission.getPermissions());
+				dispatcher.getUserService().revokePermissionFromUser(userPermission.getUser(), userPermission.getPermissions());
 				this.userPermissionsRepository.delete(userPermission);
 			}
 		}
@@ -85,7 +85,7 @@ public class UserPermissionsService {
 		for(UserPermission userPermission : userPermissionList) {
 			if(userPermission.getUser().getUsername().equalsIgnoreCase(user.getUsername())) {
 				if(userPermission.getPermissions().getPermissionName().equalsIgnoreCase(permission.getPermissionName())) {
-					this.userService.revokePermissionFromUser(userPermission.getUser(), userPermission.getPermissions());
+					dispatcher.getUserService().revokePermissionFromUser(userPermission.getUser(), userPermission.getPermissions());
 					this.userPermissionsRepository.delete(userPermission);
 				}
 			}

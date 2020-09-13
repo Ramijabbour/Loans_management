@@ -20,10 +20,9 @@ import org.springframework.stereotype.Service;
 import com.example.MasterBackUpService;
 import com.example.SiteConfig.MasterService;
 import com.example.SiteConfig.SiteConfiguration;
-import com.example.security.UserRoles.UserRoleService;
+import com.example.security.Dispatcher.ServiceDispatcher;
 import com.example.security.permissions.Permissions;
 import com.example.security.roles.Roles;
-import com.example.security.userPermissions.UserPermissionsService;
 
 @Service
 public class UserService extends MasterService implements MasterBackUpService {
@@ -31,11 +30,8 @@ public class UserService extends MasterService implements MasterBackUpService {
 	@Autowired 
 	UserRepository userRepository ; 	
 	
-	@Autowired
-	UserRoleService userRoleService ; 
-	
-	@Autowired
-	UserPermissionsService userPermissionsService ;
+	@Autowired 
+	ServiceDispatcher dispatcher ;
 	
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); ;
 
@@ -163,8 +159,8 @@ public class UserService extends MasterService implements MasterBackUpService {
 	
 	//delete user//
 	public void deleteUser(User user ) {
-		this.userPermissionsService.deleteUser(user);
-		this.userRoleService.deleteUser(user);
+		dispatcher.getUserPermissionsService().deleteUser(user);
+		dispatcher.getUserRolesService().deleteUser(user);
 		this.userRepository.deleteById(user.getId());
 	}
 	

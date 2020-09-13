@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.security.Dispatcher.ServiceDispatcher;
 import com.example.security.permissions.Permissions;
 import com.example.security.roles.Roles;
-import com.example.security.roles.RolesService;
 
 
 @Service
@@ -18,7 +18,7 @@ public class RolesPermissionsService {
 	RolePermissionRepository rolePermissionRepository ; 
 	
 	@Autowired 
-	private RolesService rolesService ; 
+	private ServiceDispatcher dispatcher ; 
 	
 	 
 	public void addRolePermission(Permissions permission,Roles role ) {
@@ -60,7 +60,7 @@ public class RolesPermissionsService {
 		List<RolePermission> rolePermissionList = this.rolePermissionRepository.findAll() ;
 		for(RolePermission rolePermission : rolePermissionList ) {
 			if(rolePermission.getPermission().getPermissionName().equalsIgnoreCase(permission.getPermissionName())) {
-				this.rolesService.revokePermissionFromRoles(rolePermission.getPermission(),rolePermission.getRole());
+				dispatcher.getRolesService().revokePermissionFromRoles(rolePermission.getPermission(),rolePermission.getRole());
 				this.rolePermissionRepository.delete(rolePermission);
 			}
 		}
@@ -84,7 +84,7 @@ public class RolesPermissionsService {
 		List<RolePermission> rolePermissionsList = this.rolePermissionRepository.findAll() ;
 		for(RolePermission rolePermission : rolePermissionsList ) {
 			if(rolePermission.getRole().getId() == role.getId() && rolePermission.getPermission().getId() == permission.getId()) {
-				this.rolesService.revokePermissionFromRoles(permission, role);
+				dispatcher.getRolesService().revokePermissionFromRoles(permission, role);
 				this.rolePermissionRepository.delete(rolePermission);
 				return ; 
 			}

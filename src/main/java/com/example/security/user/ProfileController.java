@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.SiteConfig.MasterService;
-import com.example.security.UserRoles.UserRoleService;
-import com.example.security.userPermissions.UserPermissionsService;
+import com.example.security.Dispatcher.ServiceDispatcher;
 
 @RestController
 public class ProfileController {
@@ -18,13 +17,8 @@ public class ProfileController {
 	ProfileService profileService ; 
 
 	@Autowired 
-	UserRoleService userRoleService ;
+	ServiceDispatcher dispatcher ;
 	
-	@Autowired
-	UserPermissionsService userPermissionsService ; 
-	
-	@Autowired
-	UserService userService ; 
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/profile")
 	public ModelAndView getUserProfile() {
@@ -33,8 +27,8 @@ public class ProfileController {
 		if(currUser == null ) {
 			return MasterService.sendGeneralError("لا يمكن الوصول إلى هذه الصفحة");
 		}else {
-			mav.addObject("userRoles",this.userRoleService.getRolesOfUsers(currUser));
-			mav.addObject("userPermissions",this.userPermissionsService.getPermissionsOfUser(currUser));
+			mav.addObject("userRoles",dispatcher.getUserRolesService().getRolesOfUsers(currUser));
+			mav.addObject("userPermissions",dispatcher.getUserPermissionsService().getPermissionsOfUser(currUser));
 			mav.addObject("user",currUser); 
 			return mav;
 		}
@@ -61,7 +55,7 @@ public class ProfileController {
 		}else if (currUser.getId() != user.getId()) {
 			return MasterService.sendGeneralError("لا يمكن تعديل هذا الحساب ");
 		}
-		String result = userService.updateUser(user);
+		String result = dispatcher.getUserService().updateUser(user);
 		if(result.equalsIgnoreCase("ok"))
 			return getUserProfile();
 		else 
