@@ -1,7 +1,7 @@
 package com.example.MQ;
 
-import com.example.settelmets.Models.Chaque;
 import com.example.settelmets.Models.SettledChaque;
+import com.example.settelmets.RTGSLink.ChecksSendingModel;
 import com.example.settelmets.RTGSLink.RTGSUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -19,8 +19,8 @@ public class OrderMessageSender {
         this.objectMapper = objectMapper;
     }
 
-    public void sendOrderCheck(Chaque check) {
-        this.rabbitTemplate.convertAndSend("CheckQ2", check);
+    public void sendOrderCheck(ChecksSendingModel checkSendingModel) {
+        this.rabbitTemplate.convertAndSend("CheckQ2", checkSendingModel);
     }
     public void sendOrderCheck(SettledChaque settledChaque) {
         this.rabbitTemplate.convertAndSend("SettledChaqueQ", settledChaque);

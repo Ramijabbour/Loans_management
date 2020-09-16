@@ -82,7 +82,7 @@ public class DbInit implements CommandLineRunner{
 		//injectUsers_Roles_ToDB();
 		//inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
 		//injectChecksToDB();
-		System.out.println("injection Done !! ");
+		//System.out.println("injection Done !! ");
 	}
 	
 

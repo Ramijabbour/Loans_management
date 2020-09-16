@@ -6,52 +6,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.Allocations.AllocationsService;
-import com.example.BankBranches.BrancheService;
+import com.example.ServicesPool;
 import com.example.BankBranches.Branches;
-import com.example.Banks.BankService;
 import com.example.Banks.Banks;
 import com.example.Banks.Stats.Models.DashModel;
 import com.example.Banks.Stats.Models.StatsModel;
-import com.example.Clients.ClientService;
-import com.example.CloseLoans.CloseLoanService;
 import com.example.CloseLoans.CloseLoans;
-import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
 import com.example.OpenLoans.OpenLoans;
-import com.example.OpenLoans.OpenLoansService;
-import com.example.ReScheduleLoans.ReScheduleLoansService;
-import com.example.security.user.UserService;
 
 @Service 
 public class BankStatsService {
-	@Autowired 
-	private AllocationsService allocationsService ;
-
-	@Autowired
-	private CloseLoanService closedLoansService ; 
-	
-	@Autowired 
-	private OpenLoansService openLoansService ; 
-	
-	@Autowired 
-	private BrancheService brachesService ; 
-	
-	@Autowired 
-	private BankService banksService; 
-	
-	@Autowired 
-	private ClientService clintsService ; 
-	
-//	@Autowired 
-	//private UserService usersService ; 
 	
 	@Autowired
-	private ReScheduleLoansService ResService ; 
-	
-	@Autowired
-	private LoanService LoansService ; 
-	
+	private ServicesPool servicePool ; 
 	
 	public BankStatsService() {
 	}
@@ -59,19 +27,19 @@ public class BankStatsService {
 	public StatsModel getBankStats(Banks bank) {
 		StatsModel statusModel = new StatsModel(); 
 		statusModel.setBank(bank);
-		statusModel.setBranchesList(this.brachesService.getBankBranches(bank));
-		statusModel.setAllAllocations(this.allocationsService.getBankAllocations(bank));
+		statusModel.setBranchesList(servicePool.getBranchesService().getBankBranches(bank));
+		statusModel.setAllAllocations(servicePool.getAllocationsService().getBankAllocations(bank));
 		
 		List<OpenLoans> openLoansList = new ArrayList<OpenLoans>(); 
 		List<CloseLoans> closedLoansList = new ArrayList<CloseLoans>() ; 
 		List<Loans> allLoansList = new ArrayList<Loans>() ; 
 		
 		for(Branches branch :statusModel.getBranchesList()) {
-			for(OpenLoans loan : this.openLoansService.getBrancheOpenLoans(branch)) {
+			for(OpenLoans loan : servicePool.getOpenLoansService().getBrancheOpenLoans(branch)) {
 				openLoansList.add(loan);
 				allLoansList.add(loan.getLoan());
 			}
-			for(CloseLoans closedLoan : this.closedLoansService.getBrancheClosedLoans(branch)) {
+			for(CloseLoans closedLoan : servicePool.getClosedLoansService().getBrancheClosedLoans(branch)) {
 				closedLoansList.add(closedLoan);
 				allLoansList.add(closedLoan.getLoan());
 			}
@@ -87,19 +55,19 @@ public class BankStatsService {
 	
 	public DashModel getDashDataObject() {
 		DashModel DM = new DashModel() ; 
-		DM.setTotalBanksCount(this.banksService.getBanksCount());
-		DM.setTotalClientsCount(this.clintsService.getClientsCount());
-		DM.setClosedLoansCount(this.closedLoansService.getClosedLoansCount());
-		DM.setOpenLoansCount(this.openLoansService.getOpenLoansCount());
-		DM.setTotalBranchesCount(this.brachesService.getBranchesCount());
+		DM.setTotalBanksCount(servicePool.getBankService().getBanksCount());
+		DM.setTotalClientsCount(servicePool.getClientService().getClientsCount());
+		DM.setClosedLoansCount(servicePool.getClosedLoansService().getClosedLoansCount());
+		DM.setOpenLoansCount(servicePool.getOpenLoansService().getOpenLoansCount());
+		DM.setTotalBranchesCount(servicePool.getBranchesService().getBranchesCount());
 		//DM.setTotalSystemUsers(this.usersService.getUsersCount());
 		DM.setTotalSystemUsers(5);
-		DM.setResLoansCount(this.ResService.getResLoansCount());
-		DM.setTotalLoansCount(this.LoansService.getLoansCount());
-		DM.setLoansValue(this.LoansService.getTotalLoansValue());
-		DM.setClosedLoansValue(this.closedLoansService.getTotalLoansValue());
-		DM.setOpenLoansValue(this.openLoansService.getTotalLoansValue());
-		DM.setResLoansValue(this.ResService.getTotalLoansValue());
+		DM.setResLoansCount(servicePool.getResLoansService().getResLoansCount());
+		DM.setTotalLoansCount(servicePool.getLoansService().getLoansCount());
+		DM.setLoansValue(servicePool.getLoansService().getTotalLoansValue());
+		DM.setClosedLoansValue(servicePool.getClosedLoansService().getTotalLoansValue());
+		DM.setOpenLoansValue(servicePool.getOpenLoansService().getTotalLoansValue());
+		DM.setResLoansValue(servicePool.getResLoansService().getTotalLoansValue());
 		return DM; 
 	}
 	

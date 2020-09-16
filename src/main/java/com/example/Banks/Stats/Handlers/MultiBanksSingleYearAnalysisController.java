@@ -8,13 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ServicesPool;
 import com.example.Allocations.Allocations;
-import com.example.Allocations.AllocationsService;
-import com.example.Banks.BankService;
 import com.example.Banks.Banks;
 import com.example.Banks.Stats.Models.AnalysisCompositeModel;
 import com.example.Banks.Stats.Models.AnalysisModel;
-import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
 import com.example.SiteConfig.MasterService;
 
@@ -42,15 +40,11 @@ public class MultiBanksSingleYearAnalysisController {
 	//End Of attributes section
 	
 	//Autowired Section 
-	
-	@Autowired 
-	private AllocationsService allocationsService ; 
 
-	@Autowired
-	private LoanService loansService ; 
-		
 	@Autowired 
-	private BankService banksService ;
+	private ServicesPool servicePool ; 
+	
+	
 	//End Of Autowired Section 
 	
 	//routes section 
@@ -64,12 +58,12 @@ public class MultiBanksSingleYearAnalysisController {
 		for(Banks bank : BanksList ) {
 			banksIds.add(bank.BankID);
 		}
-		Page<Allocations> allocationsPage  = this.allocationsService.getAllocationsChuck(pageNum, null); 	
+		Page<Allocations> allocationsPage  = servicePool.getAllocationsService().getAllocationsChuck(pageNum, null); 	
 		
 		while(allocationsPage != null ) {
 			processAllocationsDataArray(allocationsPage,banksIds);
 			pageNum++;
-			allocationsPage  = this.allocationsService.getAllocationsChuck(pageNum, allocationsPage);;
+			allocationsPage  = servicePool.getAllocationsService().getAllocationsChuck(pageNum, allocationsPage);;
 		}
 		//data array is full with allocations data 
 		//trim the data from zero rows
@@ -111,11 +105,11 @@ public class MultiBanksSingleYearAnalysisController {
 		}
 		loansOrderData = new int[banksIds.size()][2];
 		initOrderArray(banksIds);
-		Page<Loans> loansPage = this.loansService.getAllLoansSequence(pageNum, null);
+		Page<Loans> loansPage = servicePool.getLoansService().getAllLoansSequence(pageNum, null);
 		while(loansPage != null ) {
 			processLoansData(loansPage,banksIds);
 			pageNum++;
-			loansPage = this.loansService.getAllLoansSequence(pageNum, loansPage);
+			loansPage = servicePool.getLoansService().getAllLoansSequence(pageNum, loansPage);
 		}
 		sortOrderArray(banksIds);
 		//to sync other methods 
@@ -195,7 +189,7 @@ public class MultiBanksSingleYearAnalysisController {
 				continue  ; 
 			}
 			AnalysisModel Am = new AnalysisModel() ; 
-			Am.setName(banksService.getBankById(loansOrderData[i][0]).getBankName());
+			Am.setName(servicePool.getBankService().getBankById(loansOrderData[i][0]).getBankName());
 			Am.addDataEntry(loansOrderData[i][1]);
 			amList.add(Am);
 		}

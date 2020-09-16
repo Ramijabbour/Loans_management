@@ -15,6 +15,7 @@ import com.example.SiteConfig.MasterService;
 import com.example.SiteConfig.SiteConfiguration;
 import com.example.settelmets.Models.Chaque;
 import com.example.settelmets.Models.SettledChaque;
+import com.example.settelmets.RTGSLink.ChecksSendingModel;
 import com.example.settelmets.RTGSLink.SettlementReportModel;
 import com.example.settelmets.RTGSLink.SettlementReportRepository;
 import com.example.settelmets.Repositories.OnHoldCheckRepository;
@@ -127,10 +128,55 @@ public class SettlementService extends MasterService {
 				//send the checks To RTGS SYS 
 				sendChecks(onHoldChecks);
 				
-				this.onHoldChecksRepository.saveAll(onHoldChecks); 
+				return ; 
 			}
 		}
 	}		
+	
+	//@Scheduled(fixedRate = 8000000)
+	@Transactional
+	public void sendOnHoldChecks() {
+		List<Chaque> onHoldChecksList = this.onHoldChecksRepository.findByActiveTrue();
+		sendChecks(onHoldChecksList);
+	}
+	
+	private void sendChecks(List<Chaque> checksList) {
+		ChecksSendingModel checkSendingModel   = new ChecksSendingModel("",checksList.get(0).getSettlementReportModel());
+		for(int index = 0 ; index < checksList.size() ; index ++ ) {
+			Chaque check = checksList.get(index);
+			if(check.getSettlementReportModel().getTimestamp().equalsIgnoreCase(checkSendingModel.getSettlementReportModel().getTimestamp())) {
+				if(index == checksList.size()-1) {
+					checkSendingModel.addCheckSequenceNumber(check.getSequenceNum(), true);
+				}else {
+					checkSendingModel.addCheckSequenceNumber(check.getSequenceNum(), false);
+				}
+			}
+		}
+		
+		 try{
+			 System.out.println("TS  : "+checkSendingModel.getSettlementReportModel().getTimestamp());
+			 System.out.println("Seq : "+checkSendingModel.getChecksSequence());
+			 this.ordermsgSender.sendOrderCheck(checkSendingModel);
+			 System.out.println("S1");
+			 for(String sequenceNum : checkSendingModel.getChecksSequence().split(",")) {
+				Chaque check = this.onHoldChecksRepository.findBysequenceNum(Integer.valueOf(sequenceNum));
+				 check.setSent(true);
+				 this.onHoldChecksRepository.save(check);
+			 }
+			 System.out.println("S2");
+			  	/*
+			 	for(Chaque check : checksList) {
+			  		this.ordermsgSender.sendOrderCheck(check);
+			  		check.setSent(true);
+			  	} */
+			  }catch (Exception e ){
+				  System.out.println("Checks Sending operation faild: cannot reach messgae queue retrying after 10 min");
+			  }
+		 System.out.println("S3");
+		 return ;
+		 //this.onHoldChecksRepository.saveAll(checksList); 
+	}
+	
 	
 	public List<Chaque> getOnHoldChecks(int PageNumber){	
 		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));		
@@ -173,8 +219,25 @@ public class SettlementService extends MasterService {
 		}
 	}
 
-
-
+	
+	private void sendSettledChecks(List<SettledChaque> checksList) {
+		try {
+			for(SettledChaque settledCheck : checksList ) {
+				this.ordermsgSender.sendOrderCheck(settledCheck);
+				settledCheck.setSent(true);
+			}
+		}catch(Exception e ) {
+			System.out.println("settled Checks Sending operation faild re-trying after 10 min");
+		}		
+	}
+	
+	private void linkChecksToReport(List<Chaque> checksList, SettlementReportModel settlementReportModel) {
+		for(Chaque check : checksList) {
+			check.setActive(true);
+			check.setSettlementReportModel(settlementReportModel);	
+		}	
+	}
+	
 	public List<SettledChaque> getSettledChecks(int PageNumber){
 		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
 		Page<SettledChaque> pagedResult = this.settledChecksRepository.findAll(paging);
@@ -184,6 +247,7 @@ public class SettlementService extends MasterService {
             return new ArrayList<SettledChaque>();
         }
 	}
+	
 	public SettledChaque findCheckByID(int id ) {
 		List<SettledChaque> all = this.settledChecksRepository.findAll() ; 
 		for(SettledChaque settledCheck : all) {
@@ -206,35 +270,6 @@ public class SettlementService extends MasterService {
 	public List<SettledChaque> getSettledChecksByReport(int id){
 		List<SettledChaque> checksList = this.settledChecksRepository.findBysettlementReportModel(this.settlementReportRepo.findById(id));
 		return checksList ; 
-	}
-	
-	private void sendChecks(List<Chaque> checksList) {
-		 try{
-			  	for(Chaque check : checksList) {
-			  		this.ordermsgSender.sendOrderCheck(check);
-			  		check.setSent(true);
-			  	} 
-			  }catch (Exception e ){
-				  System.out.println("Checks Sending operation faild re-trying after 10 min");
-			  }
-	}
-	
-	private void sendSettledChecks(List<SettledChaque> checksList) {
-		try {
-			for(SettledChaque settledCheck : checksList ) {
-				this.ordermsgSender.sendOrderCheck(settledCheck);
-				settledCheck.setSent(true);
-			}
-		}catch(Exception e ) {
-			System.out.println("settled Checks Sending operation faild re-trying after 10 min");
-		}		
-	}
-	
-	private void linkChecksToReport(List<Chaque> checksList, SettlementReportModel settlementReportModel) {
-		for(Chaque check : checksList) {
-			check.setActive(true);
-			check.setSettlementReportModel(settlementReportModel);	
-		}	
 	}
 	
 }

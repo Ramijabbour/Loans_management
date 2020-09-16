@@ -23,8 +23,9 @@ public class SettlementController {
 	
 	//add protection or lock the method
 	@RequestMapping(method = RequestMethod.GET ,value = "/settlement/invoke" )
-	public void invokeSettleMethod() {
+	public String invokeSettleMethod() {
 		this.settlementService.settleChecks();
+		return "ok";
 	}
 	
 
