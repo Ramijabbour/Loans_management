@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.Banks.BankService;
+import com.example.ServicesPool;
 import com.example.Banks.Banks;
 import com.example.Banks.Stats.Handlers.MultiBanksAnalysisController;
 import com.example.Banks.Stats.Handlers.MultiBanksSingleYearAnalysisController;
@@ -28,11 +28,12 @@ public class BanksStatsController {
 	private BankStatsService bankStatsService ; 
 	
 	@Autowired
-	private BankService bankservice;
+	private ServicesPool servicePool ; 
+	
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/{bankId}")
 	public ModelAndView getBanksStats(@PathVariable int bankId) {
-		Banks bank = this.bankservice.getBankById(bankId);
+		Banks bank = servicePool.getBankService().getBankById(bankId);
 		if(bank == null ) {
 			return MasterService.sendGeneralError("Bank Not Found") ; 
 		}
@@ -60,7 +61,7 @@ public class BanksStatsController {
 
 	
 	public ModelAndView getBankNewStats(int id, int stdate, int fndate ) {
-		Banks bank = this.bankservice.getBankById(id);
+		Banks bank = servicePool.getBankService().getBankById(id);
 		if(stdate <= 0 || fndate <=0 ) {
 			return MasterService.sendGeneralError("date should be positive value") ;
 		}
@@ -106,7 +107,7 @@ public class BanksStatsController {
 	@RequestMapping(method = RequestMethod.GET , value = "/charts/multiYearBankSelection")
 	public ModelAndView getMultiYearBankSelectionView() {
 		ModelAndView mav = new ModelAndView("Charts/multiBankSelection");
-		List<Banks> banksList = this.bankservice.GetAllBanks() ; 
+		List<Banks> banksList = servicePool.getBankService().GetAllBanks() ; 
 		List<Banks> banksListToView = new ArrayList<Banks>(); 
 		for(Banks bank : banksList) {
 			if(!MultiBanksAnalysisController.containsBank(bank)) {
@@ -121,7 +122,7 @@ public class BanksStatsController {
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/charts/addMultibank/{bankId}")
 	public ModelAndView addBankToMultiList(@PathVariable int bankId) {
-		Banks bank = this.bankservice.getBankById(bankId);
+		Banks bank = servicePool.getBankService().getBankById(bankId);
 		if(bank != null )
 			MultiBanksAnalysisController.addBankToBanksList(bank);
 		return getMultiYearBankSelectionView();
@@ -130,7 +131,7 @@ public class BanksStatsController {
 	@RequestMapping(method = RequestMethod.GET , value = "/charts/allMultiBanks")
 	public ModelAndView allMultiBanks() {
 		MultiBanksAnalysisController.flushLists();
-		MultiBanksAnalysisController.setBanksList(this.bankservice.GetAllBanks());
+		MultiBanksAnalysisController.setBanksList(servicePool.getBankService().GetAllBanks());
 		return getDashBoardsTimeSpan();
 	}
 	
@@ -172,7 +173,7 @@ public class BanksStatsController {
 	@RequestMapping(method = RequestMethod.GET , value = "/charts/singlebankSelection")
 	public ModelAndView getBankSelectionView() {
 		ModelAndView mav = new ModelAndView("Charts/bankSelection");
-		List<Banks> banksList = this.bankservice.GetAllBanks() ; 
+		List<Banks> banksList = servicePool.getBankService().GetAllBanks() ; 
 		List<Banks> banksListToView = new ArrayList<Banks>(); 
 		for(Banks bank : banksList) {
 			if(!MultiBanksSingleYearAnalysisController.containsBank(bank)) {
@@ -187,7 +188,7 @@ public class BanksStatsController {
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/charts/addbank/{bankId}")
 	public ModelAndView addBankToList(@PathVariable int bankId) {
-		Banks bank = this.bankservice.getBankById(bankId);
+		Banks bank = servicePool.getBankService().getBankById(bankId);
 		if(bank != null )
 			MultiBanksSingleYearAnalysisController.addBanksToBanksList(bank);
 		return getBankSelectionView();
@@ -196,7 +197,7 @@ public class BanksStatsController {
 	@RequestMapping(method = RequestMethod.GET , value = "/charts/allSingleBanks")
 	public ModelAndView allSingleBanks() {
 		MultiBanksSingleYearAnalysisController.flushLists();
-		MultiBanksSingleYearAnalysisController.setBanksList(this.bankservice.GetAllBanks());
+		MultiBanksSingleYearAnalysisController.setBanksList(servicePool.getBankService().GetAllBanks());
 		return getSingleTimeSpan();
 	}
 	

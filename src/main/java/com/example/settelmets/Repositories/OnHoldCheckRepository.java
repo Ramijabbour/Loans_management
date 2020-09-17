@@ -17,6 +17,8 @@ public interface OnHoldCheckRepository extends JpaRepository<Chaque,Integer>,Pag
 	public Slice<Chaque> findByActiveTrue(Pageable pageable) ;
 	public Slice<Chaque> findByActiveFalse(Pageable pageable) ;
 	public List<Chaque> findByActiveFalse() ;
+	public List<Chaque> findByActiveTrue() ;
+	public Chaque findBysequenceNum(int sequenceNum);
 	public Slice<Chaque> findByCheckId(int checkId, Pageable pageable);
 	public List<Chaque> findBysettlementReportModel(SettlementReportModel srm);
 }

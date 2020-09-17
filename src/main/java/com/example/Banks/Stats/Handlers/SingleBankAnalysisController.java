@@ -5,17 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ServicesPool;
 import com.example.Allocations.Allocations;
-import com.example.Allocations.AllocationsService;
 import com.example.Banks.Banks;
 import com.example.Banks.Stats.Models.AnalysisCompositeModel;
 import com.example.Banks.Stats.Models.AnalysisModel;
-import com.example.CloseLoans.CloseLoanService;
 import com.example.CloseLoans.CloseLoans;
-import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
 import com.example.OpenLoans.OpenLoans;
-import com.example.OpenLoans.OpenLoansService;
 import com.example.SiteConfig.MasterService;
 
 import java.util.List ;
@@ -31,17 +28,7 @@ public class SingleBankAnalysisController {
 	private static Banks bank ; 
 	
 	@Autowired 
-	private AllocationsService AllocationsService ; 
-
-	@Autowired
-	private LoanService loansService ; 
-	
-	@Autowired 
-	private OpenLoansService openLoansService ;
-	
-	@Autowired 
-	private CloseLoanService closedLoansService ; 
-	
+	private ServicesPool servicePool ; 
 	
 	//========================================================================
 	
@@ -50,7 +37,7 @@ public class SingleBankAnalysisController {
 	
 	@RequestMapping("/ajax/getAllocationsAnalysisData")
 	public AnalysisCompositeModel getAllocationsAnalysisData() {
-		List<Allocations> allocationsList = this.AllocationsService.getBankAllocations(bank); 
+		List<Allocations> allocationsList = servicePool.getAllocationsService().getBankAllocations(bank); 
 		List<Allocations> filteredAllocations = new ArrayList<Allocations>() ; 
 		List<String> allocationsYears = new ArrayList<String>() ; 
 		
@@ -86,7 +73,7 @@ public class SingleBankAnalysisController {
 	@RequestMapping("/ajax/getLoansAnalysisData")
 	public AnalysisCompositeModel getLoansAnalysisData() {
 		int pageNum = 0 ;
-		Page<Loans> loansPage = this.loansService.getAllLoansSequence(pageNum, null);
+		Page<Loans> loansPage = servicePool.getLoansService().getAllLoansSequence(pageNum, null);
 		List<Loans> filteredLoansList = new ArrayList<Loans>() ; 
 		List<String> loansYears = new ArrayList<String>() ; 
 		while(loansPage != null) {
@@ -98,7 +85,7 @@ public class SingleBankAnalysisController {
 				}
 			}
 			pageNum++ ; 
-			loansPage = this.loansService.getAllLoansSequence(pageNum, loansPage);
+			loansPage = servicePool.getLoansService().getAllLoansSequence(pageNum, loansPage);
 		}
 		List<AnalysisModel> analysisModelList = new ArrayList<AnalysisModel>();
 		
@@ -125,7 +112,7 @@ public class SingleBankAnalysisController {
 	public AnalysisCompositeModel getOpenLoansAnalysisData() {
 		
 		int pageNum = 0 ;
-		Page<OpenLoans> loansPage = this.openLoansService.getAllLoansSequence(pageNum, null);
+		Page<OpenLoans> loansPage = servicePool.getOpenLoansService().getAllLoansSequence(pageNum, null);
 		List<Loans> filteredLoansList = new ArrayList<Loans>() ; 
 		List<String> loansYears = new ArrayList<String>() ; 
 		while(loansPage != null) {
@@ -137,7 +124,7 @@ public class SingleBankAnalysisController {
 				}
 			}
 			pageNum++ ; 
-			loansPage = this.openLoansService.getAllLoansSequence(pageNum, loansPage);
+			loansPage = servicePool.getOpenLoansService().getAllLoansSequence(pageNum, loansPage);
 		}
 		List<AnalysisModel> analysisModelList = new ArrayList<AnalysisModel>();
 		
@@ -163,7 +150,7 @@ public class SingleBankAnalysisController {
 	@RequestMapping("/ajax/getClosedLoansAnalysisData")
 	public AnalysisCompositeModel getClosedLoansAnalysisData() {
 		int pageNum = 0 ;
-		Page<CloseLoans> loansPage = this.closedLoansService.getAllLoansSequence(pageNum, null);
+		Page<CloseLoans> loansPage = servicePool.getClosedLoansService().getAllLoansSequence(pageNum, null);
 		List<Loans> filteredLoansList = new ArrayList<Loans>() ; 
 		List<String> loansYears = new ArrayList<String>() ; 
 		while(loansPage != null) {
@@ -175,7 +162,7 @@ public class SingleBankAnalysisController {
 				}
 			}
 			pageNum++ ; 
-			loansPage = this.closedLoansService.getAllLoansSequence(pageNum, loansPage);
+			loansPage = servicePool.getClosedLoansService().getAllLoansSequence(pageNum, loansPage);
 		}
 		List<AnalysisModel> analysisModelList = new ArrayList<AnalysisModel>();
 		
