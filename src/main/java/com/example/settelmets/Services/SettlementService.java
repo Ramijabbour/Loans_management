@@ -8,10 +8,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.example.MQ.OrderMessageSender;
@@ -133,11 +131,7 @@ public class SettlementService extends MasterService {
 				//send the checks To RTGS SYS 
 				sendChecks(onHoldChecks);
 				
-
-
-
 				this.onHoldChecksRepository.saveAll(onHoldChecks);
-
 
 			}
 		}
