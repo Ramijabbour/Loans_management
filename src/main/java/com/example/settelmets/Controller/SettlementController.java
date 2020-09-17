@@ -28,11 +28,10 @@ public class SettlementController {
 	
 	//add protection or lock the method
 	@RequestMapping(method = RequestMethod.GET ,value = "/settlement/invoke" )
-<<<<<<< HEAD
-	public String invokeSettleMethod() {
-=======
-	public void invokeSettleMethod() throws ParseException {
->>>>>>> parent of 0b73682... Revert "commit"
+
+
+	public String invokeSettleMethod() throws ParseException {
+
 		this.settlementService.settleChecks();
 		return "ok";
 	}

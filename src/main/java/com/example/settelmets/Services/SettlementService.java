@@ -133,12 +133,12 @@ public class SettlementService extends MasterService {
 				//send the checks To RTGS SYS 
 				sendChecks(onHoldChecks);
 				
-<<<<<<< HEAD
-				return ; 
-=======
+
+
+
 				this.onHoldChecksRepository.saveAll(onHoldChecks);
 
->>>>>>> parent of 0b73682... Revert "commit"
+
 			}
 		}
 		SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
