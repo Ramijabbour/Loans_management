@@ -56,6 +56,9 @@ public class Chaque implements Serializable{
     private  String localDateTime;
     
     @Column(nullable = false )
+    private  String CheckEntryDate ;
+    
+    @Column(nullable = false )
     @Convert(converter = StringEncryptDecryptConverter.class)
     private  String UserName ; 
     
@@ -80,7 +83,7 @@ public class Chaque implements Serializable{
 	
 	public Chaque(int checkId, String firstBankName, String secondBankName, String firstBranchName,
 			String firstBranchCode, String secondBranchName, String secondBranchCode, long amount,
-			String localDateTime, String userName, int userID, boolean active,long ClientAccountNumber) {
+			String localDateTime, String userName, int userID, boolean active,long ClientAccountNumber,String CheckEntryDate) {
 		super();
 		this.checkId = checkId;
 		this.firstBankName = firstBankName;
@@ -94,7 +97,8 @@ public class Chaque implements Serializable{
 		UserName = userName;
 		UserID = userID;
 		this.active = active;
-		this.ClientAccountNumber = ClientAccountNumber ; 
+		this.ClientAccountNumber = ClientAccountNumber ;
+		this.CheckEntryDate = CheckEntryDate;
 	}
 
 
@@ -228,6 +232,14 @@ public class Chaque implements Serializable{
 
 	public void setClientAccountNumber(long clientAccountNumber) {
 		ClientAccountNumber = clientAccountNumber;
+	}
+	
+	public String getCheckEntryDate() {
+		return CheckEntryDate;
+	}
+
+	public void setCheckEntryDate(String checkEntryDate) {
+		CheckEntryDate = checkEntryDate;
 	}
 
 	@Override 

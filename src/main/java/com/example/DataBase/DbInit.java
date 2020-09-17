@@ -77,18 +77,10 @@ public class DbInit implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-	
-<<<<<<< HEAD
-		//injectUsers_Roles_ToDB();
-		//inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
-		//injectChecksToDB();
-		//System.out.println("injection Done !! ");
-=======
 //		injectUsers_Roles_ToDB();
 //		inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
 //		injectChecksToDB();
 		System.out.println("injection Done !! ");
->>>>>>> parent of 0b73682... Revert "commit"
 	}
 	
 
