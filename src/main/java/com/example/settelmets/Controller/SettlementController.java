@@ -1,9 +1,14 @@
 package com.example.settelmets.Controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +28,11 @@ public class SettlementController {
 	
 	//add protection or lock the method
 	@RequestMapping(method = RequestMethod.GET ,value = "/settlement/invoke" )
+<<<<<<< HEAD
 	public String invokeSettleMethod() {
+=======
+	public void invokeSettleMethod() throws ParseException {
+>>>>>>> parent of 0b73682... Revert "commit"
 		this.settlementService.settleChecks();
 		return "ok";
 	}
@@ -115,6 +124,20 @@ public class SettlementController {
 			SiteConfiguration.addSequesnceVaraibles(mav, -1);
 		}
 		return mav ; 
+	}
+	@RequestMapping(method = RequestMethod.GET , value = "/TTS")
+	public ModelAndView getTTS() throws ParseException {
+		ModelAndView mav = new ModelAndView("settlement/TTS");
+		SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
+		System.out.println(dtf.format(SettlementService.TTS));
+		Date d1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa").parse(dtf.format(SettlementService.TTS));
+		Calendar cl = Calendar. getInstance();
+		cl.setTime(d1);
+		cl. add(Calendar.HOUR, 2);
+		Date d2 = cl.getTime();
+		System.out.println(d2);
+		mav.addObject("endDate",d2);
+		return mav;
 	}
 	
 	

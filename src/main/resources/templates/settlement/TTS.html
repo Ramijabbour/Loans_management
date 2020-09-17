@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles">
+    <meta charset="UTF-8"/>
+    <title>مصرف سورية المركزي</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+    <link th:rel="stylesheet" th:href="@{/new/css/style.css} "/>
+</head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mt-5">
+            <div class="rounded bg-gradient text-white shadow p-5 text-center mb-5">
+                <p class="mb-0 font-weight-bold text-uppercase">الوقت المتبقي لبدء عملية التسوية</p>
+                <div id="clock" class="countdown pt-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/new/js/jquery.countdown.min.js}"></script>
+
+<script th:inline="javascript">
+    var endDate = [[${#calendars.format(endDate,'yyyy/MM/dd hh:mm:ss aa')}]];
+
+    $('#clock').countdown(endDate).on('update.countdown', function (event) {
+        var $this = $(this).html(event.strftime(''
+            + '<span class="h1 font-weight-bold">%H</span> Hr'
+            + '<span class="h1 font-weight-bold">%M</span> Min'
+            + '<span class="h1 font-weight-bold">%S</span> Sec'));
+    });
+</script>
+
+</body>
+</html>
