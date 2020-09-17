@@ -1,14 +1,10 @@
 package com.example.settelmets.Services;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -43,7 +39,6 @@ public class SettlementService extends MasterService {
 	private List<String> ParticipantsIds ; 
 	private List<String> BanksNames ; 
 	private List<String> BranchesNames;
-	public static Date TTS;
 
 	private List<Chaque> initSettlementOperation() {
 		//essential variables 
@@ -103,7 +98,7 @@ public class SettlementService extends MasterService {
 	//change schedule invoke time and isolate it in another thread 
 	//@Scheduled(fixedRate = 7000000)
 	@Transactional
-	public void settleChecks() throws ParseException {
+	public void settleChecks() {
 		
 		SettlementReportModel settlementReportModel = new SettlementReportModel();
 		settlementReportModel.setTimestamp(MasterService.getDateTimeAsString());
@@ -132,13 +127,9 @@ public class SettlementService extends MasterService {
 				//send the checks To RTGS SYS 
 				sendChecks(onHoldChecks);
 				
-				this.onHoldChecksRepository.saveAll(onHoldChecks);
-
+				this.onHoldChecksRepository.saveAll(onHoldChecks); 
 			}
 		}
-		SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
-		Date now = new Date();
-		TTS=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa").parse(dtf.format(now));
 	}		
 	
 	public List<Chaque> getOnHoldChecks(int PageNumber){	
