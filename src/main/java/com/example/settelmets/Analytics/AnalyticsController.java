@@ -20,4 +20,11 @@ public class AnalyticsController {
 		return mav ; 
 	}
 	
+	
+	@RequestMapping(method=RequestMethod.GET,value ="/rtgs/analytics/continue")
+	public ModelAndView getRTGSAnalyticsNext() {
+		ModelAndView mav = new ModelAndView("Analytics/next");
+		return mav ; 
+	}
+	
 }
