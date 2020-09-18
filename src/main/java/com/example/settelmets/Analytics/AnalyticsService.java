@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.ServicesPool;
 import com.example.SiteConfig.MasterService;
 import com.example.settelmets.Models.Chaque;
 import com.example.settelmets.Models.SettledChaque;
@@ -18,7 +17,7 @@ public class AnalyticsService {
 
 		
 	@Autowired
-	private SettlementServicePool facade ; 
+	private SettlementServicePool pool ; 
 
 	private LocalDate localDate = MasterService.getCurrDate();
 		
@@ -43,13 +42,13 @@ public class AnalyticsService {
 			index++; 
 		}
 		
-		analyticsModel.setBanksCount(facade.getRtgsUsersService().getallUsers().size());
+		analyticsModel.setBanksCount(pool.getRtgsUsersService().getallUsers().size());
 		
 		//settled Checks process 
 		index = 0 ; 
 		endOfData = false ; 
 		while(!endOfData) {
-			List<SettledChaque> settledCheckList = facade.getSettlementService().getSettledChecks(index);
+			List<SettledChaque> settledCheckList = pool.getSettlementService().getSettledChecks(index);
 			if(settledCheckList.size() == 0) {
 				endOfData = true ; 
 				break ; 
@@ -60,12 +59,13 @@ public class AnalyticsService {
 			index++;  
 		}
 		
+		pool.getSettlementChartsService().setAnalyticsModel(analyticsModel);
 		return analyticsModel ; 
 	}
 	
 
 	public List<Chaque> getDataChuck(int index ) {
-		List<Chaque> checksList = facade.getSettlementService().getAllChecks(index);
+		List<Chaque> checksList = pool.getSettlementService().getAllChecks(index);
 		if(checksList.size() != 0 ) {
 			return checksList ;  
 		}else {
@@ -151,6 +151,10 @@ public class AnalyticsService {
 			}
 			
 		}
+	}
+
+	public LocalDate getLocalDate() {
+		return localDate;
 	}
 	
 	
