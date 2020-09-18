@@ -12,7 +12,6 @@ public class Client_Dim {
 
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int id ;
 
 	public String clientName;

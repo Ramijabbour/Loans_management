@@ -2,7 +2,7 @@
 <html  lang="ar" dir="rtl"
 		xmlns:th="http://www.thymeleaf.org" 
 		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:insert="BranchsFragments.html :: headerfiles">
+<head th:insert="fragments.html :: headerfiles">
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Central Bank of syria</title>
@@ -18,7 +18,7 @@
   <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-<header th:insert="BranchsFragments.html :: nav"></header>
+<header th:insert="fragments.html :: nav"></header>
 <div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -26,13 +26,10 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <h3>إضافة فرع</h3>
-          </div>
+         
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -41,36 +38,24 @@
           <div class="col-md-12">
             <!-- jquery validation -->
             <div class="card card-primary">
-              <div class="card-header">
-              <h4>أدخل معلومات الفرع</h4>
-            </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form  action="#"  th:action="@{/Banks/addBranche/}+${{bank.BankID}}" th:object="${branche}" method="post">
+           <form>
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">الأسم</label>
-                    <input type="text" name="BankName" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" th:field="*{BranchName}"  pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$">
+                  	<textarea style=" min-width:500px; max-width:100%;min-height:300px;height:100%;width:100%; dir:ltr ;text-align: left"  th:text= "${evalsummary}">    </textarea> 
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">رمز الفرع</label>
-                    <input type="text" name="BranchName" class="form-control" id="exampleInputPassword1" placeholder="Enter Branch Name" th:field="*{BrancheCode}" pattern="#([a-zA-Z0-9]+)" title="Must Start With #">
-                  </div>
-
-
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">البنك</label><br>
-                    <select th:field="*{bank}">
-                      <option th:value="${bank.BankID}" th:text="${bank.BankName}"></option>	  
-                    </select>
+                  	<h1 th:if="${give}" >اقترح نظام دعم القرار بإعطاء السلفة لهذا المتعامل     </h1> 
                   </div>
                   
-                </div>
+                  <div class="form-group">
+                  	<h1 th:if="${dontGive}" >اقترح نظام دعم القرار بعدم  إعطاء السلفة لهذا المتعامل     </h1> 
+                  </div>
+
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">تأكيد</button>
+                  <a href="/Loans/all/Open/NotConfirmed?index=0" class="btn btn-primary">تراجع</a>
                 </div>
-              </form>
+                </form>
             </div>
             <!-- /.card -->
             </div>
@@ -87,14 +72,13 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-<footer class="footer">
+   <footer class="footer">
           <div class="footer-wrap">
               <div class="w-100 clearfix">
                 <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
               </div>
           </div>
-        </footer>
-
+ </footer>  
 
 </div>
 

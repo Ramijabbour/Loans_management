@@ -1,11 +1,21 @@
 package com.example.weka;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.example.Loans.LoanService;
+import com.example.Loans.Loans;
+
+import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.rules.OneR;
+import weka.classifiers.trees.J48;
 import weka.core.Debug;
+import weka.core.Instance;
 import weka.core.Instances;
 import weka.experiment.InstanceQuery;
 import weka.filters.Filter;
@@ -14,24 +24,33 @@ import weka.filters.unsupervised.attribute.Normalize;
 @RestController
 public class Test {
 
+	@Autowired
+	LoanService loanService ;
+	
+	
     public static final String DATASETPATH = "C:\\Users\\ramij\\Downloads\\Compressed\\weka-example-master\\data\\iris.2D.arff";
     public static final String MODElPATH = "C:\\Users\\ramij\\Downloads\\Compressed\\weka-example-master\\data\\model.bin";
 
-	@RequestMapping(method = RequestMethod.GET , value = "/test1")
-    public static void test() throws Exception {    
+    
+	@RequestMapping(method = RequestMethod.GET , value = "/Loans/datamining/{id}")
+    public ModelAndView test(@PathVariable int id ) throws Exception {   
+		ModelAndView mav = new ModelAndView("Loans/DecisionSupportSystem");
+		
+		Loans loan  = loanService.getOneByID(id);
+		
         ModelGenerator mg = new ModelGenerator();
-      /*  try {
+        try {
         	InstanceQuery query = new InstanceQuery();
         	 query.setUsername("root");
         	 query.setPassword("admin");
-        	 query.setQuery("select * from client_loan");
+        	 query.setQuery("select age,finance_type,loan_type,married,net_ammount,numberofchilderen,total_ammount,address,gender,income,status,result from client_loan");
         	 // query.setSparseData(true);
         	 Instances dataset = query.retrieveInstances();         
-        	 dataset.setClassIndex(dataset.numAttributes() - 2);
+        	 dataset.setClassIndex(dataset.numAttributes() - 1);
 
-            System.out.println(dataset);*/
+            System.out.println(dataset);
             
-        Instances dataset = mg.loadDataset(DATASETPATH);
+       // Instances dataset = mg.loadDataset(DATASETPATH);
         Filter filter = new Normalize();
 
         // divide dataset to train dataset 80% and test dataset 20%
@@ -48,24 +67,42 @@ public class Test {
         Instances testdataset = new Instances(datasetnor, trainSize, testSize);
 
         // build classifier with train dataset             
-        OneR ann = (OneR) mg.buildClassifier(traindataset);
-
+       // OneR ann = (OneR) mg.buildClassifier(traindataset);
+    	OneR tree = new OneR();
+		tree.buildClassifier(traindataset);
+        
         // Evaluate classifier with test dataset
-        String evalsummary = mg.evaluateModel(ann, traindataset, testdataset);
+        String evalsummary = mg.evaluateModel(tree, traindataset, testdataset);
+		mav.addObject("evalsummary",evalsummary);
+
         System.out.println("Evaluation: " + evalsummary);
         System.out.println();
-        
+
+        System.out.println(tree.toString());
 
         //Save model 
-        mg.saveModel(ann, MODElPATH);
+        mg.saveModel(tree, MODElPATH);
        //classifiy a single instance 
+       String status = loanService.GetLoanStatus(id);
+       
         ModelClassifier cls = new ModelClassifier();
-        String classname =cls.classifiy(Filter.useFilter(cls.createInstance(1.6, 0.2, 0), filter), MODElPATH);
-        System.out.println("\n The class name for the instance with petallength = 1.6 and petalwidth =0.2 is  " +classname);
-        /*}
+        String classname =cls.classifiy(Filter.useFilter(cls.createInstance(loan.getClient().getAge(), loan.getFinanceType().getTypeName(), loan.getLoanType().getTypeName(),loan.getClient().getMarried(),loan.getNetAmmount(),loan.getClient().getNumberOFChilderen(),loan.getTotalAmmount(),loan.getClient().getAddress(),loan.getClient().getGender(),loan.getClient().getIncome(),status, 0),filter), MODElPATH);
+        System.out.println("\n The class name for the instance is  " +classname);
+        boolean give =false ,dontGive =true ;
+        if(classname.equalsIgnoreCase("yes"))
+        	{
+        		give = true ;
+        		dontGive=false ; 
+        	}
+      
+        mav.addObject("dontGive", dontGive);
+        mav.addObject("give", give);
+        
+       }
         catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
+		return mav;
     }
 
 }

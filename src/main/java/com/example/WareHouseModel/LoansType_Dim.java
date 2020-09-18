@@ -11,7 +11,6 @@ public class LoansType_Dim {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int LoanTypeID ;
 	private String TypeName="";
 	

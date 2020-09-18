@@ -1,18 +1,26 @@
 package com.example.WareHouseModel;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ParseException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.BankBranches.BrancheService;
+import com.example.BankBranches.Branches;
 import com.example.Clients.ClientService;
-
+import com.example.Clients.Clients;
+import com.example.FinanceType.FinanceType;
 import com.example.FinanceType.FinanceTypeService;
 import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
+import com.example.LoansType.LoansType;
 import com.example.LoansType.LoansTypeService;
 import com.example.WareHouseRepository.BranchBankDimRepository;
 import com.example.WareHouseRepository.ClientDimRepository;
@@ -65,7 +73,7 @@ public class insert {
 	FactTableService factService  ; 
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/insert")
-	public void insertIntoDimensions()
+	public void insertIntoDimensions() throws java.text.ParseException
 	{/*
 		List<Clients> allClients = clientsService.GetClientsByType("شخص");
 		
@@ -147,7 +155,6 @@ public class insert {
 			
 			if(loan.getClient().getClientType().equalsIgnoreCase("شخص"))	{
 				Branch_Bank_Dim branch_Bank = brancheBankRepo.findByid(loan.getBranche().getId());
-				
 				LoansType_Dim loantype = loanTypeDimRepo.findByid(loan.getLoanType().getLoanTypeID());
 				FinanceType_Dim financeType = financeTypeDimRepo.findByid(loan.getFinanceType().getFinanceTypeID());
 				//User_Dim user  = userDimRepo.findByid(loan.getUser().getId());
@@ -157,8 +164,8 @@ public class insert {
 			}	
 		}
 		System.out.println("Done !!");
-		*/
-		/*
+		
+		
 		List<Fact_Table> allloans= factService.filterFact();
 		
 		for(Fact_Table f : allloans)
@@ -170,9 +177,9 @@ public class insert {
 				result="no";
 			ClientLoan c = new ClientLoan(f.TotalAmmount,f.NetAmmount,f.getStatus(),f.getClient().getAddress(),f.getClient().getGender(),f.getClient().getMarried(),f.getClient().getNumberOFChilderen(),f.getClient().getAge(),f.getLoanType().getTypeName(),f.getFinanceType().getTypeName(),f.getClient().getIncome(),result);
 			clientLoanRepo.save(c);
-		}*/
+		}
 		
-		
+		*/
 		
 		
 	}
