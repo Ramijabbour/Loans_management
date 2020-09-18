@@ -38,7 +38,6 @@ public class Loans {
     
     public String WorkDate;
 
-
     public String LoanDate;
 
     @Convert(converter = StringEncryptDecryptConverter.class)
