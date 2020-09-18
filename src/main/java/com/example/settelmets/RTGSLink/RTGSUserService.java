@@ -3,6 +3,8 @@ package com.example.settelmets.RTGSLink;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.MQ.OrderMessageSender;
@@ -18,8 +20,11 @@ public class RTGSUserService {
 	@Autowired 
 	private OrderMessageSender msgSender ; 
 	
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	
 	public String addRTUser(RTGSUser user) {
 		// TODO Auto-generated method stub
+		user.setGender("M");
 		if(checkUserinforDuplication(user)) {
 			return "يوجد مستخدم بنفس المعلومات";
 		}
@@ -28,6 +33,8 @@ public class RTGSUserService {
 			return result ; 
 		}
 		user.setActive(true);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user = this.rtgsUserRepository.save(user); 
 		try {
 			this.msgSender.sendOrderCheck(user);
 			user.setSent(true);

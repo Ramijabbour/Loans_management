@@ -96,6 +96,11 @@ public class MasterService {
 		return String.valueOf(month) ; 
 	}
 	
+	public static String getDayFromStringDate(String date) {
+		LocalDate desiredDate = LocalDate.parse(date);
+		int month = desiredDate.getDayOfMonth(); 
+		return String.valueOf(month) ; 
+	}
 	
 	public static ModelAndView sendGeneralError(String errormsg){
 		ModelAndView mav = new ModelAndView("Errors/generalError");

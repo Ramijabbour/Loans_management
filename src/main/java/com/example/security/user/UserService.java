@@ -33,7 +33,7 @@ public class UserService extends MasterService implements MasterBackUpService {
 	@Autowired 
 	ServiceDispatcher dispatcher ;
 	
-	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); ;
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	public UserService() {
 

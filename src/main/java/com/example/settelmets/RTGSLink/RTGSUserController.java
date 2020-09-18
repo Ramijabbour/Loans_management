@@ -17,6 +17,7 @@ public class RTGSUserController {
 	private RTGSUserService rtgsUserService; 
 	
 	
+	
 	@RequestMapping(method = RequestMethod.GET , value = "/settlements/users/addrtUser")
 	public ModelAndView addRTGSUser() {
 		ModelAndView mav = new ModelAndView("settlement/addRTGSUser");

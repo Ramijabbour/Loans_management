@@ -226,11 +226,17 @@
       <nav class="bottom-navbar">
         <div class="container">
             <ul class="nav page-navigation">
-              <li class="nav-item" sec:authorize="hasAnyAuthority('ALLANALYTICS','SUPER')">
-                <a class="nav-link" href="/charts/nav">
-                  <i class="mdi mdi-file-document-box menu-icon"></i>
-                  <span class="menu-title">عرض الأحداث</span>
+              <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','SUPER','ALLANALYTICS')">
+                <a   href="#" class="nav-link">
+                  <i class="mdi mdi-human-male-female menu-icon"></i>
+                  <span class="menu-title">إحصائيات</span>
                 </a>
+				 <div class="submenu">
+                      <ul>
+                          <li class="nav-item"><a class="nav-link" href="/charts/nav">إحصائيات إدارة السلف</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/rtgs/analytics">إحصائيات نظام التسوية</a></li>
+                      </ul>
+                  </div>
               </li>
               <li class="nav-item" sec:authorize="hasAnyAuthority('getAllUsers','addUser','getNonActiveUsers','getActiveUsers','SUPER')">
                 <a   href="#" class="nav-link">
