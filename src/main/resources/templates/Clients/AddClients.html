@@ -34,92 +34,137 @@
     </section>
     
     <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-md-12">
-            <!-- jquery validation -->
-            <div class="card card-primary">
-              <div class="card-header">
-               <h4>أدخل معلومات المتعامل</h4>
-              </div>
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">أدخل متعامل</h4>
               <!-- /.card-header -->
               <!-- form start -->
-              <form th:action="@{/Clients/addClient}" th:object="${client}" method="post">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">الأسم : </label>
+              <form class="form-sample" th:action="@{/Clients/addClient}" th:object="${client}" method="post">
+                <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">الإسم</label>
                     <input type="text" name="name" class="form-control"  placeholder="ادخل الاسم " th:field="*{ClientName}" pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$">
                   </div>
-            
-                   <div class="form-group">
-                    <label for="exampleInputPassword1">النوع</label><br>
-                    <select th:field="*{ClientType}">
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">النوع</label>
+                    <select  class="form-control" th:field="*{ClientType}">
                
                       <option th:value="شخص" th:text="شخص"></option>
   					  <option th:value="مؤسسة" th:text="مؤسسة"></option>
                     </select>  
                   </div>
+                </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">الرقم الوطني </label>
+                <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">الرقم الوطني</label>
                     <input type="text" name="Identity" class="form-control"  placeholder="ادخل الرقم الوطني" th:field="*{identity_number}" >
                   </div>
-                  
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">البريد الالكتروني </label>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">البريد الإلكتروني</label>
                     <input type="text" name="Identity" class="form-control"  placeholder="ادخل البريد الالكتروني" th:field="*{email}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                   </div>
-                        
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">رقم الهاتف</label>
+                </div>
+                </div>
+
+                <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">رقم الهاتف</label>
                     <input type="text" name="Identity" class="form-control"  placeholder="ادخل رقم الهاتف" th:field="*{phone}">
                   </div>
-                  
-                  <div class="form-group">
-                    <label for="exampleInputEmail1"> العنوان</label>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">العنوان</label>
                     <input type="text" name="Identity" class="form-control"  placeholder="ادخل العنوان" th:field="*{address}" >
                   </div>
-                  
-                   <div class="form-group">
-                    <label for="exampleInputEmail1"> عدد الاولاد</label>
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">عدد الأولاد</label>
                     <input type="text" name="Identity" class="form-control"  placeholder="ادخل عدد الاولاد" th:field="*{NumberOFChilderen}" >
                   </div>
-                  
-                  <div class="form-group">
-                    <label for="exampleInputEmail1"> العمر </label>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">العمر</label>
                     <input type="text" name="Identity" class="form-control"  placeholder="ادخل العمر" th:field="*{Age}" >
                   </div>
-                  
-                  <div class="form-group">
-                    <label for="exampleInputEmail1"> الدخل </label>
-                    <input type="text" name="Identity" class="form-control"  placeholder="الدخل" th:field="*{income}" >
+                </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">الحالة الإجتماعية</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" th:field="*{Married}">
+                          <option th:value="''" th:text="اختيار"></option>
+                          <option th:value="'Y'" th:text="متزوج"></option>
+                          <option th:value="'N'" th:text="اعزب"></option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
-                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">الجنس</label><br>
-                    <select th:field="*{gender}">
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">الجنس</label>
+                    <div class="col-sm-9">
+                    <select class="form-control" th:field="*{gender}">
                     <option th:value="''" th:text="اختيار"></option>
                       <option th:value="'M'" th:text="ذكر"></option>
   					  <option th:value="'F'" th:text="انثى"></option>
                     </select>  
-                  </div>  
-                  
-                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">الحالة الاجتماعية</label><br>
-                    <select th:field="*{Married}">
-                    <option th:value="''" th:text="اختيار"></option>
-                      <option th:value="'Y'" th:text="متزوج"></option>
-  					  <option th:value="'N'" th:text="اعزب"></option>
-                    </select>  
-                  </div>  
-            
+                  </div>
+                  </div>
+                </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">الدخل</label>
+                      <input type="text" name="Identity" class="form-control"  placeholder="الدخل" th:field="*{income}" >
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <h3> يرجى الإطلاع على المعلومات قبل الضغط على زر التأكيد</h3>
+                  <p class="mb-2">&nbsp</p>
+                </div>
+                <div class="row">
+                  <br>
+                  <label class="toggle-switch" style="float: right;">
+                    <input type="checkbox" required="">
+                    <span class="toggle-slider round"></span>
+                  </label>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
                   <button type="submit" class="btn btn-primary">تأكيد</button>
+                </div>
+                  </div>
                 </div>
               </form>
             </div>

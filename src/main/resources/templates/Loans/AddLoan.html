@@ -75,7 +75,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">تلريخ السلفة</label>
+                                    <label class="col-sm-3 col-form-label">تاريخ السلفة</label>
                                     <div class="col-sm-9">
                                         <input type="date" name="LoanDate" class="form-control" th:field="*{LoanDate}">
                                     </div>
@@ -126,7 +126,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">المتعامل</label>
+                                    <label class="col-sm-3 col-form-label">فرع البنك</label>
                                     <div class="col-sm-9">
                                         <select class="form-control" th:field="*{branche}">
                                             <option th:each="branche : ${allbranche}" th:value="${branche.id}"

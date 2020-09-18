@@ -65,13 +65,15 @@
               
              
              <form action="#" th:action="@{/config/currConfig/alter}" method="get">
-                    <button th:id="'table_entry_childs_button_'" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                    	<i>تعديل إعدادات النظام</i>
+                    <button th:id="'table_entry_childs_button_'" class="btn btn-outline-warning btn-icon-text" type="submit">
+                    	<i class="mdi mdi-tooltip-edit"></i>
+                        تعديل إعدادات النظام
                      </button>
               </form>
               <form action="#" th:action="@{/config/currConfig/default}" method="get">
-                    <button th:id="'table_entry_childs_button_'" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
-                    	<i>استعادة الاعدادات الافتراضية</i>
+                    <button th:id="'table_entry_childs_button_'" class="btn btn-outline-warning btn-icon-text" type="submit">
+                    	<i class="mdi mdi-backup-restore"></i>
+                        استعادة الاعدادات الافتراضية
                      </button>
               </form>
               <p></p>
