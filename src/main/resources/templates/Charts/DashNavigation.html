@@ -32,207 +32,316 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
+	  <div class="row mt-4">
+		  <div class="col-12 grid-margin stretch-card">
+			  <div class="card">
+				  <div class="card-body">
+					  <div class="row">
+						  <div class="col-lg-4">
+							  <h4 class="card-title"></h4>
+							  <img th:src="@{/new/images/aa.jpg}" src="../../new/images/aa.jpg" />
+
+							  <form action="#" th:action="@{/charts/bankSelectionNav/1}" method="get">
+								  <br>
+								  <button th:id="'table_entry_childs_button_'" class="btn btn-link btn-rounded btn-fw" type="submit">
+									  <i>إحصائيات سنة واحدة</i>
+								  </button>
+							  </form>
+							  <br>
+							  <form action="#" th:action="@{/charts/bankSelectionNav/2}" method="get">
+								  <button th:id="'table_entry_childs_button_'" class="btn btn-link btn-rounded btn-fw" type="submit">
+									  <i>إحصائيات عدة سنوات</i>
+								  </button>
+							  </form>
+						  </div>
+						  <div class="col-lg-5">
+							  <h4 class="card-title"></h4>
+							  <div class="row">
+								  <div class="col-sm-4">
+									  <ul class="graphl-legend-rectangle">
+										  <li><span class="bg-danger"></span>البنك الزراعي</li>
+										  <li><span class="bg-warning"></span>البنك التجاري</li>
+										  <li><span class="bg-info"></span>البنك العقاري</li>
+										  <li><span class="bg-success"></span>البنك الشعبي</li>
+									  </ul>
+								  </div>
+								  <div class="col-sm-8 grid-margin">
+									  <img th:src="@{/new/images/bb.jpg}" src="../../new/images/bb.jpg" />
+								  </div>
+							  </div>
+							  <p class="mt-3 mb-4 mb-lg-0">
+							  </p>
+						  </div>
+						  <div class="col-lg-3">
+							  <h4 class="card-title"></h4>
+							  <div class="row">
+								  <div class="col-sm-12">
+									  <div class="progress progress-lg grouped mb-2">
+										  <div class="progress-bar  bg-danger" role="progressbar" style="width: 40%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+										  <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+										  <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+										  <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+									  </div>
+								  </div>
+								  <div class="col-sm-12">
+									  <ul class="graphl-legend-rectangle">
+										  <li><span class="bg-danger"></span>التجاري </li>
+										  <li><span class="bg-warning"></span>الزراعي</li>
+										  <li><span class="bg-info"></span>العقاري</li>
+										  <li><span class="bg-success"></span>الشعبي</li>
+									  </ul>
+								  </div>
+							  </div>
+
+						  </div>
+					  </div>
+				  </div>
+			  </div>
+		  </div>
+	  </div>
     
     <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-md-12">
-            <!-- jquery validation -->
-            <div class="card card-primary">
-              <!-- /.card-header -->
-              <!-- form start -->
-              <div class="row">
-						<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-secondary font-weight-bold" th:text="*{dm.TotalBanksCount}"></h2>
-										<i class="mdi mdi-bank mdi-18px text-dark"></i>
-									</div>
-								</div>
-								<canvas id="newClient"></canvas>
-								<div class="line-chart-row-title">عدد البنوك</div>
-							</div>
-						</div>
-						<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-secondary font-weight-bold" th:text="*{dm.TotalBranchesCount}"></h2>
-										<i class="mdi mdi-bank mdi-18px text-dark"></i>
-									</div>
-								</div>
-								<canvas id="newClient"></canvas>
-								<div class="line-chart-row-title">عدد الأفرع</div>
-							</div>
-						</div>
-						<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-success font-weight-bold" th:text="*{dm.TotalClientsCount}"></h2>
-										<i class="mdi mdi-account-outline mdi-18px text-dark"></i>
-									</div>
-								</div>
-								<canvas id="newClient"></canvas>
-								<div class="line-chart-row-title">عدد المتعاملين</div>
-							</div>
-						</div>
-						<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-success font-weight-bold" th:text="*{dm.TotalSystemUsers}"></h2>
-										<i class="mdi mdi-account-outline mdi-18px text-dark"></i>
-									</div>
-								</div>
-								<canvas id="newClient"></canvas>
-								<div class="line-chart-row-title">عدد مستخدمين النظام</div>
-							</div>
-						</div>
-				</div>
-              <div class="row">
-						<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-info font-weight-bold" th:text="*{dm.TotalLoansCount}"></h2>
-										<i class="mdi mdi-file-document-outline mdi-18px text-dark"></i>
-									</div>
-								</div>
-								<canvas id="invoices"></canvas>
-								<div class="line-chart-row-title">إجمالي عدد السلف</div>
-							</div>
-						</div>
-						<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-info font-weight-bold" th:text="*{dm.OpenLoansCount}"></h2>
-										<i class="mdi mdi-file-document-outline mdi-18px text-dark"></i>
-									</div>
-								</div>
-								<canvas id="invoices"></canvas>
-								<div class="line-chart-row-title">عدد السلف المفتوحة</div>
-							</div>
-						</div>
-						<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-info font-weight-bold" th:text="*{dm.ClosedLoansCount}"></h2>
-										<i class="mdi mdi-file-document-outline mdi-18px text-dark"></i>
-									</div>
-								</div>
-								<canvas id="invoices"></canvas>
-								<div class="line-chart-row-title">عدد السلف المغلقة</div>
-							</div>
-						</div>
-						<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-info font-weight-bold" th:text="*{dm.ResLoansCount}"></h2>
-										<i class="mdi mdi-file-document-outline mdi-18px text-dark"></i>
-									</div>
-								</div>
-								<canvas id="invoices"></canvas>
-								<div class="line-chart-row-title">عدد السلف المعاد جدولتها</div>
-							</div>
-						</div>
-				</div>
-				
-				<div class = "row">
-					<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-dark font-weight-bold" th:text="*{dm.LoansValue}"></h2>
-										<i class="mdi mdi-cash text-dark mdi-18px"></i>
-									</div>
-								</div>
-								<canvas id="transactions"></canvas>
-								<div class="line-chart-row-title">إجمالي قيم السلف</div>
-							</div>
-						</div>
-						<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-dark font-weight-bold" th:text="*{dm.OpenLoansValue}"></h2>
-										<i class="mdi mdi-cash text-dark mdi-18px"></i>
-									</div>
-								</div>
-								<canvas id="transactions"></canvas>
-								<div class="line-chart-row-title">إجمالي قيم السلف المفتوحة</div>
-							</div>
-						</div>
-						<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-dark font-weight-bold" th:text="*{dm.ClosedLoansValue}"></h2>
-										<i class="mdi mdi-cash text-dark mdi-18px"></i>
-									</div>
-								</div>
-								<canvas id="transactions"></canvas>
-								<div class="line-chart-row-title">إجمالي قيم السلف المغلقة</div>
-							</div>
-						</div>
-						<div class="col-lg-2 grid-margin stretch-card">
-							<div class="card">
-								<div class="card-body pb-0">
-									<div class="d-flex align-items-center justify-content-between">
-										<h2 class="text-dark font-weight-bold" th:text="*{dm.ResLoansValue}"></h2>
-										<i class="mdi mdi-cash text-dark mdi-18px"></i>
-									</div>
-								</div>
-								<canvas id="transactions"></canvas>
-								<div class="line-chart-row-title">إجمالي قيم السلف المعاد جدولتها</div>
-							</div>
-						</div>
-				</div>
-            </div>
-            <hr>
-             <form action="#" th:action="@{/charts/bankSelectionNav/1}" method="get">
-                          <button th:id="'table_entry_childs_button_'" class="btn btn-outline-inverse-info btn-icon-text" type="submit">
-                              <i>إحصائيات سنة واحدة</i>
-                          </button>
-              </form>
-              <br>
-              <form action="#" th:action="@{/charts/bankSelectionNav/2}" method="get">
-                          <button th:id="'table_entry_childs_button_'" class="btn btn-outline-inverse-info btn-icon-text" type="submit">
-                              <i>إحصائيات عدة سنوات</i>
-                  			</button>
-              </form>
-            <!-- /.card -->
-            </div>
-          <!--/.col (left) -->
-          <!-- right column -->
-          <div class="col-md-6">
+	  <!-- Main content -->
+	  <section class="content">
+		  <div class="container-fluid">
+			  <div class="row">
+				  <!-- left column -->
+				  <div class="col-md-12">
+					  <!-- jquery validation -->
+					  <div class="card card-primary">
+						  <!-- /.card-header -->
+						  <!-- form start -->
+						  <div class="row">
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-bank mdi-18px text-dark"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-secondary  font-weight-bold" th:text="*{dm.TotalBanksCount}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="newClient"></canvas>
+									  <div class="line-chart-row-title">عدد البنوك</div>
+								  </div>
+							  </div>
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-source-branch text-dark"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-secondary text-warning font-weight-bold" th:text="*{dm.TotalBranchesCount}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="allProducts"></canvas>
+									  <div class="line-chart-row-title">عدد الأفرع</div>
+								  </div>
+							  </div>
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-account-card-details mdi-18px text-dark"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-success text-danger font-weight-bold" th:text="*{dm.TotalClientsCount}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="allProducts"></canvas>
+									  <div class="line-chart-row-title">عدد المتعاملين</div>
+								  </div>
+							  </div>
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-account-outline mdi-18px text-dark"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-success text-primary font-weight-bold" th:text="*{dm.TotalSystemUsers}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="projects"></canvas>
+									  <div class="line-chart-row-title">عدد مستخدمين النظام</div>
+								  </div>
+							  </div>
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-book-open-page-variant mdi-18px text-dark"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-info text-dark font-weight-bold " th:text="*{dm.TotalLoansCount}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="orderRecieved"></canvas>
+									  <div class="line-chart-row-title">إجمالي عدد السلف</div>
+								  </div>
+							  </div>
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-file-document mdi-18px text-dark"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-info font-weight-bold" th:text="*{dm.OpenLoansCount}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="invoices"></canvas>
+									  <div class="line-chart-row-title">عدد السلف المفتوحة</div>
+								  </div>
+							  </div>
+						  </div>
+						  <div class="row">
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-file mdi-18px text-dark"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-secondary font-weight-bold" th:text="*{dm.ClosedLoansCount}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="invoices"></canvas>
+									  <div class="line-chart-row-title">عدد السلف المغلقة</div>
+								  </div>
+							  </div>
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-file-export mdi-18px text-dark"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-warning font-weight-bold" th:text="*{dm.ResLoansCount}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="invoices"></canvas>
+									  <div class="line-chart-row-title">عدد السلف المعاد جدولتها</div>
+								  </div>
+							  </div>
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-cash-multiple text-dark mdi-18px"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-danger font-weight-bold" th:text="*{dm.LoansValue}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="invoices"></canvas>
+									  <div class="line-chart-row-title">إجمالي قيم السلف</div>
+								  </div>
+							  </div>
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-cash text-dark mdi-18px"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-success font-weight-bold" th:text="*{dm.OpenLoansValue}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="invoices"></canvas>
+									  <div class="line-chart-row-title">إجمالي قيم السلف المفتوحة</div>
+								  </div>
+							  </div>
 
-          </div>
-          <!--/.col (right) -->
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-cash text-dark mdi-18px align-items-left"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-dark font-weight-bold text-dark"  th:text="*{dm.ClosedLoansValue}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="transactions"></canvas>
+									  <div class="line-chart-row-title">إجمالي قيم السلف المغلقة</div>
+								  </div>
+							  </div>
+							  <div class="col-lg-2 grid-margin stretch-card">
+								  <div class="card">
+									  <div class="card-body pb-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <i class="mdi mdi-cash text-dark mdi-18px"></i>
+										  </div>
+										  <br>
+										  <div class="d-flex align-items-center justify-content-between">
+											  <h2 class="text-info font-weight-bold" th:text="*{dm.ResLoansValue}"></h2>
+										  </div>
+									  </div>
+									  <canvas id="transactions"></canvas>
+									  <div class="line-chart-row-title">إجمالي قيم السلف المجدولة</div>
+
+								  </div>
+							  </div>
+
+						  </div>
+
+						  <!-- /.card -->
+					  </div>
+					  <!--/.col (left) -->
+					  <!-- right column -->
+					  <div class="col-md-6">
+
+					  </div>
+					  <!--/.col (right) -->
+				  </div>
+				  <!-- /.row -->
+			  </div><!-- /.container-fluid -->
+	  </section>
+	  <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
-  
-  
-<footer class="footer">
-     <div class="footer-wrap">
-         <div class="w-100 clearfix">
-           <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
-         </div>
-     </div>
-</footer>
+	<!-- /.content-wrapper -->
+
+
+	<footer class="footer">
+		<div class="footer-wrap">
+			<div class="w-100 clearfix">
+				<span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+			</div>
+		</div>
+	</footer>
 
 
 </div>
+</div>
+<script src="../../static/new/vendors/base/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="../../static/new/js/template.js"></script>
+<!-- endinject -->
+<!-- plugin js for this page -->
+<!-- End plugin js for this page -->
+<script src="../../static/new/vendors/chart.js/Chart.min.js"></script>
+<script src="../../static/new/vendors/progressbar.js/progressbar.min.js"></script>
+<script src="../../static/new/vendors/chartjs-plugin-datalabels/chartjs-plugin-datalabels.js"></script>
+<script src="../../static/new/vendors/justgage/raphael-2.1.4.min.js"></script>
+<script src="../../static/new/vendors/justgage/justgage.js"></script>
+<!-- Custom js for this page-->
+<script src="../../static/new/new/js/dashboard.js"></script>
 </body>
 </html>

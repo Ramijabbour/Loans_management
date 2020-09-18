@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html  lang="ar" dir="rtl"
-		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:th="http://www.thymeleaf.org"
 		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="LoanFragements.html :: headerfiles">
 <meta charset="utf-8">
@@ -34,84 +34,119 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-md-12">
-            <!-- jquery validation -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h4>أدخل معلومات السلفة</h3>
-              </div>
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">أدخل سلفة</h4>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="#"  th:action="@{/Loans/addLoan}"  method="post" th:object="${loan}">
-                <div class="card-body">
+              <form class="form-sample" action="#"  th:action="@{/Loans/addLoan}"  method="post" th:object="${loan}">
+                <p class="card-description">
+                  Personal info
+                </p>
 
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">رقم الرهن</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">رقم الرهن</label>
                     <input type="text" name="Name" class="form-control" th:field="*{Name}" pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$" required>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">رقم السلفة</label>
+                      </div>
+                    </div>
+
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">رقم السلفة</label>
                     <input type="text" name="Name" class="form-control" th:field="*{LoanNumber}" pattern="[0-9]+">
+                      </div>
+                    </div>
+                  </div>
                   </div>
 
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">تاريخ العمل  </label>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">تاريخ العمل</label>
+                      <div class="col-sm-9">
                     <input type="date" name="workDate" class="form-control" th:field="*{WorkDate}">
                   </div>
+                    </div>
+                  </div>
 
 
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">تاريخ السلفة </label>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">تلريخ السلفة</label>
+                      <div class="col-sm-9">
                     <input type="date" name="LoanDate" class="form-control" th:field="*{LoanDate}">
-                  </div>
-					
-					
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">توع السلفة</label><br>
-                    <select th:field="*{loanType}">
-                      <option th:each="loantype : ${allloantype}" th:value="${loantype.LoanTypeID}" th:text="${loantype.TypeName} "></option>	  
-                    </select>
-                  </div>  
-				
-
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">نوع التمويل</label><br>
-                    <select th:field="*{financeType}">
-                      <option th:each="financetype : ${allfinancetype}" th:value="${financetype.FinanceTypeID}" th:text="${financetype.TypeName} "></option>	  
-                    </select>
+                      </div>
+                    </div>
                   </div>
 
-                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">المتعامل</label><br>
-                    <select th:field="*{client}">
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">نوع السلفة</label>
+                        <div class="col-sm-9">
+                    <select class="form-control" th:field="*{loanType}">
+                      <option th:each="loantype : ${allloantype}" th:value="${loantype.LoanTypeID}" th:text="${loantype.TypeName} "></option>
+                    </select>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">نوع التمويل</label>
+                        <div class="col-sm-9">
+                    <select class="form-control" th:field="*{financeType}">
+                      <option th:each="financetype : ${allfinancetype}" th:value="${financetype.FinanceTypeID}" th:text="${financetype.TypeName} "></option>
+                    </select>
+                  </div>
+                      </div>
+                    </div>
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">المتعامل</label>
+                          <div class="col-sm-9">
+                    <select class="form-control" th:field="*{client}">
                       <option th:each="client : ${allclient}" th:value="${client.id}" th:text="${client.ClientName}"></option>
-  					  
                     </select>
-                  </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
 
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">البنك</label><br>
-                    <select th:field="*{branche}">
-                      <option th:each="branche : ${allbranche}" th:value="${branche.id}" th:text="${branche.bank.BankName}+ ' '+ ${branche.BranchName} "></option>	  
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">المتعامل</label>
+                          <div class="col-sm-9">
+                    <select class="form-control" th:field="*{branche}">
+                      <option th:each="branche : ${allbranche}" th:value="${branche.id}" th:text="${branche.bank.BankName}+ ' '+ ${branche.BranchName} "></option>
                     </select>
-                  </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-				  
+
                   <div class="form-group">
                     <label for="exampleInputPassword1"> معدل  الفائدة </label>
                     <input type="number" name="interestRate" class="form-control" placeholder="Enter Interest Rate" th:field="*{InterestRate}" pattern="[0-9]+">
                   </div>
-				  
+
                   <div class="form-group">
                     <label for="exampleInputPassword1">معدل التأخير </label>
-                    <input type="number" name="DelayInterestRate" class="form-control" placeholder="Enter Delay Interest Rate"  th:field="*{DelayInterestRate}" pattern="[0-9]+">                    
+                    <input type="number" name="DelayInterestRate" class="form-control" placeholder="Enter Delay Interest Rate"  th:field="*{DelayInterestRate}" pattern="[0-9]+">
                   </div>
 
 
@@ -163,14 +198,14 @@
                     <label for="exampleInputPassword1">الفريق الاول</label>
                     <input type="text" name="FirstSide" class="form-control" placeholder="Enter First Side" th:field="*{FirstSide}" pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$">
                   </div>
-                
+
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">الفريق الثاني </label>
                     <input type="text" name="SecondSide" class="form-control" placeholder="Enter Second Side" th:field="*{SecondSide}" pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$">
                   </div>
-                    
-                
+
+
                 <!-- /.card-body -->
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">تأكيد</button>
