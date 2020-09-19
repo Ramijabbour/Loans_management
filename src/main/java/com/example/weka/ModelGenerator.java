@@ -28,7 +28,7 @@ public class ModelGenerator {
     }
 
     public Classifier buildClassifier(Instances traindataset) {
-        OneR m = new OneR();
+        J48 m = new J48();
         
         //m.setGUI(true);
         //m.setValidationSetSize(0);

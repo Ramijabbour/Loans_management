@@ -26,7 +26,7 @@ public class ClientLoan {
 	
 	public String NumberOFChilderen ;
 	
-	public String Age ;
+	public int Age ;
 
 	public String Loan_Type ;
 
@@ -43,7 +43,7 @@ public class ClientLoan {
 	public ClientLoan() {}
 
 	public ClientLoan(String totalAmmount, String netAmmount, String status, String address, String gender, String married,
-			String numberOFChilderen, String age, String loan_Type, String finance_Type, String income, String result) {
+			String numberOFChilderen, int age, String loan_Type, String finance_Type, String income, String result) {
 		super();
 		TotalAmmount = totalAmmount;
 		NetAmmount = netAmmount;
@@ -123,11 +123,11 @@ public class ClientLoan {
 		NumberOFChilderen = numberOFChilderen;
 	}
 
-	public String getAge() {
+	public int getAge() {
 		return Age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(int age) {
 		Age = age;
 	}
 

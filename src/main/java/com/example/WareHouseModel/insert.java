@@ -165,7 +165,7 @@ public class insert {
 		}
 		System.out.println("Done !!");
 		
-		
+			
 		List<Fact_Table> allloans= factService.filterFact();
 		
 		for(Fact_Table f : allloans)
@@ -175,11 +175,13 @@ public class insert {
 				result="yes";
 			else 
 				result="no";
-			ClientLoan c = new ClientLoan(f.TotalAmmount,f.NetAmmount,f.getStatus(),f.getClient().getAddress(),f.getClient().getGender(),f.getClient().getMarried(),f.getClient().getNumberOFChilderen(),f.getClient().getAge(),f.getLoanType().getTypeName(),f.getFinanceType().getTypeName(),f.getClient().getIncome(),result);
+			
+			int age = Integer.parseInt(f.getClient().getAge());
+			ClientLoan c = new ClientLoan(f.TotalAmmount,f.NetAmmount,f.getStatus(),f.getClient().getAddress(),f.getClient().getGender(),f.getClient().getMarried(),f.getClient().getNumberOFChilderen(),age,f.getLoanType().getTypeName(),f.getFinanceType().getTypeName(),f.getClient().getIncome(),result);
 			clientLoanRepo.save(c);
 		}
-		
 		*/
+		
 		
 		
 	}
