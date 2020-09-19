@@ -430,9 +430,9 @@ public class VoucherController {
 		
 		else {
 			for(Vouchers voucher : voucherInputModel.getVouchersList()) {
+				voucher.setStatus("Open");
 				servicePool.getVoucherService().addVoucher(voucher);
 			}
-			System.out.println("tststs----------------");
 			return MasterService.sendSuccessMsg("تمت إضافة السلفة بنجاح");
 		}
 		
