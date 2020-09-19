@@ -19,6 +19,7 @@ import com.example.Banks.Stats.Handlers.SingleBankAnalysisController;
 import com.example.Banks.Stats.Models.BanksSelectionModel;
 import com.example.Banks.Stats.Models.SingleSpanModel;
 import com.example.Banks.Stats.Models.TimeSpanModel;
+import com.example.Loans.Analytics.Charts.LoansAnalyticsChartsService;
 import com.example.SiteConfig.MasterService;
 
 @RestController
@@ -26,6 +27,9 @@ public class BanksStatsController {
 
 	@Autowired
 	private BankStatsService bankStatsService ; 
+	
+	@Autowired
+	private LoansAnalyticsChartsService loansAnalyticsChartsService ; 
 	
 	@Autowired
 	private ServicesPool servicePool ; 
@@ -84,6 +88,13 @@ public class BanksStatsController {
 	public ModelAndView getDashNavigation() {
 		ModelAndView mav = new ModelAndView("Charts/DashNavigation");
 		mav.addObject("dm", this.bankStatsService.getDashDataObject());
+		return mav ; 
+	}
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/charts/next")
+	public ModelAndView getDashNavigationAnalytics() {
+		ModelAndView mav = new ModelAndView("Charts/analytics");
+		loansAnalyticsChartsService.processData();
 		return mav ; 
 	}
 

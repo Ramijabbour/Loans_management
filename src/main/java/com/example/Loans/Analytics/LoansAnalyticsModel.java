@@ -111,19 +111,39 @@ public class LoansAnalyticsModel {
 	
 	
 	
-	public void calcRatios() {	
-		FinanaceTypesYear.put("مواسم استراتيجية", FinanaceTypesYear.get("مواسم استراتيجية")/loansCounterYear);
-		FinanaceTypesYear.put("طويل الامد",  FinanaceTypesYear.get("طويل الامد")/loansCounterYear);
-		FinanaceTypesYear.put("قصير الامد",  FinanaceTypesYear.get("قصير الامد")/loansCounterYear);
-		LoansTypesYear.put("مرخص", LoansTypesYear.get("مرخص")/loansCounterYear);
-		LoansTypesYear.put("معفى", LoansTypesYear.get("معفى")/loansCounterYear);
+	public void calcRatios() {
+		
+		float ratio = ( FinanaceTypesYear.get("مواسم استراتيجية")/loansCounterYear)*100;
+		FinanaceTypesYear.put("مواسم استراتيجية", ratio);
+		
+		ratio = ( FinanaceTypesYear.get("طويل الامد")/loansCounterYear)*100;
+		FinanaceTypesYear.put("طويل الامد",ratio);
+		
+		ratio = ( FinanaceTypesYear.get("قصير الامد")/loansCounterYear)*100;
+		FinanaceTypesYear.put("قصير الامد",ratio );
+		
+		ratio = ( LoansTypesYear.get("مرخص")/loansCounterYear)*100;
+		LoansTypesYear.put("مرخص", ratio);
+		
+		ratio = ( LoansTypesYear.get("معفى")/loansCounterYear)*100;
+		LoansTypesYear.put("معفى",ratio );
 		
 		
-		FinanaceTypesMonth.put("مواسم استراتيجية", FinanaceTypesMonth.get("مواسم استراتيجية")/loansCounterMonth);
-		FinanaceTypesMonth.put("طويل الامد",  FinanaceTypesMonth.get("طويل الامد")/loansCounterMonth);
-		FinanaceTypesMonth.put("قصير الامد",  FinanaceTypesMonth.get("قصير الامد")/loansCounterMonth);
-		LoansTypesMonth.put("مرخص", LoansTypesMonth.get("مرخص")/loansCounterMonth);
-		LoansTypesMonth.put("معفى", LoansTypesMonth.get("معفى")/loansCounterMonth);
+		ratio = ( FinanaceTypesMonth.get("مواسم استراتيجية")/loansCounterMonth)*100;
+		FinanaceTypesMonth.put("مواسم استراتيجية", ratio);
+		
+		ratio = ( FinanaceTypesMonth.get("طويل الامد")/loansCounterMonth)*100;
+		FinanaceTypesMonth.put("طويل الامد", ratio );
+		
+		ratio = ( FinanaceTypesMonth.get("قصير الامد")/loansCounterMonth)*100;
+		FinanaceTypesMonth.put("قصير الامد", ratio );
+		
+		ratio = ( LoansTypesMonth.get("مرخص")/loansCounterMonth)*100;
+		LoansTypesMonth.put("مرخص",ratio );
+		
+		ratio = ( LoansTypesMonth.get("معفى")/loansCounterMonth)*100;
+		LoansTypesMonth.put("معفى",ratio );
+		
 	}
 	
 	//getters - setters 

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="ar" >
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>إCentral Bank of syria</title>
+
+    <link rel="stylesheet" th:href="@{/new/css/main.css}" href="/../../new/css/main.css" />
+    <link rel="stylesheet" th:href="@{/new/css/highcharts.css}" href="/../../new/css/highcharts.css" />
+    <link rel="stylesheet" th:href="@{/new/css/bootstrap.css}" href="/../../new/css/bootstrap.css" />
+
+    <script th:src="@{/new/js/jquery-3.2.1.min.js}" src="../../js/jquery-3.2.1.min.js"></script>
+    <script th:src="@{/new/js/highcharts.js}" src="/../../new/js/highcharts.js"></script>
+    <script th:src="@{/new/js/exporting.js}" src="/../../new/js/exporting.js"></script>
+
+
+ <script type="text/javascript">
+        $(function () {
+        	getFinanaceTypesYear();
+        	getFinanaceTypesMonth();
+        	getLoansTypesYear();
+        	getLonasTypesMonth();
+        	getMostBanksYear();
+        	getMostBanksMonth();
+        	getBankLoansCountYear();
+        	getBankLoansCountMonth();
+        });
+        
+        function getBankLoansCountMonth(params) {
+            $.get("/ajax/getBankLoansCountMonth", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#testContainer').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        function getBankLoansCountYear(params) {
+            $.get("/ajax/getBankLoansCountYear", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#cb').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        function getMostBanksMonth(params) {
+            $.get("/ajax/getMostBanksMonth", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#cc').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        function getMostBanksYear(params) {
+            $.get("/ajax/getMostBanksYear", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#cd').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        function getLonasTypesMonth(params) {
+            $.get("/ajax/getLonasTypesMonth", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#ce').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        function getLoansTypesYear(params) {
+            $.get("/ajax/getLoansTypesYear", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#cf').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        function getFinanaceTypesMonth(params) {
+            $.get("/ajax/getFinanaceTypesMonth", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#cg').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        function getFinanaceTypesYear(params) {
+            $.get("/ajax/getFinanaceTypesYear", params, function (data, textStatus, jqXHR) {
+                console.log('textStatus : ' + textStatus);
+                console.log('result : ' + JSON.stringify(data));
+
+                if (textStatus == 'success') {
+
+                    $('#ch').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: data.title
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: +10,
+                            y: 80,
+                            floating: true,
+                            borderWidth: 20,
+                            backgroundColor: '#FAFAFA',
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: data.series
+                    });
+                } else {
+                    console.log('Unable to retrive data');
+                }
+
+            });
+        }
+        
+        
+    </script>
+    
+    <style>
+	
+</style>
+</head>
+<body>
+<div id="wrapper" >
+	<hr>
+	
+    <div id="testContainer" style="height:70vh; width:100%" ></div>	
+	
+	<hr>
+	
+    <div id="cb" style="height:70vh; width:100%" ></div>	
+
+	<hr>
+	
+    <div id="cc" style="height:70vh; width:100%" ></div>	
+    
+    <hr>
+    
+    <div id="cd" style="height:70vh; width:100%" ></div>
+
+	<hr>
+	
+    <div id="ce" style="height:70vh; width:100%" ></div>	
+	
+	<hr>
+	
+    <div id="cf" style="height:70vh; width:100%" ></div>	
+	
+	<hr>
+	
+	<div id="cg" style="height:70vh; width:100%" ></div>	
+	
+	<hr>
+	
+	<div id="ch" style="height:70vh; width:100%" ></div>	
+	
+	<hr>
+
+</div>
+
+<script th:src="@{/js/bootstrap.min.js}" src="../../js/bootstrap.min.js"></script>
+
+</body>
+</html>
