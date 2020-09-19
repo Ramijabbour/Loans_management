@@ -60,7 +60,7 @@ public class AnalyticsModel {
 		ValueOfChecksPerMonth += check.getAmount() ; 
 		String bankName = check.getSecondBankName() ; 
 		if(MostBanksMonth.containsKey(bankName)) {
-			MostBanksMonth.put(bankName,MostBanksYear.get(bankName)+check.getAmount());
+			MostBanksMonth.put(bankName,MostBanksMonth.get(bankName)+check.getAmount());
 		}else {
 			MostBanksMonth.put(bankName,check.getAmount());
 		}
