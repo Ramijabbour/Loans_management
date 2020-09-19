@@ -41,6 +41,9 @@ public class Loans {
 
     public String LoanDate;
 
+    public boolean confirmed;
+
+    
     @Convert(converter = StringEncryptDecryptConverter.class)
     public String InterestRate;
 
@@ -473,6 +476,19 @@ public class Loans {
 
 	public void setEndDay(String endDay) {
 		EndDay = endDay;
+	}
+
+	
+
+
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+
+
+
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 
 

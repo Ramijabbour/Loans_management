@@ -155,6 +155,7 @@ public class LoansController {
 			System.out.println("posted to /Loans/addLoan ");
 			bank.setFinancialAllocations(Integer.toString(NewAllocation));
 			loan.setStatus("NotConfirmed");
+			loan.setConfirmed(false);
 			loan = servicePool.getLoansService().addLoan(loan);
 			OpenLoans ol =new OpenLoans(loan);
 			servicePool.getOpenLoansService().addOpenLoan(ol);
@@ -320,6 +321,8 @@ public class LoansController {
 	{
 		Loans Loan=servicePool.getLoansService().getOneByID(id);
 		Loan.setStatus("Confirmed");
+		Loan.setConfirmed(true);
+
 		servicePool.getLoansService().updateLoan(Loan);
 		response.sendRedirect("/Loans/all/Open/Confirmed?index=0");
 	}

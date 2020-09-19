@@ -1,6 +1,9 @@
 package com.example.weka;
 
 
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.Loans.LoanService;
 import com.example.Loans.Loans;
+import com.example.Loans.LoansRepository;
 
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.rules.OneR;
@@ -52,11 +56,11 @@ public class Test {
             */
          Instances dataset = mg.loadDataset(DATASETPATH);
         System.out.println(dataset);
-        Filter filter = new Normalize();
+      //  Filter filter = new Normalize();
 
         // divide dataset to train dataset 80% and test dataset 20%
-        int trainSize = (int) Math.round(dataset.numInstances() * 0.8);
-        int testSize = dataset.numInstances() - trainSize;
+       // int trainSize = (int) Math.round(dataset.numInstances() * 0.8);
+        //int testSize = dataset.numInstances() - trainSize;
 
         dataset.randomize(new Debug.Random(1));// if you comment this line the accuracy of the model will be droped from 96.6% to 80%
         
@@ -84,7 +88,6 @@ public class Test {
         //Save model 
         mg.saveModel(tree, MODElPATH);
        //classifiy a single instance 
-       String status = loanService.GetLoanStatus(id);
        boolean give =false ,dontGive =true ;
         
         ModelClassifier cls = new ModelClassifier();
@@ -115,4 +118,23 @@ public class Test {
 		return mav;
     }
 
+	
+	
+	@Autowired 
+	LoansRepository loanrepo ; 
+	@Autowired
+	LoanService service ; 
+	@RequestMapping(method = RequestMethod.GET, value="/update11")
+	public void UpdateLoan() throws IOException {
+		System.out.println("hiiii");
+		List<Loans> allloan = loanrepo.findAll();
+		for(Loans l : allloan)
+		{
+			if(l.getStatus().equalsIgnoreCase("confirmed"))
+			{
+				l.setConfirmed(true);
+				service.updateLoan(l);
+			}
+		}
+	}
 }
