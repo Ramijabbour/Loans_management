@@ -94,7 +94,7 @@ public class Test {
         double income = Double.parseDouble(loan.getClient().getIncome());
         double numberofchildren = Double.parseDouble(loan.getClient().getNumberOFChilderen());
         
-        String classname =cls.classifiy(cls.createInstance(41, netAmmount,numberofchildren,totalammount,income, 0), MODElPATH);
+        String classname =cls.classifiy(cls.createInstance(age, netAmmount,numberofchildren,totalammount,income, 0), MODElPATH);
        // String classname =cls.classifiy(cls.createInstance("overcast",83,86,"false", 1), MODElPATH);
         System.out.println("\n The class name for the instance is  " +classname); 
        
