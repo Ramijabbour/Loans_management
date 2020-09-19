@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.example.ServicesPool;
 import com.example.Loans.Loans;
 import com.example.SiteConfig.MasterService;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,7 +20,7 @@ public class LoansAnalyticsService {
 	private String MonthOfAnalytics = MasterService.getMonthFromStringDate(MasterService.getDateAsString());
 	
 	
-	public void processLoansAnalysisData() {
+	public LoansAnalyticsModel processLoansAnalysisData() {
 		yearOfAnalytics = MasterService.getYearFromStringDate(MasterService.getDateAsString());
 		MonthOfAnalytics = MasterService.getMonthFromStringDate(MasterService.getDateAsString());
 		
@@ -41,11 +40,11 @@ public class LoansAnalyticsService {
 				loansAnalyticsModel.calculateYearData(LoansOfThisYear);
 				loansAnalyticsModel.calculateMonthData(LoansOfThisYear);
 				index ++ ;  
-			}
-			
+			}	
 		}
+		loansAnalyticsModel.calcRatios();
 		
-		
+		return loansAnalyticsModel ; 
 	}
 	
 	

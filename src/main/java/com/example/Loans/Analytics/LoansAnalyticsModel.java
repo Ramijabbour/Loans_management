@@ -42,15 +42,14 @@ public class LoansAnalyticsModel {
 	private int loansCounterMonth = 0 ;
 	
 	
-	LoansAnalyticsModel(){
+	public LoansAnalyticsModel(){
 		FinanaceTypesYear.put("مواسم استراتيجية", 0f);FinanaceTypesYear.put("طويل الامد", 0f);FinanaceTypesYear.put("قصير الامد", 0f);
 		FinanaceTypesMonth.put("مواسم استراتيجية", 0f);FinanaceTypesMonth.put("طويل الامد", 0f);FinanaceTypesMonth.put("قصير الامد", 0f);
 		LoansTypesYear.put("مرخص", 0f);LoansTypesYear.put("معفى", 0f);
 		LoansTypesMonth.put("مرخص", 0f);LoansTypesMonth.put("معفى", 0f);
 	}
 	
-	
-	
+
 	//process 
 	
 	public void calculateYearData(List<Loans> loansOfThisYear) {
@@ -76,7 +75,7 @@ public class LoansAnalyticsModel {
 				BankLoansCountYear.put(bankName,1);
 			}
 		
-		}
+		}		
 	}
 
 
@@ -91,19 +90,41 @@ public class LoansAnalyticsModel {
 				String loanType = loan.getLoanType().getTypeName();
 				LoansTypesMonth.put(loanType, LoansTypesMonth.get(loanType)+1);
 				
-				
-				
+	
 				String bankName = loan.getBranche().getBank().getBankName();
+				if(MostBanksMonth.containsKey(bankName)) {
+					long currentAmount = MostBanksMonth.get(bankName);
+					currentAmount += Long.valueOf(loan.getTotalAmmount());
+					MostBanksMonth.put(bankName, currentAmount);
+					int currCounter = BankLoansCountMonth.get(bankName);
+					currCounter++;
+					BankLoansCountMonth.put(bankName, currCounter);
+				}else {
+					long amount = Long.valueOf(loan.getTotalAmmount());
+					MostBanksMonth.put(bankName, amount);
+					BankLoansCountMonth.put(bankName, 1);
+				}
 				
-			
 			}			
-			//MostBanksMonth;
-			//BankLoansCountMonth;
-		}
+		}	
 	}
 	
 	
 	
+	public void calcRatios() {	
+		FinanaceTypesYear.put("مواسم استراتيجية", FinanaceTypesYear.get("مواسم استراتيجية")/loansCounterYear);
+		FinanaceTypesYear.put("طويل الامد",  FinanaceTypesYear.get("طويل الامد")/loansCounterYear);
+		FinanaceTypesYear.put("قصير الامد",  FinanaceTypesYear.get("قصير الامد")/loansCounterYear);
+		LoansTypesYear.put("مرخص", LoansTypesYear.get("مرخص")/loansCounterYear);
+		LoansTypesYear.put("معفى", LoansTypesYear.get("معفى")/loansCounterYear);
+		
+		
+		FinanaceTypesMonth.put("مواسم استراتيجية", FinanaceTypesMonth.get("مواسم استراتيجية")/loansCounterMonth);
+		FinanaceTypesMonth.put("طويل الامد",  FinanaceTypesMonth.get("طويل الامد")/loansCounterMonth);
+		FinanaceTypesMonth.put("قصير الامد",  FinanaceTypesMonth.get("قصير الامد")/loansCounterMonth);
+		LoansTypesMonth.put("مرخص", LoansTypesMonth.get("مرخص")/loansCounterMonth);
+		LoansTypesMonth.put("معفى", LoansTypesMonth.get("معفى")/loansCounterMonth);
+	}
 	
 	//getters - setters 
 
