@@ -57,7 +57,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">رقم السلفة</label>
                                     <input type="text" name="Name" class="form-control" th:field="*{LoanNumber}"
-                                           pattern="[0-9]+">
+                                           pattern="[0-9]+" required>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">تاريخ العمل</label>
                                     <div class="col-sm-9">
-                                        <input type="date" name="workDate" class="form-control" th:field="*{WorkDate}">
+                                        <input type="date" name="workDate" class="form-control" th:field="*{WorkDate}" required>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">تاريخ السلفة</label>
                                     <div class="col-sm-9">
-                                        <input type="date" name="LoanDate" class="form-control" th:field="*{LoanDate}">
+                                        <input type="date" name="LoanDate" class="form-control" th:field="*{LoanDate}" required>
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">نوع السلفة</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" th:field="*{loanType}">
+                                        <select class="form-control" th:field="*{loanType}" >
                                             <option th:each="loantype : ${allloantype}"
                                                     th:value="${loantype.LoanTypeID}"
                                                     th:text="${loantype.TypeName} "></option>
@@ -143,7 +143,7 @@
                                     <label class="col-sm-3 col-form-label">معدل الفائدة</label>
                                     <input type="number" name="interestRate" class="form-control"
                                            placeholder="Enter Interest Rate" th:field="*{InterestRate}"
-                                           pattern="[0-9]+">
+                                           pattern="[0-9]+" required>
                                 </div>
 
                             </div>
@@ -153,7 +153,7 @@
                                     <label class="col-sm-3 col-form-label">معدل التأخير</label>
                                     <input type="number" name="DelayInterestRate" class="form-control"
                                            placeholder="Enter Delay Interest Rate" th:field="*{DelayInterestRate}"
-                                           pattern="[0-9]+">
+                                           pattern="[0-9]+" required>
 
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                                     <label class="col-sm-3 col-form-label">القيمة الكلية</label>
                                     <input type="number" name="TotalAmmount" class="form-control"
                                            placeholder="Enter Total Ammount" th:field="*{TotalAmmount}"
-                                           pattern="[0-9]+">
+                                           pattern="[0-9]+" required>
                                 </div>
                             </div>
 
@@ -175,7 +175,7 @@
                                     <input type="text" name="TotalAmmountAsString" class="form-control"
                                            placeholder="Enter Total Ammount As String "
                                            th:field="*{TotalAmmountAsString}"
-                                           pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$">
+                                           pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$" required>
                                 </div>
                             </div>
                         </div>
@@ -185,7 +185,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">القيمة الصافية</label>
                                     <input type="number" name="NetAmmount" class="form-control"
-                                           placeholder="Enter Net Ammount" th:field="*{NetAmmount}" pattern="[0-9]+">
+                                           placeholder="Enter Net Ammount" th:field="*{NetAmmount}" pattern="[0-9]+" required>
                                 </div>
                             </div>
 
@@ -194,7 +194,7 @@
                                     <label class="col-sm-3 col-form-label">الصافية كتابياًً</label>
                                     <input type="text" name="NetAmmountAsString" class="form-control"
                                            placeholder="Enter Net Ammount As String " th:field="*{NetAmmountAsString}"
-                                           pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$">
+                                           pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$" required>
                                 </div>
                             </div>
                         </div>
@@ -205,7 +205,7 @@
                                     <label class="col-sm-3 col-form-label">عدد السندات</label>
                                     <input type="text" name="NumberOfVoucher" class="form-control"
                                            placeholder="Enter Number Of Voucher" th:field="*{NumberOfVoucher}"
-                                           pattern="[0-9]+">
+                                           pattern="[0-9]+" required>
                                 </div>
                             </div>
 
@@ -216,7 +216,7 @@
                                     <input type="text" name="Number Of VoucherAsString" class="form-control"
                                            placeholder="Enter Number Of Voucher As String "
                                            th:field="*{NumberOfVoucherAsString}"
-                                           pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$">
+                                           pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$" required>
                                 </div>
                             </div>
                         </div>
@@ -227,7 +227,7 @@
                                     <label class="col-sm-3 col-form-label">رقم القرار</label>
                                     <input type="number" name="ClearanceNumber" class="form-control"
                                            placeholder="Enter Clearance Number  " th:field="*{ClearanceNumber}"
-                                           pattern="[0-9]+">
+                                           pattern="[0-9]+" required>
                                 </div>
                             </div>
 
@@ -236,7 +236,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">الهدف</label>
                                     <input type="text" name="purpose" class="form-control" placeholder="Enter purpose  "
-                                           th:field="*{purpose}" pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$">
+                                           th:field="*{purpose}" pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$" required>
                                 </div>
                             </div>
                         </div>
@@ -247,7 +247,7 @@
                                     <label class="col-sm-3 col-form-label">الفريق الأول</label>
                                     <input type="text" name="FirstSide" class="form-control"
                                            placeholder="Enter First Side"
-                                           th:field="*{FirstSide}" pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$">
+                                           th:field="*{FirstSide}" pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$" required>
                                 </div>
                             </div>
 
@@ -257,7 +257,7 @@
                                     <label class="col-sm-3 col-form-label">الفريق الثاني</label>
                                     <input type="text" name="SecondSide" class="form-control"
                                            placeholder="Enter Second Side" th:field="*{SecondSide}"
-                                           pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$">
+                                           pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$" required>
                                 </div>
                             </div>
                         </div>
