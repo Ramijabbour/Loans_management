@@ -155,16 +155,19 @@ public class LoansController {
 			System.out.println("posted to /Loans/addLoan ");
 			bank.setFinancialAllocations(Integer.toString(NewAllocation));
 			loan.setStatus("NotConfirmed");
-			servicePool.getLoansService().addLoan(loan);
+			loan = servicePool.getLoansService().addLoan(loan);
 			OpenLoans ol =new OpenLoans(loan);
 			servicePool.getOpenLoansService().addOpenLoan(ol);
-			return this.voucherController.addVoucherSequence(loan.getId(),Integer.valueOf(loan.getNumberOfVoucher())-1);
+			
+			return this.voucherController.startVoucherSequence(loan);
+			
+			//return this.voucherController.addVoucherSequence(loan.getId(),Integer.valueOf(loan.getNumberOfVoucher())-1);
 			//response.sendRedirect("/Loans/all/Open");
 		}
 
 
 		else {
-			System.out.println("NullPointerException Handled at loan Service / Add loan -- call for low allocation");
+			System.out.println("allocations error -- ");
 			//response.sendRedirect("/Loans/addLoan/Error");
 			ModelAndView mav = new ModelAndView("Loans/Error");
 			return mav;

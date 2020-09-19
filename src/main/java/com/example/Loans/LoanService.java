@@ -13,6 +13,7 @@ import com.example.CloseLoans.CloseLoans;
 import com.example.OpenLoans.OpenLoans;
 import com.example.ReScheduleLoans.ReScheduleLoans;
 import com.example.SiteConfig.SiteConfiguration;
+import com.example.settelmets.Models.Chaque;
 
 
 
@@ -56,9 +57,9 @@ public class LoanService {
 	}
 	
 	
-	public void addLoan(Loans loan)
+	public Loans addLoan(Loans loan)
 	{
-		loansRepository.save(loan);
+		return loansRepository.save(loan);
 	}
 	
 	public void DeleteLoan(int id)
@@ -147,4 +148,17 @@ public class LoanService {
 		
 		return "";
 	}
+	
+	
+	public List<Loans> getLoansOfYear(String year , int PageNumber ){
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("loanYear"));
+		Page<Loans> pagedResult = this.loansRepository.findByLoanYear(year, paging);
+		if (pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		} else {
+			return new ArrayList<Loans>();
+		}
+	}
+	
+	
 }

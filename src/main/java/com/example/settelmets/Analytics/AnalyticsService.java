@@ -76,8 +76,8 @@ public class AnalyticsService {
 	
 	private List<Chaque> calcYearAnalytics(List<Chaque> checkList, AnalyticsModel analyticsModel) {
 		List<Chaque> filteredChecksList = new ArrayList<Chaque>();
+		String currYear = MasterService.getYearFromStringDate(localDate.toString());
 		for(Chaque check : checkList ) {
-			String currYear = MasterService.getYearFromStringDate(localDate.toString());
 			String checkYear = MasterService.getYearFromStringDate(check.getCheckEntryDate());
 			if(currYear.equalsIgnoreCase(checkYear)) {
 				filteredChecksList.add(check);
@@ -90,10 +90,10 @@ public class AnalyticsService {
 
 	private List<Chaque> calcMonthAnalytics(List<Chaque> checkList, AnalyticsModel analyticsModel) {
 		List<Chaque> filteredChecksList = new ArrayList<Chaque>();
+		String currMonth = MasterService.getMonthFromStringDate(localDate.toString());
 		for(Chaque check : checkList ) {
-			String currYear = MasterService.getMonthFromStringDate(localDate.toString());
-			String checkYear = MasterService.getMonthFromStringDate(check.getCheckEntryDate());
-			if(currYear.equalsIgnoreCase(checkYear)) {
+			String checkMonth = MasterService.getMonthFromStringDate(check.getCheckEntryDate());
+			if(currMonth.equalsIgnoreCase(checkMonth)) {
 				filteredChecksList.add(check);
 				analyticsModel.addMonthCheck(check);
 			}
@@ -102,10 +102,10 @@ public class AnalyticsService {
 	}
 
 	private void calcDayAnalytics(List<Chaque> checkList, AnalyticsModel analyticsModel) {
+		String currDay = MasterService.getDayFromStringDate(localDate.toString());
 		for(Chaque check : checkList ) {
-			String currYear = MasterService.getDayFromStringDate(localDate.toString());
-			String checkYear = MasterService.getDayFromStringDate(check.getCheckEntryDate());
-			if(currYear.equalsIgnoreCase(checkYear)) {
+			String checkDay = MasterService.getDayFromStringDate(check.getCheckEntryDate());
+			if(currDay.equalsIgnoreCase(checkDay)) {
 				analyticsModel.addDayCheck(check);
 			}
 		}		
@@ -114,8 +114,8 @@ public class AnalyticsService {
 	
 	private List<SettledChaque> calcSettledChecksYearAnalysis(List<SettledChaque> settledCheckList, AnalyticsModel analyticsModel) {
 		List<SettledChaque> filteredChecksList = new ArrayList<SettledChaque>();
+		String currYear = MasterService.getYearFromStringDate(localDate.toString());
 		for(SettledChaque settledCheck : settledCheckList ) {
-			String currYear = MasterService.getYearFromStringDate(localDate.toString());
 			String checkYear = MasterService.getYearFromStringDate(settledCheck.getLocalDateTime());
 			if(currYear.equalsIgnoreCase(checkYear)) {
 				filteredChecksList.add(settledCheck);
@@ -129,8 +129,8 @@ public class AnalyticsService {
 
 	private List<SettledChaque> calcSettledChecksMonthAnalysis(List<SettledChaque> settledCheckList,AnalyticsModel analyticsModel) {
 		List<SettledChaque> filteredChecksList = new ArrayList<SettledChaque>();
+		String currMonth = MasterService.getMonthFromStringDate(localDate.toString());
 		for(SettledChaque settledCheck : settledCheckList ) {
-			String currMonth = MasterService.getMonthFromStringDate(localDate.toString());
 			String checkMonth = MasterService.getMonthFromStringDate(settledCheck.getLocalDateTime());
 			if(currMonth.equalsIgnoreCase(checkMonth)) {
 				filteredChecksList.add(settledCheck);
@@ -143,8 +143,8 @@ public class AnalyticsService {
 
 
 	private void calcSettledChecksDayAnalysis(List<SettledChaque> settledCheckList,AnalyticsModel analyticsModel) {
+		String currDay = MasterService.getMonthFromStringDate(localDate.toString());
 		for(SettledChaque settledCheck : settledCheckList ) {
-			String currDay = MasterService.getMonthFromStringDate(localDate.toString());
 			String checkDay = MasterService.getMonthFromStringDate(settledCheck.getLocalDateTime());
 			if(currDay.equalsIgnoreCase(checkDay)) {
 				analyticsModel.addDaySettledCheck(settledCheck);
