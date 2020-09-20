@@ -23,7 +23,7 @@ public class CloseLoans {
 	
 
 	public CloseLoans() {}
-	
+
 	public CloseLoans(Loans loan) {
 		this.loan = loan;
 	}

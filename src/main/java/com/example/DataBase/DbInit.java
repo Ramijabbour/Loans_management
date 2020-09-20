@@ -3,8 +3,13 @@ package com.example.DataBase;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.example.CloseLoans.CloseLoans;
+import com.example.CloseLoans.CloseLoansRepository;
+import com.example.ReScheduleLoans.ReScheduleLoans;
+import com.example.ReScheduleLoans.ReScheduleLoansRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,13 +57,17 @@ public class DbInit implements CommandLineRunner{
 	private OpenLoansRepository openLoansRepo ; 
 	private ClientsRepository clientsRepo ; 
 	private UserRoleRepository userRoleRepository ;
-	private VouchersRepository vouchersRepo ; 
-	
+	private VouchersRepository vouchersRepo ;
+	private CloseLoansRepository closeLoanRepository ;
+	private ReScheduleLoansRepository reScheduleLoansRepository;
+
+
 	public DbInit(OnHoldCheckRepository onHoldRepositpry ,UserRepository userRepository,PasswordEncoder passwordEncoder
 				,LoansTypeRepository LtypeRepo,FinanceTypeRepository financeRep,BanksRepository banksRepo
 				,AllocationsRepository allocationsRepo,LoansRepository loansRepo,BrancheRepository branchRepo
 				,RolesRepository rolesRepo ,  OpenLoansRepository openLoansRepo, ClientsRepository clientsRepo
-				,UserRoleRepository userRoleRepository,VouchersRepository vouchersRepo) {
+				,UserRoleRepository userRoleRepository,VouchersRepository vouchersRepo,CloseLoansRepository closeLoansRepository,
+				  ReScheduleLoansRepository reScheduleLoansRepository) {
 		this.onHoldRepo = onHoldRepositpry ; 
 		this.userRepository = userRepository ; 
 		this.passwordEncoder = passwordEncoder ;
@@ -72,175 +81,302 @@ public class DbInit implements CommandLineRunner{
 		this.openLoansRepo = openLoansRepo ; 
 		this.clientsRepo = clientsRepo ;  
 		this.userRoleRepository = userRoleRepository;
-		this.vouchersRepo = vouchersRepo ; 
+		this.vouchersRepo = vouchersRepo ;
+		this.reScheduleLoansRepository=reScheduleLoansRepository;
+		this.closeLoanRepository=closeLoansRepository;
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-//		injectUsers_Roles_ToDB();
-//		inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
+		injectUsers_Roles_ToDB();
+		inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
 //		injectChecksToDB();
 		System.out.println("injection Done !! ");
 	}
 	
 
 	public void inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans() {
-		//insert clients // 
-		List<Clients> allClients = new ArrayList<Clients>(); 
-		boolean switchG = false ; 
-		for(int i = 0 ; i < 60 ; i ++) {
-			Clients client = new Clients("المتعامل"+i,"","003135658"+i,"client"+i+"mail@gmail.com","093737101"+i,
-					"دمشق"," ","","","","");
-			if(i%2 == 0 ) {
-				client.setClientType("شخص");
-				if(switchG) {
-					client.setGender("ذكر");
-					client.setMarried("y");
-					client.setNumberOFChilderen("2");
-					int age= i+20 ; 
-					client.setAge(""+age);
-					client.setIncome(""+i*300);
-					switchG = false ; 
-				}else {
-					client.setGender("أنثى");
-					client.setMarried("n");
-					int age2 = i+20;
-					client.setAge(""+age2);
-					if(i==0)
-						client.setIncome("200");
-					else 
-						client.setIncome(""+i*2000);
-					client.setNumberOFChilderen("0");
-					switchG = true ; 
+		//insert clients //
+		List<String> name = new ArrayList<String>();
+		List<String> age = new ArrayList<String>();
+		List<String> Income = new ArrayList<String>();
+		Income.add("100000");
+		Income.add("150000");
+		Income.add("200000");
+		Income.add("125000");
+		Income.add("175000");
+		Income.add("225000");
+		Income.add("250000");
+		Income.add("275000");
+		Income.add("300000");
+		Income.add("325000");
+		Income.add("350000");
+		Income.add("400000");
+		Income.add("450000");
+		Income.add("500000");
+		Income.add("750000");
+		Income.add("8250000");
+		Income.add("1000000");
+		Income.add("1250000");
+		Income.add("1500000");
+		Income.add("2000000");
+		Income.add("3000000");
+		List<String> Income2 = new ArrayList<String>();
+		List<String> NumberOfChildren = new ArrayList<String>();
+		for (int i = 1; i <= 1500; i++) {
+			Random r = new Random();
+			int a = r.nextInt((60 - 25) + 1) + 25;
+			String number = Integer.toString(a);
+			age.add(number);
+
+		}
+		for (int i = 1; i <= 1500; i++) {
+			String number = Integer.toString(i);
+			name.add("Client" + number);
+		}
+		for (int i = 1; i <= 1500; i++) {
+			Random r = new Random();
+			int a = r.nextInt((60 - 25) + 1) + 25;
+			String number = Integer.toString(a);
+			age.add(number);
+
+		}
+		for (int i = 0; i < age.size(); i++) {
+			Random r = new Random();
+
+			while (true) {
+				int a = r.nextInt((20 - 0) + 1) + 0;
+				int inco = Integer.parseInt(Income.get(a));
+				int age2 = Integer.parseInt(age.get(i));
+				if (inco > 300000 && age2 > 30 && age2 != 60) {
+					String number = Integer.toString(inco);
+					Income2.add(number);
+					break;
+				} else if (inco < 700000 && age2 == 60) {
+					String number = Integer.toString(inco);
+					Income2.add(number);
+					break;
+				} else if (inco < 450000 && age2 <= 30) {
+					String number = Integer.toString(inco);
+					Income2.add(number);
+					break;
 				}
-			}else {
-				client.setClientType("مؤسسة");	
-				
+
+
 			}
+		}
+		for (int i = 0; i < age.size(); i++) {
+			Random r = new Random();
+
+			while (true) {
+				int a = r.nextInt((7 - 0) + 1) + 0;
+
+				int age2 = Integer.parseInt(age.get(i));
+				if (a > 0 && a < 4 && age2 >= 20 && age2 <= 30) {
+					String number = Integer.toString(a);
+					NumberOfChildren.add(number);
+					break;
+				} else if (age2 <= 60 && age2 >= 50) {
+					String number = Integer.toString(a);
+					NumberOfChildren.add(number);
+					break;
+				} else if (age2 < 50 && age2 > 30 && a < 5) {
+					String number = Integer.toString(a);
+					NumberOfChildren.add(number);
+					break;
+				}
+
+
+			}
+		}
+		List<Clients> allClients = new ArrayList<Clients>();
+		boolean switchG = false;
+
+		for (int i = 0; i < name.size(); i++) {
+			Clients client = new Clients(name.get(i), "شخص", "003135658" + i, name.get(i) + "mail@gmail.com", "093737101" + i,
+					"", " ", "", NumberOfChildren.get(i), age.get(i), Income2.get(i));
+			Random r = new Random();
+			int gend = r.nextInt((1 - 0) + 1) + 0;
+			if (gend == 0)
+				client.gender = "ذكر";
+			else
+				client.gender = "أنثى";
+			int addr = r.nextInt((4 - 0) + 1) + 0;
+			if (addr == 0)
+				client.address = "دمشق";
+			if (addr == 1)
+				client.address = "حلب";
+			if (addr == 2)
+				client.address = "حمص";
+			if (addr == 3)
+				client.address = "طرطوس";
+			if (addr == 4)
+				client.address = "الاذقية";
+			int marry = r.nextInt((1 - 0) + 1) + 0;
+			if (marry == 0)
+				client.Married = "أعذب";
+			else
+				client.Married = "متزوج";
+
 			this.clientsRepo.save(client);
 			allClients.add(client);
+
 		}
-		//inser finance types // 
-		FinanceType f=new FinanceType("مواسم استراتيجية","100");
-		
+		//inser finance types //
+		FinanceType f = new FinanceType("مواسم استراتيجية", "100");
+
 		this.financeRepo.save(f);
-		
-		FinanceType f1=new FinanceType("طويل الامد","75");
-		
+
+		FinanceType f1 = new FinanceType("طويل الامد", "75");
+
 		this.financeRepo.save(f1);
-		
-		FinanceType f2=new FinanceType("قصير الامد","80");
-		 
+
+		FinanceType f2 = new FinanceType("قصير الامد", "80");
+
 		this.financeRepo.save(f2);
-		
-		List<FinanceType> fTypes = new ArrayList<FinanceType>() ; 
-		fTypes.add(f);fTypes.add(f1);fTypes.add(f2);
-		
-		
+
+		List<FinanceType> fTypes = new ArrayList<FinanceType>();
+		fTypes.add(f);
+		fTypes.add(f1);
+		fTypes.add(f2);
+
+
 		//insert loans types 
 		LoansType l = new LoansType("مرخص");
 		this.TypeRepo.save(l);
 		LoansType l1 = new LoansType("معفى");
 		this.TypeRepo.save(l1);
 		List<LoansType> loansTypes = new ArrayList<LoansType>();
-		loansTypes.add(l);loansTypes.add(l1);
-		
-		
+		loansTypes.add(l);
+		loansTypes.add(l1);
+
+
 		//inserts bank //
-		List<Branches> branchList = new ArrayList<Branches>();
-		for(int dashNum = 0 ; dashNum < 10 ; dashNum++) {
-			Banks dashBank = new Banks("dashBank"+dashNum,"0") ; 
+		List<Branches> branchListt = new ArrayList<Branches>();
+		List<String> branchList = new ArrayList<String>();
+		branchList.add("المحافظة");
+		branchList.add("المزة");
+		branchList.add("الروضة");
+		branchList.add("الميدان");
+		branchList.add("التجارة");
+		branchList.add("ضاحية الأسد");
+		branchList.add("قطنا");
+		branchList.add("العدوي");
+		branchList.add("أبورمانة");
+		List<String> Bank = new ArrayList<String>();
+		Bank.add("التوفير");
+		Bank.add("الزراعي");
+		Bank.add("التسليف الشعبي");
+		Bank.add("العقاري");
+		Bank.add("الصناعي");
+		Bank.add("التجاري");
+
+		for (int dashNum = 0; dashNum < Bank.size(); dashNum++) {
+			Banks dashBank = new Banks(Bank.get(dashNum), "0");
 			this.banksRepo.save(dashBank);
-			
-			Branches branch = new Branches("br"+dashNum,"#br"+dashNum); 
-			branch.setBank(dashBank);
-			this.branchRepo.save(branch); 
-			branchList.add(branch);
-		//insertAllocations for this banks 
-		int year = 1996 ;
-		for(int i = 1 ; i <= 24 ; i++) {
-			int initialAmount = ThreadLocalRandom.current().nextInt(10000, 9000000 + 1);
-			Allocations allocation = new Allocations() ; 
-			allocation.setBank(dashBank);
-			allocation.setAllocationAmmount(String.valueOf(initialAmount));
-			String yearAsString = String.valueOf(year);
-			String date = yearAsString +"-01-01";
-			allocation.setAllocationDate(date); 
-			year++ ; 
-			this.allocationsRepo.save(allocation);
-		}
-		}
-		//insert branch to set the loans to 
-		
-			
-		int financeType = 0 ; 
-		int loanType = 0 ;
-		int branchesCounter = 0 ; 
-		int clientsCounter = 0 ; 
-		for(int j = 0 ; j < 5 ; j++) {
-			int year = 1980 ;
-			for(int i = 1 ; i < 40 ; i ++) {
-			int totalLoanValue = 50000+ ThreadLocalRandom.current().nextInt(10000, 9000000 + 1);; 
-			int intrestRate = ThreadLocalRandom.current().nextInt(2,20);
-			Loans loan = new Loans("السلفة"+i,"الطرف الأول","الطرف الثاني",String.valueOf(i),
-				String.valueOf(intrestRate),String.valueOf(intrestRate-1),"ر.ت"+i,String.valueOf(totalLoanValue),
-				String.valueOf(totalLoanValue),String.valueOf(totalLoanValue),String.valueOf(totalLoanValue), "3",
-				"3","شراء بضاعة",allClients.get(clientsCounter), branchList.get(branchesCounter), null, loansTypes.get(loanType),
-			fTypes.get(financeType));
-		String yearAsString = String.valueOf(year);
-		int month = ThreadLocalRandom.current().nextInt(1,13);
-		String monthAsString = String.valueOf(month);
-		if(month != 10) {
-			if( month != 11)
-				if( month != 12)
-			monthAsString = "0"+monthAsString;
-		}
-		int day = ThreadLocalRandom.current().nextInt(1,28);
-		String sDay = String.valueOf(day);
-		if(sDay.length() == 1 ) {
-			sDay = "0" + sDay; 
-		}
-		String date = yearAsString +"-"+monthAsString+"-"+sDay;
-		System.out.println("loan date "+date);
-		if(i %2 == 0 ) {
-			loan.setStatus("Confirmed");
-		}else {
-			loan.setStatus("NotConfirmed");
-		}
-		loan.setLoanDate(date);
-		year++;
-		
-		if(financeType < 2 ) {
-			financeType++;
-		}else {
-			financeType = 0 ; 
-		}
-		if(loanType == 0 ) {
-			loanType = 1 ;
-		}else {
-			loanType = 0 ; 
-		}
-		if(branchesCounter < branchList.size()-1) {
-			branchesCounter ++ ;
-		}else {
-			branchesCounter = 0 ; 
-		}
-		
-		this.loansRepo.save(loan); 
-		OpenLoans openLoan = new OpenLoans();
-		openLoan.setLoan(loan);
-		this.openLoansRepo.save(openLoan);
-		injectVouchersToLoan(loan,allClients.get(clientsCounter));
-		if(clientsCounter < allClients.size()-1) {
-			clientsCounter ++ ; 
-		}else {
-			clientsCounter = 0 ; 
-		}
-		
+
+			for (int j = 0; j < branchList.size(); j++) {
+				Branches branch = new Branches(branchList.get(j), "#br" + dashNum);
+				branch.setBank(dashBank);
+				this.branchRepo.save(branch);
+				branchListt.add(branch);
 			}
+
+			//insertAllocations for this banks
+			int year = 1996;
+			for (int i = 1; i <= 24; i++) {
+				int initialAmount = ThreadLocalRandom.current().nextInt(10000, 9000000 + 1);
+				Allocations allocation = new Allocations();
+				allocation.setBank(dashBank);
+				allocation.setAllocationAmmount(String.valueOf(initialAmount));
+				String yearAsString = String.valueOf(year);
+				String date = yearAsString + "-01-01";
+				allocation.setAllocationDate(date);
+				year++;
+				this.allocationsRepo.save(allocation);
+			}
+
 		}
-		
+		//insert branch to set the loans to
+		List<String> LoansAmount = new ArrayList<String>();
+
+		int start = 100000;
+		String number3 = Integer.toString(start);
+		LoansAmount.add(number3);
+		while (true) {
+			start += 25000;
+
+			String number2 = Integer.toString(start);
+			LoansAmount.add(number2);
+
+			if (start == 10025000)
+				break;
+
+		}
+
+		Random r = new Random();
+
+
+		for (int k = 0; k < 10; k++) {
+			int year = 2010;
+			for (int i = 1; i < 50; i++) {
+
+				int financeType = r.nextInt(2);
+				int BankName = r.nextInt((5 - 0) + 1) + 0;
+				int loanType = r.nextInt((1 - 0) + 1) + 0;
+				int branchesCounter = r.nextInt((44 - 0) + 1) + 0;
+				int clientsCounter = r.nextInt((1499 - 0) + 1) + 0;
+				int LoansAmountCounter = r.nextInt((397 - 0) + 1) + 0;
+				int totalLoanValue = 50000 + ThreadLocalRandom.current().nextInt(10000, 9000000 + 1);
+				;
+				int intrestRate = ThreadLocalRandom.current().nextInt(2, 20);
+				Loans loan = new Loans("السلفة" + i, branchListt.get(branchesCounter).getBank().bankName, "مصرف سورية المركزي", "1123" + String.valueOf(i),
+						String.valueOf(intrestRate), String.valueOf(intrestRate - 1), "ر.ت" + i, LoansAmount.get(LoansAmountCounter),
+						LoansAmount.get(LoansAmountCounter) + " ليرة سورية", "", "", "3",
+						"3", "", allClients.get(clientsCounter), branchListt.get(branchesCounter), null, loansTypes.get(loanType),
+						fTypes.get(financeType));
+
+				double x = Double.parseDouble(fTypes.get(financeType).getFundintRate()) / 100.00;
+				double y = Double.parseDouble(LoansAmount.get(LoansAmountCounter));
+				double z = x * y;
+				loan.setNetAmmount(String.valueOf(z));
+				loan.setNetAmmountAsString(String.valueOf(z) + " ليرة سورية");
+				String yearAsString = String.valueOf(year);
+				int month = r.nextInt((12 - 1) + 1) + 1;
+				String monthAsString = String.valueOf(month);
+				int day = r.nextInt((28 - 1) + 1) + 1;
+				String sDay = String.valueOf(day);
+				String date = yearAsString + "-" + monthAsString + "-" + sDay;
+//				System.out.println("loan date " + date);
+				loan.setStatus("مؤكدة");
+				loan.setLoanDate(date);
+				int stat = r.nextInt((6 - 1) + 1) + 1;
+				this.loansRepo.save(loan);
+				if (stat == 1 || stat == 2 || stat == 3 || stat == 4) {
+					CloseLoans closeLoans = new CloseLoans();
+					closeLoans.setLoan(loan);
+					this.closeLoanRepository.save(closeLoans);
+
+				}
+				if (stat == 5) {
+					OpenLoans openLoan = new OpenLoans();
+					openLoan.setLoan(loan);
+					this.openLoansRepo.save(openLoan);
+				}
+				if (stat == 6) {
+					ReScheduleLoans reScheduleLoans = new ReScheduleLoans();
+					reScheduleLoans.setLoan(loan);
+					this.reScheduleLoansRepository.save(reScheduleLoans);
+				}
+
+				injectVouchersToLoan(loan, allClients.get(clientsCounter));
+			}
+			System.out.println("done");
+			year++;
+		}
 	}
+		
+
 
 	public void injectUsers_Roles_ToDB() {
 		boolean adminFound = false , superFound = false ,statsFound = false , allStatsFound = false ,loansFound = false  ; 
@@ -340,9 +476,9 @@ public class DbInit implements CommandLineRunner{
 			voucher.setNetAmmount(String.valueOf(ammount));
 			voucher.setStatus("open");
 			voucher.setFundingRatio(loan.getInterestRate());
-			String year = getYearFromStringDate(loan.getLoanDate());
-			String voDate = generateDateForVoucher(Integer.valueOf(year)) ; 
-			voucher.setVoucherDate(voDate);
+			//String year = getYearFromStringDate(loan.getLoanDate());
+			//String voDate = generateDateForVoucher(Integer.valueOf(year)) ;
+			//voucher.setVoucherDate(voDate);
 			this.vouchersRepo.save(voucher);
 		}
 		
