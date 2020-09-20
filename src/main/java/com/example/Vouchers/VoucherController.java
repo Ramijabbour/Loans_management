@@ -55,7 +55,7 @@ public class VoucherController {
 	public void addNewVoucher(@ModelAttribute Vouchers voucher,HttpServletResponse response,@PathVariable int id ) throws IOException {
 		System.out.println("posted to /Loan/AddVoucher/id ");
 		Loans loan=servicePool.getLoansService().getOneByID(id);
-		voucher.setStatus("Open");
+		voucher.setStatus("غير مدفوع");
 		voucher.setLoan(loan);
 		servicePool.getVoucherService().addVoucher(voucher);
 		response.sendRedirect("/Loans/all/Open?index=0");
@@ -79,7 +79,7 @@ public class VoucherController {
 		ModelAndView mav = new ModelAndView("Vouchers/OneVoucher");
 		Vouchers voucher= servicePool.getVoucherService().GetVoucherById(id);
 		boolean checkStatus =false ;
-		if(voucher.getStatus().equalsIgnoreCase("Open"))
+		if(voucher.getStatus().equalsIgnoreCase("غير مدفوع"))
 			checkStatus=true;
 		mav.addObject("status",checkStatus);
 		mav.addObject("notstatus",!checkStatus);
@@ -126,7 +126,7 @@ public class VoucherController {
 	public void PaidVoucher(@PathVariable int id , HttpServletResponse response) throws IOException
 	{
 		Vouchers voucher = servicePool.getVoucherService().GetVoucherById(id);
-		voucher.setStatus("paid");
+		voucher.setStatus("مدفوع");
 		
 		servicePool.getVoucherService().updateVoucher(voucher);
 		int  loanid = voucher.getLoan().getId();
@@ -195,7 +195,7 @@ public class VoucherController {
 		}
 		
 		//step #1 add the voucher 
-		voucher.setStatus("Open");
+		voucher.setStatus("غير مدفوع");
 		
 		servicePool.getVoucherService().addVoucher(voucher);
 		//step #2 check the remaining voucher to add 
@@ -259,7 +259,7 @@ public class VoucherController {
 		}
 		
 		//step #1 add the voucher 
-		voucher.setStatus("Open");
+		voucher.setStatus("غير مدفوع");
 		
 		servicePool.getVoucherService().addVoucher(voucher);
 		//step #2 check the remaining voucher to add 
@@ -430,7 +430,7 @@ public class VoucherController {
 		
 		else {
 			for(Vouchers voucher : voucherInputModel.getVouchersList()) {
-				voucher.setStatus("Open");
+				voucher.setStatus("غير مدفوع");
 				servicePool.getVoucherService().addVoucher(voucher);
 			}
 			return MasterService.sendSuccessMsg("تمت إضافة السلفة بنجاح");

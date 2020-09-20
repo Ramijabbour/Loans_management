@@ -89,6 +89,10 @@ public class AnalyticsModel {
 	
 	
 	
+	
+	
+	
+	
 	public int getNumberOfChecksPerDay() {
 		return NumberOfChecksPerDay;
 	}

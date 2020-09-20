@@ -40,7 +40,7 @@ public class OpenLoansService {
 		
 		for(OpenLoans l : allLoans)
 		{
-			if(l.getLoan().getStatus().equalsIgnoreCase("NotConfirmed"))
+			if(l.getLoan().getStatus().equalsIgnoreCase("غير مؤكدة"))
 				NotConfimedLoans.add(l);
 		}
 		return NotConfimedLoans;
@@ -54,7 +54,7 @@ public class OpenLoansService {
 		
 		for(OpenLoans l : allLoans)
 		{
-			if(l.getLoan().getStatus().equalsIgnoreCase("Confirmed"))
+			if(l.getLoan().getStatus().equalsIgnoreCase("مؤكدة"))
 				ConfimedLoans.add(l);
 		}
 		return ConfimedLoans;
