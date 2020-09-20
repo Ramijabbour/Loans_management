@@ -10,6 +10,7 @@ import com.example.BankBranches.Branches;
 import com.example.Clients.Clients;
 import com.example.FinanceType.FinanceType;
 import com.example.LoansType.LoansType;
+import com.example.SiteConfig.MasterService;
 import com.example.aspect.EncryptDecrypt.StringEncryptDecryptConverter;
 import com.example.security.user.User;
 
@@ -40,6 +41,9 @@ public class Loans {
 
     public String LoanDate;
 
+    public boolean confirmed;
+
+    
     @Convert(converter = StringEncryptDecryptConverter.class)
     public String InterestRate;
 
@@ -87,7 +91,27 @@ public class Loans {
     private FinanceType financeType = null;
     
     
-    public Loans() {}
+    @Convert(converter = StringEncryptDecryptConverter.class)
+    private String loanYear ; 
+    
+    @Convert(converter = StringEncryptDecryptConverter.class)
+    private String loanMonth ; 
+  
+    
+    @Convert(converter = StringEncryptDecryptConverter.class)
+    private String EndYear ; 
+    
+    @Convert(converter = StringEncryptDecryptConverter.class)
+    private String EndMonth ; 
+    
+    @Convert(converter = StringEncryptDecryptConverter.class)
+    private String EndDay ; 
+    
+    
+    public Loans() {
+    	this.loanYear = MasterService.getYearFromStringDate(MasterService.getDateAsString());
+		this.loanMonth = MasterService.getMonthFromStringDate(MasterService.getDateAsString());
+    }
     
     
 
@@ -116,10 +140,89 @@ public class Loans {
 		this.user = user;
 		this.loanType = loanType;
 		this.financeType = financeType;
+		this.loanYear = MasterService.getYearFromStringDate(MasterService.getDateAsString());
+		this.loanMonth = MasterService.getMonthFromStringDate(MasterService.getDateAsString());
 	}
 
 
 
+    public void calculateEndDate() {
+    	if(financeType.getTypeName().equalsIgnoreCase("مواسم استراتيجية")) {
+    		int loanDay = Integer.valueOf(MasterService.getDayFromStringDate(this.LoanDate));
+    		int loanYear = Integer.valueOf(MasterService.getYearFromStringDate(this.LoanDate));
+    		int loanMonth  = Integer.valueOf(MasterService.getMonthFromStringDate(this.LoanDate));
+    		
+    		loanDay+=45 ; 
+    		
+    		int decisionDay = loanDay - 30 ; 
+    		
+    		if(decisionDay <= 30 ) {
+    			loanMonth++ ; 
+    			if(loanMonth>12) {
+    				loanYear++; 
+    				loanMonth = 1;
+    			}
+    			EndDay = String.valueOf(decisionDay);
+    			EndMonth = String.valueOf(loanMonth);
+    			EndYear = String.valueOf(loanYear);
+    		} 
+    		
+    		else if (decisionDay > 30 ) {
+    			loanMonth++ ; 
+    			if(loanMonth>12) {
+    				loanYear++; 
+    				loanMonth = 1;
+    			}
+    			loanMonth++ ; 
+    			if(loanMonth>12) {
+    				loanYear++; 
+    				loanMonth = 1;
+    			}
+    			decisionDay = decisionDay - 30 ; 
+       			EndDay = String.valueOf(decisionDay);
+    			EndMonth = String.valueOf(loanMonth);
+    			EndYear = String.valueOf(loanYear);
+    		}
+    		
+    	}
+    	
+    	
+    	
+    	else if(financeType.getTypeName().equalsIgnoreCase("طويل الامد")) {
+    		int loanYear = Integer.valueOf(MasterService.getYearFromStringDate(this.LoanDate));
+    		loanYear +=5 ; 
+    		EndYear = String.valueOf(loanYear);
+    		EndMonth = MasterService.getMonthFromStringDate(this.LoanDate);
+    		EndDay=  MasterService.getDayFromStringDate(this.LoanDate);
+    
+    	} 
+    	
+    	
+    	
+    	else if(financeType.getTypeName().equalsIgnoreCase("قصير الامد")) {
+    		int loanMonth  = Integer.valueOf(MasterService.getMonthFromStringDate(this.LoanDate));
+    		int loanYear = Integer.valueOf(MasterService.getYearFromStringDate(this.LoanDate));
+    		
+    		loanMonth+=6 ; 
+    		
+    		int decision = loanMonth - 12 ; 
+    		if(decision <= 0 ) {
+    			EndYear = String.valueOf(loanYear);
+    			EndMonth = String.valueOf(loanMonth);
+    		}
+    		else if(decision > 0 ) {
+    			loanMonth = decision ; 
+    			loanYear++ ; 
+    			EndYear = String.valueOf(loanYear);
+    			EndMonth = String.valueOf(loanMonth);
+    		}
+    		EndDay=  MasterService.getDayFromStringDate(this.LoanDate);
+    	} 
+    	
+    }
+    
+    
+    
 	public int getId() {
         return id;
     }
@@ -316,6 +419,76 @@ public class Loans {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getLoanYear() {
+		return loanYear;
+	}
+
+
+
+	public void setLoanYear(String loanYear) {
+		this.loanYear = loanYear;
+	}
+
+
+
+	public String getLoanMonth() {
+		return loanMonth;
+	}
+
+
+
+	public void setLoanMonth(String loanMonth) {
+		this.loanMonth = loanMonth;
+	}
+
+
+	public String getEndYear() {
+		return EndYear;
+	}
+
+
+
+	public void setEndYear(String endYear) {
+		EndYear = endYear;
+	}
+
+
+
+	public String getEndMonth() {
+		return EndMonth;
+	}
+
+
+
+	public void setEndMonth(String endMonth) {
+		EndMonth = endMonth;
+	}
+
+
+
+	public String getEndDay() {
+		return EndDay;
+	}
+
+
+
+	public void setEndDay(String endDay) {
+		EndDay = endDay;
+	}
+
+	
+
+
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+
+
+
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 
 

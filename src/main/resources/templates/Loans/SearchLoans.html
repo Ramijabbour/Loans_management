@@ -64,7 +64,7 @@
                                 <td th:text="${loan.NetAmmount}"></td>
                                 <td th:text="${loan.Status}"></td>
                                 <td>
-                                    <form th:if="${show}" action="#" th:action="@{/Loans/Loan/} + ${{loan.id}}" method="get">
+                                    <form th:if="${loan.confirmed}" action="#" th:action="@{/Loans/Loan/} + ${{loan.id}}" method="get">
                                         <button th:id="'table_entry_childs_button_' + ${loan.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                                             <i>عرض</i>
                                         </button>
@@ -73,9 +73,17 @@
 
 
                                 <td>
-                                    <form th:if="${check}" action="#" th:action="@{/Loan/Confirme/}+ ${{loan.id}}" method="get">
+                                    <form th:unless="${loan.confirmed}" action="#" th:action="@{/Loans/Confirme/}+ ${{loan.id}}" method="get">
                                         <button th:id="'table_entry_childs_button_' + ${loan.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
                                             <i>تأكيد</i>
+                                        </button>
+                                    </form>
+                                </td>
+                               
+                             <td>
+                                    <form th:unless="${loan.confirmed}" action="#" th:action=" @{/Loans/datamining/}+ ${{loan.id}}" method="get">
+                                        <button th:id="'table_entry_childs_button_' + ${loan.id}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">
+                                            <i>دعم القرار</i>
                                         </button>
                                     </form>
                                 </td>

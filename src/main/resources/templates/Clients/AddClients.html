@@ -45,7 +45,7 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">الإسم</label>
-                    <input type="text" name="name" class="form-control"  placeholder="ادخل الاسم " th:field="*{ClientName}" pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$">
+                    <input type="text" name="name" class="form-control"  placeholder="ادخل الاسم " th:field="*{ClientName}" pattern="^[a-zA-Z][a-zA-Z0-9-_\.\ ]{1,20}$" required>
                   </div>
                 </div>
 
@@ -65,14 +65,14 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">الرقم الوطني</label>
-                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل الرقم الوطني" th:field="*{identity_number}" >
+                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل الرقم الوطني" th:field="*{identity_number}"  required>
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">البريد الإلكتروني</label>
-                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل البريد الالكتروني" th:field="*{email}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل البريد الالكتروني" th:field="*{email}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
                   </div>
                 </div>
                 </div>
@@ -81,14 +81,14 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">رقم الهاتف</label>
-                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل رقم الهاتف" th:field="*{phone}">
+                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل رقم الهاتف" th:field="*{phone}" required>
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">العنوان</label>
-                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل العنوان" th:field="*{address}" >
+                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل العنوان" th:field="*{address}" required>
                   </div>
                 </div>
                 </div>
@@ -96,14 +96,14 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">عدد الأولاد</label>
-                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل عدد الاولاد" th:field="*{NumberOFChilderen}" >
+                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل عدد الاولاد" th:field="*{NumberOFChilderen}" required>
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">العمر</label>
-                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل العمر" th:field="*{Age}" >
+                    <input type="text" name="Identity" class="form-control"  placeholder="ادخل العمر" th:field="*{Age}" required>
                   </div>
                 </div>
                 </div>
@@ -141,7 +141,7 @@
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">الدخل</label>
-                      <input type="text" name="Identity" class="form-control"  placeholder="الدخل" th:field="*{income}" >
+                      <input type="text" name="Identity" class="form-control"  placeholder="الدخل" th:field="*{income}" required >
                     </div>
                   </div>
                 </div>

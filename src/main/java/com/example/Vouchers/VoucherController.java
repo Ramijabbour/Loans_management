@@ -1,6 +1,7 @@
 package com.example.Vouchers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import com.example.ServicesPool;
 import com.example.Clients.Clients;
 import com.example.Loans.Loans;
 import com.example.Loans.LoansController;
+import com.example.SiteConfig.MasterService;
 
 @RestController
 public class VoucherController {
@@ -211,13 +213,7 @@ public class VoucherController {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
@@ -348,6 +344,109 @@ public class VoucherController {
 	}
 	
 	//end of data check section // 
+	
+	
+	public ModelAndView startVoucherSequence(Loans loan ) {
+		List<Vouchers> emptyVouchersList = new ArrayList<Vouchers>() ; 
+		for(int i = 0 ; i < Integer.valueOf(loan.getNumberOfVoucher()) ; i ++ ) {
+			Vouchers voucher = new Vouchers();
+			voucher.setLoan(loan);
+			emptyVouchersList.add(voucher);
+		}
+		VouchersInputModel voucherInputModel = new VouchersInputModel(emptyVouchersList, loan);
+		System.out.println("loan data "+loan.getNumberOfVoucher());
+		ModelAndView mav = new ModelAndView("Vouchers/addVouchersNew");
+		mav.addObject("voucherInputModel", voucherInputModel);
+		List<Clients> allclient = servicePool.getClientService().GetAllClientsNoPage();
+		mav.addObject("allclient", allclient);
+		mav.addObject("loanid", loan.getId());
+		mav.addObject("msg", " ");
+		return mav ;
+	} 
+	
+	
+	@RequestMapping(method = RequestMethod.POST , value = "/vouchers/addLoanVouchers/{loanid}")
+	public ModelAndView addVouchersOfLoan(@ModelAttribute VouchersInputModel voucherInputModel,@PathVariable int loanid ) {
+		Loans loan = servicePool.getLoansService().getOneByID(loanid);
+		voucherInputModel.setLoan(loan);
+		
+		int loanNetAmount = Integer.valueOf(loan.getNetAmmount());
+		int loanTotalAmount = Integer.valueOf(loan.getTotalAmmount());
+		int vouchersNetAmount = 0 ; int vouchersTotalAmount = 0 ; 
+		
+		String dateMsg = "" ;
+		for(Vouchers voucher : voucherInputModel.getVouchersList()) {
+			voucher.setLoan(loan);
+			vouchersNetAmount+=Integer.valueOf(voucher.getNetAmmount());
+			vouchersTotalAmount += Integer.valueOf(voucher.getTotal());
+			
+			int voucherYear = Integer.valueOf(MasterService.getYearFromStringDate(voucher.getVoucherDate()));
+			int voucherMonth = Integer.valueOf(MasterService.getMonthFromStringDate(voucher.getVoucherDate()));
+			int voucherDay = Integer.valueOf(MasterService.getDayFromStringDate(voucher.getVoucherDate()));
+			
+			int loanYear = Integer.valueOf(MasterService.getYearFromStringDate(loan.getLoanDate()));
+			int loanMonth = Integer.valueOf( MasterService.getMonthFromStringDate(loan.getLoanDate()));
+			int loanDay = Integer.valueOf(MasterService.getDayFromStringDate(loan.getLoanDate()));
+		 
+			if(loanYear > voucherYear) {
+				dateMsg = "تاريخ السند يجب أن يكون بعد تاريخ السلفة";
+			}else if(loanYear == voucherYear) {
+				if(loanMonth > voucherMonth) {
+					dateMsg = "تاريخ السند يجب أن يكون بعد تاريخ السلفة"; 
+				}else if(loanMonth == voucherMonth) {
+					if(loanDay > voucherDay ) {
+						dateMsg = "تاريخ السند يجب أن يكون بعد تاريخ السلفة";
+					}else {
+						dateMsg = "ok";
+					}
+				}else {
+					dateMsg = "ok";
+				}
+			}else {
+				dateMsg = "ok";
+			}
+		
+		}
+		
+		if(!dateMsg.equalsIgnoreCase("ok")) {
+			return voucherError(voucherInputModel,loan,dateMsg);
+		}
+		
+		String msg = " " ; 
+		if(vouchersNetAmount > loanNetAmount || vouchersNetAmount < loanNetAmount) {
+			msg = "مجموع القيمة الصافية للسندات يجب أن يكون مساوياً للقية الصافية للسلفة";
+		}
+		if(vouchersTotalAmount > loanTotalAmount || vouchersTotalAmount < loanTotalAmount) {
+			msg = "مجموع القيمة الكلية للسندات يجب أن يكون مساوياً للقيمة الكلية للسلفة";
+		}
+		if(msg.equalsIgnoreCase(" ")) {
+			msg = "ok";
+		}
+			
+		
+		if(!msg.equalsIgnoreCase("ok")) {
+			return voucherError(voucherInputModel,loan,msg);
+		}
+		
+		else {
+			for(Vouchers voucher : voucherInputModel.getVouchersList()) {
+				voucher.setStatus("Open");
+				servicePool.getVoucherService().addVoucher(voucher);
+			}
+			return MasterService.sendSuccessMsg("تمت إضافة السلفة بنجاح");
+		}
+		
+	}
+	
+	public ModelAndView voucherError(VouchersInputModel voucherInputModel , Loans loan , String errorMsg ) {
+		ModelAndView mav = new ModelAndView("Vouchers/addVouchersNew");
+		mav.addObject("voucherInputModel", voucherInputModel);
+		List<Clients> allclient = servicePool.getClientService().GetAllClientsNoPage();
+		mav.addObject("allclient", allclient);
+		mav.addObject("loanid", loan.getId());
+		mav.addObject("msg", errorMsg);
+		return mav ;
+	}
 	
 	
 }

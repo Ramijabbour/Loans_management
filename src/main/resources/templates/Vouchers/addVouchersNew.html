@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html  lang="ar" dir="rtl"
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles">
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Central Bank of syria</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/../../new/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/../../new/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/../../new/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/../../new/images/photo5810167110637302253.jpg" />
+</head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<div class="wrapper">
+	<div class="content-wrapper">
+	<section class="content">
+<p th:text="${msg}"></p>
+<form action="#" th:action="@{/vouchers/addLoanVouchers/} + ${{loanid}}" th:object="${voucherInputModel}"
+  method="post">
+    <fieldset>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                	<th> تاريخ السند </th>
+                	<th> قيمة السند </th>
+                	<th> الاجمالي </th>
+                	<th> القيمة الصافية </th>
+                	<th> المتعامل </th>
+                	<th> نسبة التمويل </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="voucher, itemStat : *{vouchersList}">
+                    <td><input type="date" th:field="*{vouchersList[__${itemStat.index}__].VoucherDate}" class="form-control" /></td>
+                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].VoucherAmmount}" class="form-control"/></td>
+                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].Total}" class="form-control"/></td>
+                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].NetAmmount}" class="form-control"/></td>
+                    <td>
+                    <select th:field="*{vouchersList[__${itemStat.index}__].client}" class="form-control">
+                      <option th:each="client : ${allclient}" th:value="${client.id}" th:text="${client.ClientName}"></option>
+                    </select>
+                    </td>
+                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].FundingRatio}" class="form-control"/></td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="submit" id="submitButton" th:value="Save" class="btn btn-inverse-primary btn-fw">
+        <input type="reset" id="resetButton" name="reset" th:value="Reset" class="btn btn-inverse-danger btn-fw"/>
+    </fieldset>
+</form>
+</section>
+ </div>
+</div>
+<footer class="footer">
+     <div class="footer-wrap">
+         <div class="w-100 clearfix">
+           <span class="d-block text-center text-sm-left d-sm-inline-block">جميع الحقوق محفوظة©2020 <a href="https://www.templatewatch.com/" target="_blank"></a>مصرف سورية المركزي.</span>
+         </div>
+     </div>
+</footer>
+
+
+</body>
+
+</html>
