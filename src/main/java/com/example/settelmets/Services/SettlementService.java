@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.example.MQ.OrderMessageSender;
@@ -100,7 +101,7 @@ public class SettlementService extends MasterService {
 
 	
 	//change schedule invoke time and isolate it in another thread 
-	//@Scheduled(fixedRate = 7000000)
+	@Scheduled(fixedRate = 7200000)
 	@Transactional
 	public void settleChecks() throws ParseException {
 		

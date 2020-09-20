@@ -3,6 +3,7 @@ package com.example.settelmets.RTGSLink;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,10 @@ public class RTGSUserService {
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	public String addRTUser(RTGSUser user) {
-		// TODO Auto-generated method stub
 		user.setGender("M");
-		if(checkUserinforDuplication(user)) {
-			return "يوجد مستخدم بنفس المعلومات";
+		String duplicationResult =checkUserinforDuplication(user); 
+		if(!duplicationResult.equalsIgnoreCase("ok")) {
+			return duplicationResult;
 		}
 		String result = this.validateUserInfo(user);
 		if(!result.equalsIgnoreCase("ok")) {
@@ -42,11 +43,26 @@ public class RTGSUserService {
 			user.setSent(false);
 		}
 		this.rtgsUserRepository.save(user); 
-		
 		//call for msg sender 
 		return "ok";
 	} 
 	
+	
+	@Scheduled(fixedRate = 900000)
+	public void sendOnHoldUsers() {
+		List<RTGSUser> usersList = this.rtgsUserRepository.findBySentFalse() ; 
+		if(usersList.size() != 0 ) {
+			for(RTGSUser user : usersList ) {
+			try {
+				this.msgSender.sendOrderCheck(user);
+				user.setSent(true);
+			}catch(Exception e ) {
+				user.setSent(false);
+			}
+			this.rtgsUserRepository.save(user);
+			} 
+		}
+	}
 	
 	public List<RTGSUser> getallUsers(){
 		return this.rtgsUserRepository.findAll() ; 
@@ -76,18 +92,29 @@ public class RTGSUserService {
 		return "ok";
 	}
 	
-	public boolean checkUserinforDuplication(RTGSUser user ) {
+	public String checkUserinforDuplication(RTGSUser user ) {
+		List<RTGSUser> usersRepoList = this.rtgsUserRepository.findBybankName(user.getBankName());
+		if(usersRepoList.size() != 0 ) {
+			for(RTGSUser rtUser : usersRepoList) {
+				if(rtUser.getBranchName().equalsIgnoreCase(user.getBranchName())){
+					return "يوجد حساب لهذا الفرع من هذا البنك" ; 
+				}
+				if(rtUser.getBranchCode().equalsIgnoreCase(user.getBranchCode())) {
+					return "رمز الفرع مستخدم سابقا لهذا البنك" ;
+				}
+			}
+		}
 		List<RTGSUser> usersList = this.rtgsUserRepository.findAll() ; 
 		for(int i = 0 ; i < usersList.size() ; i++ ) {
 			RTGSUser tempUser = usersList.get(i) ;
 			if(tempUser.getUsername().equalsIgnoreCase(user.getUsername())) {
-				return true ; 
+				return "اسم المستخدم غير متاح" ; 
 			}
 			if(tempUser.getEmail().equalsIgnoreCase(user.getEmail())){
-				return true ; 
+				return "البريد الالكتروني مستخدم سابقاً" ; 
 			}
 		}
-		return false ; 
+		return "ok" ; 
 	}
 	
 	private boolean validatePassword(String password) {

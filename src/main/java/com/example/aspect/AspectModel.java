@@ -51,71 +51,71 @@ public class AspectModel {
 
 	//Controlling access to site routes  
 	
-	/*
+	
 	@Before("execution(* com.example.security.user.UserController..*(..)))")
 	public void secureUserService(JoinPoint  proceedingJoinPoint)  {
 			System.out.println("intercepting user Controller methods ");
 			printFunctionCallInfo(proceedingJoinPoint);
-			//if(!checkEntryTime()) {
-				//throw new OutOfDayBoundsException() ; 
-			//}
-			//User user = get_current_User();    
-			//user.flatUserDetailes();   
-			//checkUserPermission(proceedingJoinPoint,user);
+			if(!checkEntryTime()) {
+				throw new OutOfDayBoundsException() ; 
+			}
+			User user = get_current_User();    
+			user.flatUserDetailes();   
+			checkUserPermission(proceedingJoinPoint,user);
 	}
 	
 	@Before("execution(* com.example.Banks.BankController..*(..)))")
 	public void secureBanksService(JoinPoint  proceedingJoinPoint)  {
-			//System.out.println("intercepting banks Controller ");
-			//printFunctionCallInfo(proceedingJoinPoint);
+			System.out.println("intercepting banks Controller ");
+			printFunctionCallInfo(proceedingJoinPoint);
 			User user = get_current_User();    
 			user.flatUserDetailes();   
-			//checkUserPermission(proceedingJoinPoint,user);
+			checkUserPermission(proceedingJoinPoint,user);
 	}
 		
 	@Before("execution(* com.example.security.roles.RolesController..*(..)))")
 	public void secureRolesService(JoinPoint  proceedingJoinPoint)  {
 			System.out.println("intercepting ROLES Controller ");
 			printFunctionCallInfo(proceedingJoinPoint);
-			//User user = get_current_User();    
-			//user.flatUserDetailes();   
-			//checkUserPermission(proceedingJoinPoint,user);
+			User user = get_current_User();    
+			user.flatUserDetailes();   
+			checkUserPermission(proceedingJoinPoint,user);
 	}
 	
 	@Before("execution(* com.example.security.permissions.PermissionsController..*(..)))")
 	public void securePermissionsService(JoinPoint  proceedingJoinPoint)  {
 			System.out.println("intercepting Permissions Controller ");
 			printFunctionCallInfo(proceedingJoinPoint);
-			//User user = get_current_User();    
-			//user.flatUserDetailes();   
-			//checkUserPermission(proceedingJoinPoint,user);
+			User user = get_current_User();    
+			user.flatUserDetailes();   
+			checkUserPermission(proceedingJoinPoint,user);
 	}
 	
 	@Before("execution(* com.example.Clients.ClinetController..*(..)))")
 	public void secureClientsService(JoinPoint  proceedingJoinPoint)  {
 			System.out.println("intercepting Clients Controller ");
 			printFunctionCallInfo(proceedingJoinPoint);
-			//User user = get_current_User();    
-			//user.flatUserDetailes();   
-			//checkUserPermission(proceedingJoinPoint,user);
+			User user = get_current_User();    
+			user.flatUserDetailes();   
+			checkUserPermission(proceedingJoinPoint,user);
 	}
 	
 	@Before("execution(* com.example.BankBranches.BracheController..*(..)))")
 	public void secureBranchesService(JoinPoint  proceedingJoinPoint)  {
 			System.out.println("intercepting Branches Controller ");
 			printFunctionCallInfo(proceedingJoinPoint);
-			//User user = get_current_User();    
-			//user.flatUserDetailes();   
-			//checkUserPermission(proceedingJoinPoint,user);
+			User user = get_current_User();    
+			user.flatUserDetailes();   
+			checkUserPermission(proceedingJoinPoint,user);
 	}
 	
 	@Before("execution(* com.example.Allocations.AllocationsController..*(..)))")
 	public void secureAllocationsService(JoinPoint  proceedingJoinPoint)  {
 			System.out.println("intercepting Allocations Controller ");
 			printFunctionCallInfo(proceedingJoinPoint);
-			//User user = get_current_User();    
-			//user.flatUserDetailes();   
-			//checkUserPermission(proceedingJoinPoint,user);
+			User user = get_current_User();    
+			user.flatUserDetailes();   
+			checkUserPermission(proceedingJoinPoint,user);
 	}
 	
 	@Before("execution(* com.example.Vouchers.VoucherController..*(..)))")
@@ -371,7 +371,7 @@ public class AspectModel {
 	}
 	
 	
-	*/
+	
 }
 
 
