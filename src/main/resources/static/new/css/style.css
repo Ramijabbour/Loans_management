@@ -13189,6 +13189,14 @@ input[type="button"].btn-block {
 .card-group > .card {
   margin-bottom: 15px;
 }
+.layer p {
+    margin: 0; /* Убираем отступы вокруг */
+    padding-left: 10%; /* Поле слева */
+   }
+   .layer p {
+       margin: 0; /* Убираем отступы вокруг */
+       padding-right: 30%; /* Поле слева */
+      }
 
 @media (min-width: 576px) {
   .card-group {
@@ -21575,6 +21583,11 @@ dl li {
 .icon-box-dark i {
   color: white;
   font-size: 1.25rem;
+}
+.center X {
+  display: block;
+  margin-right: 700px;
+
 }
 
 .icon-box-dark.icon-box-lg {
