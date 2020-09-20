@@ -150,11 +150,22 @@ public class LoansController {
 		int Amount=Integer.parseInt(loan.getNetAmmount());
 		int bankAlloacation  =Integer.parseInt(bank.getFinancialAllocations());
 		int NewAllocation=bankAlloacation-Amount;
+		
+		if(servicePool.getLoansService().checkLoanNumber(loan.getLoanNumber()))
+		{
+			System.out.println("loan number error -- ");
+			//response.sendRedirect("/Loans/addLoan/Error");
+			ModelAndView mav = new ModelAndView("Errors/userError");
+			String msg = "لايمكن اضافة السلفة لان رقم السلفة موجود مسبقا "; 
+			mav.addObject("msg",msg);
+			return mav;
+			
+		}
 
 		if(NewAllocation>=0) {
 			System.out.println("posted to /Loans/addLoan ");
 			bank.setFinancialAllocations(Integer.toString(NewAllocation));
-			loan.setStatus("NotConfirmed");
+			loan.setStatus("غير مؤكدة");
 			loan.setConfirmed(false);
 			loan = servicePool.getLoansService().addLoan(loan);
 			OpenLoans ol =new OpenLoans(loan);
@@ -200,6 +211,8 @@ public class LoansController {
 
 		Loans NewLoan=new Loans(oldLoan.getName(),oldLoan.getFirstSide(),oldLoan.getSecondSide(),oldLoan.getLoanNumber(),oldLoan.getInterestRate(),oldLoan.getDelayInterestRate(),oldLoan.getClearanceNumber(),oldLoan.getTotalAmmount(),oldLoan.getTotalAmmountAsString()
 				,oldLoan.getNetAmmount(),oldLoan.getNetAmmountAsString(),oldLoan.getNumberOfVoucherAsString(),oldLoan.getNumberOfVoucher(),oldLoan.getPurpose(),oldLoan.getClient(),oldLoan.getBranche(),oldLoan.getUser(),oldLoan.getLoanType(),oldLoan.getFinanceType());
+		NewLoan.setConfirmed(true);
+		NewLoan.setStatus("مؤكدة");
 		NewLoan.setLoanDate(loan.getLoanDate());
 		Date currentDate = new Date();
 		NewLoan.setWorkDate(currentDate.toString());
@@ -320,7 +333,7 @@ public class LoansController {
 	public void ConfirmLoan(@PathVariable int id, HttpServletResponse response) throws IOException
 	{
 		Loans Loan=servicePool.getLoansService().getOneByID(id);
-		Loan.setStatus("Confirmed");
+		Loan.setStatus("مؤكدة");
 		Loan.setConfirmed(true);
 
 		servicePool.getLoansService().updateLoan(Loan);
