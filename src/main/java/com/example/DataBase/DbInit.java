@@ -88,10 +88,10 @@ public class DbInit implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		injectUsers_Roles_ToDB();
-		inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
+	//	injectUsers_Roles_ToDB();
+	//	inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
 //		injectChecksToDB();
-		System.out.println("injection Done !! ");
+	//	System.out.println("injection Done !! ");
 	}
 	
 
@@ -319,7 +319,7 @@ public class DbInit implements CommandLineRunner{
 
 		for (int k = 0; k < 10; k++) {
 			int year = 2010;
-			for (int i = 1; i < 1000; i++) {
+			for (int i = 1; i < 20; i++) {
 
 				int financeType = r.nextInt(2);
 				int BankName = r.nextInt((5 - 0) + 1) + 0;
@@ -474,7 +474,7 @@ public class DbInit implements CommandLineRunner{
 			voucher.setTotal(String.valueOf(ammount));
 			voucher.setVoucherAmmount(String.valueOf(ammount));
 			voucher.setNetAmmount(String.valueOf(ammount));
-			voucher.setStatus("open");
+			voucher.setStatus("غير مدفوع");
 			voucher.setFundingRatio(loan.getInterestRate());
 			//String year = getYearFromStringDate(loan.getLoanDate());
 			//String voDate = generateDateForVoucher(Integer.valueOf(year)) ;

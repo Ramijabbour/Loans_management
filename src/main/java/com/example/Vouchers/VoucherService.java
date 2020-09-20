@@ -100,7 +100,7 @@ public class VoucherService {
 		{
 			if(voucher.getLoan() !=null) {
 				if(voucher.getLoan().getId()==id)
-					if(!voucher.getStatus().equalsIgnoreCase("paid"))
+					if(!voucher.getStatus().equalsIgnoreCase("مدفوع"))
 					  return false ;
 			}
 		}

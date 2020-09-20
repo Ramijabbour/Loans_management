@@ -32,18 +32,18 @@ public class Test {
 	LoanService loanService ;
 	
 	
-    public static final String DATASETPATH = "C:\\Users\\ramij\\Downloads\\Compressed\\weka-example-master\\data\\new2.arff";
+    public static final String DATASETPATH = "C:\\Users\\ramij\\Downloads\\Compressed\\weka-example-master\\data\\new3.arff";
     public static final String MODElPATH = "C:\\Users\\ramij\\Downloads\\Compressed\\weka-example-master\\data\\model.bin";
 
     
 	@RequestMapping(method = RequestMethod.GET , value = "/Loans/datamining/{id}")
-    public ModelAndView test(@PathVariable int id ) throws Exception {   
+    public ModelAndView test(@PathVariable int id ) throws Exception {    
 		ModelAndView mav = new ModelAndView("Loans/DecisionSupportSystem");
 		
 		Loans loan  = loanService.getOneByID(id);
 		
         ModelGenerator mg = new ModelGenerator();
-        /*try {
+       /* try {
         	InstanceQuery query = new InstanceQuery();
         	 query.setUsername("root");
         	 query.setPassword("admin");
@@ -52,8 +52,8 @@ public class Test {
         	 Instances dataset = query.retrieveInstances();         
         	 dataset.setClassIndex(dataset.numAttributes() - 1);
 
-            System.out.println(dataset);
-            */
+            System.out.println(dataset);*/
+            
          Instances dataset = mg.loadDataset(DATASETPATH);
         System.out.println(dataset);
       //  Filter filter = new Normalize();
@@ -97,10 +97,14 @@ public class Test {
         double income = Double.parseDouble(loan.getClient().getIncome());
         double numberofchildren = Double.parseDouble(loan.getClient().getNumberOFChilderen());
         
+
         String classname =cls.classifiy(cls.createInstance(age, netAmmount,numberofchildren,totalammount,income, 0), MODElPATH);
        // String classname =cls.classifiy(cls.createInstance("overcast",83,86,"false", 1), MODElPATH);
         System.out.println("\n The class name for the instance is  " +classname); 
-       
+
+        mav.addObject("loan", loan);
+        mav.addObject("classname", classname);
+
         if(classname.equalsIgnoreCase("yes"))
         	{
         		give = true ;
@@ -118,19 +122,17 @@ public class Test {
 		return mav;
     }
 
-	
-	
+
 	@Autowired 
 	LoansRepository loanrepo ; 
 	@Autowired
 	LoanService service ; 
 	@RequestMapping(method = RequestMethod.GET, value="/update11")
 	public void UpdateLoan() throws IOException {
-		System.out.println("hiiii");
 		List<Loans> allloan = loanrepo.findAll();
 		for(Loans l : allloan)
 		{
-			if(l.getStatus().equalsIgnoreCase("confirmed"))
+			if(l.getStatus().equalsIgnoreCase("مؤكدة"))
 			{
 				l.setConfirmed(true);
 				service.updateLoan(l);

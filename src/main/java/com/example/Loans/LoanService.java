@@ -161,4 +161,16 @@ public class LoanService {
 	}
 	
 	
+	public boolean checkLoanNumber(String number )
+	{
+		List<Loans> allLoans= loansRepository.findAll();
+		for(Loans l : allLoans)
+		{
+			if(l.getLoanNumber().equalsIgnoreCase(number))
+			return 	true ;
+		}
+		return false ; 
+	}
+	
+	
 }
