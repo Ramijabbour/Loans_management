@@ -319,7 +319,7 @@ public class DbInit implements CommandLineRunner{
 
 		for (int k = 0; k < 10; k++) {
 			int year = 2010;
-			for (int i = 1; i < 50; i++) {
+			for (int i = 1; i < 1000; i++) {
 
 				int financeType = r.nextInt(2);
 				int BankName = r.nextInt((5 - 0) + 1) + 0;
