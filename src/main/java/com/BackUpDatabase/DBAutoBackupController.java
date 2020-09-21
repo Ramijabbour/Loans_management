@@ -21,12 +21,16 @@ public class DBAutoBackupController implements CommandLineRunner {
 
 
     @Override
-    @Scheduled(cron = "0 30 1 * * ?")
+   // @Scheduled(cron = "0 30 1 * * ?")
     public void run(String... args) throws Exception {
+        Backupdbtosql();
+
     }
 
     public static void Backupdbtosql() {
+        System.out.println("Starting BackUp");
         try {
+            System.out.println("Starting BackUp");
 
             /*NOTE: Getting path to the Jar file being executed*/
             /*NOTE: YourImplementingClass-> replace with the class executing the code*/
@@ -36,9 +40,9 @@ public class DBAutoBackupController implements CommandLineRunner {
 
 
             /*NOTE: Creating Database Constraints*/
-            String dbName = "YourDBName";
-            String dbUser = "YourUserName";
-            String dbPass = "YourUserPassword";
+            String dbName = "loans_management";
+            String dbUser = "root";
+            String dbPass = "jad@1234";
 
             /*NOTE: Creating Path Constraints for folder saving*/
             /*NOTE: Here the backup folder is created for saving inside it*/
@@ -51,9 +55,10 @@ public class DBAutoBackupController implements CommandLineRunner {
             /*NOTE: Creating Path Constraints for backup saving*/
             /*NOTE: Here the backup is saved in a folder called backup with the name backup.sql*/
             String savePath = "\"" + jarDir + "\\backup\\" + "backup.sql\"";
+            System.out.println(savePath);
 
             /*NOTE: Used to create a cmd command*/
-            String executeCmd = "mysqldump -u" + dbUser + " -p" + dbPass + " --database " + dbName + " -r " + savePath;
+            String executeCmd = "C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysqldump -u"  + dbUser + " -p" + dbPass + " --databases " + dbName + " -r " + savePath;
 
             /*NOTE: Executing the command here*/
             Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
@@ -81,19 +86,18 @@ public class DBAutoBackupController implements CommandLineRunner {
             String jarDir = jarFile.getParentFile().getPath();
 
             /*NOTE: Creating Database Constraints*/
-            String dbName = "YourDBName";
-            String dbUser = "YourUserName";
-            String dbPass = "YourUserPassword";
+            String dbName = "loans_management";
+            String dbUser = "root";
+            String dbPass = "jad@1234";
 
             /*NOTE: Creating Path Constraints for restoring*/
             String restorePath = jarDir + "\\backup" + "\\" + s;
 
             /*NOTE: Used to create a cmd command*/
             /*NOTE: Do not create a single large string, this will cause buffer locking, use string array*/
-            String[] executeCmd = new String[]{"mysql", dbName, "-u" + dbUser, "-p" + dbPass, "-e", " source " + restorePath};
-
+            String[] restoreCmd = new String[]{"C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\","mysql ", "--user=" + dbUser, "--password=" + dbPass, "-e", "source " + restorePath};
             /*NOTE: processComplete=0 if correctly executed, will contain other values if not*/
-            Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
+            Process runtimeProcess = Runtime.getRuntime().exec(restoreCmd);
             int processComplete = runtimeProcess.waitFor();
 
             /*NOTE: processComplete=0 if correctly executed, will contain other values if not*/

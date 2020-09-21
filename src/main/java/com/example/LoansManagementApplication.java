@@ -2,6 +2,7 @@ package com.example;
 
 
 import ValidContent_Visitor.Valid_Visitable;
+import com.BackUpDatabase.DBAutoBackupController;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -51,6 +52,8 @@ public class LoansManagementApplication implements CommandLineRunner {
         System.out.println(date);
         */
     	System.out.println("Loans Management is online continue to essential data injection");
+//        DBAutoBackupController dbAutoBackupController = new DBAutoBackupController();
+//        dbAutoBackupController.run();
     }
 }
 
