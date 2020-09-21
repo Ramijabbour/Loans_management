@@ -107,7 +107,7 @@ public class SettlementService extends MasterService {
 		
 		SettlementReportModel settlementReportModel = new SettlementReportModel();
 		settlementReportModel.setTimestamp(MasterService.getDateTimeAsString());
-		settlementReportRepo.save(settlementReportModel);
+		settlementReportModel = settlementReportRepo.save(settlementReportModel);
 		
 		System.out.println("settlement invoked at : "+MasterService.getCurrDateTime());
 		
@@ -148,6 +148,7 @@ public class SettlementService extends MasterService {
 		sendChecks(onHoldChecksList);
 	}
 	
+	@Transactional
 	private void sendChecks(List<Chaque> checksList) {
 		ChecksSendingModel checkSendingModel   = new ChecksSendingModel("",checksList.get(0).getSettlementReportModel());
 		for(int index = 0 ; index < checksList.size() ; index ++ ) {
@@ -171,18 +172,10 @@ public class SettlementService extends MasterService {
 				 check.setSent(true);
 				 this.onHoldChecksRepository.save(check);
 			 }
-			 System.out.println("S2");
-			  	/*
-			 	for(Chaque check : checksList) {
-			  		this.ordermsgSender.sendOrderCheck(check);
-			  		check.setSent(true);
-			  	} */
 			  }catch (Exception e ){
 				  System.out.println("Checks Sending operation faild: cannot reach messgae queue retrying after 10 min");
 			  }
-		 System.out.println("S3");
-		 return ;
-		 //this.onHoldChecksRepository.saveAll(checksList); 
+		 return ; 
 	}
 	
 	
