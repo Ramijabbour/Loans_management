@@ -2,17 +2,6 @@ package com.example.SiteConfig;
 
 
 import java.time.LocalDate;
-/*
-import java.util.Base64;
-import java.lang.reflect.Field;
-import java.security.spec.KeySpec;
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
-*/
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,10 +22,11 @@ public class MasterService {
 
 	@Autowired
 	protected UserRepository userRepo; 
-	
-	@Autowired
-	protected ActivityService activityService ;
 
+	@Autowired
+	protected ActivityService activityService ; 
+	
+	
 	@Autowired
 	PermissionsService permissionsService ; 
 

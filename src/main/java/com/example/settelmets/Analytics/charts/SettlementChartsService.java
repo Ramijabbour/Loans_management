@@ -45,8 +45,8 @@ public class SettlementChartsService {
 			AnalysisModel AM = new AnalysisModel();
 			AM.setName(entry.getKey());
 			Long amount = entry.getValue() ; 
-			int amountAsInt = Math.toIntExact(amount);
-			AM.addDataEntry(amountAsInt);
+			//int amountAsInt = Math.toIntExact(amount);
+			AM.addDataEntry(amount);
 			modelList.add(AM);
 		}
 		ACM.setSeries(modelList);
@@ -65,8 +65,8 @@ public class SettlementChartsService {
 			AnalysisModel AM = new AnalysisModel();
 			AM.setName(entry.getKey());
 			Long amount = entry.getValue() ; 
-			int amountAsInt = Math.toIntExact(amount);
-			AM.addDataEntry(amountAsInt);
+			//int amountAsInt = Math.toIntExact(amount);
+			AM.addDataEntry(amount);
 			modelList.add(AM);
 		}
 		ACM.setSeries(modelList);

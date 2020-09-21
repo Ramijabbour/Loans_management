@@ -21,7 +21,7 @@ import java.util.ArrayList ;
 
 @RestController
 public class SingleBankAnalysisController {
-	
+	/*
 	//essential attributes  
 	private static int timeSpanStart ; 
 	private static int timeSpanEnd ; 
@@ -233,6 +233,6 @@ public class SingleBankAnalysisController {
 
 
 	
-	
+	*/
 	//===========================================================================
 }
