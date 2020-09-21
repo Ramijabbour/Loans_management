@@ -19,7 +19,7 @@ import java.util.ArrayList ;
 
 @RestController
 public class MultiBanksAnalysisController {
-
+/*
 	
 	//Attributes section 
 	private static int yearSpanStart ; 
@@ -505,4 +505,5 @@ public class MultiBanksAnalysisController {
 		}
 		return false ; 
 	}
+	*/
 }

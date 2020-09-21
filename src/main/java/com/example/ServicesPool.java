@@ -59,6 +59,7 @@ public class ServicesPool {
 	@Autowired
 	private ReportService reportsService ; 
 	
+	
 	public AllocationsService getAllocationsService() {
 		return allocationsService;
 	}

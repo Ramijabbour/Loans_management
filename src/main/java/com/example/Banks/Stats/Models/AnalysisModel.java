@@ -6,11 +6,11 @@ import java.util.List;
 public class AnalysisModel {
 
 	private String name ; // year
-	private List<Integer> data = new ArrayList<Integer>() ; // one entry for this year allocation  
+	private List<Long> data = new ArrayList<Long>() ; // one entry for this year allocation  
 	
 	public AnalysisModel() {}
 	
-	public AnalysisModel(String name , List<Integer> data ) {
+	public AnalysisModel(String name , List<Long> data ) {
 		this.name = name ; 
 		this.data = data ; 
 	}
@@ -20,14 +20,14 @@ public class AnalysisModel {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<Integer> getData() {
+	public List<Long> getData() {
 		return data;
 	}
-	public void setData(List<Integer> data) {
+	public void setData(List<Long> data) {
 		this.data = data;
 	} 
 	
-	public void addDataEntry(int data ) {
+	public void addDataEntry(Long data ) {
 		this.data.add(data);
 	}
 	

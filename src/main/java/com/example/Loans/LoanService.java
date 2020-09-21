@@ -13,7 +13,6 @@ import com.example.CloseLoans.CloseLoans;
 import com.example.OpenLoans.OpenLoans;
 import com.example.ReScheduleLoans.ReScheduleLoans;
 import com.example.SiteConfig.SiteConfiguration;
-import com.example.settelmets.Models.Chaque;
 
 
 
@@ -25,9 +24,7 @@ public class LoanService {
 	
 	@Autowired
 	private ServicesPool servicePool ; 
-	
-	
-	
+
 	public List<Loans> getAllLoans(int PageNumber)
 	{
 		return loansRepository.findAll();

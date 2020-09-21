@@ -26,7 +26,7 @@ import com.example.BankBranches.Branches;
 		import com.example.LoansType.LoansType;
 		import com.example.OpenLoans.OpenLoans;
 		import com.example.ReScheduleLoans.ReScheduleLoans;
-		import com.example.SiteConfig.SiteConfiguration;
+import com.example.SiteConfig.SiteConfiguration;
 import com.example.Vouchers.VoucherController;
 
 @RestController
@@ -37,6 +37,8 @@ public class LoansController {
 
 	@Autowired
 	VoucherController voucherController ;
+	 
+	
 	
 	//get All Open Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open")

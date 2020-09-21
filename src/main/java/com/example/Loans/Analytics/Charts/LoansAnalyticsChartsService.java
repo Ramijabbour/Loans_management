@@ -37,7 +37,7 @@ public class LoansAnalyticsChartsService {
 			AnalysisModel AM = new AnalysisModel();
 			AM.setName(entry.getKey());
 			float amount = entry.getValue() ; 
-			int amountAsInt = (int)amount;
+			long amountAsInt = (long)amount;
 			AM.addDataEntry(amountAsInt);
 			modelList.add(AM);
 		}
@@ -56,7 +56,7 @@ public class LoansAnalyticsChartsService {
 			AnalysisModel AM = new AnalysisModel();
 			AM.setName(entry.getKey());
 			float amount = entry.getValue() ; 
-			int amountAsInt = (int)amount;
+			long amountAsInt = (long)amount;
 			AM.addDataEntry(amountAsInt);
 			modelList.add(AM);
 		}
@@ -77,7 +77,7 @@ public class LoansAnalyticsChartsService {
 			AnalysisModel AM = new AnalysisModel();
 			AM.setName(entry.getKey());
 			float amount = entry.getValue() ; 
-			int amountAsInt = (int)amount;
+			long amountAsInt = (long)amount;
 			AM.addDataEntry(amountAsInt);
 			modelList.add(AM);
 		}
@@ -95,7 +95,7 @@ public class LoansAnalyticsChartsService {
 			AnalysisModel AM = new AnalysisModel();
 			AM.setName(entry.getKey());
 			float amount = entry.getValue() ; 
-			int amountAsInt = (int)amount;
+			long amountAsInt = (long)amount;
 			AM.addDataEntry(amountAsInt);
 			modelList.add(AM);
 		}
@@ -115,8 +115,8 @@ public class LoansAnalyticsChartsService {
 			AnalysisModel AM = new AnalysisModel();
 			AM.setName(entry.getKey());
 			long amount = entry.getValue() ; 
-			int amountAsInt = Math.toIntExact(amount);
-			AM.addDataEntry(amountAsInt);
+			//int amountAsInt = Math.toIntExact(amount);
+			AM.addDataEntry(amount);
 			modelList.add(AM);
 		}
 		ACM.setSeries(modelList);
@@ -133,8 +133,8 @@ public class LoansAnalyticsChartsService {
 			AnalysisModel AM = new AnalysisModel();
 			AM.setName(entry.getKey());
 			long amount = entry.getValue() ; 
-			int amountAsInt = Math.toIntExact(amount);
-			AM.addDataEntry(amountAsInt);
+			//int amountAsInt = Math.toIntExact(amount);
+			AM.addDataEntry(amount);
 			modelList.add(AM);
 		}
 		ACM.setSeries(modelList);
@@ -152,7 +152,7 @@ public class LoansAnalyticsChartsService {
 		for (Map.Entry<String,Integer> entry : analyticsModel.getBankLoansCountYear().entrySet()){
 			AnalysisModel AM = new AnalysisModel();
 			AM.setName(entry.getKey());
-			int amount = entry.getValue() ; 
+			long amount = entry.getValue() ; 
 			AM.addDataEntry(amount);
 			modelList.add(AM);
 		}
@@ -169,7 +169,7 @@ public class LoansAnalyticsChartsService {
 		for (Map.Entry<String,Integer> entry : analyticsModel.getBankLoansCountMonth().entrySet()){
 			AnalysisModel AM = new AnalysisModel();
 			AM.setName(entry.getKey());
-			int amount = entry.getValue() ; 
+			long amount = entry.getValue() ; 
 			AM.addDataEntry(amount);
 			modelList.add(AM);
 		}
