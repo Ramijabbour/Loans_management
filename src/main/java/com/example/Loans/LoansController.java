@@ -57,16 +57,16 @@ public class LoansController {
 	//get All NotConfirmed Open Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open/NotConfirmed")
 	public ModelAndView ShowAllNotConfirmedOpenLoans(@Param(value ="index") int index) {
-		ModelAndView mav = new ModelAndView("Loans/AllOpenLoans");
-		List<OpenLoans> allOpenloans=servicePool.getOpenLoansService().GetNotConfirmedLoans();
+		ModelAndView mav = new ModelAndView("Loans/AllNotConfirmed");
+		List<OpenLoans> allOpenloans=servicePool.getOpenLoansService().GetNotConfirmedLoans(index);
 		mav.addObject("allloans",allOpenloans);
 		boolean check=true ;
 		mav.addObject("check", check);
-		/*if(allOpenloans.size() > 0 ) {
+		if(allOpenloans.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
 		}else {
 			SiteConfiguration.addSequesnceVaraibles(mav, -1);
-		}*/
+		}
 		return mav;
 	}
 	// -------------------------------------------------------------------
@@ -75,18 +75,17 @@ public class LoansController {
 	//get All Confirmed Open Loans ------------------------------------------------------
 	@RequestMapping(method = RequestMethod.GET , value="/Loans/all/Open/Confirmed")
 	public ModelAndView ShowAllConfirmedOpenLoans(@Param(value ="index") int index) {
-		ModelAndView mav = new ModelAndView("Loans/AllOpenLoans");
-		List<OpenLoans> allOpenloans=servicePool.getOpenLoansService().GetConfirmedLoans();
+		ModelAndView mav = new ModelAndView("Loans/AllConfirmed");
+		List<OpenLoans> allOpenloans=servicePool.getOpenLoansService().GetConfirmedLoans(index);
 		mav.addObject("allloans",allOpenloans);
-
 		boolean show = true ;
 		mav.addObject("show",  show);
 
-		/*if(allOpenloans.size() > 0 ) {
+		if(allOpenloans.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
 		}else {
 			SiteConfiguration.addSequesnceVaraibles(mav, -1);
-		}*/
+		}
 		return mav;
 	}
 	// -------------------------------------------------------------------

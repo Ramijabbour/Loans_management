@@ -33,33 +33,65 @@ public class OpenLoansService {
 	}
 	
 	
-	public List <OpenLoans>GetNotConfirmedLoans()
-	{
+	public List <OpenLoans>GetNotConfirmedLoans(int PageNumber)
+	{ 	
 		List<OpenLoans> allLoans=openLoanRepository.findAll();
-		List<OpenLoans> NotConfimedLoans = new ArrayList<OpenLoans>();
-		
+		List<OpenLoans> NotConfimedLoans = new ArrayList<OpenLoans>();	
 		for(OpenLoans l : allLoans)
 		{
-			if(l.getLoan().getStatus().equalsIgnoreCase("غير مؤكدة"))
+			if(l.getLoan().getStatus().equalsIgnoreCase("غير مؤكدة")) {
 				NotConfimedLoans.add(l);
+			}
 		}
-		return NotConfimedLoans;
+		
+		int ignore = calculateIgnoreValue(PageNumber);
+		
+		List<OpenLoans> pagedList = new ArrayList<OpenLoans>();
+		for(int i = ignore ; i < ignore+SiteConfiguration.getPageSize() ; i ++ ) {
+			try {
+				pagedList.add(NotConfimedLoans.get(i));
+			}catch(Exception e ) {
+				break ; 
+			}
+		}
+		return pagedList ; 
+		//return NotConfimedLoans;
 	}
 	
 	
-	public List <OpenLoans>GetConfirmedLoans()
+	public List <OpenLoans>GetConfirmedLoans(int PageNumber )
 	{
 		List<OpenLoans> allLoans=openLoanRepository.findAll();
 		List<OpenLoans> ConfimedLoans = new ArrayList<OpenLoans>();
-		
 		for(OpenLoans l : allLoans)
 		{
 			if(l.getLoan().getStatus().equalsIgnoreCase("مؤكدة"))
 				ConfimedLoans.add(l);
 		}
-		return ConfimedLoans;
+
+		int ignore = calculateIgnoreValue(PageNumber);
+		List<OpenLoans> pagedList = new ArrayList<OpenLoans>();
+		for(int i = ignore ; i < ignore+SiteConfiguration.getPageSize() ; i ++ ) {
+			try {
+				pagedList.add(ConfimedLoans.get(i));
+			}catch(Exception e ) {
+				break ; 
+			}
+		}
+		
+		return pagedList ; 
+		//return ConfimedLoans;
 	}
 	
+	
+	private int calculateIgnoreValue(int value ) {
+		if(value == 0 ) {
+			return 0 ; 
+		}
+		else {
+			return value * SiteConfiguration.getPageSize() ; 
+		}
+	}
 	
 	
 	public void addOpenLoan(OpenLoans openLoan)

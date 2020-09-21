@@ -13,4 +13,5 @@ public interface OpenLoansRepository extends JpaRepository<OpenLoans,Integer> {
     @Query("select count(*) from OpenLoans")
     public int getOpenLoansCount();
 	
+    
 }
