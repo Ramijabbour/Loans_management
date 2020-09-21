@@ -12,9 +12,9 @@ public class ClientLoan {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int id ;
 	
-	public String TotalAmmount;
+	public int TotalAmmount;
     
-    public String NetAmmount;
+    public double NetAmmount;
 
     private String status; 
 	
@@ -24,7 +24,7 @@ public class ClientLoan {
 	
 	public String Married ;
 	
-	public String NumberOFChilderen ;
+	public int NumberOFChilderen ;
 	
 	public int Age ;
 
@@ -33,7 +33,7 @@ public class ClientLoan {
 	public String Finance_Type ; 
 	
 	
-	public String income ;
+	public int income ;
 
 	public String result ;
 	
@@ -42,8 +42,8 @@ public class ClientLoan {
 
 	public ClientLoan() {}
 
-	public ClientLoan(String totalAmmount, String netAmmount, String status, String address, String gender, String married,
-			String numberOFChilderen, int age, String loan_Type, String finance_Type, String income, String result) {
+	public ClientLoan(int totalAmmount, double netAmmount, String status, String address, String gender, String married,
+			int numberOFChilderen, int age, String loan_Type, String finance_Type, int income, String result) {
 		super();
 		TotalAmmount = totalAmmount;
 		NetAmmount = netAmmount;
@@ -67,21 +67,7 @@ public class ClientLoan {
 		this.id = id;
 	}
 
-	public String getTotalAmmount() {
-		return TotalAmmount;
-	}
-
-	public void setTotalAmmount(String totalAmmount) {
-		TotalAmmount = totalAmmount;
-	}
-
-	public String getNetAmmount() {
-		return NetAmmount;
-	}
-
-	public void setNetAmmount(String netAmmount) {
-		NetAmmount = netAmmount;
-	}
+	
 
 	public String getStatus() {
 		return status;
@@ -115,14 +101,7 @@ public class ClientLoan {
 		Married = married;
 	}
 
-	public String getNumberOFChilderen() {
-		return NumberOFChilderen;
-	}
-
-	public void setNumberOFChilderen(String numberOFChilderen) {
-		NumberOFChilderen = numberOFChilderen;
-	}
-
+	
 	public int getAge() {
 		return Age;
 	}
@@ -147,13 +126,7 @@ public class ClientLoan {
 		Finance_Type = finance_Type;
 	}
 
-	public String getIncome() {
-		return income;
-	}
 
-	public void setIncome(String income) {
-		this.income = income;
-	}
 
 	public String getResult() {
 		return result;
@@ -161,6 +134,40 @@ public class ClientLoan {
 
 	public void setResult(String result) {
 		this.result = result;
+	}
+
+	public int getTotalAmmount() {
+		return TotalAmmount;
+	}
+
+	public void setTotalAmmount(int totalAmmount) {
+		TotalAmmount = totalAmmount;
+	}
+
+	
+
+	public double getNetAmmount() {
+		return NetAmmount;
+	}
+
+	public void setNetAmmount(double netAmmount) {
+		NetAmmount = netAmmount;
+	}
+
+	public int getNumberOFChilderen() {
+		return NumberOFChilderen;
+	}
+
+	public void setNumberOFChilderen(int numberOFChilderen) {
+		NumberOFChilderen = numberOFChilderen;
+	}
+
+	public int getIncome() {
+		return income;
+	}
+
+	public void setIncome(int income) {
+		this.income = income;
 	} 
 	
    

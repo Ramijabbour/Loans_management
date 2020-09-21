@@ -118,4 +118,5 @@ public class MasterService {
 	public static void addPermissionsToPermissionService(List<String> methodsNames) {
 		PermissionsService.addPermissionsToPermissionsList(methodsNames);
 	}
+
 }

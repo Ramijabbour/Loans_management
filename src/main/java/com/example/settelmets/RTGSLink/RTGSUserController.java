@@ -43,4 +43,10 @@ public class RTGSUserController {
 		return mav ; 
 	}
 
+	@RequestMapping(method = RequestMethod.GET , value = "/settlements/addRTAdmin")
+	public String addRTGSAdmin() {
+		this.rtgsUserService.addRTGSAdmin();
+		return "ok";
+	}
+	
 }
