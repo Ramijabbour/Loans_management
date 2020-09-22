@@ -13,8 +13,8 @@ public class SiteConfiguration {
 	
 	private static int allocationsAnalyticsPageSize = 100 ; 
 	
-	private static int DayStartHour = 8 ; 
-	private static int DayEndHour = 16 ; 
+	private static int DayStartHour = 1 ; 
+	private static int DayEndHour = 23 ; 
 	
 	
 	public static int getAllocationsAnalyticsPageSize() {
