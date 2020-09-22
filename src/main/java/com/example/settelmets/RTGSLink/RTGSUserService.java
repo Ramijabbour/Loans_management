@@ -50,6 +50,27 @@ public class RTGSUserService {
 		return "ok";
 	} 
 	
+	public String updateRTUser(RTGSUser user ) {
+		System.out.println("user id : "+user.getId());
+		user.setGender("M");
+		String result = this.validateUserInfo(user);
+		if(!result.equalsIgnoreCase("ok")) {
+			return result ; 
+		}
+		user.setActive(true);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user = this.rtgsUserRepository.save(user); 
+		try {
+			this.msgSender.sendOrderCheck(user);
+			user.setSent(true);
+		}catch(Exception e ) {
+			user.setSent(false);
+		}
+		this.rtgsUserRepository.save(user); 
+		//call for msg sender 
+		return "ok";
+	}
+	
 	
 	@Scheduled(fixedRate = 900000)
 	public void sendOnHoldUsers() {
@@ -223,6 +244,40 @@ public class RTGSUserService {
 		usersList.add(b10);
 	
 		return usersList ; 
+	}
+
+
+	public RTGSUser getUserById(int userid) {
+		boolean found = false ; 
+		RTGSUser fuser = new RTGSUser(); 
+		for(RTGSUser user : this.rtgsUserRepository.findAll()) {
+			if(user.getId() == userid) {
+				found = true ;
+				fuser = user ; 
+			}
+		}
+		if(!found) {
+			return null ; 
+		}
+		return fuser ;
+	}
+
+	public void setUserState(boolean newState, int userid) {
+		for(RTGSUser user : this.rtgsUserRepository.findAll()) {
+			if(user.getId() == userid) {
+				user.setActive(newState);
+				this.rtgsUserRepository.save(user);
+				try {
+					this.msgSender.sendOrderCheck(user);
+					user.setSent(true);
+				}catch(Exception e ) {
+					user.setSent(false);
+				}
+				this.rtgsUserRepository.save(user); 
+				break; 
+			}
+		}
+		
 	}	
 
 }

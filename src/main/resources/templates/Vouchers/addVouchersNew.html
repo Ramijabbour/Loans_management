@@ -39,16 +39,16 @@
             </thead>
             <tbody>
                 <tr th:each="voucher, itemStat : *{vouchersList}">
-                    <td><input type="date" th:field="*{vouchersList[__${itemStat.index}__].VoucherDate}" class="form-control" /></td>
-                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].VoucherAmmount}" class="form-control"/></td>
-                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].Total}" class="form-control"/></td>
-                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].NetAmmount}" class="form-control"/></td>
+                    <td><input type="date" th:field="*{vouchersList[__${itemStat.index}__].VoucherDate}" class="form-control" required/></td>
+                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].VoucherAmmount}" class="form-control" required/></td>
+                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].Total}" class="form-control" required/></td>
+                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].NetAmmount}" class="form-control" required/></td>
                     <td>
                     <select th:field="*{vouchersList[__${itemStat.index}__].client}" class="form-control">
                       <option th:each="client : ${allclient}" th:value="${client.id}" th:text="${client.ClientName}"></option>
                     </select>
                     </td>
-                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].FundingRatio}" class="form-control"/></td>
+                    <td><input type="number" th:field="*{vouchersList[__${itemStat.index}__].FundingRatio}" class="form-control" required/></td>
                 </tr>
             </tbody>
         </table>

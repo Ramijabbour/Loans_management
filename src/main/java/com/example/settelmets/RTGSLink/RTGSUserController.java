@@ -2,6 +2,7 @@ package com.example.settelmets.RTGSLink;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,5 +49,48 @@ public class RTGSUserController {
 		this.rtgsUserService.addRTGSAdmin();
 		return "ok";
 	}
+	
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/settlements/users/editRTUser/{userid}")
+	public ModelAndView editRTGSUser(@PathVariable int userid) {
+		RTGSUser user = this.rtgsUserService.getUserById(userid);
+		if(user == null ) {
+			return MasterService.sendGeneralError("لم يتم العثور على المستخدم المطلوب");
+		}
+		ModelAndView mav = new ModelAndView("settlement/edit");
+		mav.addObject("user",user);
+		return mav ; 
+	}
+	
+	
+	@RequestMapping(method = RequestMethod.POST , value = "/settlements/users/editRTUser")
+	public ModelAndView editRTGSUser(@ModelAttribute RTGSUser user) {
+		String result =  this.rtgsUserService.updateRTUser(user) ; 
+		if(result.equalsIgnoreCase("ok")) {
+			return MasterService.sendSuccessMsg("تم تعديل  المستخدم بنجاح");
+		}else {
+			return MasterService.sendGeneralError(result);
+		}
+	}
+	
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/settlements/users/changeState/{userid}")
+	public ModelAndView changeUserState(@PathVariable int userid) {
+		RTGSUser user = this.rtgsUserService.getUserById(userid);
+		if(user == null ) {
+			return MasterService.sendGeneralError("لم يتم العثور على المستخدم المطلوب");
+		}
+		if(user.isActive()) {
+			this.rtgsUserService.setUserState(false,userid);
+			return MasterService.sendSuccessMsg("تم تعطيل  المستخدم بنجاح");
+		}else {
+			this.rtgsUserService.setUserState(true,userid);
+			return MasterService.sendSuccessMsg("تم تفعيل  المستخدم بنجاح");
+		}
+	}
+	
+	
+	
+	
 	
 }

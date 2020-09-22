@@ -43,6 +43,8 @@
                         <th> البريد الاكتروني </th>
                         <th> تاريخ إنشاء الحساب</th>
                         <th> فعال </th>
+                        <th></th>
+                        <th></th>
                     </tr>
                       </thead>
                       <tbody>
@@ -60,16 +62,16 @@
                         <td><span th:text="${user.Active}"> Active </span></td>
                         
                         <td sec:authorize="hasAnyAuthority('ADMIN','SUPER')">
-                          <form action="#" th:action="@{/adminstration/users/update/} + ${{user.id}}" method="get">
+                          <form action="#" th:action="@{/settlements/users/editRTUser/} + ${{user.id}}" method="get">
                               <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-inverse-primary btn-sm" type="submit">
                                   <i>تعديل</i>
                               </button>
                           </form>
                       </td>
                       <td sec:authorize="hasAnyAuthority('ADMIN','SUPER')">
-                          <form action="#" th:action="@{/adminstration/users/delete/} + ${{user.id}}" method="post">
+                          <form action="#" th:action="@{/settlements/users/changeState/} + ${{user.id}}" method="get">
                               <button th:id="'table_entry_childs_button_' + ${user.id}" class="btn btn-inverse-primary btn-sm" type="submit">
-                                  <i>حذف</i>
+                                  <i>تغيير حالة الحساب</i>
                               </button>
                           </form>
                       </td>
