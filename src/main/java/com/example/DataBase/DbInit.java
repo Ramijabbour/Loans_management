@@ -331,9 +331,33 @@ public class DbInit implements CommandLineRunner {
         }
 
         Random r = new Random();
+        List<String> purpose = new ArrayList<String>();
+        List<String> purpose2 = new ArrayList<String>();
+        List<String> purpose3 = new ArrayList<String>();
+        purpose.add("ِراء منزل");
+        purpose.add("شراء منشأة صناعية");
+        purpose.add("التجسل على سكن");
+        purpose.add("إفتتاح مشروع تجاري");
+        purpose.add("إنشاء شركة برمجية");
+        purpose.add("إفتتاح مركز طبي");
+        purpose2.add("شراء سيارة");
+        purpose2.add("شراء دراجة نارية");
+        purpose2.add("شراء حاسوب");
+        purpose2.add("شراء مولدة كهربائية");
+        purpose2.add("ديكور شركة");
+        purpose2.add("تجهيزات طبية");
+        purpose2.add("تجهيزات مكتب هندسي");
+        purpose3.add("الحصول على علف");
+        purpose3.add("الحصول على مولدة مائية");
+        purpose3.add("بذور موسمية");
+        purpose3.add("شراء أعلاف");
+        purpose3.add("مضخة مياه");
+        purpose3.add("معدات زراعية");
 
-		int year = 2010;
-        for (int k = 0; k < 10; k++) {
+//loan.setloanyear;
+// loan.setloanmonth
+        int year = 2010;
+        for (int k = 0; k < 11; k++) {
             for (int i = 1; i < 20; i++) {
                 int lo = 0;
                 int LoanOpenClose = 0;
@@ -346,6 +370,9 @@ public class DbInit implements CommandLineRunner {
                 int loan1 = r.nextInt((151 - 0) + 1) + 0;
                 int loan2 = r.nextInt((70 - 0) + 1) + 0;
                 int loam3 = r.nextInt((22 - 0) + 1) + 0;
+                int p1 = r.nextInt((5 - 0) + 1) + 0;
+                int p2 = r.nextInt((6 - 0) + 1) + 0;
+                int p3 = r.nextInt((5 - 0) + 1) + 0;
                 int totalLoanValue = 50000 + ThreadLocalRandom.current().nextInt(10000, 9000000 + 1);
                 int intrestRate = ThreadLocalRandom.current().nextInt(2, 20);
                 Loans loan = new Loans(String.valueOf(r.nextInt(85456)) + r.nextInt(50), branchListt.get(branchesCounter).getBank().bankName, "مصرف سورية المركزي", String.valueOf(r.nextInt(85456)) + r.nextInt(50),
@@ -359,7 +386,7 @@ public class DbInit implements CommandLineRunner {
                 int stat = r.nextInt((6 - 1) + 1) + 1;
                 int result = 0;
                 if (loan.getFinanceType().TypeName == "مواسم استراتيجية") {
-
+                    loan.setPurpose(purpose3.get(p3));
                     loan.setTotalAmmount(LoansAmount3.get(loam3));
                     loan.setTotalAmmountAsString(LoansAmount3.get(loam3) + " ليرة سورية");
                     int LA3 = Integer.parseInt(LoansAmount3.get(loam3));
@@ -368,9 +395,7 @@ public class DbInit implements CommandLineRunner {
                     double z = x * y;
                     loan.setNetAmmount(String.format("%.0f", z));
                     loan.setNetAmmountAsString(String.format("%.0f", z) + " ليرة سورية");
-
                     int month = r.nextInt((12 - 1) + 1) + 1;
-
                     int day = r.nextInt((28 - 1) + 1) + 1;
                     String monthAsString = String.valueOf(month);
                     String sDay = String.valueOf(day);
@@ -395,17 +420,16 @@ public class DbInit implements CommandLineRunner {
                         reScheduleLoans.setLoan(loan);
                         this.reScheduleLoansRepository.save(reScheduleLoans);
                         month += 1;
-                        int year2 =year ;
-						if (day < 15)
-							day += 15;
-						else
-							day = day + 15 - 30;
+                        int year2 = year;
+                        if (day < 15)
+                            day += 15;
+                        else
+                            day = day + 15 - 30;
 
                         if (month > 12) {
                             month = 1;
-                             year2 = year +1 ;
+                            year2 = year + 1;
                         }
-
                         closeLoans.setStatus("سلفة مجدولة اغلقت وسددت بالكامل");
                         monthAsString = String.valueOf(month);
                         sDay = String.valueOf(day);
@@ -420,10 +444,9 @@ public class DbInit implements CommandLineRunner {
                 }
 
                 if (loan.getFinanceType().TypeName == "طويل الامد") {
-
+                    loan.setPurpose(purpose.get(p1));
                     loan.setTotalAmmount(LoansAmount.get(loan1));
                     loan.setTotalAmmountAsString(LoansAmount.get(loan1) + " ليرة سورية");
-
                     int LA3 = Integer.parseInt(LoansAmount.get(loan1));
                     double x = Double.parseDouble(fTypes.get(financeType).getFundintRate()) / 100.00;
                     double y = Double.parseDouble(LoansAmount.get(loan1));
@@ -463,11 +486,11 @@ public class DbInit implements CommandLineRunner {
                         ReScheduleLoans reScheduleLoans = new ReScheduleLoans();
                         reScheduleLoans.setLoan(loan);
                         this.reScheduleLoansRepository.save(reScheduleLoans);
-                        int year2=year+5;
+                        int year2 = year + 5;
                         closeLoans.setStatus("سلفة مجدولة اغلقت وسددت بالكامل");
-						monthAsString = String.valueOf(month);
-						sDay = String.valueOf(day);
-						yearAsString = String.valueOf(year2);
+                        monthAsString = String.valueOf(month);
+                        sDay = String.valueOf(day);
+                        yearAsString = String.valueOf(year2);
                         date = yearAsString + "-" + monthAsString + "-" + sDay;
                         closeLoans.getLoan().setLoanDate(date);
                         closeLoans.getLoan().setWorkDate(date);
@@ -477,10 +500,9 @@ public class DbInit implements CommandLineRunner {
                     }
                 }
                 if (loan.getFinanceType().TypeName == "قصير الامد") {
-
+                    loan.setPurpose(purpose2.get(p2));
                     loan.setTotalAmmount(LoansAmount2.get(loan2));
                     loan.setTotalAmmountAsString(LoansAmount2.get(loan2) + " ليرة سورية");
-
                     int LA3 = Integer.parseInt(LoansAmount2.get(loan2));
                     double x = Double.parseDouble(fTypes.get(financeType).getFundintRate()) / 100.00;
                     double y = Double.parseDouble(LoansAmount2.get(loan2));
@@ -520,17 +542,16 @@ public class DbInit implements CommandLineRunner {
                         ReScheduleLoans reScheduleLoans = new ReScheduleLoans();
                         reScheduleLoans.setLoan(loan);
                         this.reScheduleLoansRepository.save(reScheduleLoans);
-						int year2=year;
-                       if (month>12)
-					   {
-					   	month=6;
-					   	 year2=year +1;
-					   }
+                        int year2 = year;
+                        if (month > 12) {
+                            month = 6;
+                            year2 = year + 1;
+                        }
                         closeLoans.setStatus("سلفة مجدولة اغلقت وسددت بالكامل");
-						monthAsString = String.valueOf(month);
-						sDay = String.valueOf(day);
-						yearAsString = String.valueOf(year2);
-						date = yearAsString + "-" + monthAsString + "-" + sDay;
+                        monthAsString = String.valueOf(month);
+                        sDay = String.valueOf(day);
+                        yearAsString = String.valueOf(year2);
+                        date = yearAsString + "-" + monthAsString + "-" + sDay;
                         date = yearAsString + "-" + monthAsString + "-" + sDay;
                         closeLoans.getLoan().setLoanDate(date);
                         closeLoans.getLoan().setWorkDate(date);
@@ -538,6 +559,7 @@ public class DbInit implements CommandLineRunner {
                         injectVouchersToLoan(loan, allClients.get(clientsCounter), 1);
 
                     }
+
                 }
 //				if (stat == 5) {
 //					OpenLoans openLoan = new OpenLoans();
@@ -549,7 +571,6 @@ public class DbInit implements CommandLineRunner {
 //					reScheduleLoans.setLoan(loan);
 //					this.reScheduleLoansRepository.save(reScheduleLoans);
 //				}
-
             }
             System.out.println("done");
             year++;
