@@ -86,8 +86,8 @@ public class DbInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        injectUsers_Roles_ToDB();
-        inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
+//        injectUsers_Roles_ToDB();
+//        inject_Banks_Allocations_Finance_Branches_LoansTypes_Loans();
 //		injectChecksToDB();
         //	System.out.println("injection Done !! ");
     }
@@ -405,14 +405,16 @@ public class DbInit implements CommandLineRunner {
                     loan.setStatus("مؤكدة");
                     loan.setLoanDate(date);
                     loan.setWorkDate(date);
-                    this.loansRepo.save(loan);
+
                     if (CA * 1.5 >= LA3) {
+                        this.loansRepo.save(loan);
                         System.out.println(CA);
                         CloseLoans closeLoans = new CloseLoans();
                         closeLoans.setLoan(loan);
                         closeLoans.setStatus("اغلقت وسددت بالكامل");
                         injectVouchersToLoan(loan, allClients.get(clientsCounter), 1);
                     } else if (CA * 1.5 < LA3) {
+                        this.loansRepo.save(loan);
                         System.out.println(CA);
                         CloseLoans closeLoans = new CloseLoans();
                         closeLoans.setLoan(loan);
@@ -463,9 +465,9 @@ public class DbInit implements CommandLineRunner {
 //				System.out.println("loan date " + date);
                     loan.setStatus("مؤكدة");
                     loan.setLoanDate(date);
-                    this.loansRepo.save(loan);
                     int NumberOFChildere = Integer.parseInt(loan.getClient().NumberOFChilderen);
                     if (CA * 0.66 * 12 * 5 >= LA1 && NumberOFChildere <= 3) {
+                        this.loansRepo.save(loan);
                         System.out.println(CA);
                         CloseLoans closeLoans = new CloseLoans();
                         closeLoans.setLoan(loan);
@@ -473,6 +475,7 @@ public class DbInit implements CommandLineRunner {
                         this.closeLoanRepository.save(closeLoans);
                         injectVouchersToLoan(loan, allClients.get(clientsCounter), 1);
                     } else if (CA * 0.33 * 12 * 5 >= LA1 && NumberOFChildere > 3) {
+                        this.loansRepo.save(loan);
                         System.out.println(CA);
                         CloseLoans closeLoans = new CloseLoans();
                         closeLoans.setLoan(loan);
@@ -481,6 +484,7 @@ public class DbInit implements CommandLineRunner {
                         injectVouchersToLoan(loan, allClients.get(clientsCounter), 1);
                     } else if (CA * 0.66 * 12 * 5 < LA1 && NumberOFChildere > 3 || CA * 0.33 * 12 * 5 < LA1 && NumberOFChildere <= 3) {
                         System.out.println(CA);
+                        this.loansRepo.save(loan);
                         CloseLoans closeLoans = new CloseLoans();
                         closeLoans.setLoan(loan);
                         ReScheduleLoans reScheduleLoans = new ReScheduleLoans();
@@ -519,9 +523,9 @@ public class DbInit implements CommandLineRunner {
 //				System.out.println("loan date " + date);
                     loan.setStatus("مؤكدة");
                     loan.setLoanDate(date);
-                    this.loansRepo.save(loan);
                     int NumberOFChildere = Integer.parseInt(loan.getClient().NumberOFChilderen);
                     if (CA * 0.66 * 6 >= LA2 && NumberOFChildere <= 3) {
+                        this.loansRepo.save(loan);
                         System.out.println(CA);
                         CloseLoans closeLoans = new CloseLoans();
                         closeLoans.setLoan(loan);
@@ -530,6 +534,7 @@ public class DbInit implements CommandLineRunner {
                         injectVouchersToLoan(loan, allClients.get(clientsCounter), 1);
                     } else if (CA * 0.33 * 6 >= LA2 && NumberOFChildere > 3) {
                         System.out.println(CA);
+                        this.loansRepo.save(loan);
                         CloseLoans closeLoans = new CloseLoans();
                         closeLoans.setLoan(loan);
                         closeLoans.setStatus("اغلقت وسددت بالكامل");
@@ -537,6 +542,7 @@ public class DbInit implements CommandLineRunner {
                         injectVouchersToLoan(loan, allClients.get(clientsCounter), 1);
                     } else if (CA * 0.66 * 6 < LA2 && NumberOFChildere > 3 || CA * 0.33 * 6 < LA2 && NumberOFChildere <= 3) {
                         System.out.println(CA);
+                        this.loansRepo.save(loan);
                         CloseLoans closeLoans = new CloseLoans();
                         closeLoans.setLoan(loan);
                         ReScheduleLoans reScheduleLoans = new ReScheduleLoans();

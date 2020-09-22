@@ -74,7 +74,7 @@ public class insert {
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/insert")
 	public void insertIntoDimensions() throws java.text.ParseException
-	{/*
+	{
 		List<Clients> allClients = clientsService.GetClientsByType("شخص");
 		
 		for(Clients client : allClients)
@@ -142,9 +142,9 @@ public class insert {
 			timeRepo.save(t);
 		}
 		
-		
-		List<Loans>allLoans= loanService.FindAllLoans();
-		for(Loans loan :allLoans)
+
+		List<Loans>allLoans1= loanService.FindAllLoans();
+		for(Loans loan :allLoans1)
 		{
 			String status = loanService.GetLoanStatus(loan.getId());
 			List<Time_Dim> allTime = timeRepo.findAll();
@@ -164,32 +164,32 @@ public class insert {
 			}	
 		}
 		System.out.println("Done !!");
-		*/
+
 			
 		List<Fact_Table> allloans= factService.filterFact();
 		
 		for(Fact_Table f : allloans)
 		{
 			String result = null;
-			if(f.getStatus().equalsIgnoreCase("مغلقة"))
-				result="yes";
-			else 
-				result="no";
-			
-			int age = Integer.parseInt(f.getClient().getAge());
-			int TotalAmmount = Integer.parseInt(f.getTotalAmmount());
+		if(f.getStatus().equalsIgnoreCase("مغلقة"))
+			result="yes";
+		else
+			result="no";
 
-			double NetAmmount = Double.parseDouble(f.getNetAmmount());
-			int NumberOFChilderen = Integer.parseInt(f.getClient().getNumberOFChilderen());
-			int income = Integer.parseInt(f.getClient().getIncome());
+		int age = Integer.parseInt(f.getClient().getAge());
+		int TotalAmmount = Integer.parseInt(f.getTotalAmmount());
 
-			ClientLoan c = new ClientLoan(TotalAmmount,NetAmmount,f.getStatus(),f.getClient().getAddress(),f.getClient().getGender(),f.getClient().getMarried(),NumberOFChilderen,age,f.getLoanType().getTypeName(),f.getFinanceType().getTypeName(),income,result);
-			clientLoanRepo.save(c);
-		}
-	
-		
-		
-		
+		double NetAmmount = Double.parseDouble(f.getNetAmmount());
+		int NumberOFChilderen = Integer.parseInt(f.getClient().getNumberOFChilderen());
+		int income = Integer.parseInt(f.getClient().getIncome());
+
+		ClientLoan c = new ClientLoan(TotalAmmount,NetAmmount,f.getStatus(),f.getClient().getAddress(),f.getClient().getGender(),f.getClient().getMarried(),NumberOFChilderen,age,f.getLoanType().getTypeName(),f.getFinanceType().getTypeName(),income,result);
+		clientLoanRepo.save(c);
+	}
+
+
+
+
 	}
 
 }

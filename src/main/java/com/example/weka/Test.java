@@ -32,8 +32,8 @@ public class Test {
 	LoanService loanService ;
 	
 	
-    public static final String DATASETPATH = "C:\\Users\\ramij\\Downloads\\Compressed\\weka-example-master\\data\\new3.arff";
-    public static final String MODElPATH = "C:\\Users\\ramij\\Downloads\\Compressed\\weka-example-master\\data\\model.bin";
+    public static final String DATASETPATH = "D:\\okkk\\new3.arff";
+    public static final String MODElPATH = "D:\\okkk\\model.bin";
 
     
 	@RequestMapping(method = RequestMethod.GET , value = "/Loans/datamining/{id}")
@@ -46,7 +46,7 @@ public class Test {
         try {
         	InstanceQuery query = new InstanceQuery();
         	 query.setUsername("root");
-        	 query.setPassword("admin");
+        	 query.setPassword("jad@1234");
         	 query.setQuery("select age,net_ammount,numberofchilderen,total_ammount,income,result from client_loan");
         	 // query.setSparseData(true);
         	 Instances dataset = query.retrieveInstances();         
