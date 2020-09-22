@@ -14,12 +14,16 @@ import com.example.Banks.Stats.Models.StatsModel;
 import com.example.CloseLoans.CloseLoans;
 import com.example.Loans.Loans;
 import com.example.OpenLoans.OpenLoans;
+import com.example.security.user.UserService;
 
 @Service 
 public class BankStatsService {
 	
 	@Autowired
 	private ServicesPool servicePool ; 
+	
+	@Autowired
+	private UserService userService ; 
 	
 	public BankStatsService() {
 	}
@@ -60,8 +64,8 @@ public class BankStatsService {
 		DM.setClosedLoansCount(servicePool.getClosedLoansService().getClosedLoansCount());
 		DM.setOpenLoansCount(servicePool.getOpenLoansService().getOpenLoansCount());
 		DM.setTotalBranchesCount(servicePool.getBranchesService().getBranchesCount());
-		//DM.setTotalSystemUsers(this.usersService.getUsersCount());
-		DM.setTotalSystemUsers(5);
+		DM.setTotalSystemUsers(this.userService.getUsersCount());
+		//DM.setTotalSystemUsers(5);
 		DM.setResLoansCount(servicePool.getResLoansService().getResLoansCount());
 		DM.setTotalLoansCount(servicePool.getLoansService().getLoansCount());
 		DM.setLoansValue(servicePool.getLoansService().getTotalLoansValue());

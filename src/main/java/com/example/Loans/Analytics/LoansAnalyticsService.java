@@ -15,14 +15,17 @@ public class LoansAnalyticsService {
 	@Autowired 
 	private ServicesPool pool ; 
 	
-	private String yearOfAnalytics = MasterService.getYearFromStringDate(MasterService.getDateAsString());
+	private String yearOfAnalytics =" " ;
 
-	private String MonthOfAnalytics = MasterService.getMonthFromStringDate(MasterService.getDateAsString());
+	private String MonthOfAnalytics =" ";
 	
 	
 	public LoansAnalyticsModel processLoansAnalysisData() {
-		yearOfAnalytics = MasterService.getYearFromStringDate(MasterService.getDateAsString());
-		MonthOfAnalytics = MasterService.getMonthFromStringDate(MasterService.getDateAsString());
+		
+		if(yearOfAnalytics.equalsIgnoreCase(" ") || MonthOfAnalytics.equalsIgnoreCase(" ")) {
+			yearOfAnalytics = MasterService.getYearFromStringDate(MasterService.getDateAsString());
+			MonthOfAnalytics = MasterService.getMonthFromStringDate(MasterService.getDateAsString());
+		}
 		
 		boolean endOfData = false ; 
 		int index = 0 ;

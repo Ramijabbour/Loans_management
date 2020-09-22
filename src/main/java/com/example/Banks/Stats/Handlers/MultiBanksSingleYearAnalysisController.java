@@ -19,7 +19,7 @@ import com.example.SiteConfig.MasterService;
 @RestController
 public class MultiBanksSingleYearAnalysisController {	
 	//Attributes section 
-	
+	/*
 	private static int year ; 
 	private static int MonthStart ; 
 	private static int MonthEnd ;
@@ -450,5 +450,5 @@ public class MultiBanksSingleYearAnalysisController {
 		return false ; 
 	}
 	//End Of setters - getters section 
-	
+	*/
 }
