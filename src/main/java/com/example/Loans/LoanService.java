@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.example.ServicesPool;
@@ -13,6 +16,9 @@ import com.example.CloseLoans.CloseLoans;
 import com.example.OpenLoans.OpenLoans;
 import com.example.ReScheduleLoans.ReScheduleLoans;
 import com.example.SiteConfig.SiteConfiguration;
+import com.example.security.user.User;
+import com.example.security.user.UserRepository;
+import com.example.settelmets.Models.Chaque;
 
 
 
@@ -24,7 +30,10 @@ public class LoanService {
 	
 	@Autowired
 	private ServicesPool servicePool ; 
-
+	@Autowired
+	private UserRepository userRepo ; 
+	
+	
 	public List<Loans> getAllLoans(int PageNumber)
 	{
 		return loansRepository.findAll();
@@ -169,5 +178,20 @@ public class LoanService {
 		return false ; 
 	}
 	
+	
+	public User get_current_User() {
+	    String username ; 
+	       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	          Object principal =  auth.getPrincipal();
+	          if(principal instanceof UserDetails) {
+	             username = ((UserDetails) principal).getUsername() ; 
+	             for(User user : this.userRepo.findAll()) {
+	           if(user.getUsername().equalsIgnoreCase(username)) {
+	             return user ; 
+	           }
+	         }
+	          }
+	           return null  ; 
+	    }
 	
 }

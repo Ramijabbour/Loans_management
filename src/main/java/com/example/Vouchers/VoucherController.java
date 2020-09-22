@@ -20,6 +20,7 @@ import com.example.Clients.Clients;
 import com.example.Loans.Loans;
 import com.example.Loans.LoansController;
 import com.example.SiteConfig.MasterService;
+import com.example.security.user.User;
 
 @RestController
 public class VoucherController {
@@ -55,7 +56,10 @@ public class VoucherController {
 	public void addNewVoucher(@ModelAttribute Vouchers voucher,HttpServletResponse response,@PathVariable int id ) throws IOException {
 		System.out.println("posted to /Loan/AddVoucher/id ");
 		Loans loan=servicePool.getLoansService().getOneByID(id);
+		User u = servicePool.getLoansService().get_current_User();
+		voucher.setUser(u);
 		voucher.setStatus("غير مدفوع");
+		
 		voucher.setLoan(loan);
 		servicePool.getVoucherService().addVoucher(voucher);
 		response.sendRedirect("/Loans/all/Open?index=0");
@@ -377,6 +381,8 @@ public class VoucherController {
 		String dateMsg = "" ;
 		for(Vouchers voucher : voucherInputModel.getVouchersList()) {
 			voucher.setLoan(loan);
+			User u = servicePool.getLoansService().get_current_User();
+			voucher.setUser(u);
 			vouchersNetAmount+=Integer.valueOf(voucher.getNetAmmount());
 			vouchersTotalAmount += Integer.valueOf(voucher.getTotal());
 			

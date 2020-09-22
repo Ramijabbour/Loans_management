@@ -32,8 +32,8 @@ public class Test {
 	LoanService loanService ;
 	
 	
-    public static final String DATASETPATH = "C:\\Users\\ramij\\Downloads\\Compressed\\weka-example-master\\data\\new3.arff";
-    public static final String MODElPATH = "C:\\Users\\ramij\\Downloads\\Compressed\\weka-example-master\\data\\model.bin";
+    public static final String DATASETPATH = "D:\\okkk\\new3.arff";
+    public static final String MODElPATH = "D:\\okkk\\model.bin";
 
     
 	@RequestMapping(method = RequestMethod.GET , value = "/Loans/datamining/{id}")
@@ -43,19 +43,19 @@ public class Test {
 		Loans loan  = loanService.getOneByID(id);
 		
         ModelGenerator mg = new ModelGenerator();
-        try {
+        /*try {
         	InstanceQuery query = new InstanceQuery();
         	 query.setUsername("root");
-        	 query.setPassword("admin");
+        	 query.setPassword("jad@1234");
         	 query.setQuery("select age,net_ammount,numberofchilderen,total_ammount,income,result from client_loan");
         	 // query.setSparseData(true);
         	 Instances dataset = query.retrieveInstances();         
         	 dataset.setClassIndex(dataset.numAttributes() - 1);
 
             System.out.println(dataset);
-            
-       //  Instances dataset = mg.loadDataset(DATASETPATH);
-       // System.out.println(dataset);
+          */  
+         Instances dataset = mg.loadDataset(DATASETPATH);
+        System.out.println(dataset);
       //  Filter filter = new Normalize();
 
         // divide dataset to train dataset 80% and test dataset 20%
@@ -115,10 +115,10 @@ public class Test {
         mav.addObject("dontGive", dontGive);
         mav.addObject("give", give);
         
-      }
+      /*}
         catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 		return mav;
     }
 
