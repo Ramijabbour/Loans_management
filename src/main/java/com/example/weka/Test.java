@@ -43,7 +43,7 @@ public class Test {
 		Loans loan  = loanService.getOneByID(id);
 		
         ModelGenerator mg = new ModelGenerator();
-        try {
+        /*try {
         	InstanceQuery query = new InstanceQuery();
         	 query.setUsername("root");
         	 query.setPassword("admin");
@@ -53,9 +53,9 @@ public class Test {
         	 dataset.setClassIndex(dataset.numAttributes() - 1);
 
             System.out.println(dataset);
-            
-       //  Instances dataset = mg.loadDataset(DATASETPATH);
-       // System.out.println(dataset);
+          */  
+         Instances dataset = mg.loadDataset(DATASETPATH);
+        System.out.println(dataset);
       //  Filter filter = new Normalize();
 
         // divide dataset to train dataset 80% and test dataset 20%
@@ -115,10 +115,10 @@ public class Test {
         mav.addObject("dontGive", dontGive);
         mav.addObject("give", give);
         
-      }
+      /*}
         catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 		return mav;
     }
 

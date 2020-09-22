@@ -26,15 +26,19 @@ import com.example.BankBranches.Branches;
 		import com.example.LoansType.LoansType;
 		import com.example.OpenLoans.OpenLoans;
 		import com.example.ReScheduleLoans.ReScheduleLoans;
-		import com.example.SiteConfig.SiteConfiguration;
+import com.example.SiteConfig.MasterService;
+import com.example.SiteConfig.SiteConfiguration;
 import com.example.Vouchers.VoucherController;
+import com.example.security.user.User;
 
 @RestController
 public class LoansController {
 
 	@Autowired
 	private ServicesPool servicePool ; 
+	
 
+	
 	@Autowired
 	VoucherController voucherController ;
 	
@@ -132,6 +136,7 @@ public class LoansController {
 		List<Branches> allbranche=servicePool.getBranchesService().getAllBrancheNoPage();
 		List<LoansType> allloanType = servicePool.getLoanTypesService().getAllType();
 		List<FinanceType> allfinanceType= servicePool.getFinanceTypeService().getAllFinanceType();
+		
 		mav.addObject("allclient",allclient);
 		mav.addObject("loan",new Loans());
 		mav.addObject("allbranche",allbranche);
@@ -162,6 +167,8 @@ public class LoansController {
 		}
 
 		if(NewAllocation>=0) {
+			User u = servicePool.getLoansService().get_current_User();
+			loan.setUser(u);
 			System.out.println("posted to /Loans/addLoan ");
 			bank.setFinancialAllocations(Integer.toString(NewAllocation));
 			loan.setStatus("غير مؤكدة");
@@ -199,7 +206,7 @@ public class LoansController {
 	public ModelAndView RescheduleLoan(@ModelAttribute Loans loan,@PathVariable int id) throws IOException
 	{
 		Loans oldLoan=servicePool.getLoansService().getOneByID(id);
-
+		
 		OpenLoans open = servicePool.getOpenLoansService().getOpenLoanFromLoan(id);
 		servicePool.getOpenLoansService().DeleteOpenLoan(open);
 
@@ -212,11 +219,15 @@ public class LoansController {
 				,oldLoan.getNetAmmount(),oldLoan.getNetAmmountAsString(),oldLoan.getNumberOfVoucherAsString(),oldLoan.getNumberOfVoucher(),oldLoan.getPurpose(),oldLoan.getClient(),oldLoan.getBranche(),oldLoan.getUser(),oldLoan.getLoanType(),oldLoan.getFinanceType());
 		NewLoan.setConfirmed(true);
 		NewLoan.setStatus("مؤكدة");
+		
 		NewLoan.setLoanDate(loan.getLoanDate());
 		Date currentDate = new Date();
 		NewLoan.setWorkDate(currentDate.toString());
+		
+		oldLoan.setInterestRate("مجدولة");
+		servicePool.getLoansService().updateLoan(oldLoan);
 		servicePool.getLoansService().addLoan(NewLoan);
-
+		
 		ReScheduleLoans scheduleLoan=new ReScheduleLoans(NewLoan);
 		servicePool.getResLoansService().addLoan(scheduleLoan);
 
@@ -278,6 +289,9 @@ public class LoansController {
 			response.sendRedirect("/Loans/all/Close?index=0");
 	}
 
+	
+	
+	
 
 
 	//----------------------------------------------------------------
@@ -346,7 +360,10 @@ public class LoansController {
 	public ModelAndView SearchByLoanNumber(@Param(value ="index") int index,@RequestParam("search") String loanNumber) {
 		ModelAndView mav = new ModelAndView("Loans/SearchLoans");
 		List<Loans> allloans = servicePool.getLoansService().SearchByLoanNumber(index,loanNumber);
+		String loanStatus = servicePool.getLoansService().GetLoanStatus(allloans.get(0).getId());
 		mav.addObject("allloans",allloans);
+		mav.addObject("loanStatus",loanStatus);
+		
 		mav.addObject("searchvar",loanNumber);
 		if(allloans.size() > 0 ) {
 			SiteConfiguration.addSequesnceVaraibles(mav, index);
