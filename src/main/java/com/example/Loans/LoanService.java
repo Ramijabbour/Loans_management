@@ -143,7 +143,7 @@ public class LoanService {
 		if(c!=null)
 			return "مغلقة";
 		
-		return "";
+		return "مغلقة";
 	}
 	
 	

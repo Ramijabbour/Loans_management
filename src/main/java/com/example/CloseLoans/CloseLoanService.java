@@ -27,7 +27,7 @@ public class CloseLoanService {
 	
 	public List<CloseLoans> GetAllCloseLoan(int PageNumber)
 	{
-		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));	
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id").descending());	
 		Page<CloseLoans> pagedResult = this.closeLoanRepository.findAll(paging);
 		if (pagedResult.hasContent()) {
             return pagedResult.getContent();

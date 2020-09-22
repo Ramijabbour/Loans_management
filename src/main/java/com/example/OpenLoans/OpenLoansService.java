@@ -23,7 +23,7 @@ public class OpenLoansService {
 	
 	public List<OpenLoans> GetAllOpenLoan(int PageNumber)
 	{
-		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id").descending());
 		Page<OpenLoans> pagedResult = this.openLoanRepository.findAll(paging);
 		if (pagedResult.hasContent()) {
             return pagedResult.getContent();

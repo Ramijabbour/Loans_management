@@ -33,7 +33,7 @@ public class ReScheduleLoansService {
 	
 	public List<ReScheduleLoans> getAllReScheduleLoans(int PageNumber)
 	{
-		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id"));
+		Pageable paging = PageRequest.of(PageNumber, SiteConfiguration.getPageSize(), Sort.by("id").descending());
 		Page<ReScheduleLoans> pagedResult = this.reScheduleLoansReopsitory.findAll(paging);
 		if (pagedResult.hasContent()) {
             return pagedResult.getContent();
