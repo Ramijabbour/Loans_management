@@ -11,6 +11,7 @@ import com.example.Banks.Stats.Models.AnalysisCompositeModel;
 import com.example.Banks.Stats.Models.AnalysisModel;
 import com.example.Loans.Analytics.LoansAnalyticsModel;
 import com.example.Loans.Analytics.LoansAnalyticsService;
+import com.example.SiteConfig.MasterService;
 
 @Service
 public class LoansAnalyticsChartsService {
@@ -20,15 +21,20 @@ public class LoansAnalyticsChartsService {
 	
 	LoansAnalyticsModel analyticsModel =  new LoansAnalyticsModel();
 	
+	String Year = MasterService.getYearFromStringDate(MasterService.getDateAsString());
+	String Month = MasterService.getMonthFromStringDate(MasterService.getDateAsString());
+	
 	public void processData() {
 		analyticsModel = loansAnalyticsService.processLoansAnalysisData(); 	
+		Year = loansAnalyticsService.getYearOfAnalytics() ; 
+		Month = loansAnalyticsService.getMonthOfAnalytics();
 	}
 	
 	
 	
 	public AnalysisCompositeModel getFinanaceTypesYear() {
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel();
-		ACM.setTitle("نسب أنواع التمويل على السلف خلال هذه السنة");
+		ACM.setTitle("نسب أنواع التمويل على السلف خلال سنة "+Year);
 		ACM.addCat(analyticsModel.getYearOfAnalytics());
 	
 		List<AnalysisModel> modelList = new ArrayList<AnalysisModel>();
@@ -47,7 +53,7 @@ public class LoansAnalyticsChartsService {
 	
 	public AnalysisCompositeModel getFinanaceTypesMonth() {
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel();
-		ACM.setTitle("نسب أنواع التمويل على السلف خلال هذا الشهر");
+		ACM.setTitle("نسب أنواع التمويل على السلف خلال شهر "+Month);
 		ACM.addCat(analyticsModel.getMonthOfAnalytics());
 		
 		List<AnalysisModel> modelList = new ArrayList<AnalysisModel>();
@@ -68,7 +74,7 @@ public class LoansAnalyticsChartsService {
 	
 	public AnalysisCompositeModel getLoansTypesYear() {
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel();
-		ACM.setTitle("نسب أنواع السلف خلال هذه السنة");
+		ACM.setTitle("نسب أنواع السلف خلال سنة"+Year);
 		ACM.addCat(analyticsModel.getYearOfAnalytics());
 		
 		List<AnalysisModel> modelList = new ArrayList<AnalysisModel>();
@@ -87,7 +93,7 @@ public class LoansAnalyticsChartsService {
 	
 	public AnalysisCompositeModel getLonasTypesMonth() {
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel();
-		ACM.setTitle("نسب أنواع السلف خلال هذا الشهر");
+		ACM.setTitle("نسب أنواع السلف خلال شهر"+Month);
 		ACM.addCat(analyticsModel.getMonthOfAnalytics());
 		
 		List<AnalysisModel> modelList = new ArrayList<AnalysisModel>();
@@ -107,7 +113,7 @@ public class LoansAnalyticsChartsService {
 	
 	public AnalysisCompositeModel getMostBanksYear() {
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel();
-		ACM.setTitle("قيم السلف لكل بنك خلال هذه السنة");
+		ACM.setTitle("قيم السلف لكل بنك خلال سنة "+Year);
 		ACM.addCat(analyticsModel.getYearOfAnalytics());
 		
 		List<AnalysisModel> modelList = new ArrayList<AnalysisModel>();
@@ -125,7 +131,7 @@ public class LoansAnalyticsChartsService {
 	
 	public AnalysisCompositeModel getMostBanksMonth() {
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel();
-		ACM.setTitle("قيم السلف لكل بنك خلال هذا الشهر");
+		ACM.setTitle("قيم السلف لكل بنك خلال شهر "+Month);
 		ACM.addCat(analyticsModel.getMonthOfAnalytics());
 		
 		List<AnalysisModel> modelList = new ArrayList<AnalysisModel>();
@@ -145,7 +151,7 @@ public class LoansAnalyticsChartsService {
 	
 	public AnalysisCompositeModel getBankLoansCountYear() {
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel();
-		ACM.setTitle("عدد السلف الممنوحة لكل بنك خلال هذه السنة");
+		ACM.setTitle("عدد السلف الممنوحة لكل بنك خلال سنة "+Year);
 		ACM.addCat(analyticsModel.getYearOfAnalytics());
 		
 		List<AnalysisModel> modelList = new ArrayList<AnalysisModel>();
@@ -162,7 +168,7 @@ public class LoansAnalyticsChartsService {
 	
 	public AnalysisCompositeModel getBankLoansCountMonth() {
 		AnalysisCompositeModel ACM = new AnalysisCompositeModel();
-		ACM.setTitle("عدد السلف الممنوحة لكل بنك خلال هذا الشهر");
+		ACM.setTitle("عدد السلف الممنوحة لكل بنك خلال شهر"+Month);
 		ACM.addCat(analyticsModel.getMonthOfAnalytics());
 		
 		List<AnalysisModel> modelList = new ArrayList<AnalysisModel>();
@@ -185,6 +191,30 @@ public class LoansAnalyticsChartsService {
 
 	public void setAnalyticsModel(LoansAnalyticsModel analyticsModel) {
 		this.analyticsModel = analyticsModel;
+	}
+
+
+
+	public String getYear() {
+		return Year;
+	}
+
+
+
+	public void setYear(String year) {
+		Year = year;
+	}
+
+
+
+	public String getMonth() {
+		return Month;
+	}
+
+
+
+	public void setMonth(String month) {
+		Month = month;
 	}
 	
 	

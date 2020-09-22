@@ -15,11 +15,11 @@ public class AnalyticsModel {
 	private int NumberOfChecksPerYear  = 0; 
 	
 	
-	private int ValueOfChecksPerDay  = 0; 
+	private long ValueOfChecksPerDay  = 0; 
 	
-	private int ValueOfChecksPerMonth  = 0; 
+	private long ValueOfChecksPerMonth  = 0; 
 	
-	private int ValueOfChecksPerYear  = 0;
+	private long ValueOfChecksPerYear  = 0;
 	
 	
 	private long DailyExchangeValue  = 0; 
@@ -117,7 +117,7 @@ public class AnalyticsModel {
 		NumberOfChecksPerYear = numberOfChecksPerYear;
 	}
 
-	public int getValueOfChecksPerDay() {
+	public long getValueOfChecksPerDay() {
 		return ValueOfChecksPerDay;
 	}
 
@@ -125,7 +125,7 @@ public class AnalyticsModel {
 		ValueOfChecksPerDay = valueOfChecksPerDay;
 	}
 
-	public int getValueOfChecksPerMonth() {
+	public long getValueOfChecksPerMonth() {
 		return ValueOfChecksPerMonth;
 	}
 
@@ -133,7 +133,7 @@ public class AnalyticsModel {
 		ValueOfChecksPerMonth = valueOfChecksPerMonth;
 	}
 
-	public int getValueOfChecksPerYear() {
+	public long getValueOfChecksPerYear() {
 		return ValueOfChecksPerYear;
 	}
 

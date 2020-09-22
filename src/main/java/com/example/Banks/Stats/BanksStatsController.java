@@ -1,7 +1,10 @@
 package com.example.Banks.Stats;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,12 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.ServicesPool;
 import com.example.Banks.Banks;
-import com.example.Banks.Stats.Handlers.MultiBanksAnalysisController;
-import com.example.Banks.Stats.Handlers.MultiBanksSingleYearAnalysisController;
-import com.example.Banks.Stats.Handlers.SingleBankAnalysisController;
 import com.example.Banks.Stats.Models.BanksSelectionModel;
 import com.example.Banks.Stats.Models.SingleSpanModel;
 import com.example.Banks.Stats.Models.TimeSpanModel;
+import com.example.Loans.Analytics.LoansAnalyticsService;
+import com.example.Loans.Analytics.LoansTimeModel;
 import com.example.Loans.Analytics.Charts.LoansAnalyticsChartsService;
 import com.example.SiteConfig.MasterService;
 
@@ -33,6 +35,9 @@ public class BanksStatsController {
 	
 	@Autowired
 	private ServicesPool servicePool ; 
+	
+	@Autowired
+	private LoansAnalyticsService loansAnalyticsService ; 
 	
 	
 	@RequestMapping(method = RequestMethod.GET , value = "/Banks/view/stats/{bankId}")
@@ -91,6 +96,22 @@ public class BanksStatsController {
 		return mav ; 
 	}
 	
+	@RequestMapping(method = RequestMethod.GET , value = "/charts/setTime/next")
+	public ModelAndView getDashNavigationAnalysisAnalytics() {
+		ModelAndView mav = new ModelAndView("Charts/timeSet");
+		mav.addObject("model", new LoansTimeModel());
+		return mav ; 
+	}
+	
+	@RequestMapping(method = RequestMethod.POST , value = "/charts/setTime/next")
+	public void getDashNavigationAnalysisAnalytics(@ModelAttribute LoansTimeModel timeModel , HttpServletResponse response) throws IOException {
+		loansAnalyticsChartsService.setYear(String.valueOf(timeModel.getYear()));
+		loansAnalyticsChartsService.setMonth(String.valueOf(timeModel.getMonth()));
+		loansAnalyticsService.setYearOfAnalytics(String.valueOf(timeModel.getYear()));
+		loansAnalyticsService.setMonthOfAnalytics(String.valueOf(timeModel.getMonth()));
+		response.sendRedirect("/charts/next");
+	}
+	
 	@RequestMapping(method = RequestMethod.GET , value = "/charts/next")
 	public ModelAndView getDashNavigationAnalytics() {
 		ModelAndView mav = new ModelAndView("Charts/analytics");
@@ -98,6 +119,7 @@ public class BanksStatsController {
 		return mav ; 
 	}
 
+	
 	@RequestMapping(method = RequestMethod.GET , value = "/charts/bankSelectionNav/{redirect}")
 	public ModelAndView dashResponse(@PathVariable int redirect) {
 		if(redirect == 1 ) {
